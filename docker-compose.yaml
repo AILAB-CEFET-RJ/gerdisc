@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:10.17
+    restart: always
+    environment:
+      POSTGRES_USER: ${PostgresServer}
+      POSTGRES_PASSWORD: ${PostgresUser}
+      POSTGRES_DB: ${PostgresPassword}
+    ports:
+      - "${postgresPort}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  gerdisc:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+     
+volumes:
+  db_data:
