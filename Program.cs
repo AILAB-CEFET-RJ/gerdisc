@@ -32,7 +32,7 @@ builder.Services.AddSingleton<IUnitOfWork>(
         settings.PostgresDb));
 builder.Services.AddSingleton<ISettings, Settings>(x => settings);
 builder.Services.AddAuthorization();
-var singingConfig = new SingingConfiguration(settings.SingingKey);
+var singingConfig = new SingingConfiguration(settings.SinginKey);
 builder.Services.AddSingleton<ISingingConfiguration>(x => singingConfig);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

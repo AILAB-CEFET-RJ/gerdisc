@@ -4,7 +4,7 @@ namespace gerdisc.Settings
     {
         public IConfigurationRoot config { get; }
 
-        public string SingingKey => config.GetValue<string>("SingingKey")??"";
+        public string SinginKey => config.GetValue<string>("SinginKey")??"";
         public string postgresPort => config.GetValue<string>("postgresPort")??"";
         public string PostgresServer => config.GetValue<string>("PostgresServer")??"";
         public string PostgresUser => config.GetValue<string>("PostgresUser")??"";

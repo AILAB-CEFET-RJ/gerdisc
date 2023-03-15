@@ -7,7 +7,7 @@ namespace gerdisc.Settings
 {
     public interface ISettings
     {
-        public string SingingKey { get; }
+        public string SinginKey { get; }
         public string postgresPort { get; }
         public string PostgresServer { get; }
         public string PostgresUser { get; }
