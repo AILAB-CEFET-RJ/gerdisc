@@ -4,17 +4,18 @@ namespace gerdisc.Settings
     {
         public IConfigurationRoot config { get; }
 
-        public string SinginKey => config.GetValue<string>("SinginKey")??"";
-        public string postgresPort => config.GetValue<string>("postgresPort")??"";
-        public string PostgresServer => config.GetValue<string>("PostgresServer")??"";
-        public string PostgresUser => config.GetValue<string>("PostgresUser")??"";
-        public string PostgresPassword => config.GetValue<string>("PostgresPassword")??"";
-        public string PostgresDb => config.GetValue<string>("PostgresDb")??"";
+        public string SinginKey => config[nameof(SinginKey)]??"";
+        public string postgresPort => config[nameof(postgresPort)]??"";
+        public string PostgresServer => config[nameof(PostgresServer)]??"";
+        public string PostgresUser => config[nameof(PostgresUser)]??"";
+        public string PostgresPassword => config[nameof(PostgresPassword)]??"";
+        public string PostgresDb => config[nameof(PostgresDb)]??"";
         public Settings()
         {
             config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
                 .Build();
         }
     }
