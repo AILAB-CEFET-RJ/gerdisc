@@ -1,13 +1,13 @@
 version: "3.9"
 
 services:
-  db:
+  postgres:
     image: postgres:10.17
     restart: always
     environment:
-      POSTGRES_USER: ${PostgresServer}
-      POSTGRES_PASSWORD: ${PostgresUser}
-      POSTGRES_DB: ${PostgresPassword}
+      POSTGRES_USER: ${PostgresUser}
+      POSTGRES_PASSWORD: ${PostgresPassword}
+      POSTGRES_DB: ${PostgresDb}
     ports:
       - "${postgresPort}:5432"
     volumes:
@@ -19,6 +19,8 @@ services:
       - .env
     ports:
       - "80:80"
-     
+    depends_on:
+      - postgres
+
 volumes:
   db_data:
