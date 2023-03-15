@@ -7,7 +7,7 @@ namespace gerdisc.Repositories
     {
         public string? DbUrl { get; }
 
-        public DbSet<Entities.UserEntity> Users { get; set; }
+        public DbSet<UserEntity>? Users { get; set; }
 
         public ContexRepository(string server, string login, string password, string database)
         {

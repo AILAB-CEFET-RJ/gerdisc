@@ -11,7 +11,7 @@ namespace gerdisc.Repositories
         {
             _dbContext = new ContexRepository(server, login, password, database);
             _dbContext.Database.EnsureCreated();
-            if (!_dbContext.Users.Any())
+            if (_dbContext.Users is not null && !_dbContext.Users.Any())
             {
                 var myEntity = new UserEntity
                 {
