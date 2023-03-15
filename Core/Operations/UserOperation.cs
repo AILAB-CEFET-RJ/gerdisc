@@ -3,7 +3,6 @@ using gerdisc.Repositories;
 using gerdisc.DTOs;
 using gerdisc.Data.DTOs;
 using gerdisc.Core.Services;
-using System.Security.Cryptography;
 using gerdisc.Propierties;
 
 namespace gerdisc.Core

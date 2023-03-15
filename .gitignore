@@ -1,7 +1,6 @@
 # .NET Core and Visual Studio default folders
 bin/
 obj/
-.vscode/
 .vs/
 /Properties/launchSettings.json
 
@@ -67,5 +66,5 @@ _ReSharper*/
 *.resharper
 *.DotSettings.user
 
-# Visual Studio Code files
-.vscode/
+# enviroment
+.env
