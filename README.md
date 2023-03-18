@@ -64,3 +64,31 @@ The application exposes the following endpoints:
     POST /api/students: Creates a new student.
     PUT /api/students/{id}: Updates the student with the specified ID.
     DELETE /api/students/{id}: Deletes the student with the specified ID.
+
+
+### Development Container
+
+Gerdisc comes with a preconfigured development container that allows you to quickly set up your development environment without installing anything other than Docker and Visual Studio Code (VS Code).
+
+The dev container includes PostgreSQL, which is used as the database for Gerdisc. With the dev container running, you can run the Gerdisc application locally and start making changes immediately.
+
+To use the dev container, follow these steps:
+
+Install Docker on your machine.
+Clone the project repository to your local machine.
+If you have the Remote - Containers extension installed, VS Code will prompt you to reopen the project in a container. Click "Reopen in Container" to continue.
+If you don't see this prompt, open the Command Palette in VS Code (Ctrl/Cmd + Shift + P) and select "Remote-Containers: Reopen in Container" from the list of options.
+
+Wait for the container to build and start up. This may take a few minutes the first time you run it.
+
+Once the container is ready, open a terminal in VS Code and run the following command to create the database tables:
+    dotnet ef database update
+You can now run the project by pressing F5 or running the "Run" task in VS Code.
+    dotnet run
+The application will be available at http://localhost:5000.
+
+#### Using the Dev Container
+
+With the dev container running, you can interact with the application and the database just like you would on a local machine. You can use the VS Code editor to modify the code, and any changes you make will be automatically synced to the container.
+
+To access the database, you can use a PostgreSQL client such as pgAdmin or DBeaver. The dev container exposes PostgreSQL on port 5432, so you can connect to it using the IP address 127.0.0.1 and port 5432. The default username and password are postgres and password, respectively.
