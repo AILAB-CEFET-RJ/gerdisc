@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using gerdisc.DTOs;
-using gerdisc.Entities;
+using gerdisc.Data.DTOs;
+using gerdisc.Data.Entities;
 
-namespace gerdisc.Mapper
+namespace gerdisc.Data.Mapper
 {
     public static class UserMapper
     {

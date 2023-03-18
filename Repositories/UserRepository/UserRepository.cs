@@ -1,4 +1,4 @@
- using gerdisc.Entities;
+using gerdisc.Data.Entities;
 
 namespace gerdisc.Repositories.User
 {

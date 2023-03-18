@@ -1,6 +1,5 @@
-using gerdisc.Core;
+using gerdisc.Core.Services;
 using gerdisc.Data.DTOs;
-using gerdisc.DTOs;
 using gerdisc.Propierties;
 using gerdisc.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -13,9 +12,9 @@ namespace gerdisc.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserOperation _userOperation;
-        public UserController(IRepository unitOfWork, ISingingConfiguration singingConfig)
+        public UserController(IRepository repository, ISingingConfiguration singingConfig)
         {
-            _userOperation = new UserOperation(unitOfWork, singingConfig);
+            _userOperation = new UserOperation(repository, singingConfig);
         }
         [HttpPost]
         [Authorize(Roles = "Administrator, Professor")]

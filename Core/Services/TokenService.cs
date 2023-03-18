@@ -1,12 +1,13 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using gerdisc.Entities;
+using gerdisc.Data.Entities;
 using Microsoft.IdentityModel.Tokens;
 
 namespace gerdisc.Core.Services
 {
+    /// <summary>
+    /// Generates a token.
+    /// </summary>
     public static class TokenService
     {
         public static string GenerateJwtToken(this UserEntity user, RsaSecurityKey privateKeys)

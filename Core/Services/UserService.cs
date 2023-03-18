@@ -1,35 +1,33 @@
-using gerdisc.Mapper;
+using gerdisc.Data.Mapper;
 using gerdisc.Repositories;
-using gerdisc.DTOs;
 using gerdisc.Data.DTOs;
-using gerdisc.Core.Services;
 using gerdisc.Propierties;
 
-namespace gerdisc.Core
+namespace gerdisc.Core.Services
 {
     public class UserOperation
     {
-        public IRepository UnitOfWork { get; set; }
+        public IRepository Repository { get; set; }
         private ISingingConfiguration _singingConfig { get; }
         public UserOperation(
-            IRepository unitOfWork,
+            IRepository Repository,
             ISingingConfiguration singingConfig
         )
         {
-            UnitOfWork = unitOfWork;
+            this.Repository = Repository;
             _singingConfig = singingConfig;
         }
 
         public void CreateUser(UserDto user)
         {
-            user.Id = UnitOfWork.User.Count()+1;
-            UnitOfWork.User.Add(user.Map(BCrypt.Net.BCrypt.HashPassword("12345678")));
-            UnitOfWork.User.Commit();
+            user.Id = Repository.User.Count()+1;
+            Repository.User.Add(user.Map(BCrypt.Net.BCrypt.HashPassword("12345678")));
+            Repository.User.Commit();
         }
 
         public string? Login(LoginDto login)
         {
-            var user = UnitOfWork.User.GetSingle(x => x.Email == login.Email);
+            var user = Repository.User.GetSingle(x => x.Email == login.Email);
             bool verified = BCrypt.Net.BCrypt.Verify(login.Password, user?.PasswordHash);
             if (!verified)
             {
