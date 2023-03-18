@@ -6,13 +6,10 @@ Gerdisc is a web-based information system designed to manage the registration an
 
 The project follows a typical N-tier architecture, with the following layers:
 
-Models (Enities, mappers and DTOs)
-
-Presentation (controllers)
-
-Service (business logic)
-
-Data (repositories and database context)
+- Models (Enities, mappers and DTOs)
+- Presentation (controllers)
+- Service (business logic)
+- Data (repositories and database context)
 
 - #### Model Layer
 The models layer represent the data structures of the entities in the system, such as Student, Teacher, ResearchLine, and ResearchProject. These models are used to map the database tables and to perform CRUD (Create-Read-Update-Delete) operations on the data.
@@ -48,16 +45,16 @@ Prerequisites
 
 ### Installing
 
-- Clone the repository to your local machine.
-- Configure the database connection string in appsettings.json.
-- Run the database migrations to create the required tables in the database.
-- Run the project.
-
-        git clone git@github.com:radhanama/gerdisc.git
-        cd gerdisc
-        dotnet ef database update
-        dotnet run
-
+1. Clone the repository to your local machine.
+2. Configure the database connection string in appsettings.json.
+3. Run the database migrations to create the required tables in the database.
+4. Run the project.
+~~~
+git clone git@github.com:radhanama/gerdisc.git
+cd gerdisc
+dotnet ef database update
+dotnet run
+~~~
 ### Usage
 
 The application exposes the following endpoints:
@@ -75,21 +72,22 @@ The Gerdisc development container is a Docker container that includes all the re
 
 To use the development container, follow these steps:
 
-- Install Docker on your machine.
-- Clone the project repository to your local machine.
-- If you have the Remote - Containers extension installed, VS Code will prompt you to reopen the project in a container. Click "Reopen in Container" to continue.
-- If you don't see this prompt, open the Command Palette in VS Code (Ctrl/Cmd + Shift + P) and select "Remote-Containers: Reopen in Container" from the list of options.
-- In the file ./.devcontainer/devcontainer.json, you may need to modify the path to the SSH key if you are not running Linux.
-- Wait for the container to build and start up. This may take a few minutes the first time you run it.
-- Once the container is ready, open a terminal in VS Code and run the following command to create the database tables:
+1. Install Docker on your machine.
+2. Clone the project repository to your local machine.
+3. If you have the Remote - Containers extension installed, VS Code will prompt you to reopen the project in a container. Click "Reopen in Container" to continue.
+4. If you don't see this prompt, open the Command Palette in VS Code (Ctrl/Cmd + Shift + P) and select "Remote-Containers: Reopen in Container" from the list of options.
+5. In the file ./.devcontainer/devcontainer.json, you may need to modify the path to the SSH key if you are not running Linux.
+6. Wait for the container to build and start up. This may take a few minutes the first time you run it.
+7. Once the container is ready, open a terminal in VS Code and run the following command to create the database tables:
+    ~~~
+    dotnet ef database update
+    ~~~
 
-        dotnet ef database update
-
-- You can now run the project by pressing F5 or running the "Run" task in VS Code.
-
-        dotnet run
-
-- The application will be available at http://localhost:5000.
+8. You can now run the project by pressing F5 or running the "Run" task in VS Code.
+    ~~~
+    dotnet run
+    ~~~
+9. The application will be available at http://localhost:5000.
 
 #### Using the Dev Container
 
