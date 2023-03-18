@@ -11,30 +11,25 @@ The project follows a typical N-tier architecture, with the following layers:
     Data (repositories and database context)
 
 ##### Presentation Layer
-The presentation layer consists of controllers and models, which define the API endpoints and the data transfer objects (DTOs) used to transfer data between the API and the service layer.
-Service Layer
-The models represent the data structures of the entities in the system, such as Student, Teacher, ResearchLine, and ResearchProject. These models are used to map the database tables and to perform CRUD (Create-Read-Update-Delete) operations on the data.
-Views
-The controllers handle the HTTP requests and responses, and they are responsible for executing the logic of the application. Each entity in the system has its own controller, such as StudentsController, TeachersController, ResearchLinesController, and ResearchProjectsController. These controllers expose endpoints for creating, reading, updating, and deleting data for their respective entities.
-Services
+The presentation layer includes controllers and models, which define API endpoints and DTOs for data transfer between the API and service layer. The models represent entities in the system, such as Student, Teacher, ResearchLine, and ResearchProject, and are used for mapping database tables and performing CRUD operations.
+Controllers handle HTTP requests and responses, executing the logic of the application. Each entity has its own controller, such as StudentsController, TeachersController, ResearchLinesController, and ResearchProjectsController, with endpoints for creating, reading, updating, and deleting data.
 
 ##### Service Layer 
 The service layer contains the business logic of the application. It communicates with the data layer (repositories and database context) to perform CRUD operations on the database.
-The services layer contains the business logic of the application. The services are used by the controllers to perform complex operations that require multiple database queries or complex calculations. In Gerdisc, each entity has its own service, such as StudentService, TeacherService, ResearchLineService, and ResearchProjectService.
-Repository
+This layer contains the business logic of the application. The services are used by the controllers to perform complex operations that require multiple database queries or complex calculations. In Gerdisc, each entity has its own service, such as StudentService, TeacherService, ResearchLineService, and ResearchProjectService.
 
 ##### Data Layer
 
 The data layer consists of repositories and a database context. The repositories encapsulate the data access logic, while the database context provides a connection to the database and manages the entities.
 
-The repository layer is responsible for communicating with the database. It uses Entity Framework to perform the CRUD operations on the database tables. In Gerdisc, each entity has its own repository, such as StudentRepository, TeacherRepository, ResearchLineRepository, and ResearchProjectRepository. The repositories are used by the services to access the data.
+The repository is responsible for communicating with the database. It uses Entity Framework to perform the CRUD operations on the database tables. In Gerdisc, each entity has its own repository, such as StudentRepository, TeacherRepository, ResearchLineRepository, and ResearchProjectRepository. The repositories are used by the services to access the data.
 
 ### Technologies Used
 
-    ASP.NET Core
-    Entity Framework Core
-    Npgsql (PostgreSQL database provider)
-    Other technologies used in the project.
+ASP.NET Core
+Entity Framework Core
+Npgsql (PostgreSQL database provider)
+Other technologies used in the project.
 
 ## Getting Started
 
@@ -46,16 +41,15 @@ Prerequisites
 
 ### Installing
 
-    Clone the repository to your local machine.
-    Configure the database connection string in appsettings.json.
-    Run the database migrations to create the required tables in the database.
-    Run the project.
-    ```
+Clone the repository to your local machine.
+Configure the database connection string in appsettings.json.
+Run the database migrations to create the required tables in the database.
+Run the project.
+    
     git clone https://github.com/yourusername/gerdisc.git
     cd gerdisc
     dotnet ef database update
     dotnet run
-    ```
 
 ### Usage
 
