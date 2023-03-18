@@ -6,23 +6,26 @@ Gerdisc is a web-based information system designed to manage the registration an
 
 The project follows a typical N-tier architecture, with the following layers:
 
-    Models (Enities, mappers and DTOs)
-    Presentation (controllers)
-    Service (business logic)
-    Data (repositories and database context)
+Models (Enities, mappers and DTOs)
 
-##### Model Layer
+Presentation (controllers)
+
+Service (business logic)
+
+Data (repositories and database context)
+
+- #### Model Layer
 The models layer represent the data structures of the entities in the system, such as Student, Teacher, ResearchLine, and ResearchProject. These models are used to map the database tables and to perform CRUD (Create-Read-Update-Delete) operations on the data.
 The models represent entities in the system, such as Student, Teacher, ResearchLine, and ResearchProject, and are used for mapping database tables and performing CRUD operations.
 
-##### Presentation Layer
+- #### Presentation Layer
 The presentation layer includes controllers, which define API endpoints for data transfer between the API and service layer. 
 Controllers handle HTTP requests and responses, executing the logic of the application. Each entity has its own controller, such as StudentsController, TeachersController, ResearchLinesController, and ResearchProjectsController, with endpoints for creating, reading, updating, and deleting data.
 
-##### Service Layer 
+- #### Service Layer 
 The service layer contains the business logic of the application. It communicates with the data layer (repositories and database context) to perform CRUD operations on the database. The services are used by the controllers to perform complex operations that require multiple database queries or complex calculations. In Gerdisc, each entity has its own service, such as StudentService, TeacherService, ResearchLineService, and ResearchProjectService.
 
-##### Data Layer
+- #### Data Layer
 
 The data layer consists of repositories and a database context. The repositories encapsulate the data access logic, while the database context provides a connection to the database and manages the entities.
 
@@ -30,30 +33,30 @@ The repository is responsible for communicating with the database. It uses Entit
 
 ### Technologies Used
 
-ASP.NET Core
-Entity Framework Core
-Npgsql (PostgreSQL database provider)
-Other technologies used in the project.
+- ASP.NET Core
+- Entity Framework Core
+- Npgsql (PostgreSQL database provider)
+- Other technologies used in the project.
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 Prerequisites
 
-.NET Core SDK
-PostgreSQL
+- .NET Core SDK
+- PostgreSQL
 
 ### Installing
 
-Clone the repository to your local machine.
-Configure the database connection string in appsettings.json.
-Run the database migrations to create the required tables in the database.
-Run the project.
+- Clone the repository to your local machine.
+- Configure the database connection string in appsettings.json.
+- Run the database migrations to create the required tables in the database.
+- Run the project.
 
-    git clone git@github.com:radhanama/gerdisc.git
-    cd gerdisc
-    dotnet ef database update
-    dotnet run
+        git clone git@github.com:radhanama/gerdisc.git
+        cd gerdisc
+        dotnet ef database update
+        dotnet run
 
 ### Usage
 
@@ -72,17 +75,21 @@ The Gerdisc development container is a Docker container that includes all the re
 
 To use the development container, follow these steps:
 
-Install Docker on your machine.
-Clone the project repository to your local machine.
-If you have the Remote - Containers extension installed, VS Code will prompt you to reopen the project in a container. Click "Reopen in Container" to continue.
-If you don't see this prompt, open the Command Palette in VS Code (Ctrl/Cmd + Shift + P) and select "Remote-Containers: Reopen in Container" from the list of options.
-In the file ./.devcontainer/devcontainer.json, you may need to modify the path to the SSH key if you are not running Linux.
-Wait for the container to build and start up. This may take a few minutes the first time you run it.
-Once the container is ready, open a terminal in VS Code and run the following command to create the database tables:
-    dotnet ef database update
-You can now run the project by pressing F5 or running the "Run" task in VS Code.
-    dotnet run
-The application will be available at http://localhost:5000.
+- Install Docker on your machine.
+- Clone the project repository to your local machine.
+- If you have the Remote - Containers extension installed, VS Code will prompt you to reopen the project in a container. Click "Reopen in Container" to continue.
+- If you don't see this prompt, open the Command Palette in VS Code (Ctrl/Cmd + Shift + P) and select "Remote-Containers: Reopen in Container" from the list of options.
+- In the file ./.devcontainer/devcontainer.json, you may need to modify the path to the SSH key if you are not running Linux.
+- Wait for the container to build and start up. This may take a few minutes the first time you run it.
+- Once the container is ready, open a terminal in VS Code and run the following command to create the database tables:
+
+        dotnet ef database update
+
+- You can now run the project by pressing F5 or running the "Run" task in VS Code.
+
+        dotnet run
+
+- The application will be available at http://localhost:5000.
 
 #### Using the Dev Container
 
