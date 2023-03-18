@@ -69,7 +69,7 @@ namespace gerdisc.Migrations
         migrationBuilder.InsertData(
             table: "Users",
             columns: new[] { "FirstName", "LastName", "Email", "PasswordHash", "Role", "CreatedAt" },
-            values: new object[] { "admin", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), Data.Enums.RolesEnum.Administrator, DateTime.UtcNow });
+            values: new object[] { "admin", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), (int)Data.Enums.RolesEnum.Administrator, DateTime.UtcNow });
 
         }
 
