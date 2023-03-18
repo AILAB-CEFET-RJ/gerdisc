@@ -68,21 +68,16 @@ The application exposes the following endpoints:
 
 ### Development Container
 
-Gerdisc comes with a preconfigured development container that allows you to quickly set up your development environment without installing anything other than Docker and Visual Studio Code (VS Code).
+The Gerdisc development container is a Docker container that includes all the required dependencies to run the Gerdisc application, including PostgreSQL. Using a development container allows you to quickly set up your development environment without installing anything other than Docker and Visual Studio Code (VS Code). Additionally, it provides a consistent and reproducible development environment that is isolated from your local machine.
 
-The dev container includes PostgreSQL, which is used as the database for Gerdisc. With the dev container running, you can run the Gerdisc application locally and start making changes immediately.
-
-To use the dev container, follow these steps:
+To use the development container, follow these steps:
 
 Install Docker on your machine.
 Clone the project repository to your local machine.
 If you have the Remote - Containers extension installed, VS Code will prompt you to reopen the project in a container. Click "Reopen in Container" to continue.
 If you don't see this prompt, open the Command Palette in VS Code (Ctrl/Cmd + Shift + P) and select "Remote-Containers: Reopen in Container" from the list of options.
-
-In the file ./.devcontainer/devcontainer.json you have to chnage the path of the ssh key of your system in case you do not use linux.
-
+In the file ./.devcontainer/devcontainer.json, you may need to modify the path to the SSH key if you are not running Linux.
 Wait for the container to build and start up. This may take a few minutes the first time you run it.
-
 Once the container is ready, open a terminal in VS Code and run the following command to create the database tables:
     dotnet ef database update
 You can now run the project by pressing F5 or running the "Run" task in VS Code.
