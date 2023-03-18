@@ -21,20 +21,6 @@ namespace gerdisc.Repositories
         {
             _dbContext = dbContext;
             _dbContext.Database.EnsureCreated();
-            if (_dbContext.Users is not null && !_dbContext.Users.Any())
-            {
-                var myEntity = new UserEntity
-                {
-                    FirstName = "admin",
-                    LastName = "admin",
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin"),
-                    Email = "admin@gmail.com",
-                    Role = Data.Enums.RolesEnum.Administrator,
-                    CreatedAt = DateTime.UtcNow
-                };
-                _dbContext.Users.Add(myEntity);
-                _dbContext.SaveChanges();
-            }
         }
 
         public IUserRepository User => new UserRepository(_dbContext);
