@@ -93,10 +93,7 @@ namespace gerdisc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", null, t =>
-                        {
-                            t.ExcludeFromMigrations();
-                        });
+                    b.ToTable("Users", (string)null);
                 });
 #pragma warning restore 612, 618
         }

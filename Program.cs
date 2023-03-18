@@ -23,7 +23,7 @@ builder.Services.AddSwaggerGen(c =>
     c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 var settings = new Settings();
-var connectionString = $"Host=localhost;Username=postgres;Password=password;Database=gerdisc";
+var connectionString = $"Host={settings.PostgresServer};Username={settings.PostgresUser};Password={settings.PostgresPassword};Database={settings.PostgresDb}";
 var singingConfig = new SingingConfiguration(settings.SinginKey);
 builder.Services.AddNpgsql<ContexRepository>(connectionString);
 builder.Services.AddControllers();

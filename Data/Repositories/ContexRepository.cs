@@ -20,7 +20,7 @@ namespace gerdisc.Repositories
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserEntity>().ToTable("Users", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<UserEntity>().ToTable("Users");
             modelBuilder.Entity<StudentEntity>().ToTable("Students");
             modelBuilder.Entity<ProfessorEntity>().ToTable("Professors");
             modelBuilder.Entity<CourseEntity>().ToTable("Courses");
