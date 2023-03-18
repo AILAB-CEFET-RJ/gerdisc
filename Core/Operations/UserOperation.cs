@@ -9,10 +9,10 @@ namespace gerdisc.Core
 {
     public class UserOperation
     {
-        public IUnitOfWork UnitOfWork { get; set; }
+        public IRepository UnitOfWork { get; set; }
         private ISingingConfiguration _singingConfig { get; }
         public UserOperation(
-            IUnitOfWork unitOfWork,
+            IRepository unitOfWork,
             ISingingConfiguration singingConfig
         )
         {

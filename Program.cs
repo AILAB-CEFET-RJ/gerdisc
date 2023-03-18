@@ -23,17 +23,15 @@ builder.Services.AddSwaggerGen(c =>
     c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 var settings = new Settings();
-builder.Services.AddControllers();
-builder.Services.AddSingleton<IUnitOfWork>(
-    x => new UnitOfWork(
-        settings.PostgresServer,
-        settings.PostgresUser,
-        settings.PostgresPassword,
-        settings.PostgresDb));
-builder.Services.AddSingleton<ISettings, Settings>(x => settings);
-builder.Services.AddAuthorization();
+var connectionString = $"Host=localhost;Username=postgres;Password=password;Database=gerdisc";
 var singingConfig = new SingingConfiguration(settings.SinginKey);
+builder.Services.AddNpgsql<ContexRepository>(connectionString);
+builder.Services.AddControllers();
 builder.Services.AddSingleton<ISingingConfiguration>(x => singingConfig);
+builder.Services.AddSingleton<ISettings, Settings>(x => settings);
+builder.Services.AddSingleton<IRepository>(
+    x => new Repository(x.GetService<ContexRepository>()));
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

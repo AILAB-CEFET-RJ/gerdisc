@@ -13,7 +13,7 @@ namespace gerdisc.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserOperation _userOperation;
-        public UserController(IUnitOfWork unitOfWork, ISingingConfiguration singingConfig)
+        public UserController(IRepository unitOfWork, ISingingConfiguration singingConfig)
         {
             _userOperation = new UserOperation(unitOfWork, singingConfig);
         }

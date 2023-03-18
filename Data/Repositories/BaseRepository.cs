@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
+using gerdisc.Data.Entities;
 using gerdisc.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace gerdisc.Repositories
 {
-    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
+    public abstract class BaseRepository<TEntity> :  IBaseRepository<TEntity>
         where TEntity : BaseEntity
     {
         private ContexRepository _context;

@@ -10,8 +10,15 @@ namespace gerdisc.Propierties
         {
             using( var rsa = new RSACryptoServiceProvider(2048))
             {
-                rsa.FromXmlString(key);
-                this.Key = new RsaSecurityKey(rsa.ExportParameters(true));
+                try
+                {
+                    rsa.FromXmlString(key);
+                    this.Key = new RsaSecurityKey(rsa.ExportParameters(true));
+                }
+                catch (CryptographicException)
+                {
+                    this.Key = new RsaSecurityKey(rsa.ExportParameters(true));
+                }
             }
         }
     }

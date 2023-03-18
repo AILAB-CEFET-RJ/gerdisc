@@ -1,3 +1,4 @@
+using gerdisc.Data.Entities;
 using gerdisc.Data.Enums;
 
 namespace gerdisc.Entities

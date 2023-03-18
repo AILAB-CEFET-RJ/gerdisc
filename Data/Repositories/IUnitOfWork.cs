@@ -2,7 +2,7 @@ using gerdisc.Repositories.User;
 
 namespace gerdisc.Repositories
 {
-    public interface IUnitOfWork
+    public interface IRepository
     {
         public IUserRepository User{ get; }
     }

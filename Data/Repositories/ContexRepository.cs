@@ -1,3 +1,4 @@
+using gerdisc.Data.Entities;
 using gerdisc.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,13 +8,22 @@ namespace gerdisc.Repositories
     {
         public string? DbUrl { get; }
 
-        public DbSet<UserEntity>? Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<StudentEntity> Students { get; set; }
+        public DbSet<ProfessorEntity> Professors { get; set; }
+        public DbSet<CourseEntity> Courses { get; set; }
 
-        public ContexRepository(string server, string login, string password, string database)
+
+        public ContexRepository(DbContextOptions<ContexRepository> options)
+            : base(options)
         {
-            DbUrl = $"Host={server};Username={login};Password={password};Database={database}";
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(DbUrl);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserEntity>().ToTable("Users", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<StudentEntity>().ToTable("Students");
+            modelBuilder.Entity<ProfessorEntity>().ToTable("Professors");
+            modelBuilder.Entity<CourseEntity>().ToTable("Courses");
+        }
     }
 }
