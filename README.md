@@ -6,17 +6,21 @@ Gerdisc is a web-based information system designed to manage the registration an
 
 The project follows a typical N-tier architecture, with the following layers:
 
-    Presentation (controllers and models)
+    Models (Enities, mappers and DTOs)
+    Presentation (controllers)
     Service (business logic)
     Data (repositories and database context)
 
+##### Model Layer
+The models layer represent the data structures of the entities in the system, such as Student, Teacher, ResearchLine, and ResearchProject. These models are used to map the database tables and to perform CRUD (Create-Read-Update-Delete) operations on the data.
+The models represent entities in the system, such as Student, Teacher, ResearchLine, and ResearchProject, and are used for mapping database tables and performing CRUD operations.
+
 ##### Presentation Layer
-The presentation layer includes controllers and models, which define API endpoints and DTOs for data transfer between the API and service layer. The models represent entities in the system, such as Student, Teacher, ResearchLine, and ResearchProject, and are used for mapping database tables and performing CRUD operations.
+The presentation layer includes controllers, which define API endpoints for data transfer between the API and service layer. 
 Controllers handle HTTP requests and responses, executing the logic of the application. Each entity has its own controller, such as StudentsController, TeachersController, ResearchLinesController, and ResearchProjectsController, with endpoints for creating, reading, updating, and deleting data.
 
 ##### Service Layer 
-The service layer contains the business logic of the application. It communicates with the data layer (repositories and database context) to perform CRUD operations on the database.
-This layer contains the business logic of the application. The services are used by the controllers to perform complex operations that require multiple database queries or complex calculations. In Gerdisc, each entity has its own service, such as StudentService, TeacherService, ResearchLineService, and ResearchProjectService.
+The service layer contains the business logic of the application. It communicates with the data layer (repositories and database context) to perform CRUD operations on the database. The services are used by the controllers to perform complex operations that require multiple database queries or complex calculations. In Gerdisc, each entity has its own service, such as StudentService, TeacherService, ResearchLineService, and ResearchProjectService.
 
 ##### Data Layer
 
@@ -36,8 +40,8 @@ Other technologies used in the project.
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 Prerequisites
 
-    .NET Core SDK
-    PostgreSQL
+.NET Core SDK
+PostgreSQL
 
 ### Installing
 
@@ -45,8 +49,8 @@ Clone the repository to your local machine.
 Configure the database connection string in appsettings.json.
 Run the database migrations to create the required tables in the database.
 Run the project.
-    
-    git clone https://github.com/yourusername/gerdisc.git
+
+    git clone git@github.com:radhanama/gerdisc.git
     cd gerdisc
     dotnet ef database update
     dotnet run
