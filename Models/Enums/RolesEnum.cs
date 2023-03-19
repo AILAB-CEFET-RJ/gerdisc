@@ -1,4 +1,4 @@
-namespace gerdisc.Data.Enums
+namespace gerdisc.Models.Enums
 {
     public enum RolesEnum
     {

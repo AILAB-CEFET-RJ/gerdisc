@@ -1,7 +1,7 @@
-using gerdisc.Data.DTOs;
-using gerdisc.Data.Entities;
+using gerdisc.Models.DTOs;
+using gerdisc.Models.Entities;
 
-namespace gerdisc.Data.Mapper
+namespace gerdisc.Models.Mapper
 {
     public static class UserMapper
     {

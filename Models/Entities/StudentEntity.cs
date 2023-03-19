@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace gerdisc.Data.Entities
+namespace gerdisc.Models.Entities
 {
     public record StudentEntity : BaseEntity
     {

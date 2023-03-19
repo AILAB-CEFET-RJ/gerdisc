@@ -1,9 +1,9 @@
-using gerdisc.Data.Enums;
+using gerdisc.Models.Enums;
 
-namespace gerdisc.Data.Entities
+namespace gerdisc.Models.Entities
 {
     /// <summary>
-    /// Represents a user in the database.
+    /// Represents a user in the Modelsbase.
     /// </summary>
     public record UserEntity : BaseEntity
     {

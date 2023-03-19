@@ -1,6 +1,6 @@
-using gerdisc.Data.Enums;
+using gerdisc.Models.Enums;
 
-namespace gerdisc.Data.DTOs
+namespace gerdisc.Models.DTOs
 {
     /// <summary>
     /// Represents a user cantract to the api.
