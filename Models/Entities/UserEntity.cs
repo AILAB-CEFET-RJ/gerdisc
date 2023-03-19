@@ -3,7 +3,7 @@ using gerdisc.Models.Enums;
 namespace gerdisc.Models.Entities
 {
     /// <summary>
-    /// Represents a user in the Modelsbase.
+    /// Represents a user in the Database.
     /// </summary>
     public record UserEntity : BaseEntity
     {

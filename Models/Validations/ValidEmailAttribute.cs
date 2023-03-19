@@ -3,8 +3,16 @@ using System.Text.RegularExpressions;
 
 namespace gerdisc.Models.Validations
 {
+    /// <summary>
+    /// A custom validation attribute used to validate email addresses.
+    /// </summary>
     public class ValidEmailAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// Determines whether the specified value is a valid email address.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <returns><c>true</c> if the value is a valid email address; otherwise, <c>false</c>.</returns>
         public override bool IsValid(object? value)
         {
             var email = value as string;
