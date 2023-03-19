@@ -30,5 +30,10 @@ namespace gerdisc.Infrastructure.Repositories
         }
 
         public IUserRepository User => new UserRepository(_dbContext);
+
+        public async Task<int> CommitAsync()
+        {
+            return await _dbContext.SaveChangesAsync();
+        }
     }
 }

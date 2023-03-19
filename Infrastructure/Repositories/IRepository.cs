@@ -5,5 +5,6 @@ namespace gerdisc.Infrastructure.Repositories
     public interface IRepository
     {
         public IUserRepository User{ get; }
+        Task<int> CommitAsync();
     }
 }

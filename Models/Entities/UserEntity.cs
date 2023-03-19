@@ -7,13 +7,13 @@ namespace gerdisc.Models.Entities
     /// </summary>
     public record UserEntity : BaseEntity
     {
-        public string? FirstName { get; init; }
+        public string? FirstName { get; set; }
 
-        public string? LastName { get; init; }
+        public string? LastName { get; set; }
 
         public string? Email { get; init; }
 
-        public string? PasswordHash { get; init; }
+        public string? PasswordHash { get; set; }
 
         public RolesEnum Role { get; set; }
 
