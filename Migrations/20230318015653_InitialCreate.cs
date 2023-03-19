@@ -66,10 +66,10 @@ namespace gerdisc.Migrations
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
-        migrationBuilder.InsertData(
-            table: "Users",
-            columns: new[] { "FirstName", "LastName", "Email", "PasswordHash", "Role", "CreatedAt" },
-            values: new object[] { "admin", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), (int)Models.Enums.RolesEnum.Administrator, DateTime.UtcNow });
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "FirstName", "LastName", "Email", "PasswordHash", "Role", "CreatedAt" },
+                values: new object[] { "admin", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), (int)Models.Enums.RolesEnum.Administrator, DateTime.UtcNow });
 
         }
 

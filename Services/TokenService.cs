@@ -1,3 +1,4 @@
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using gerdisc.Models.Entities;
@@ -18,9 +19,9 @@ namespace gerdisc.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.FirstName),
-                    new Claim(ClaimTypes.Surname, user.LastName),
-                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Name, user.FirstName??""),
+                    new Claim(ClaimTypes.Surname, user.LastName??""),
+                    new Claim(ClaimTypes.Email, user.Email??""),
                     new Claim(ClaimTypes.Role, user.Role.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),

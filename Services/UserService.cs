@@ -20,7 +20,7 @@ namespace gerdisc.Services
 
         public void CreateUser(UserDto user)
         {
-            user.Id = Repository.User.Count()+1;
+            user.Id = Repository.User.Count() + 1;
             Repository.User.Add(user.Map(BCrypt.Net.BCrypt.HashPassword("12345678")));
             Repository.User.Commit();
         }
