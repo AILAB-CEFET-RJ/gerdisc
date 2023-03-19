@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using gerdisc.Repositories;
+using gerdisc.Infrastructure.Repositories;
 
 #nullable disable
 
@@ -22,7 +22,7 @@ namespace gerdisc.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("gerdisc.Data.Entities.CourseEntity", b =>
+            modelBuilder.Entity("gerdisc.Models.Entities.CourseEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,7 +35,7 @@ namespace gerdisc.Migrations
                     b.ToTable("Courses", (string)null);
                 });
 
-            modelBuilder.Entity("gerdisc.Data.Entities.ProfessorEntity", b =>
+            modelBuilder.Entity("gerdisc.Models.Entities.ProfessorEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace gerdisc.Migrations
                     b.ToTable("Professors", (string)null);
                 });
 
-            modelBuilder.Entity("gerdisc.Data.Entities.StudentEntity", b =>
+            modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

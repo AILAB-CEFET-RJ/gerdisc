@@ -1,7 +1,7 @@
-using gerdisc.Data.Entities;
+using gerdisc.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace gerdisc.Repositories
+namespace gerdisc.Infrastructure.Repositories
 {
     public class ContexRepository : DbContext
     {

@@ -1,5 +1,5 @@
 using gerdisc.Propierties;
-using gerdisc.Repositories;
+using gerdisc.Infrastructure.Repositories;
 using gerdisc.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

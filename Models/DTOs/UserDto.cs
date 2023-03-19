@@ -1,3 +1,4 @@
+using System;
 using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.DTOs

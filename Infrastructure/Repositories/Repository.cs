@@ -1,6 +1,6 @@
-using gerdisc.Repositories.User;
+using gerdisc.Infrastructure.Repositories.User;
 
-namespace gerdisc.Repositories
+namespace gerdisc.Infrastructure.Repositories
 {
     /// <summary>
     /// Access to all entities in the database.

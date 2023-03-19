@@ -1,9 +1,9 @@
 using System.Linq.Expressions;
-using gerdisc.Data.Entities;
+using gerdisc.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace gerdisc.Repositories
+namespace gerdisc.Infrastructure.Repositories
 {
     public abstract class BaseRepository<TEntity> :  IBaseRepository<TEntity>
         where TEntity : BaseEntity
@@ -26,10 +26,10 @@ namespace gerdisc.Repositories
         {
             return _dbSet.Count();
         }
-        public virtual IEnumerable<TEntity> AllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
+        public virtual IEnumerable<TEntity> AllIncluding(params Expression<Func<TEntity, object>>[] includePropierties)
         {
             IQueryable<TEntity> query = _dbSet;
-            foreach (var includeProperty in includeProperties)
+            foreach (var includeProperty in includePropierties)
             {
                 query = query.Include(includeProperty);
             }
@@ -46,10 +46,10 @@ namespace gerdisc.Repositories
             return _dbSet.FirstOrDefault(predicate);
         }
 
-        public TEntity? GetSingle(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
+        public TEntity? GetSingle(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includePropierties)
         {
             IQueryable<TEntity> query = _dbSet;
-            foreach (var includeProperty in includeProperties)
+            foreach (var includeProperty in includePropierties)
             {
                 query = query.Include(includeProperty);
             }

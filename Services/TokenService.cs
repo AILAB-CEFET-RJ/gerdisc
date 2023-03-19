@@ -1,9 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using gerdisc.Data.Entities;
+using gerdisc.Models.Entities;
 using Microsoft.IdentityModel.Tokens;
 
-namespace gerdisc.Core.Services
+namespace gerdisc.Services
 {
     /// <summary>
     /// Generates a token.

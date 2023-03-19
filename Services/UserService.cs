@@ -1,9 +1,9 @@
-using gerdisc.Data.Mapper;
-using gerdisc.Repositories;
-using gerdisc.Data.DTOs;
+using gerdisc.Models.Mapper;
+using gerdisc.Infrastructure.Repositories;
+using gerdisc.Models.DTOs;
 using gerdisc.Propierties;
 
-namespace gerdisc.Core.Services
+namespace gerdisc.Services
 {
     public class UserOperation
     {

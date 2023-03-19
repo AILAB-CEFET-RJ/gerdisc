@@ -1,6 +1,6 @@
-using gerdisc.Data.Entities;
+using gerdisc.Models.Entities;
 
-namespace gerdisc.Repositories.User
+namespace gerdisc.Infrastructure.Repositories.User
 {
     public class UserRepository : BaseRepository<UserEntity>, IUserRepository
     {
