@@ -1,4 +1,4 @@
-using gerdisc.Propierties;
+using gerdisc.Properties;
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

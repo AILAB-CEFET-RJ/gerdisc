@@ -1,6 +1,6 @@
 using Microsoft.IdentityModel.Tokens;
 
-namespace gerdisc.Propierties
+namespace gerdisc.Properties
 {
     public interface ISingingConfiguration
     {

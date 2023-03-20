@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 
-namespace gerdisc.Propierties
+namespace gerdisc.Properties
 {
     public class SingingConfiguration : ISingingConfiguration
     {

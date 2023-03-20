@@ -2,7 +2,7 @@
 bin/
 obj/
 .vs/
-/Propierties/launchSettings.json
+/Properties/launchSettings.json
 
 # NuGet
 *.nuget.props

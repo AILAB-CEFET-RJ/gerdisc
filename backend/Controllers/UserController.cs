@@ -1,6 +1,6 @@
 using gerdisc.Services.User;
 using gerdisc.Models.DTOs;
-using gerdisc.Propierties;
+using gerdisc.Properties;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using gerdisc.Infrastructure.Repositories;
