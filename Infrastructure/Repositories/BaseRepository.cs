@@ -7,8 +7,8 @@ namespace gerdisc.Infrastructure.Repositories
     public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         where TEntity : BaseEntity
     {
-        private readonly ContexRepository _context;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly ContexRepository _context;
+        protected readonly DbSet<TEntity> _dbSet;
 
         protected BaseRepository(ContexRepository context)
         {

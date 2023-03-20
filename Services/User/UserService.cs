@@ -39,7 +39,7 @@ namespace gerdisc.Services.User
 
         public async Task<string> AuthenticateAsync(LoginDto loginDto)
         {
-            var user = await _repository.User.GetSingleAsync(u => u.Email == loginDto.Email);
+            var user = await _repository.User.GetUserByEmail(loginDto.Email);
             if (user == null)
             {
                 throw new ArgumentException($"User with email {loginDto.Email} not found.");
