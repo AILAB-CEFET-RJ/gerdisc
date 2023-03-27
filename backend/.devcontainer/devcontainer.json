@@ -5,13 +5,10 @@
     "dockerComposeFile": "docker-compose.yml",
     "service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-	"features": {
-		"ghcr.io/devcontainers/features/dotnet:1": {}
-	},
-
 	"mounts": [
 		"source=~/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
-	  ]
+	  ],
+	  "postCreateCommand": "dotnet tool install --global dotnet-ef",
 	  
 
 	// Features to add to the dev container. More info: https://containers.dev/features.

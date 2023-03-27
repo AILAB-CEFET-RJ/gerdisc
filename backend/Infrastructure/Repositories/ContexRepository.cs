@@ -11,6 +11,7 @@ namespace gerdisc.Infrastructure.Repositories
         public DbSet<StudentEntity>? Students { get; set; }
         public DbSet<ProfessorEntity>? Professors { get; set; }
         public DbSet<CourseEntity>? Courses { get; set; }
+        public DbSet<ProjectEntity>? Projects { get; set; }
 
 
         public ContexRepository(DbContextOptions<ContexRepository> options)
@@ -23,6 +24,7 @@ namespace gerdisc.Infrastructure.Repositories
             modelBuilder.Entity<StudentEntity>().ToTable("Students");
             modelBuilder.Entity<ProfessorEntity>().ToTable("Professors");
             modelBuilder.Entity<CourseEntity>().ToTable("Courses");
+            modelBuilder.Entity<ProjectEntity>().ToTable("Projects");
         }
     }
 }

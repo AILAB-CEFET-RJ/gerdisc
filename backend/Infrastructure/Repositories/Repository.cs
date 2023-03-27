@@ -1,3 +1,5 @@
+using gerdisc.Infrastructure.Repositories.Course;
+using gerdisc.Infrastructure.Repositories.Project;
 using gerdisc.Infrastructure.Repositories.User;
 
 namespace gerdisc.Infrastructure.Repositories
@@ -30,6 +32,8 @@ namespace gerdisc.Infrastructure.Repositories
         }
 
         public IUserRepository User => new UserRepository(_dbContext);
+        public IProjectRepository Project => new ProjectRepository(_dbContext);
+        public ICourseRepository Course => new CourseRepository(_dbContext);
 
         public async Task<int> CommitAsync()
         {
