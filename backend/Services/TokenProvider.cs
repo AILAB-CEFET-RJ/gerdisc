@@ -9,7 +9,7 @@ namespace gerdisc.Services
     /// <summary>
     /// Generates a token.
     /// </summary>
-    public static class TokenService
+    public static class TokenProvider
     {
         public static string GenerateJwtToken(this UserEntity user, RsaSecurityKey privateKeys)
         {

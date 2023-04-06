@@ -17,9 +17,9 @@ namespace gerdisc.Controllers
     {
         private readonly IStudentService _studentService;
 
-        public StudentsController(IRepository repository, ILogger<StudentService> logger)
+        public StudentsController(IStudentService studentService)
         {
-            _studentService = new StudentService(repository, logger);
+            _studentService = studentService;
         }
 
         [HttpPost]

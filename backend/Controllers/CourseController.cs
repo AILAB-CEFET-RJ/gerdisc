@@ -12,9 +12,9 @@ namespace gerdisc.Controllers
     {
         private readonly ICourseService _courseService;
 
-        public CourseController(IRepository repository, ILogger<CourseService> logger)
+        public CourseController(ICourseService courseService)
         {
-            _courseService = new CourseService(repository, logger);
+            _courseService = courseService;
         }
 
         /// <summary>

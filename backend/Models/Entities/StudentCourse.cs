@@ -4,7 +4,7 @@ namespace gerdisc.Models.Entities
     /// <summary>
     /// Represents the association between a student and a course they are enrolled in.
     /// </summary>
-    public class StudentCourseEntity
+    public record StudentCourseEntity : BaseEntity
     {
         /// <summary>
         /// Gets or sets the unique identifier of the student.

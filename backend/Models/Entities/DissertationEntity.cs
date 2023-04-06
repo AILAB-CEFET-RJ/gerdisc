@@ -3,13 +3,8 @@ namespace gerdisc.Models.Entities
     /// <summary>
     /// Represents a Dissertation in the system.
     /// </summary>
-    public class DissertationEntity
+    public record DissertationEntity : BaseEntity
     {
-        /// <summary>
-        /// Gets or sets the unique identifier of the dissertation.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Gets or sets the foreign key of the student that wrote the dissertation.
         /// </summary>

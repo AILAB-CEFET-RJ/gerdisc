@@ -8,12 +8,12 @@ namespace gerdisc.Services.User
     public class UserService : IUserService
     {
         private readonly IRepository _repository;
-        private readonly ISingingConfiguration _singingConfig;
+        private readonly ISigningConfiguration _singingConfig;
         private readonly ILogger<UserService> _logger;
 
         public UserService(
             IRepository repository,
-            ISingingConfiguration singingConfig,
+            ISigningConfiguration singingConfig,
             ILogger<UserService> logger
         )
         {

@@ -1,6 +1,6 @@
 namespace gerdisc.Settings
 {
-    public class Settings: ISettings
+    public class AppSettings: ISettings
     {
         public IConfigurationRoot config { get; }
 
@@ -10,7 +10,7 @@ namespace gerdisc.Settings
         public string PostgresUser => config[nameof(PostgresUser)]??"";
         public string PostgresPassword => config[nameof(PostgresPassword)]??"";
         public string PostgresDb => config[nameof(PostgresDb)]??"";
-        public Settings()
+        public AppSettings()
         {
             config = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)

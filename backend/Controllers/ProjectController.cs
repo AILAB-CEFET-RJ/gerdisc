@@ -12,9 +12,9 @@ namespace gerdisc.Controllers
     {
         private readonly IProjectService _projectService;
 
-        public ProjectController(IRepository repository, ILogger<ProjectService> logger)
+        public ProjectController(IProjectService projectService)
         {
-            _projectService = new ProjectService(repository, logger);
+            _projectService = projectService;
         }
 
         /// <summary>
