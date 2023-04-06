@@ -3,10 +3,10 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace gerdisc.Properties
 {
-    public class SingingConfiguration : ISingingConfiguration
+    public class SigningConfiguration : ISigningConfiguration
     {
         public RsaSecurityKey Key { get; set; }
-        public SingingConfiguration(string key)
+        public SigningConfiguration(string key)
         {
             using( var rsa = new RSACryptoServiceProvider(2048))
             {

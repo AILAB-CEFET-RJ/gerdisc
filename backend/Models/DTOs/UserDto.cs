@@ -22,6 +22,8 @@ namespace gerdisc.Models.DTOs
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
+        public string Cpf { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         [Required(ErrorMessage = "Role is required")]

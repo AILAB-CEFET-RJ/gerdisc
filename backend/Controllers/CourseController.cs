@@ -1,3 +1,4 @@
+using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Services.Course;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,7 @@ namespace gerdisc.Controllers
 
         public CourseController(ICourseService courseService)
         {
-            _courseService = courseService ?? throw new ArgumentNullException(nameof(courseService));
+            _courseService = courseService;
         }
 
         /// <summary>

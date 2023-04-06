@@ -13,9 +13,9 @@ namespace gerdisc.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(IRepository repository, ISingingConfiguration singingConfig, ILogger<UserService> logger)
+        public UserController(IUserService userService)
         {
-            _userService = new UserService(repository, singingConfig, logger);
+            _userService = userService;
         }
 
         [HttpPost]
