@@ -29,5 +29,11 @@ namespace gerdisc.Models.Entities
         /// Gets or sets the navigation property of the project associated with the dissertation.
         /// </summary>
         public ProjectEntity Project { get; set; }
+
+        public DissertationEntity()
+        {
+            Student = new StudentEntity();
+            Project = new ProjectEntity();
+        }
     }
 }

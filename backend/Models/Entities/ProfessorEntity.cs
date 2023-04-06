@@ -14,6 +14,6 @@ namespace gerdisc.Models.Entities
         /// </summary>
         [Required]
         [StringLength(20)]
-        public string Siape { get; set; }
+        public string? Siape { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 using gerdisc.Infrastructure.Repositories.Course;
+using gerdisc.Infrastructure.Repositories.Professor;
 using gerdisc.Infrastructure.Repositories.Project;
+using gerdisc.Infrastructure.Repositories.Student;
 using gerdisc.Infrastructure.Repositories.User;
 
 namespace gerdisc.Infrastructure.Repositories
@@ -32,6 +34,8 @@ namespace gerdisc.Infrastructure.Repositories
         }
 
         public IUserRepository User => new UserRepository(_dbContext);
+        public IStudentRepository Student => new StudentRepository(_dbContext);
+        public IProfessorRepository Professor => new ProfessorRepository(_dbContext);
         public IProjectRepository Project => new ProjectRepository(_dbContext);
         public ICourseRepository Course => new CourseRepository(_dbContext);
 

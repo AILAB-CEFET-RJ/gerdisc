@@ -6,14 +6,9 @@ namespace gerdisc.Models.Entities
     public record CourseEntity : BaseEntity
     {
         /// <summary>
-        /// The unique identifier of the course.
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
         /// The name of the course.
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// The number of credits associated with the course.
@@ -23,7 +18,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The code assigned to the course.
         /// </summary>
-        public string Code { get; set; }
+        public string? Code { get; set; }
 
         /// <summary>
         /// Indicates whether the course is elective or not.
@@ -33,7 +28,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The concept assigned to the course.
         /// </summary>
-        public string Concept { get; set; }
+        public string? Concept { get; set; }
     }
 
 }

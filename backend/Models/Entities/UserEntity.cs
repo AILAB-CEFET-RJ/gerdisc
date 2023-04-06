@@ -18,6 +18,11 @@ namespace gerdisc.Models.Entities
         public string? LastName { get; set; }
 
         /// <summary>
+        /// The cpf of the user.
+        /// </summary>
+        public string? Cpf { get; set; }
+
+        /// <summary>
         /// The email of the user.
         /// </summary>
         public string? Email { get; init; }

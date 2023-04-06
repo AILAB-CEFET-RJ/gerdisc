@@ -20,6 +20,7 @@ namespace gerdisc.Models.Mapper
                 Id = self.Id,
                 FirstName = self.FirstName,
                 LastName = self.LastName,
+                Cpf = self.Cpf,
                 Email = self.Email,
                 CreatedAt = self.CreatedAt,
                 PasswordHash = password,
@@ -51,6 +52,7 @@ namespace gerdisc.Models.Mapper
                 Id = self.Id,
                 FirstName = self.FirstName,
                 LastName = self.LastName,
+                Cpf = self.Cpf,
                 Email = self.Email,
                 CreatedAt = self.CreatedAt,
                 Role = self.Role

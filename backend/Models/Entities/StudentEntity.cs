@@ -91,5 +91,40 @@ namespace gerdisc.Models.Entities
         /// The scholarship status of the student.
         /// </summary>
         public int Scholarship { get; set; }
+
+        /// <summary>
+        /// Gets or sets the navigation property for the associated user entity.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the associated <see cref="UserEntity"/> entity.
+        /// </remarks>
+        public virtual UserEntity User { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the navigation property for the collection of student course entities associated with this student.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the associated collection of <see cref="StudentCourseEntity"/> entities.
+        /// </remarks>
+        public virtual ICollection<StudentCourseEntity> StudentCourses { get; set; }
+
+        /// <summary>
+        /// Gets or sets the navigation property for the collection of dissertation entities associated with this student.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the associated collection of <see cref="DissertationEntity"/> entities.
+        /// </remarks>
+        public virtual ICollection<DissertationEntity> Dissertations { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StudentEntity"/> class with the specified properties.
+        /// </summary>
+        public StudentEntity()
+        {
+            Dissertations = new List<DissertationEntity>();
+            StudentCourses = new List<StudentCourseEntity>();
+            User = new UserEntity();
+        }
     }
 }
