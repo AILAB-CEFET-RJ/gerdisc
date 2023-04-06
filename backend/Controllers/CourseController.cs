@@ -1,3 +1,4 @@
+using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Services.Course;
 using Microsoft.AspNetCore.Authorization;
@@ -11,9 +12,9 @@ namespace gerdisc.Controllers
     {
         private readonly ICourseService _courseService;
 
-        public CourseController(ICourseService courseService)
+        public CourseController(IRepository repository, ILogger<CourseService> logger)
         {
-            _courseService = courseService ?? throw new ArgumentNullException(nameof(courseService));
+            _courseService = new CourseService(repository, logger);
         }
 
         /// <summary>

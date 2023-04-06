@@ -1,3 +1,4 @@
+using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Services.Project;
 using Microsoft.AspNetCore.Authorization;
@@ -11,9 +12,9 @@ namespace gerdisc.Controllers
     {
         private readonly IProjectService _projectService;
 
-        public ProjectController(IProjectService projectService)
+        public ProjectController(IRepository repository, ILogger<ProjectService> logger)
         {
-            _projectService = projectService ?? throw new ArgumentNullException(nameof(projectService));
+            _projectService = new ProjectService(repository, logger);
         }
 
         /// <summary>
