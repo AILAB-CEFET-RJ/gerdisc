@@ -1,5 +1,6 @@
 using gerdisc.Infrastructure.Repositories.Course;
 using gerdisc.Infrastructure.Repositories.Dissertation;
+using gerdisc.Infrastructure.Repositories.Extension;
 using gerdisc.Infrastructure.Repositories.Professor;
 using gerdisc.Infrastructure.Repositories.Project;
 using gerdisc.Infrastructure.Repositories.Student;
@@ -39,6 +40,7 @@ namespace gerdisc.Infrastructure.Repositories
         public IProfessorRepository Professor => new ProfessorRepository(_dbContext);
         public IProjectRepository Project => new ProjectRepository(_dbContext);
         public IDissertationRepository Dissertation => new DissertationRepository(_dbContext);
+        public IExtensionRepository Extension => new ExtensionRepository(_dbContext);
         public ICourseRepository Course => new CourseRepository(_dbContext);
 
         public async Task<int> CommitAsync()
