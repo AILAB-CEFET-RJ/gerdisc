@@ -39,6 +39,7 @@ for path in "${paths[@]}"; do
   else
     cp "$path" "$new"
     sed -i "s/$name_to_copy/$name/g" "$new"
+    sed -i "s/${name_to_copy,}/${name,}/g" "$new"
     echo "Debug: $new created."
   fi
 done
