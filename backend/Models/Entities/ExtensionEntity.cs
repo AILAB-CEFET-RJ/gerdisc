@@ -1,20 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using gerdisc.Models.Entities;
-
 namespace gerdisc.Models.Entities
 {
     /// <summary>
-    /// Represents a extension in the system.
+    /// Represents an extension in the system.
     /// </summary>
     public record ExtensionEntity : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the name of the extension.
+        /// Gets or sets the ID of the student associated with the extension.
         /// </summary>
-        public string? Name { get; set; }
+        public int StudentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of days the extension is valid for.
+        /// </summary>
+        public int NumberOfDays { get; set; }
 
         /// <summary>
         /// Gets or sets the status of the extension.
@@ -22,28 +21,25 @@ namespace gerdisc.Models.Entities
         public string? Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of professors associated with the extension.
+        /// Gets or sets the type of extension.
         /// </summary>
-        public List<ProfessorEntity> Professors { get; set; }
+        public int Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of students associated with the extension.
+        /// Gets or sets the student associated with the extension.
         /// </summary>
-        public List<StudentEntity> Students { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of dissertations associated with the extension.
-        /// </summary>
-        public List<DissertationEntity> Dissertations { get; set; }
+        /// <remarks>
+        /// This property is virtual to enable lazy loading of the associated Student entity
+        /// by Entity Framework.
+        /// </remarks>
+        public virtual StudentEntity Student { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtensionEntity"/> class.
         /// </summary>
         public ExtensionEntity()
         {
-            Professors = new List<ProfessorEntity>();
-            Students = new List<StudentEntity>();
-            Dissertations = new List<DissertationEntity>();
+            Student = new StudentEntity();
         }
     }
 }

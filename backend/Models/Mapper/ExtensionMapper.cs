@@ -16,6 +16,11 @@ namespace gerdisc.Models.Mapper
         public static ExtensionEntity ToEntity(this ExtensionDto self) =>
             self is null ? new ExtensionEntity() : new ExtensionEntity
             {
+                Id = self.Id,
+                Status = self.Status,
+                NumberOfDays = self.NumberOfDays,
+                StudentId = self.StudentId,
+                Type = self.Type
             };
 
         /// <summary>
@@ -26,6 +31,10 @@ namespace gerdisc.Models.Mapper
         /// <returns>The updated <see cref="ExtensionEntity"/> object.</returns>
         public static ExtensionEntity ToEntity(this ExtensionDto self, ExtensionEntity entityToUpdate)
         {
+            entityToUpdate.Status = self.Status;
+            entityToUpdate.NumberOfDays = self.NumberOfDays;
+            entityToUpdate.StudentId = self.StudentId;
+            entityToUpdate.Type = self.Type;
             return entityToUpdate;
         }
 
@@ -37,6 +46,11 @@ namespace gerdisc.Models.Mapper
         public static ExtensionDto ToDto(this ExtensionEntity self) =>
             self is null ? new ExtensionDto() : new ExtensionDto
             {
+                Id = self.Id,
+                Status = self.Status,
+                NumberOfDays = self.NumberOfDays,
+                StudentId = self.StudentId,
+                Type = self.Type
             };
     }
 }

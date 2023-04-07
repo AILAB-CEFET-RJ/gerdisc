@@ -16,6 +16,10 @@ namespace gerdisc.Models.Mapper
         public static DissertationEntity ToEntity(this DissertationDto self) =>
             self is null ? new DissertationEntity() : new DissertationEntity
             {
+                Id = self.Id,
+                Name = self.Name,
+                ProjectId = self.ProjectId,
+                StudentId = self.StudentId,
             };
 
         /// <summary>
@@ -26,6 +30,9 @@ namespace gerdisc.Models.Mapper
         /// <returns>The updated <see cref="DissertationEntity"/> object.</returns>
         public static DissertationEntity ToEntity(this DissertationDto self, DissertationEntity entityToUpdate)
         {
+            entityToUpdate.Name = self.Name;
+            entityToUpdate.ProjectId = self.ProjectId;
+            entityToUpdate.StudentId = self.StudentId;
             return entityToUpdate;
         }
 
@@ -37,6 +44,10 @@ namespace gerdisc.Models.Mapper
         public static DissertationDto ToDto(this DissertationEntity self) =>
             self is null ? new DissertationDto() : new DissertationDto
             {
+                Id = self.Id,
+                Name = self.Name,
+                ProjectId = self.ProjectId,
+                StudentId = self.StudentId,
             };
     }
 }

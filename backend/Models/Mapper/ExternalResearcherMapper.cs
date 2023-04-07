@@ -16,6 +16,9 @@ namespace gerdisc.Models.Mapper
         public static ExternalResearcherEntity ToEntity(this ExternalResearcherDto self) =>
             self is null ? new ExternalResearcherEntity() : new ExternalResearcherEntity
             {
+                Id = self.Id,
+                UserId = self.UserId,
+                Institution = self.Institution
             };
 
         /// <summary>
@@ -26,6 +29,9 @@ namespace gerdisc.Models.Mapper
         /// <returns>The updated <see cref="ExternalResearcherEntity"/> object.</returns>
         public static ExternalResearcherEntity ToEntity(this ExternalResearcherDto self, ExternalResearcherEntity entityToUpdate)
         {
+            entityToUpdate.Id = self.Id;
+            entityToUpdate.UserId = self.UserId;
+            entityToUpdate.Institution = self.Institution;
             return entityToUpdate;
         }
 
@@ -37,6 +43,9 @@ namespace gerdisc.Models.Mapper
         public static ExternalResearcherDto ToDto(this ExternalResearcherEntity self) =>
             self is null ? new ExternalResearcherDto() : new ExternalResearcherDto
             {
+                Id = self.Id,
+                UserId = self.UserId,
+                Institution = self.Institution
             };
     }
 }

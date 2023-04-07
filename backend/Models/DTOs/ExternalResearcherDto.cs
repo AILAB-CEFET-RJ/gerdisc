@@ -2,8 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace gerdisc.Models.DTOs
 {
-    public class ExternalResearcherDTO
+    public class ExternalResearcherDto
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
 
         [Required]
