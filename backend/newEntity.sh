@@ -8,51 +8,39 @@ if [ -z "$1" ]; then
 fi
 
 name=$1
-entity_path="Models/Entities/${name}Entity.cs"
-dto_path="Models/DTOs/${name}Dto.cs"
-mapper_path="Models/Mapper/${name}Mapper.cs"
-controller_path="Controllers/${name}Controller.cs"
-service_path="Services/${name}Service.cs"
-service_interface_path="Services/Interfaces/I${name}Service.cs"
-repository_interface_path="Infrastructure/Repositories/${name}/I${name}Repository.cs"
-repository_path="Infrastructure/Repositories/${name}/${name}Repository.cs"
-
-paths=("$entity_path" "$dto_path" "$mapper_path" "$controller_path" "$service_path" "$service_interface_path" "$repository_interface_path" "$repository_path")
-
-for path in "${paths[@]}"; do
-  mkdir -p "$(dirname $path)"
-done
 
 if [ -z "$2" ]; then
-  for path in "${paths[@]}"; do
-    touch "$path"
-  done
-
-  echo "Files created successfully."
-  exit 0
+  echo "Please provide the name of the entity to copy as a second parameter."
+  exit 1
 fi
 
 name_to_copy=$2
-source_paths=()
-dest_paths=()
 
+# Find destination paths
+paths=($(find . \( -name "${name_to_copy}Entity.cs" -o -name "${name_to_copy}Dto.cs" -o -name "${name_to_copy}Mapper.cs" -o -name "${name_to_copy}Controller.cs" -o -name "${name_to_copy}Service.cs" -o -name "I${name_to_copy}Service.cs" -o -name "${name_to_copy}Repository.cs" -o -name "I${name_to_copy}Repository.cs" \)))
+
+# Create empty files if there were no files found
+if [ ${#paths[@]} -eq 0 ]; then
+  echo "No files found with name containing '$name_to_copy' in the current directory and its subdirectories."
+  exit 1
+fi
+
+# Copy and update files
 for path in "${paths[@]}"; do
-  source="${path//${name}/${name_to_copy}}"
-  source_paths+=("$source")
-  dest_paths+=("$path")
-done
-
-for i in "${!source_paths[@]}"; do
-  source="${source_paths[$i]}"
-  dest="${dest_paths[$i]}"
-  
-  if [ ! -f "$source" ]; then
-    echo "Error: $source does not exist."
+  new="${path//$name_to_copy/$name}"
+  mkdir -p "$(dirname $new)"
+  if [ ! -f "$path" ]; then
+    echo "Error: $path does not exist."
     exit 1
   fi
   
-  cp "$source" "$dest"
-  sed -i "s/$name_to_copy/$name/g" "$dest"
+  if [ -f "$new" ]; then
+    echo "Warning: $new already exists. Skipping creation of this file."
+  else
+    cp "$path" "$new"
+    sed -i "s/$name_to_copy/$name/g" "$new"
+    echo "Debug: $new created."
+  fi
 done
 
 echo "Files copied and updated successfully."
