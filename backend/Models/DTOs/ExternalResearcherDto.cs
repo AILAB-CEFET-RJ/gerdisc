@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace gerdisc.Models.DTOs
 {
-    public class ExternalResearcherDto
+    public class ExternalResearcherDTO
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int UserId { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string? Institution { get; set; }
     }
 }

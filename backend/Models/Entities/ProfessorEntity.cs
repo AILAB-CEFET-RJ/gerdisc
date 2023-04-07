@@ -12,8 +12,6 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The SIAPE (System for Electronic Management of Educational Documentation) number of the professor.
         /// </summary>
-        [Required]
-        [StringLength(20)]
         public string? Siape { get; set; }
     }
 }
