@@ -57,6 +57,15 @@ namespace gerdisc.Controllers
             }
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ExtensionDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ExtensionDto>>> GetAllExtensionsAsync()
+        {
+            var extensionDtos = await _extensionService.GetAllExtensionsAsync();
+
+            return Ok(extensionDtos);
+        }
+
         /// <summary>
         /// Updates a extension by its ID.
         /// </summary>

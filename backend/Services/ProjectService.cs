@@ -47,6 +47,18 @@ namespace gerdisc.Services.Project
             return projectEntity.ToDto();
         }
 
+        public async Task<IEnumerable<ProjectDto>> GetAllProjectsAsync()
+        {
+            var projects = await _repository.Project.GetAllAsync();
+            var projectDtos = new List<ProjectDto>();
+            foreach (var project in projects)
+            {
+                projectDtos.Add(project.ToDto());
+            }
+
+            return projectDtos;
+        }
+
         public async Task<ProjectDto> UpdateProjectAsync(int id, ProjectDto projectDto)
         {
             var existingProject = await _repository.Project.GetSingleAsync(id);

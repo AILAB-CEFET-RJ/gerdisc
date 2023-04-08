@@ -22,6 +22,12 @@ namespace gerdisc.Services.Extension
         Task<ExtensionDto> GetExtensionAsync(int id);
 
         /// <summary>
+        /// Gets a list of all extension entities.
+        /// </summary>
+        /// <returns>A list of all extension entities.</returns>
+        Task<IEnumerable<ExtensionDto>> GetAllExtensionsAsync();
+
+        /// <summary>
         /// Updates a extension.
         /// </summary>
         /// <param name="id">The ID of the extension to update.</param>

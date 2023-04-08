@@ -22,6 +22,12 @@ namespace gerdisc.Services.Dissertation
         Task<DissertationDto> GetDissertationAsync(int id);
 
         /// <summary>
+        /// Gets a list of all dissertation entities.
+        /// </summary>
+        /// <returns>A list of all dissertation entities.</returns>
+        Task<IEnumerable<DissertationDto>> GetAllDissertationsAsync();
+
+        /// <summary>
         /// Updates a dissertation.
         /// </summary>
         /// <param name="id">The ID of the dissertation to update.</param>

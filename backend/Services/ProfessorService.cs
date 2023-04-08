@@ -47,6 +47,18 @@ namespace gerdisc.Services.Professor
             return professorEntity.ToDto();
         }
 
+        public async Task<IEnumerable<ProfessorDto>> GetAllProfessorsAsync()
+        {
+            var professors = await _repository.Professor.GetAllAsync();
+            var professorDtos = new List<ProfessorDto>();
+            foreach (var professor in professors)
+            {
+                professorDtos.Add(professor.ToDto());
+            }
+
+            return professorDtos;
+        }
+
         public async Task<ProfessorDto> UpdateProfessorAsync(int id, ProfessorDto professorDto)
         {
             var existingProfessor = await _repository.Professor.GetSingleAsync(id);

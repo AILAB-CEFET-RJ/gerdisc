@@ -57,6 +57,15 @@ namespace gerdisc.Controllers
             }
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ProfessorDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProfessorDto>>> GetAllProfessorsAsync()
+        {
+            var professorDtos = await _professorService.GetAllProfessorsAsync();
+
+            return Ok(professorDtos);
+        }
+
         /// <summary>
         /// Updates a professor by its ID.
         /// </summary>

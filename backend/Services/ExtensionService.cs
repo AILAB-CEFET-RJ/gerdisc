@@ -47,6 +47,18 @@ namespace gerdisc.Services.Extension
             return extensionEntity.ToDto();
         }
 
+        public async Task<IEnumerable<ExtensionDto>> GetAllExtensionsAsync()
+        {
+            var extensions = await _repository.Extension.GetAllAsync();
+            var extensionDtos = new List<ExtensionDto>();
+            foreach (var extension in extensions)
+            {
+                extensionDtos.Add(extension.ToDto());
+            }
+
+            return extensionDtos;
+        }
+
         public async Task<ExtensionDto> UpdateExtensionAsync(int id, ExtensionDto extensionDto)
         {
             var existingExtension = await _repository.Extension.GetSingleAsync(id);

@@ -22,6 +22,12 @@ namespace gerdisc.Services.Professor
         Task<ProfessorDto> GetProfessorAsync(int id);
 
         /// <summary>
+        /// Gets a list of all professor entities.
+        /// </summary>
+        /// <returns>A list of all professor entities.</returns>
+        Task<IEnumerable<ProfessorDto>> GetAllProfessorsAsync();
+
+        /// <summary>
         /// Updates a professor.
         /// </summary>
         /// <param name="id">The ID of the professor to update.</param>

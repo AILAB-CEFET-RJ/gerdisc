@@ -57,6 +57,15 @@ namespace gerdisc.Controllers
             }
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<DissertationDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<DissertationDto>>> GetAllDissertationsAsync()
+        {
+            var dissertationDtos = await _dissertationService.GetAllDissertationsAsync();
+
+            return Ok(dissertationDtos);
+        }
+
         /// <summary>
         /// Updates a dissertation by its ID.
         /// </summary>

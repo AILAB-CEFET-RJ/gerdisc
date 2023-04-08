@@ -47,6 +47,18 @@ namespace gerdisc.Services.Dissertation
             return dissertationEntity.ToDto();
         }
 
+        public async Task<IEnumerable<DissertationDto>> GetAllDissertationsAsync()
+        {
+            var dissertations = await _repository.Dissertation.GetAllAsync();
+            var dissertationDtos = new List<DissertationDto>();
+            foreach (var dissertation in dissertations)
+            {
+                dissertationDtos.Add(dissertation.ToDto());
+            }
+
+            return dissertationDtos;
+        }
+
         public async Task<DissertationDto> UpdateDissertationAsync(int id, DissertationDto dissertationDto)
         {
             var existingDissertation = await _repository.Dissertation.GetSingleAsync(id);
