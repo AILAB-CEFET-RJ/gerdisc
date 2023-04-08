@@ -13,7 +13,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Name of the dissertation.
         /// </summary>
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the foreign key of the project associated with the dissertation.
