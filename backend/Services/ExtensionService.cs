@@ -32,7 +32,7 @@ namespace gerdisc.Services.Extension
             await _repository.Extension.AddAsync(extension);
             await _repository.Extension.CommitAsync();
 
-            _logger.LogInformation($"Extension {extension.Name} created successfully.");
+            _logger.LogInformation($"Extension {extension.StudentId} created successfully.");
             return extensionDto;
         }
 
