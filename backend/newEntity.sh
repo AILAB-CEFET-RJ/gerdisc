@@ -14,20 +14,27 @@ if [ -z "$2" ]; then
   exit 1
 fi
 
-name_to_copy=$2
+template_name=$2
+
+# Add help option
+if [ "$1" == "--help" ]; then
+  echo "Usage: $0 <name> <template_name>"
+  echo "Copies files with names containing <template_name> and replaces it with <name>."
+  exit 0
+fi
 
 # Find destination paths
-paths=($(find . \( -name "${name_to_copy}Entity.cs" -o -name "${name_to_copy}Dto.cs" -o -name "${name_to_copy}Mapper.cs" -o -name "${name_to_copy}Controller.cs" -o -name "${name_to_copy}Service.cs" -o -name "I${name_to_copy}Service.cs" -o -name "${name_to_copy}Repository.cs" -o -name "I${name_to_copy}Repository.cs" \)))
+paths=($(find . \( -name "${template_name}Entity.cs" -o -name "${template_name}Dto.cs" -o -name "${template_name}Mapper.cs" -o -name "${template_name}Controller.cs" -o -name "${template_name}Service.cs" -o -name "I${template_name}Service.cs" -o -name "${template_name}Repository.cs" -o -name "I${template_name}Repository.cs" \)))
 
 # Create empty files if there were no files found
 if [ ${#paths[@]} -eq 0 ]; then
-  echo "No files found with name containing '$name_to_copy' in the current directory and its subdirectories."
+  echo "No files found with name containing '$template_name' in the current directory and its subdirectories."
   exit 1
 fi
 
 # Copy and update files
 for path in "${paths[@]}"; do
-  new="${path//$name_to_copy/$name}"
+  new="${path//$template_name/$name}"
   mkdir -p "$(dirname $new)"
   if [ ! -f "$path" ]; then
     echo "Error: $path does not exist."
@@ -38,8 +45,8 @@ for path in "${paths[@]}"; do
     echo "Warning: $new already exists. Skipping creation of this file."
   else
     cp "$path" "$new"
-    sed -i "s/$name_to_copy/$name/g" "$new"
-    sed -i "s/${name_to_copy,}/${name,}/g" "$new"
+    sed -i "s/$template_name/$name/g" "$new"
+    sed -i "s/${template_name,}/${name,}/g" "$new"
     echo "Debug: $new created."
   fi
 done
