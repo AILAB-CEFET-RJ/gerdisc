@@ -19,13 +19,13 @@ export  default function Home()
                         <span>GERDISC</span>
                     </div>
                     <div className={styles.headerOptions}>
-                    <div>Óla, Coodenador</div>
+                    <div>Olá, Coordenador</div>
                     </div>
                 </div>
                 <div className={styles.headerBreak}></div>
                 <br></br>
                 <div>
-                    <pre id='pre' style={{ margin: "1rem"}}>Acesse os paneis para consulta e cadastro:</pre>
+                    <pre id='pre' style={{ margin: "1rem"}}>Acesse os paineis para consulta e cadastro:</pre>
                 </div>
                 <div className={styles.dashboard}>
                     <div className={styles.boardItem}>
