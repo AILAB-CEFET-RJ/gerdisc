@@ -28,7 +28,7 @@ export  default function Home(props)
                 <div className={styles.headerBreak}></div>
                 <br></br>
                 <div>
-                    <pre id='pre' style={{ margin: "1rem"}}>Acesse os paneis para consulta e cadastro:</pre>
+                    <pre id='pre' style={{ margin: "1rem"}}>Acesse os paineis para consulta e cadastro:</pre>
                 </div>
                 <div className={styles.dashboard}>
                     {(role == "Professor" || role == "Administrator") && <div className={styles.boardItem}>

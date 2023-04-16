@@ -28,6 +28,7 @@ namespace gerdisc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddEndpointsApiExplorer();
+            services.AddAuthorization();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gerdisc", Version = "v1" });
@@ -87,10 +88,10 @@ namespace gerdisc
             });
 
             app.UseHttpsRedirection();
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

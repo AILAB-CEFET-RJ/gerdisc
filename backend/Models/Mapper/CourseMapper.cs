@@ -16,6 +16,12 @@ namespace gerdisc.Models.Mapper
         public static CourseEntity ToEntity(this CourseDto self) =>
             self is null ? new CourseEntity() : new CourseEntity
             {
+                Id = self.Id,
+                Code = self.Code,
+                Name = self.Name,
+                Concept = self.Concept,
+                Credits = self.Credits,
+                IsElective = self.IsElective,
             };
 
         /// <summary>
@@ -26,6 +32,12 @@ namespace gerdisc.Models.Mapper
         /// <returns>The updated <see cref="CourseEntity"/> object.</returns>
         public static CourseEntity ToEntity(this CourseDto self, CourseEntity entityToUpdate)
         {
+            entityToUpdate.Id = self.Id;
+            entityToUpdate.Code = self.Code;
+            entityToUpdate.Name = self.Name;
+            entityToUpdate.Concept = self.Concept;
+            entityToUpdate.Credits = self.Credits;
+            entityToUpdate.IsElective = self.IsElective;
             return entityToUpdate;
         }
 
@@ -37,6 +49,12 @@ namespace gerdisc.Models.Mapper
         public static CourseDto ToDto(this CourseEntity self) =>
             self is null ? new CourseDto() : new CourseDto
             {
+                Id = self.Id,
+                Code = self.Code,
+                Name = self.Name,
+                Concept = self.Concept,
+                Credits = self.Credits,
+                IsElective = self.IsElective,
             };
     }
 }

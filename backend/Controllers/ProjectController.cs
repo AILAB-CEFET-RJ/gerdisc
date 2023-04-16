@@ -57,6 +57,15 @@ namespace gerdisc.Controllers
             }
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ProjectDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProjectDto>>> GetAllProjectsAsync()
+        {
+            var projectDtos = await _projectService.GetAllProjectsAsync();
+
+            return Ok(projectDtos);
+        }
+
         /// <summary>
         /// Updates a project by its ID.
         /// </summary>

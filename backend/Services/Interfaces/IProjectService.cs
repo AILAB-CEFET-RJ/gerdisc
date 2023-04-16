@@ -22,6 +22,12 @@ namespace gerdisc.Services.Project
         Task<ProjectDto> GetProjectAsync(int id);
 
         /// <summary>
+        /// Gets a list of all project entities.
+        /// </summary>
+        /// <returns>A list of all project entities.</returns>
+        Task<IEnumerable<ProjectDto>> GetAllProjectsAsync();
+
+        /// <summary>
         /// Updates a project.
         /// </summary>
         /// <param name="id">The ID of the project to update.</param>

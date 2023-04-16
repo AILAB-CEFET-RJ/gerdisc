@@ -8,51 +8,47 @@ if [ -z "$1" ]; then
 fi
 
 name=$1
-entity_path="Models/Entities/${name}Entity.cs"
-dto_path="Models/DTOs/${name}Dto.cs"
-mapper_path="Models/Mapper/${name}Mapper.cs"
-controller_path="Controllers/${name}Controller.cs"
-service_path="Services/${name}Service.cs"
-service_interface_path="Services/Interfaces/I${name}Service.cs"
-repository_interface_path="Infrastructure/Repositories/${name}/I${name}Repository.cs"
-repository_path="Infrastructure/Repositories/${name}/${name}Repository.cs"
-
-paths=("$entity_path" "$dto_path" "$mapper_path" "$controller_path" "$service_path" "$service_interface_path" "$repository_interface_path" "$repository_path")
-
-for path in "${paths[@]}"; do
-  mkdir -p "$(dirname $path)"
-done
 
 if [ -z "$2" ]; then
-  for path in "${paths[@]}"; do
-    touch "$path"
-  done
+  echo "Please provide the name of the entity to copy as a second parameter."
+  exit 1
+fi
 
-  echo "Files created successfully."
+template_name=$2
+
+# Add help option
+if [ "$1" == "--help" ]; then
+  echo "Usage: $0 <name> <template_name>"
+  echo "Copies files with names containing <template_name> and replaces it with <name>."
   exit 0
 fi
 
-name_to_copy=$2
-source_paths=()
-dest_paths=()
+# Find destination paths
+paths=($(find . \( -name "${template_name}Entity.cs" -o -name "${template_name}Dto.cs" -o -name "${template_name}Mapper.cs" -o -name "${template_name}Controller.cs" -o -name "${template_name}Service.cs" -o -name "I${template_name}Service.cs" -o -name "${template_name}Repository.cs" -o -name "I${template_name}Repository.cs" \)))
 
+# Create empty files if there were no files found
+if [ ${#paths[@]} -eq 0 ]; then
+  echo "No files found with name containing '$template_name' in the current directory and its subdirectories."
+  exit 1
+fi
+
+# Copy and update files
 for path in "${paths[@]}"; do
-  source="${path//${name}/${name_to_copy}}"
-  source_paths+=("$source")
-  dest_paths+=("$path")
-done
-
-for i in "${!source_paths[@]}"; do
-  source="${source_paths[$i]}"
-  dest="${dest_paths[$i]}"
-  
-  if [ ! -f "$source" ]; then
-    echo "Error: $source does not exist."
+  new="${path//$template_name/$name}"
+  mkdir -p "$(dirname $new)"
+  if [ ! -f "$path" ]; then
+    echo "Error: $path does not exist."
     exit 1
   fi
   
-  cp "$source" "$dest"
-  sed -i "s/$name_to_copy/$name/g" "$dest"
+  if [ -f "$new" ]; then
+    echo "Warning: $new already exists. Skipping creation of this file."
+  else
+    cp "$path" "$new"
+    sed -i "s/$template_name/$name/g" "$new"
+    sed -i "s/${template_name,}/${name,}/g" "$new"
+    echo "Debug: $new created."
+  fi
 done
 
 echo "Files copied and updated successfully."

@@ -30,5 +30,4 @@ namespace gerdisc.Models.Entities
         /// </summary>
         public string? Concept { get; set; }
     }
-
 }
