@@ -37,7 +37,7 @@
     color: #004AAD;
     height: 100vh;
     width: 100vw;
-    background-image: url("/frontend/public/cefet.png");
+    background-image: url("/front/public/cefet.png");
     background-size: cover;
     background-position: center;
 }
@@ -59,6 +59,7 @@
 }
 .boardItem:hover{
     border: 2px solid #004AAD;
+    padding: 0.5rem;
     border-radius: 1rem;
 }
 #pre{
