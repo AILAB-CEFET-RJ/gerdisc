@@ -8,5 +8,12 @@ namespace gerdisc.Models.DTOs
         public List<ProfessorDto> Professors { get; set; }
         public List<StudentDto> Students { get; set; }
         public List<DissertationDto> Dissertations { get; set; }
+
+        public ProjectDto()
+        {
+            Professors = new List<ProfessorDto>();
+            Students = new List<StudentDto>();
+            Dissertations = new List<DissertationDto>();
+        }
     }
 }

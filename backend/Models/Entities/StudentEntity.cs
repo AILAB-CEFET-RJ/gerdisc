@@ -98,8 +98,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property allows lazy loading of the associated <see cref="UserEntity"/> entity.
         /// </remarks>
-        public virtual UserEntity User { get; set; }
-
+        public virtual UserEntity? User { get; set; }
 
         /// <summary>
         /// Gets or sets the navigation property for the collection of student course entities associated with this student.
@@ -124,7 +123,6 @@ namespace gerdisc.Models.Entities
         {
             Dissertations = new List<DissertationEntity>();
             StudentCourses = new List<StudentCourseEntity>();
-            User = new UserEntity();
         }
     }
 }

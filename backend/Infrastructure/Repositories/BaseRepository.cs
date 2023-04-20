@@ -36,12 +36,12 @@ namespace gerdisc.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<TEntity?> GetSingleAsync(int id)
+        public virtual async Task<TEntity?> GetSingleAsync(int id)
         {
             return await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<TEntity?> GetSingleAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<TEntity?> GetSingleAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.FirstOrDefaultAsync(predicate);
         }

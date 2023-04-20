@@ -19,9 +19,6 @@ namespace gerdisc.Models.Mapper
                 Id = self.Id,
                 Name = self.Name,
                 Status = self.Status,
-                Professors = self.Professors?.Select(p => p.ToEntity()).ToList(),
-                Students = self.Students?.Select(s => s.ToEntity()).ToList(),
-                Dissertations = self.Dissertations?.Select(d => d.ToEntity()).ToList()
             };
 
         /// <summary>
@@ -34,9 +31,6 @@ namespace gerdisc.Models.Mapper
         {
             entityToUpdate.Name = self.Name;
             entityToUpdate.Status = self.Status;
-            entityToUpdate.Professors = self.Professors?.Select(p => p.ToEntity()).ToList();
-            entityToUpdate.Students = self.Students?.Select(s => s.ToEntity()).ToList();
-            entityToUpdate.Dissertations = self.Dissertations?.Select(d => d.ToEntity()).ToList();
             return entityToUpdate;
         }
 
@@ -51,9 +45,9 @@ namespace gerdisc.Models.Mapper
                 Id = self.Id,
                 Name = self.Name,
                 Status = self.Status,
-                Professors = self.Professors?.Select(p => p.ToDto()).ToList(),
-                Students = self.Students?.Select(s => s.ToDto()).ToList(),
-                Dissertations = self.Dissertations?.Select(d => d.ToDto()).ToList()
+                Professors = self.Professors.Select(p => p.ToDto()).ToList(),
+                Students = self.Students.Select(s => s.ToDto()).ToList(),
+                Dissertations = self.Dissertations.Select(d => d.ToDto()).ToList()
             };
     }
 }

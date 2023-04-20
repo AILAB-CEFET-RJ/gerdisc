@@ -2,6 +2,7 @@ using gerdisc.Infrastructure.Repositories;
 using gerdisc.Properties;
 using gerdisc.Services.Course;
 using gerdisc.Services.Interfaces;
+using gerdisc.Services.Professor;
 using gerdisc.Services.Project;
 using gerdisc.Services.Student;
 using gerdisc.Services.User;
@@ -55,6 +56,7 @@ namespace gerdisc
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IProfessorService, ProfessorService>();
             services.AddScoped<IUserService, UserService>();
             services.AddSingleton<ISigningConfiguration>(signingConfig);
             services.AddSingleton<ISettings>(settings);

@@ -17,6 +17,7 @@ namespace gerdisc.Models.Mapper
             dto is null ? new StudentEntity() : new StudentEntity
             {
                 Id = dto.Id,
+                UserId = dto.UserId,
                 Registration = dto.Registration,
                 RegistrationDate = dto.RegistrationDate,
                 ProjectId = dto.ProjectId,
@@ -81,7 +82,8 @@ namespace gerdisc.Models.Mapper
                 GraduationYear = entity.GraduationYear,
                 UndergraduateArea = entity.UndergraduateArea,
                 DateOfBirth = entity.DateOfBirth,
-                Scholarship = entity.Scholarship
+                Scholarship = entity.Scholarship,
+                User = entity.User?.ToDto(),
             };
     }
 }
