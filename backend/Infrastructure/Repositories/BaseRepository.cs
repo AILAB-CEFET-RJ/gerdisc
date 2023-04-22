@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using gerdisc.Infrastructure.Extensions;
 using gerdisc.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,24 @@ namespace gerdisc.Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(id));
             
             return await _dbSet.FindAsync(id);
+        }
+
+        public async Task<TEntity> GetByIdAsync(Guid id, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+
+            return await _dbSet.IncludeMultiple(includeProperties).SingleOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return await _dbSet.IncludeMultiple(includeProperties).ToListAsync();
+        }
+
+        public async Task<IEnumerable<TEntity>> GetPagedAsync(Expression<Func<TEntity, bool>> predicate, int pageNumber, int pageSize, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return await _dbSet.IncludeMultiple(includeProperties).Where(predicate).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetPagedAsync(int pageNumber, int pageSize)

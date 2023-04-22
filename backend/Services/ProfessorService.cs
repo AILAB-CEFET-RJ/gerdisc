@@ -1,10 +1,6 @@
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
 using gerdisc.Models.Mapper;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace gerdisc.Services.Professor
 {
@@ -37,7 +33,7 @@ namespace gerdisc.Services.Professor
 
         public async Task<ProfessorDto> GetProfessorAsync(Guid id)
         {
-            var professorEntity = await _repository.Professor.GetByIdAsync(id);
+            var professorEntity = await _repository.Professor.GetByIdAsync(id, x => x.User);
             if (professorEntity == null)
             {
                 throw new ArgumentException("Professor not found.");
@@ -48,7 +44,7 @@ namespace gerdisc.Services.Professor
 
         public async Task<IEnumerable<ProfessorDto>> GetAllProfessorsAsync()
         {
-            var professors = await _repository.Professor.GetAllAsync();
+            var professors = await _repository.Professor.GetAllAsync(x => x.User);
             var professorDtos = new List<ProfessorDto>();
             foreach (var professor in professors)
             {
