@@ -10,7 +10,7 @@ namespace gerdisc.Models.DTOs
     /// </summary>
     public class UserDto
     {
-        public int Id { get; set; }
+        public Guid? Id { get; set; }
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
@@ -26,7 +26,6 @@ namespace gerdisc.Models.DTOs
 
         public DateTime CreatedAt { get; set; }
 
-        [Required(ErrorMessage = "Role is required")]
         public RolesEnum Role { get; set; }
     }
 }

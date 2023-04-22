@@ -21,7 +21,7 @@ namespace gerdisc.Services.Course
         /// </summary>
         /// <param name="id">The ID of the course to retrieve.</param>
         /// <returns>The course matching the specified ID.</returns>
-        Task<CourseDto> GetCourseAsync(int id);
+        Task<CourseDto> GetCourseAsync(Guid id);
 
         /// <summary>
         /// Retrieves a list of all courses.
@@ -35,13 +35,13 @@ namespace gerdisc.Services.Course
         /// <param name="id">The ID of the course to update.</param>
         /// <param name="courseDto">The DTO object containing the updated course information.</param>
         /// <returns>The updated course.</returns>
-        Task<CourseDto> UpdateCourseAsync(int id, CourseDto courseDto);
+        Task<CourseDto> UpdateCourseAsync(Guid id, CourseDto courseDto);
 
         /// <summary>
         /// Deletes a course.
         /// </summary>
         /// <param name="id">The ID of the course to delete.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
-        Task DeleteCourseAsync(int id);
+        Task DeleteCourseAsync(Guid id);
     }
 }

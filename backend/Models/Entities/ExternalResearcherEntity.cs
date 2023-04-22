@@ -10,7 +10,15 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The user ID of the external researcher.
         /// </summary>
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the navigation property for the associated user entity.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the associated <see cref="UserEntity"/> entity.
+        /// </remarks>
+        public virtual UserEntity? User { get; set; }
 
         /// <summary>
         /// a string representing the name of the institution that the external researcher is affiliated with.

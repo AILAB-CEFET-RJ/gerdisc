@@ -22,22 +22,18 @@ namespace gerdisc.Services.Course
 
         public async Task<CourseDto> CreateCourseAsync(CourseDto courseDto)
         {
-            var count = await _repository.Course.CountAsync();
-            courseDto.Id = count + 1;
-
             var course = courseDto.ToEntity();
 
             await _repository.Course.AddAsync(course);
-            await _repository.Course.CommitAsync();
 
             _logger.LogInformation($"Course {course.Name} created successfully.");
 
             return course.ToDto();
         }
 
-        public async Task<CourseDto> GetCourseAsync(int id)
+        public async Task<CourseDto> GetCourseAsync(Guid id)
         {
-            var courseEntity = await _repository.Course.GetSingleAsync(id);
+            var courseEntity = await _repository.Course.GetByIdAsync(id);
             if (courseEntity == null)
             {
                 throw new ArgumentException($"Course with id {id} not found.");
@@ -58,9 +54,9 @@ namespace gerdisc.Services.Course
             return courseDtos;
         }
 
-        public async Task<CourseDto> UpdateCourseAsync(int id, CourseDto courseDto)
+        public async Task<CourseDto> UpdateCourseAsync(Guid id, CourseDto courseDto)
         {
-            var existingCourse = await _repository.Course.GetSingleAsync(id);
+            var existingCourse = await _repository.Course.GetByIdAsync(id);
             if (existingCourse == null)
             {
                 throw new ArgumentException($"Course with id {id} does not exist.");
@@ -68,21 +64,20 @@ namespace gerdisc.Services.Course
 
             existingCourse = courseDto.ToEntity(existingCourse);
 
-            await _repository.Course.CommitAsync();
+            await _repository.Course.UpdateAsync(existingCourse);
 
             return existingCourse.ToDto();
         }
 
-        public async Task DeleteCourseAsync(int id)
+        public async Task DeleteCourseAsync(Guid id)
         {
-            var existingCourse = await _repository.Course.GetSingleAsync(id);
+            var existingCourse = await _repository.Course.GetByIdAsync(id);
             if (existingCourse == null)
             {
                 throw new ArgumentException($"Course with id {id} does not exist.");
             }
 
-            _repository.Course.Delete(existingCourse);
-            await _repository.Course.CommitAsync();
+            await _repository.Course.DeleteAsync(existingCourse);
         }
     }
 }

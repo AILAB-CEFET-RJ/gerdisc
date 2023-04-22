@@ -7,9 +7,9 @@ namespace gerdisc.Models.DTOs
 {
     public class DissertationDto
     {
-        public int Id { get; set; }
-        public int StudentId { get; set; }
+        public Guid? Id { get; set; }
+        public Guid StudentId { get; set; }
         public string? Name { get; set; }
-        public int ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
     }
 }

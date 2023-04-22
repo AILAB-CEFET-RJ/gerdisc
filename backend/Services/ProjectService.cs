@@ -24,21 +24,17 @@ namespace gerdisc.Services.Project
 
         public async Task<ProjectDto> CreateProjectAsync(ProjectDto projectDto)
         {
-            var count = await _repository.Project.CountAsync();
-            projectDto.Id = count + 1;
-
             var project = projectDto.ToEntity();
 
             await _repository.Project.AddAsync(project);
-            await _repository.Project.CommitAsync();
 
             _logger.LogInformation($"Project {project.Name} created successfully.");
             return projectDto;
         }
 
-        public async Task<ProjectDto> GetProjectAsync(int id)
+        public async Task<ProjectDto> GetProjectAsync(Guid id)
         {
-            var projectEntity = await _repository.Project.GetSingleAsync(id);
+            var projectEntity = await _repository.Project.GetByIdAsync(id);
             if (projectEntity == null)
             {
                 throw new ArgumentException("Project not found.");
@@ -59,9 +55,9 @@ namespace gerdisc.Services.Project
             return projectDtos;
         }
 
-        public async Task<ProjectDto> UpdateProjectAsync(int id, ProjectDto projectDto)
+        public async Task<ProjectDto> UpdateProjectAsync(Guid id, ProjectDto projectDto)
         {
-            var existingProject = await _repository.Project.GetSingleAsync(id);
+            var existingProject = await _repository.Project.GetByIdAsync(id);
             if (existingProject == null)
             {
                 throw new ArgumentException($"Project with id {id} does not exist.");
@@ -69,21 +65,19 @@ namespace gerdisc.Services.Project
 
             existingProject = projectDto.ToEntity(existingProject);
 
-            await _repository.Project.CommitAsync();
 
             return existingProject.ToDto();
         }
 
-        public async Task DeleteProjectAsync(int id)
+        public async Task DeleteProjectAsync(Guid id)
         {
-            var existingProject = await _repository.Project.GetSingleAsync(id);
+            var existingProject = await _repository.Project.GetByIdAsync(id);
             if (existingProject == null)
             {
                 throw new ArgumentException($"Project with id {id} does not exist.");
             }
 
-            _repository.Project.Delete(existingProject);
-            await _repository.Project.CommitAsync();
+            await _repository.Project.DeleteAsync(existingProject);
         }
     }
 }

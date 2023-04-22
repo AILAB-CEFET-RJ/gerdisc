@@ -2,10 +2,8 @@ namespace gerdisc.Models.DTOs
 {
     public class StudentDto
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-
-        public UserDto? User { get; set; }
+        public Guid? Id { get; set; }
+        public UserDto User { get; set; }
 
         public string? Registration { get; set; }
         

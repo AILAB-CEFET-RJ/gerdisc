@@ -20,7 +20,7 @@ namespace gerdisc.Services.Interfaces
         /// </summary>
         /// <param name="studentId">The ID of the student entity to retrieve.</param>
         /// <returns>The student entity with the specified ID.</returns>
-        Task<StudentDto> GetStudentAsync(int studentId);
+        Task<StudentDto> GetStudentAsync(Guid studentId);
 
         /// <summary>
         /// Update a student.
@@ -28,14 +28,14 @@ namespace gerdisc.Services.Interfaces
         /// <param name="id">The id of the student to update.</param>
         /// <param name="studentDto">The student DTO to update.</param>
         /// <returns>The updated student DTO.</returns>
-        public Task<StudentDto> UpdateStudentAsync(int id, StudentDto studentDto);
+        public Task<StudentDto> UpdateStudentAsync(Guid id, StudentDto studentDto);
 
         /// <summary>
         /// Deletes a student entity.
         /// </summary>
         /// <param name="studentId">The ID of the student entity to delete.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task DeleteStudentAsync(int studentId);
+        Task DeleteStudentAsync(Guid studentId);
 
         /// <summary>
         /// Gets a list of all student entities.

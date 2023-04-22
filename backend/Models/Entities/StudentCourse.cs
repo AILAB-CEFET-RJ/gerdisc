@@ -12,7 +12,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property is a foreign key to the <see cref="StudentEntity"/> entity.
         /// </remarks>
-        public int StudentId { get; set; }
+        public Guid StudentId { get; set; }
 
         /// <summary>
         /// Gets or sets the student navigation property.
@@ -28,7 +28,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property is a foreign key to the <see cref="CourseEntity"/> entity.
         /// </remarks>
-        public int CourseId { get; set; }
+        public Guid CourseId { get; set; }
 
         /// <summary>
         /// Gets or sets the course navigation property.

@@ -14,16 +14,15 @@ namespace gerdisc.Models.Mapper
         /// <param name="self">The <see cref="UserDto"/> object to convert.</param>
         /// <param name="password">The password hash to set for the <see cref="UserEntity"/> object.</param>
         /// <returns>A new <see cref="UserEntity"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static UserEntity ToEntity(this UserDto self, string password) =>
+        public static UserEntity ToEntity(this UserDto self) =>
             self is null ? new UserEntity() : new UserEntity
             {
-                Id = self.Id,
                 FirstName = self.FirstName,
                 LastName = self.LastName,
                 Cpf = self.Cpf,
                 Email = self.Email,
                 CreatedAt = self.CreatedAt,
-                PasswordHash = password,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(self.Password),
                 Role = self.Role
             };
 

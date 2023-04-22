@@ -16,7 +16,6 @@ namespace gerdisc.Models.Mapper
         public static ProjectEntity ToEntity(this ProjectDto self) =>
             self is null ? new ProjectEntity() : new ProjectEntity
             {
-                Id = self.Id,
                 Name = self.Name,
                 Status = self.Status,
             };

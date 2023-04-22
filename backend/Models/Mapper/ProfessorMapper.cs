@@ -16,9 +16,8 @@ namespace gerdisc.Models.Mapper
         public static ProfessorEntity ToEntity(this ProfessorDto self) =>
             self is null ? new ProfessorEntity() : new ProfessorEntity
             {
-                Id = self.Id,
                 Siape = self.Siape,
-                UserId = self.UserId,
+                UserId = self.User.Id!.Value,
             };
 
         /// <summary>
@@ -29,9 +28,7 @@ namespace gerdisc.Models.Mapper
         /// <returns>The updated <see cref="ProfessorEntity"/> object.</returns>
         public static ProfessorEntity ToEntity(this ProfessorDto self, ProfessorEntity entityToUpdate)
         {
-            entityToUpdate.Id = self.Id;
             entityToUpdate.Siape = self.Siape;
-            entityToUpdate.UserId = self.UserId;
             return entityToUpdate;
         }
 
@@ -45,7 +42,7 @@ namespace gerdisc.Models.Mapper
             {
                 Id = self.Id,
                 Siape = self.Siape,
-                UserId = self.UserId,
+                User = self.User.ToDto(),
             };
     }
 }

@@ -11,6 +11,14 @@ namespace gerdisc.Models.Entities
         /// Gets or sets the ID of the entity.
         /// </summary>
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public BaseEntity()
+        {
+            Id = Guid.NewGuid();
+        }
     }
 }

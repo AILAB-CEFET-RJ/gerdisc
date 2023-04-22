@@ -8,7 +8,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Gets or sets the foreign key of the student that wrote the dissertation.
         /// </summary>
-        public int StudentId { get; set; }
+        public Guid StudentId { get; set; }
 
         /// <summary>
         /// Name of the dissertation.
@@ -18,7 +18,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Gets or sets the foreign key of the project associated with the dissertation.
         /// </summary>
-        public int ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
 
         /// <summary>
         /// Gets or sets the navigation property of the student that wrote the dissertation.

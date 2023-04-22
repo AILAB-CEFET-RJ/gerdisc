@@ -44,7 +44,7 @@ namespace gerdisc.Controllers
         /// <returns>The project.</returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "Administrator, ProjectManager, Developer")]
-        public async Task<ActionResult<ProjectDto>> GetProject(int id)
+        public async Task<ActionResult<ProjectDto>> GetProject(Guid id)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace gerdisc.Controllers
         /// <returns>The updated project.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<ProjectDto>> UpdateProject(int id, ProjectDto projectDto)
+        public async Task<ActionResult<ProjectDto>> UpdateProject(Guid id, ProjectDto projectDto)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace gerdisc.Controllers
         /// <returns>No content.</returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<IActionResult> DeleteProject(int id)
+        public async Task<IActionResult> DeleteProject(Guid id)
         {
             try
             {

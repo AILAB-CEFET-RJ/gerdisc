@@ -24,21 +24,17 @@ namespace gerdisc.Services.Extension
 
         public async Task<ExtensionDto> CreateExtensionAsync(ExtensionDto extensionDto)
         {
-            var count = await _repository.Extension.CountAsync();
-            extensionDto.Id = count + 1;
-
             var extension = extensionDto.ToEntity();
 
             await _repository.Extension.AddAsync(extension);
-            await _repository.Extension.CommitAsync();
 
             _logger.LogInformation($"Extension {extension.StudentId} created successfully.");
             return extensionDto;
         }
 
-        public async Task<ExtensionDto> GetExtensionAsync(int id)
+        public async Task<ExtensionDto> GetExtensionAsync(Guid id)
         {
-            var extensionEntity = await _repository.Extension.GetSingleAsync(id);
+            var extensionEntity = await _repository.Extension.GetByIdAsync(id);
             if (extensionEntity == null)
             {
                 throw new ArgumentException("Extension not found.");
@@ -59,9 +55,9 @@ namespace gerdisc.Services.Extension
             return extensionDtos;
         }
 
-        public async Task<ExtensionDto> UpdateExtensionAsync(int id, ExtensionDto extensionDto)
+        public async Task<ExtensionDto> UpdateExtensionAsync(Guid id, ExtensionDto extensionDto)
         {
-            var existingExtension = await _repository.Extension.GetSingleAsync(id);
+            var existingExtension = await _repository.Extension.GetByIdAsync(id);
             if (existingExtension == null)
             {
                 throw new ArgumentException($"Extension with id {id} does not exist.");
@@ -69,21 +65,19 @@ namespace gerdisc.Services.Extension
 
             existingExtension = extensionDto.ToEntity(existingExtension);
 
-            await _repository.Extension.CommitAsync();
 
             return existingExtension.ToDto();
         }
 
-        public async Task DeleteExtensionAsync(int id)
+        public async Task DeleteExtensionAsync(Guid id)
         {
-            var existingExtension = await _repository.Extension.GetSingleAsync(id);
+            var existingExtension = await _repository.Extension.GetByIdAsync(id);
             if (existingExtension == null)
             {
                 throw new ArgumentException($"Extension with id {id} does not exist.");
             }
 
-            _repository.Extension.Delete(existingExtension);
-            await _repository.Extension.CommitAsync();
+            await _repository.Extension.DeleteAsync(existingExtension);
         }
     }
 }

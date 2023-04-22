@@ -44,7 +44,7 @@ namespace gerdisc.Controllers
         /// <returns>The professor.</returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "Administrator, ProfessorManager, Developer")]
-        public async Task<ActionResult<ProfessorDto>> GetProfessor(int id)
+        public async Task<ActionResult<ProfessorDto>> GetProfessor(Guid id)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace gerdisc.Controllers
         /// <returns>The updated professor.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator, ProfessorManager")]
-        public async Task<ActionResult<ProfessorDto>> UpdateProfessor(int id, ProfessorDto professorDto)
+        public async Task<ActionResult<ProfessorDto>> UpdateProfessor(Guid id, ProfessorDto professorDto)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace gerdisc.Controllers
         /// <returns>No content.</returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Administrator, ProfessorManager")]
-        public async Task<IActionResult> DeleteProfessor(int id)
+        public async Task<IActionResult> DeleteProfessor(Guid id)
         {
             try
             {

@@ -24,21 +24,17 @@ namespace gerdisc.Services.Dissertation
 
         public async Task<DissertationDto> CreateDissertationAsync(DissertationDto dissertationDto)
         {
-            var count = await _repository.Dissertation.CountAsync();
-            dissertationDto.Id = count + 1;
-
             var dissertation = dissertationDto.ToEntity();
 
             await _repository.Dissertation.AddAsync(dissertation);
-            await _repository.Dissertation.CommitAsync();
 
             _logger.LogInformation($"Dissertation {dissertation.Name} created successfully.");
             return dissertationDto;
         }
 
-        public async Task<DissertationDto> GetDissertationAsync(int id)
+        public async Task<DissertationDto> GetDissertationAsync(Guid id)
         {
-            var dissertationEntity = await _repository.Dissertation.GetSingleAsync(id);
+            var dissertationEntity = await _repository.Dissertation.GetByIdAsync(id);
             if (dissertationEntity == null)
             {
                 throw new ArgumentException("Dissertation not found.");
@@ -59,9 +55,9 @@ namespace gerdisc.Services.Dissertation
             return dissertationDtos;
         }
 
-        public async Task<DissertationDto> UpdateDissertationAsync(int id, DissertationDto dissertationDto)
+        public async Task<DissertationDto> UpdateDissertationAsync(Guid id, DissertationDto dissertationDto)
         {
-            var existingDissertation = await _repository.Dissertation.GetSingleAsync(id);
+            var existingDissertation = await _repository.Dissertation.GetByIdAsync(id);
             if (existingDissertation == null)
             {
                 throw new ArgumentException($"Dissertation with id {id} does not exist.");
@@ -69,21 +65,19 @@ namespace gerdisc.Services.Dissertation
 
             existingDissertation = dissertationDto.ToEntity(existingDissertation);
 
-            await _repository.Dissertation.CommitAsync();
 
             return existingDissertation.ToDto();
         }
 
-        public async Task DeleteDissertationAsync(int id)
+        public async Task DeleteDissertationAsync(Guid id)
         {
-            var existingDissertation = await _repository.Dissertation.GetSingleAsync(id);
+            var existingDissertation = await _repository.Dissertation.GetByIdAsync(id);
             if (existingDissertation == null)
             {
                 throw new ArgumentException($"Dissertation with id {id} does not exist.");
             }
 
-            _repository.Dissertation.Delete(existingDissertation);
-            await _repository.Dissertation.CommitAsync();
+            await _repository.Dissertation.DeleteAsync(existingDissertation);
         }
     }
 }

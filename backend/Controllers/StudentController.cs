@@ -28,13 +28,13 @@ namespace gerdisc.Controllers
         {
             var createdStudentDto = await _studentService.CreateStudentAsync(studentDto);
 
-            return CreatedAtAction(nameof(GetStudentAsync), new { studentId = createdStudentDto.Id }, createdStudentDto);
+            return CreatedAtAction(nameof(GetStudentAsync), new { studentId = createdStudentDto.Id.Value.ToString() }, createdStudentDto);
         }
 
         [HttpGet("{studentId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(StudentDto), StatusCodes.Status200OK)]
-        public async Task<ActionResult<StudentDto>> GetStudentAsync(int studentId)
+        public async Task<ActionResult<StudentDto>> GetStudentAsync(Guid studentId)
         {
             var studentDto = await _studentService.GetStudentAsync(studentId);
 
@@ -49,7 +49,7 @@ namespace gerdisc.Controllers
         [HttpPut("{studentId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(StudentDto), StatusCodes.Status200OK)]
-        public async Task<ActionResult<StudentDto>> UpdateStudentAsync(int studentId, StudentDto studentDto)
+        public async Task<ActionResult<StudentDto>> UpdateStudentAsync(Guid studentId, StudentDto studentDto)
         {
             var updatedStudentDto = await _studentService.UpdateStudentAsync(studentId, studentDto);
 
@@ -64,7 +64,7 @@ namespace gerdisc.Controllers
         [HttpDelete("{studentId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteStudentAsync(int studentId)
+        public async Task<IActionResult> DeleteStudentAsync(Guid studentId)
         {
             var studentDto = await _studentService.GetStudentAsync(studentId);
 

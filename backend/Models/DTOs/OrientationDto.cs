@@ -7,9 +7,9 @@ namespace gerdisc.Models.DTOs
 {
     public class OrientationDto
     {
-        public int Id { get; set; }
-        public int ProfessorId { get; set; }
-        public int ResearcherId { get; set; }
+        public Guid? Id { get; set; }
+        public Guid ProfessorId { get; set; }
+        public Guid ResearcherId { get; set; }
         public DissertationDto Dissertation { get; set; }
 
         public OrientationDto()

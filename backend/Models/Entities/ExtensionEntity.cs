@@ -8,7 +8,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Gets or sets the ID of the student associated with the extension.
         /// </summary>
-        public int StudentId { get; set; }
+        public Guid StudentId { get; set; }
 
         /// <summary>
         /// Gets or sets the number of days the extension is valid for.

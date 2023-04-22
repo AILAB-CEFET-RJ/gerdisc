@@ -10,17 +10,12 @@ namespace gerdisc.Infrastructure.Repositories.Student
         {
         }
 
-        public override async Task<StudentEntity?> GetSingleAsync(int id)
+        public virtual async Task<StudentEntity> GetByIdAsync(Guid id)
         {
             return await _context.Students?.Include(c => c.User).FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public override async Task<StudentEntity?> GetSingleAsync(Expression<Func<StudentEntity, bool>> predicate)
-        {
-            return await _context.Students?.Include(c => c.User).FirstOrDefaultAsync(predicate);
-        }
-
-        public override async Task<IEnumerable<StudentEntity>> FindByAsync(Expression<Func<StudentEntity, bool>> predicate)
+        public override async Task<IEnumerable<StudentEntity>> FindAsync(Expression<Func<StudentEntity, bool>> predicate)
         {
             return await _context.Students?.Include(c => c.User).Where(predicate).ToListAsync();
         }

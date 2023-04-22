@@ -10,8 +10,8 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The ID of the user associated with this student entity.
         /// </summary>
-        public int UserId { get; set; }
-        
+        public Guid UserId { get; set; }
+
         /// <summary>
         /// The registration number of the student.
         /// </summary>

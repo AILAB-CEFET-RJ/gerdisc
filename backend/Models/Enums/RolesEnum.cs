@@ -6,6 +6,7 @@ namespace gerdisc.Models.Enums
         Professor,
         TeachingAssistant,
         Researcher,
-        Administrator
+        Administrator,
+        ExternalResearcher
     }
 }

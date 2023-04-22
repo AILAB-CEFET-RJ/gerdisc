@@ -2,9 +2,9 @@ namespace gerdisc.Models.DTOs
 {
     public class ExtensionDto
     {
-        public int Id { get; set; }
+        public Guid? Id { get; set; }
 
-        public int StudentId { get; set; }
+        public Guid StudentId { get; set; }
 
         public int NumberOfDays { get; set; }
 

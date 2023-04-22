@@ -16,7 +16,6 @@ namespace gerdisc.Models.Mapper
         public static ExtensionEntity ToEntity(this ExtensionDto self) =>
             self is null ? new ExtensionEntity() : new ExtensionEntity
             {
-                Id = self.Id,
                 Status = self.Status,
                 NumberOfDays = self.NumberOfDays,
                 StudentId = self.StudentId,

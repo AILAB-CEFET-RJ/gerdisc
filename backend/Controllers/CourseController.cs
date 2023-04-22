@@ -38,7 +38,7 @@ namespace gerdisc.Controllers
         [Authorize(Roles = "Administrator, Professor, Student")]
         [ProducesResponseType(typeof(CourseDto), 200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetCourse(int id)
+        public async Task<IActionResult> GetCourse(Guid id)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace gerdisc.Controllers
         [ProducesResponseType(typeof(CourseDto), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateCourse(int id, CourseDto courseDto)
+        public async Task<IActionResult> UpdateCourse(Guid id, CourseDto courseDto)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace gerdisc.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> DeleteCourseAsync(int id)
+        public async Task<IActionResult> DeleteCourseAsync(Guid id)
         {
             try
             {

@@ -44,7 +44,7 @@ namespace gerdisc.Controllers
         /// <returns>The extension.</returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "Administrator, ExtensionManager, Developer")]
-        public async Task<ActionResult<ExtensionDto>> GetExtension(int id)
+        public async Task<ActionResult<ExtensionDto>> GetExtension(Guid id)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace gerdisc.Controllers
         /// <returns>The updated extension.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator, ExtensionManager")]
-        public async Task<ActionResult<ExtensionDto>> UpdateExtension(int id, ExtensionDto extensionDto)
+        public async Task<ActionResult<ExtensionDto>> UpdateExtension(Guid id, ExtensionDto extensionDto)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace gerdisc.Controllers
         /// <returns>No content.</returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Administrator, ExtensionManager")]
-        public async Task<IActionResult> DeleteExtension(int id)
+        public async Task<IActionResult> DeleteExtension(Guid id)
         {
             try
             {

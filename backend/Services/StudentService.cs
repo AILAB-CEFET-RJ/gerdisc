@@ -25,21 +25,20 @@ namespace gerdisc.Services.Student
 
         public async Task<StudentDto> CreateStudentAsync(StudentDto studentDto)
         {
-            var count = await _repository.Student.CountAsync();
-            studentDto.Id = count + 1;
+            var user = studentDto.User.ToEntity();
+            user = await _repository.User.AddAsync(user);
 
             var student = studentDto.ToEntity();
+            student.UserId = user.Id;
+            student = await _repository.Student.AddAsync(student);
 
-            await _repository.Student.AddAsync(student);
-            await _repository.Student.CommitAsync();
-
-            _logger.LogInformation($"Student {student.UserId} created successfully.");
-            return studentDto;
+            _logger.LogInformation($"Student {student.User.Id} created successfully.");
+            return student.ToDto();
         }
 
-        public async Task<StudentDto> GetStudentAsync(int id)
+        public async Task<StudentDto> GetStudentAsync(Guid id)
         {
-            var studentEntity = await _repository.Student.GetSingleAsync(id);
+            var studentEntity = await _repository.Student.GetByIdAsync(id);
             if (studentEntity == null)
             {
                 throw new ArgumentException("Student not found.");
@@ -60,9 +59,9 @@ namespace gerdisc.Services.Student
             return studentDtos;
         }
 
-        public async Task<StudentDto> UpdateStudentAsync(int id, StudentDto studentDto)
+        public async Task<StudentDto> UpdateStudentAsync(Guid id, StudentDto studentDto)
         {
-            var existingStudent = await _repository.Student.GetSingleAsync(id);
+            var existingStudent = await _repository.Student.GetByIdAsync(id);
             if (existingStudent == null)
             {
                 throw new ArgumentException($"Student with id {id} does not exist.");
@@ -70,21 +69,19 @@ namespace gerdisc.Services.Student
 
             existingStudent = studentDto.ToEntity(existingStudent);
 
-            await _repository.Student.CommitAsync();
 
             return existingStudent.ToDto();
         }
 
-        public async Task DeleteStudentAsync(int id)
+        public async Task DeleteStudentAsync(Guid id)
         {
-            var existingStudent = await _repository.Student.GetSingleAsync(id);
+            var existingStudent = await _repository.Student.GetByIdAsync(id);
             if (existingStudent == null)
             {
                 throw new ArgumentException($"Student with id {id} does not exist.");
             }
 
-            _repository.Student.Delete(existingStudent);
-            await _repository.Student.CommitAsync();
+            await _repository.Student.DeleteAsync(existingStudent);
         }
     }
 }

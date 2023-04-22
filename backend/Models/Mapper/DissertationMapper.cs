@@ -16,7 +16,6 @@ namespace gerdisc.Models.Mapper
         public static DissertationEntity ToEntity(this DissertationDto self) =>
             self is null ? new DissertationEntity() : new DissertationEntity
             {
-                Id = self.Id,
                 Name = self.Name,
                 ProjectId = self.ProjectId,
                 StudentId = self.StudentId,

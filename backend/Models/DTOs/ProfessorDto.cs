@@ -7,8 +7,8 @@ namespace gerdisc.Models.DTOs
 {
     public class ProfessorDto
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
+        public Guid? Id { get; set; }
+        public UserDto User { get; set; }
         public string Siape { get; set; }
     }
 }

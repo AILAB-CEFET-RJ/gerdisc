@@ -16,7 +16,6 @@ namespace gerdisc.Models.Mapper
         public static CourseEntity ToEntity(this CourseDto self) =>
             self is null ? new CourseEntity() : new CourseEntity
             {
-                Id = self.Id,
                 Code = self.Code,
                 Name = self.Name,
                 Concept = self.Concept,
@@ -32,7 +31,6 @@ namespace gerdisc.Models.Mapper
         /// <returns>The updated <see cref="CourseEntity"/> object.</returns>
         public static CourseEntity ToEntity(this CourseDto self, CourseEntity entityToUpdate)
         {
-            entityToUpdate.Id = self.Id;
             entityToUpdate.Code = self.Code;
             entityToUpdate.Name = self.Name;
             entityToUpdate.Concept = self.Concept;

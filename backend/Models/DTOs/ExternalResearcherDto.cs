@@ -4,8 +4,8 @@ namespace gerdisc.Models.DTOs
 {
     public class ExternalResearcherDto
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
+        public Guid? Id { get; set; }
+        public UserDto User { get; set; }
 
         [Required]
         [StringLength(20)]

@@ -24,21 +24,20 @@ namespace gerdisc.Services.Professor
 
         public async Task<ProfessorDto> CreateProfessorAsync(ProfessorDto professorDto)
         {
-            var count = await _repository.Professor.CountAsync();
-            professorDto.Id = count + 1;
+            var user = professorDto.User.ToEntity();
+            user = await _repository.User.AddAsync(user);
 
             var professor = professorDto.ToEntity();
-
+            professor.UserId = user.Id;
             await _repository.Professor.AddAsync(professor);
-            await _repository.Professor.CommitAsync();
 
-            _logger.LogInformation($"Professor {professor.UserId} created successfully.");
+            _logger.LogInformation($"Professor {professor.User.Id} created successfully.");
             return professorDto;
         }
 
-        public async Task<ProfessorDto> GetProfessorAsync(int id)
+        public async Task<ProfessorDto> GetProfessorAsync(Guid id)
         {
-            var professorEntity = await _repository.Professor.GetSingleAsync(id);
+            var professorEntity = await _repository.Professor.GetByIdAsync(id);
             if (professorEntity == null)
             {
                 throw new ArgumentException("Professor not found.");
@@ -59,9 +58,9 @@ namespace gerdisc.Services.Professor
             return professorDtos;
         }
 
-        public async Task<ProfessorDto> UpdateProfessorAsync(int id, ProfessorDto professorDto)
+        public async Task<ProfessorDto> UpdateProfessorAsync(Guid id, ProfessorDto professorDto)
         {
-            var existingProfessor = await _repository.Professor.GetSingleAsync(id);
+            var existingProfessor = await _repository.Professor.GetByIdAsync(id);
             if (existingProfessor == null)
             {
                 throw new ArgumentException($"Professor with id {id} does not exist.");
@@ -69,21 +68,19 @@ namespace gerdisc.Services.Professor
 
             existingProfessor = professorDto.ToEntity(existingProfessor);
 
-            await _repository.Professor.CommitAsync();
 
             return existingProfessor.ToDto();
         }
 
-        public async Task DeleteProfessorAsync(int id)
+        public async Task DeleteProfessorAsync(Guid id)
         {
-            var existingProfessor = await _repository.Professor.GetSingleAsync(id);
+            var existingProfessor = await _repository.Professor.GetByIdAsync(id);
             if (existingProfessor == null)
             {
                 throw new ArgumentException($"Professor with id {id} does not exist.");
             }
 
-            _repository.Professor.Delete(existingProfessor);
-            await _repository.Professor.CommitAsync();
+            await _repository.Professor.DeleteAsync(existingProfessor);
         }
     }
 }

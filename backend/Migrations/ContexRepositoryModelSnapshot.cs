@@ -24,11 +24,9 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.CourseEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -52,17 +50,19 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.DissertationEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -75,37 +75,33 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProfessorEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ProjectEntityId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("ProjectEntityId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Siape")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectEntityId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Professors", (string)null);
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProjectEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -120,34 +116,36 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentCourseEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("CourseId1")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("StudentId1")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("CourseId1");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentId1");
 
                     b.ToTable("StudentCourseEntity");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("CPF")
                         .HasColumnType("text");
@@ -170,8 +168,8 @@ namespace gerdisc.Migrations
                     b.Property<DateTime>("ProjectDefenceDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("ProjectEntityId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("ProjectEntityId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ProjectId")
                         .HasColumnType("text");
@@ -200,8 +198,8 @@ namespace gerdisc.Migrations
                     b.Property<string>("UndergraduateInstitution")
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -214,11 +212,9 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.UserEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Cpf")
                         .HasColumnType("text");
@@ -270,19 +266,27 @@ namespace gerdisc.Migrations
                     b.HasOne("gerdisc.Models.Entities.ProjectEntity", null)
                         .WithMany("Professors")
                         .HasForeignKey("ProjectEntityId");
+
+                    b.HasOne("gerdisc.Models.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentCourseEntity", b =>
                 {
                     b.HasOne("gerdisc.Models.Entities.CourseEntity", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId")
+                        .HasForeignKey("CourseId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("gerdisc.Models.Entities.StudentEntity", "Student")
                         .WithMany("StudentCourses")
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("StudentId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

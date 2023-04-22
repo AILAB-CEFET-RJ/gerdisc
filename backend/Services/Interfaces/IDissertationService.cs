@@ -19,7 +19,7 @@ namespace gerdisc.Services.Dissertation
         /// </summary>
         /// <param name="id">The ID of the dissertation to retrieve.</param>
         /// <returns>The dissertation DTO with the specified ID.</returns>
-        Task<DissertationDto> GetDissertationAsync(int id);
+        Task<DissertationDto> GetDissertationAsync(Guid id);
 
         /// <summary>
         /// Gets a list of all dissertation entities.
@@ -33,12 +33,12 @@ namespace gerdisc.Services.Dissertation
         /// <param name="id">The ID of the dissertation to update.</param>
         /// <param name="dissertationDto">The dissertation DTO containing the updated dissertation details.</param>
         /// <returns>The updated dissertation DTO.</returns>
-        Task<DissertationDto> UpdateDissertationAsync(int id, DissertationDto dissertationDto);
+        Task<DissertationDto> UpdateDissertationAsync(Guid id, DissertationDto dissertationDto);
 
         /// <summary>
         /// Deletes a dissertation.
         /// </summary>
         /// <param name="id">The ID of the dissertation to delete.</param>
-        Task DeleteDissertationAsync(int id);
+        Task DeleteDissertationAsync(Guid id);
     }
 }

@@ -4,13 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace gerdisc.Infrastructure.Repositories
 {
-    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
-        where TEntity : BaseEntity
+    public abstract class BaseRepository<TEntity> where TEntity : BaseEntity
     {
         protected readonly ContexRepository _context;
         protected readonly DbSet<TEntity> _dbSet;
 
-        protected BaseRepository(ContexRepository context)
+        public BaseRepository(ContexRepository context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
@@ -21,75 +20,68 @@ namespace gerdisc.Infrastructure.Repositories
             return await _dbSet.ToListAsync();
         }
 
-        public virtual async Task<int> CountAsync()
+        public virtual async Task<TEntity> GetByIdAsync(object id)
         {
-            return await _dbSet.CountAsync();
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            
+            return await _dbSet.FindAsync(id);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> AllIncludingAsync(params Expression<Func<TEntity, object>>[] includeProperties)
+        public virtual async Task<IEnumerable<TEntity>> GetPagedAsync(int pageNumber, int pageSize)
         {
-            IQueryable<TEntity> query = _dbSet;
-            foreach (var includeProperty in includeProperties)
-            {
-                query = query.Include(includeProperty);
-            }
-            return await query.ToListAsync();
+            return await _dbSet.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
-        public virtual async Task<TEntity?> GetSingleAsync(int id)
-        {
-            return await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public virtual async Task<TEntity?> GetSingleAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return await _dbSet.FirstOrDefaultAsync(predicate);
-        }
-
-        public async Task<TEntity?> GetSingleAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            IQueryable<TEntity> query = _dbSet;
-            foreach (var includeProperty in includeProperties)
-            {
-                query = query.Include(includeProperty);
-            }
-
-            return await query.Where(predicate).FirstOrDefaultAsync();
-        }
-
-        public virtual async Task<IEnumerable<TEntity>> FindByAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.Where(predicate).ToListAsync();
         }
-        public virtual async Task AddAsync(TEntity entity)
+
+        public virtual async Task<IEnumerable<TEntity>> GetPagedAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> predicate)
         {
-            await _dbSet.AddAsync(entity);
+            return await _dbSet.Include(predicate).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
-        public virtual void Update(TEntity entity)
+        public virtual async Task<TEntity> AddAsync(TEntity entity)
+        {
+            _dbSet.Add(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+
+        public virtual async Task UpdateAsync(TEntity entity)
         {
             _dbSet.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
 
-        public virtual void Delete(TEntity entity)
+        public virtual async Task DeleteAsync(TEntity entity)
         {
-            _dbSet.Attach(entity);
             _dbSet.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteWhereAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task DeleteByIdAsync(object id)
         {
-            IEnumerable<TEntity> entities = await _dbSet.Where(predicate).ToListAsync();
-            foreach (var entity in entities)
-            {
-                _dbSet.Remove(entity);
-            }
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            
+            TEntity entityToDelete = await _dbSet.FindAsync(id);
+            _dbSet.Remove(entityToDelete);
+            await _context.SaveChangesAsync();
         }
 
-        public virtual async Task<int> CommitAsync()
+        public virtual async Task DeleteRangeAsync(IEnumerable<TEntity> entities)
         {
-            return await _context.SaveChangesAsync();
+            _dbSet.RemoveRange(entities);
+            await _context.SaveChangesAsync();
+        }
+
+        public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.AsNoTracking().CountAsync(predicate).ConfigureAwait(false);
         }
     }
 }
