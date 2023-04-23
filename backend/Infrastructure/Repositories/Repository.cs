@@ -2,9 +2,12 @@ using gerdisc.Infrastructure.Repositories.Course;
 using gerdisc.Infrastructure.Repositories.Dissertation;
 using gerdisc.Infrastructure.Repositories.Extension;
 using gerdisc.Infrastructure.Repositories.ExternalResearcher;
+using gerdisc.Infrastructure.Repositories.Orientation;
 using gerdisc.Infrastructure.Repositories.Professor;
+using gerdisc.Infrastructure.Repositories.ProfessorProject;
 using gerdisc.Infrastructure.Repositories.Project;
 using gerdisc.Infrastructure.Repositories.Student;
+using gerdisc.Infrastructure.Repositories.StudentCourse;
 using gerdisc.Infrastructure.Repositories.User;
 
 namespace gerdisc.Infrastructure.Repositories
@@ -44,6 +47,9 @@ namespace gerdisc.Infrastructure.Repositories
         public IExtensionRepository Extension => new ExtensionRepository(_dbContext);
         public IExternalResearcherRepository ExternalResearcher => new ExternalResearcherRepository(_dbContext);
         public ICourseRepository Course => new CourseRepository(_dbContext);
+        public IProfessorProjectRepository ProfessorProject => new ProfessorProjectRepository(_dbContext);
+        public IStudentCourseRepository StudentCourse => new StudentCourseRepository(_dbContext);
+        public IOrientationRepository Orientation => new OrientationRepository(_dbContext);
 
         public async Task<int> CommitAsync()
         {
