@@ -1,4 +1,3 @@
-using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Services.Professor;
 using Microsoft.AspNetCore.Authorization;

@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
 using gerdisc.Services.Interfaces;
-using gerdisc.Services.Student;
-using gerdisc.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gerdisc.Controllers
 {
@@ -23,62 +17,50 @@ namespace gerdisc.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(StudentDto), StatusCodes.Status201Created)]
-        public async Task<ActionResult<StudentDto>> CreateStudentAsync(StudentDto studentDto)
+        [Authorize(Roles = "Administrator, StudentManager")]
+        public async Task<ActionResult<StudentDto>> CreateStudent(StudentDto studentDto)
         {
-            var createdStudentDto = await _studentService.CreateStudentAsync(studentDto);
-
-            return CreatedAtAction(nameof(GetStudentAsync), new { studentId = createdStudentDto.Id.Value.ToString() }, createdStudentDto);
+            try
+            {
+                var student = await _studentService.CreateStudentAsync(studentDto);
+                return CreatedAtAction(nameof(GetStudent), new { studentId = student.Id }, student);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{studentId}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StudentDto), StatusCodes.Status200OK)]
-        public async Task<ActionResult<StudentDto>> GetStudentAsync(Guid studentId)
+        [Authorize(Roles = "Administrator, StudentManager")]
+        public async Task<ActionResult<StudentDto>> GetStudent(Guid studentId)
         {
-            var studentDto = await _studentService.GetStudentAsync(studentId);
-
-            if (studentDto == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(studentDto);
+            var student = await _studentService.GetStudentAsync(studentId);
+            if (student == null) return NotFound();
+            return Ok(student);
         }
 
         [HttpPut("{studentId}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StudentDto), StatusCodes.Status200OK)]
-        public async Task<ActionResult<StudentDto>> UpdateStudentAsync(Guid studentId, StudentDto studentDto)
+        [Authorize(Roles = "Administrator, StudentManager")]
+        public async Task<ActionResult<StudentDto>> UpdateStudent(Guid studentId, StudentDto studentDto)
         {
             var updatedStudentDto = await _studentService.UpdateStudentAsync(studentId, studentDto);
-
-            if (updatedStudentDto == null)
-            {
-                return NotFound();
-            }
-
+            if (updatedStudentDto == null) return NotFound();
             return Ok(updatedStudentDto);
         }
 
         [HttpDelete("{studentId}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteStudentAsync(Guid studentId)
+        [Authorize(Roles = "Administrator, StudentManager")]
+        public async Task<IActionResult> DeleteStudent(Guid studentId)
         {
             var studentDto = await _studentService.GetStudentAsync(studentId);
-
-            if (studentDto == null)
-            {
-                return NotFound();
-            }
-
+            if (studentDto == null) return NotFound();
             await _studentService.DeleteStudentAsync(studentId);
-
             return NoContent();
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator, StudentManager")]
         [ProducesResponseType(typeof(IEnumerable<StudentDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetAllStudentsAsync()
         {

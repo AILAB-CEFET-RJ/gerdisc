@@ -38,7 +38,7 @@ namespace gerdisc.Services.Student
 
         public async Task<StudentDto> GetStudentAsync(Guid id)
         {
-            var studentEntity = await _repository.Student.GetByIdAsync(id);
+            var studentEntity = await _repository.Student.GetByIdAsync(id, s => s.User);
             if (studentEntity == null)
             {
                 throw new ArgumentException("Student not found.");
@@ -49,7 +49,7 @@ namespace gerdisc.Services.Student
 
         public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync()
         {
-            var students = await _repository.Student.GetAllAsync();
+            var students = await _repository.Student.GetAllAsync(s => s.User);
             var studentDtos = new List<StudentDto>();
             foreach (var student in students)
             {

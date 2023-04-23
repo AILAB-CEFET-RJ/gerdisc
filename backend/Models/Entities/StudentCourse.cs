@@ -1,4 +1,3 @@
-
 namespace gerdisc.Models.Entities
 {
     /// <summary>
@@ -37,6 +36,21 @@ namespace gerdisc.Models.Entities
         /// This property allows lazy loading of the <see cref="CourseEntity"/> entity.
         /// </remarks>
         public virtual CourseEntity Course { get; set; }
+
+        /// <summary>
+        /// Gets or sets the grade of the student in the course.
+        /// </summary>
+        public char Grade { get; set; }
+
+        /// <summary>
+        /// Gets or sets the year in which the student took the course.
+        /// </summary>
+        public int Year { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trimester in which the student took the course.
+        /// </summary>
+        public int Trimester { get; set; }
 
         public StudentCourseEntity()
         {
