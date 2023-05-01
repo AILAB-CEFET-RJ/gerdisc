@@ -28,6 +28,13 @@ namespace gerdisc
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(
+                options => options
+                    .AddPolicy("CorsPolicy",
+                        builder => builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()));
             services.AddEndpointsApiExplorer();
             services.AddAuthorization();
             services.AddSwaggerGen(c =>
@@ -88,6 +95,8 @@ namespace gerdisc
                 c.EnableDeepLinking();
                 c.DisplayRequestDuration();
             });
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
             app.UseRouting();
