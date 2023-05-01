@@ -56,5 +56,17 @@ namespace gerdisc.Models.Mapper
                 CreatedAt = self.CreatedAt,
                 Role = self.Role
             };
+
+        /// <summary>
+        /// Converts a <see cref="UserEntity"/> object to a <see cref="LoginResultDto"/> object.
+        /// </summary>
+        /// <param name="self">The <see cref="UserEntity"/> object to convert.</param>
+        /// <returns>A new <see cref="LoginResultDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static LoginResultDto ToDto(this UserEntity user, string token) =>
+            user is null ? new LoginResultDto() : new LoginResultDto
+            {
+                User = user.ToDto(),
+                Token = token,
+            };
     }
 }

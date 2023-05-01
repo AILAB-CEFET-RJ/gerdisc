@@ -1,5 +1,6 @@
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
+using gerdisc.Models.Mapper;
 using gerdisc.Properties;
 
 namespace gerdisc.Services.User
@@ -21,7 +22,7 @@ namespace gerdisc.Services.User
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<string> AuthenticateAsync(LoginDto loginDto)
+        public async Task<LoginResultDto> AuthenticateAsync(LoginDto loginDto)
         {
             var user = await _repository.User.GetUserByEmail(loginDto.Email);
             if (user == null)
@@ -34,7 +35,7 @@ namespace gerdisc.Services.User
                 throw new ArgumentException("Invalid password.");
             }
 
-            return user.GenerateJwtToken(_singingConfig.Key);
+            return user.ToDto(user.GenerateJwtToken(_singingConfig.Key));
         }
 
         private string HashPassword(string password)

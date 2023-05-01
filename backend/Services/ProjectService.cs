@@ -49,7 +49,7 @@ namespace gerdisc.Services.Project
         {
             var projects = await _repository
                 .Project
-                .GetAllAsync();
+                .GetAllAsync(x => x);
             var projectDtos = new List<ProjectDto>();
             foreach (var project in projects)
             {

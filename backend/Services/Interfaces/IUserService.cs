@@ -13,6 +13,6 @@ namespace gerdisc.Services.User
         /// </summary>
         /// <param name="loginDto">The LoginDto object containing email and password information</param>
         /// <returns>The generated JWT token</returns>
-        Task<string> AuthenticateAsync(LoginDto loginDto);
+        Task<LoginResultDto> AuthenticateAsync(LoginDto loginDto);
     }
 }

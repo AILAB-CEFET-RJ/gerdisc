@@ -15,7 +15,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-            
+
             return await _dbSet
                 .Include(x => x.ProfessorProjects)
                 .ThenInclude(x => x.Professor)
