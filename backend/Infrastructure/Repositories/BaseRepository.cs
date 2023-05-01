@@ -21,7 +21,7 @@ namespace gerdisc.Infrastructure.Repositories
             return await _dbSet.ToListAsync();
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(object id)
+        public virtual async Task<TEntity> GetByIdAsync(Guid id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));

@@ -20,20 +20,6 @@ namespace gerdisc.Models.Entities
         /// </summary>
         public Guid ProjectId { get; set; }
 
-        /// <summary>
-        /// Gets or sets the navigation property of the student that wrote the dissertation.
-        /// </summary>
         public StudentEntity Student { get; set; }
-
-        /// <summary>
-        /// Gets or sets the navigation property of the project associated with the dissertation.
-        /// </summary>
-        public ProjectEntity Project { get; set; }
-
-        public DissertationEntity()
-        {
-            Student = new StudentEntity();
-            Project = new ProjectEntity();
-        }
     }
 }

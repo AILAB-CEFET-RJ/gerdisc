@@ -36,11 +36,7 @@ namespace gerdisc.Services.Project
         {
             var projectEntity = await _repository
                 .Project
-                .GetByIdAsync(
-                        id,
-                        x => x.Professors,
-                        x => x.Students,
-                        x => x.Dissertations);
+                .GetByIdAsync(id);
             if (projectEntity == null)
             {
                 throw new ArgumentException("Project not found.");
@@ -53,10 +49,7 @@ namespace gerdisc.Services.Project
         {
             var projects = await _repository
                 .Project
-                .GetAllAsync(
-                    x => x.Professors,
-                    x => x.Students,
-                    x => x.Dissertations);
+                .GetAllAsync();
             var projectDtos = new List<ProjectDto>();
             foreach (var project in projects)
             {

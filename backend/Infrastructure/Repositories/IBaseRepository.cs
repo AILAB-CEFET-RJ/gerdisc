@@ -24,7 +24,7 @@ namespace gerdisc.Infrastructure.Repositories
         /// <param name="id">The ID of the entity to get.</param>
         /// <returns>The entity with the specified ID, or null if not found.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="id"/> is null.</exception>
-        Task<TEntity> GetByIdAsync(object id);
+        Task<TEntity> GetByIdAsync(Guid id);
 
         /// <summary>
         /// Gets a single entity by its primary key value, including any related entities specified in the includeProperties parameter.
