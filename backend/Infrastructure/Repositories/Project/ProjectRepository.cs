@@ -1,5 +1,7 @@
+using System.Linq.Expressions;
 using gerdisc.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace gerdisc.Infrastructure.Repositories.Project
 {
@@ -21,6 +23,5 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .ThenInclude(x => x.Student)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
-
     }
 }

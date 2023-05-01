@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using gerdisc.Infrastructure.Extensions;
 using gerdisc.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace gerdisc.Infrastructure.Repositories
 {
@@ -40,6 +41,18 @@ namespace gerdisc.Infrastructure.Repositories
         public async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return await _dbSet.IncludeMultiple(includeProperties).ToListAsync();
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync(params Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>[] includeProperties)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            foreach (var includeProperty in includeProperties)
+            {
+                query = includeProperty(query);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetPagedAsync(Expression<Func<TEntity, bool>> predicate, int pageNumber, int pageSize, params Expression<Func<TEntity, object>>[] includeProperties)
