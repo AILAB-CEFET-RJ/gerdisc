@@ -2,9 +2,11 @@ import styles from '@/styles/Login.module.css'
 import Head from 'next/head'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
     const router = useRouter()
+    const navigator = useNavigate()
     const [ email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -15,6 +17,7 @@ export default function Login() {
             pathname:'/Home',
             query: {name: "Radhanama",role: "Administrator"}
             })
+        navigator.
 
     }
     return (
