@@ -21,7 +21,7 @@ namespace gerdisc.Models.Mapper
                 LastName = self.LastName,
                 Cpf = self.Cpf,
                 Email = self.Email,
-                CreatedAt = self.CreatedAt,
+                CreatedAt = DateTime.UtcNow,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(self.Password),
                 Role = self.Role
             };
@@ -53,7 +53,6 @@ namespace gerdisc.Models.Mapper
                 LastName = self.LastName,
                 Cpf = self.Cpf,
                 Email = self.Email,
-                CreatedAt = self.CreatedAt,
                 Role = self.Role
             };
 

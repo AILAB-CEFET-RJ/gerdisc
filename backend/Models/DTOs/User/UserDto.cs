@@ -24,8 +24,6 @@ namespace gerdisc.Models.DTOs
 
         public string Cpf { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-
         public RolesEnum Role { get; set; }
     }
 }

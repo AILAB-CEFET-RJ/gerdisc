@@ -12,11 +12,11 @@ namespace gerdisc.Models.DTOs
         public string? ProjectId { get; set; }
         
         public int Status { get; set; }
-        
+
         public DateTime EntryDate { get; set; }
-        
+
         public DateTime ProjectDefenceDate { get; set; }
-        
+
         public DateTime ProjectQualificationDate { get; set; }
         
         public string? Proficiency { get; set; }
