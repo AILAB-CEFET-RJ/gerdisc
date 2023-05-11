@@ -22,14 +22,17 @@ namespace gerdisc.Services.Dissertation
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<DissertationDto> CreateDissertationAsync(DissertationDto dissertationDto)
+        public async Task<OrientationDto> CreateDissertationAsync(OrientationDto orientationDto)
         {
-            var dissertation = dissertationDto.ToEntity();
+            var dissertation = orientationDto.Dissertation.ToEntity();
+
+            orientationDto.Id = dissertation.Id;
 
             await _repository.Dissertation.AddAsync(dissertation);
+            await _repository.Orientation.AddAsync(orientationDto.ToEntity());
 
             _logger.LogInformation($"Dissertation {dissertation.Name} created successfully.");
-            return dissertationDto;
+            return orientationDto;
         }
 
         public async Task<DissertationDto> GetDissertationAsync(Guid id)
@@ -55,15 +58,15 @@ namespace gerdisc.Services.Dissertation
             return dissertationDtos;
         }
 
-        public async Task<DissertationDto> UpdateDissertationAsync(Guid id, DissertationDto dissertationDto)
+        public async Task<OrientationDto> UpdateDissertationAsync(Guid id, OrientationDto orientationDto)
         {
-            var existingDissertation = await _repository.Dissertation.GetByIdAsync(id);
+            var existingDissertation = await _repository.Orientation.GetByIdAsync(id);
             if (existingDissertation == null)
             {
                 throw new ArgumentException($"Dissertation with id {id} does not exist.");
             }
 
-            existingDissertation = dissertationDto.ToEntity(existingDissertation);
+            existingDissertation = orientationDto.ToEntity(existingDissertation);
 
 
             return existingDissertation.ToDto();

@@ -20,15 +20,15 @@ namespace gerdisc.Controllers
         /// <summary>
         /// Creates a new dissertation.
         /// </summary>
-        /// <param name="dissertationDto">The dissertation data.</param>
+        /// <param name="orientationDto">The dissertation data.</param>
         /// <returns>The created dissertation.</returns>
         [HttpPost]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<DissertationDto>> CreateDissertation(DissertationDto dissertationDto)
+        public async Task<ActionResult<OrientationDto>> CreateDissertation(OrientationDto orientationDto)
         {
             try
             {
-                var dissertation = await _dissertationService.CreateDissertationAsync(dissertationDto);
+                var dissertation = await _dissertationService.CreateDissertationAsync(orientationDto);
                 return CreatedAtAction(nameof(GetDissertation), new { id = dissertation.Id }, dissertation);
             }
             catch (Exception ex)
@@ -70,15 +70,15 @@ namespace gerdisc.Controllers
         /// Updates a dissertation by its ID.
         /// </summary>
         /// <param name="id">The dissertation ID.</param>
-        /// <param name="dissertationDto">The dissertation data.</param>
+        /// <param name="orientationDto">The dissertation data.</param>
         /// <returns>The updated dissertation.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<DissertationDto>> UpdateDissertation(Guid id, DissertationDto dissertationDto)
+        public async Task<ActionResult<OrientationDto>> UpdateDissertation(Guid id, OrientationDto orientationDto)
         {
             try
             {
-                var dissertation = await _dissertationService.UpdateDissertationAsync(id, dissertationDto);
+                var dissertation = await _dissertationService.UpdateDissertationAsync(id, orientationDto);
                 return Ok(dissertation);
             }
             catch (Exception ex)

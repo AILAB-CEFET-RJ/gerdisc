@@ -27,7 +27,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property is a foreign key to the <see cref="ExternalResearcherEntity"/> entity.
         /// </remarks>
-        public Guid? ExternalResearcherId { get; set; }
+        public Guid? ResearcherId { get; set; }
 
         /// <summary>
         /// Gets or sets the external researcher navigation property.

@@ -12,7 +12,7 @@ namespace gerdisc.Services.Dissertation
         /// </summary>
         /// <param name="dissertationDto">The dissertation DTO containing the dissertation details.</param>
         /// <returns>The created dissertation DTO.</returns>
-        Task<DissertationDto> CreateDissertationAsync(DissertationDto dissertationDto);
+        Task<OrientationDto> CreateDissertationAsync(OrientationDto orientationDto);
 
         /// <summary>
         /// Retrieves a dissertation by ID.
@@ -33,7 +33,7 @@ namespace gerdisc.Services.Dissertation
         /// <param name="id">The ID of the dissertation to update.</param>
         /// <param name="dissertationDto">The dissertation DTO containing the updated dissertation details.</param>
         /// <returns>The updated dissertation DTO.</returns>
-        Task<DissertationDto> UpdateDissertationAsync(Guid id, DissertationDto dissertationDto);
+        Task<OrientationDto> UpdateDissertationAsync(Guid id, OrientationDto orientationDto);
 
         /// <summary>
         /// Deletes a dissertation.
