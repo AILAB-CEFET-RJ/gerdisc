@@ -1,6 +1,9 @@
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Properties;
 using gerdisc.Services.Course;
+using gerdisc.Services.Dissertation;
+using gerdisc.Services.Extension;
+using gerdisc.Services.ExternalResearcher;
 using gerdisc.Services.Interfaces;
 using gerdisc.Services.Professor;
 using gerdisc.Services.Project;
@@ -70,7 +73,10 @@ namespace gerdisc
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IProfessorService, ProfessorService>();
+            services.AddScoped<IExternalResearcherService, ExternalResearcherService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDissertationService, DissertationService>();
+            services.AddScoped<IExtensionService, ExtensionService>();
             services.AddSingleton<ISigningConfiguration>(signingConfig);
             services.AddSingleton<ISettings>(settings);
             services.AddSingleton<IRepository>(x => new Repository(x.GetService<ContexRepository>()));
