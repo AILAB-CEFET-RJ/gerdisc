@@ -1,14 +1,20 @@
 import React from 'react'
 
 
-export default function Header({title, description})
-{
+export default function Header({ name }) {
     return (
-        <head>
-            <title>{title}</title>
-            <meta name="description" content={description} />
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <link rel="icon" href="/favicon.ico" />         
-        </head>
+        <>
+            <div className={"header"}>
+                <div className={"appName"}>
+                    <div className={"bleap"}> </div>
+                    <span>GERDISC</span>
+                </div>
+                <div className={"headerOptions"}>
+                    <div>Óla, {name}</div>
+                </div>
+            </div>
+            <div className={"headerBreak"}><span></span></div>
+            <br></br>
+        </>
     );
 }
