@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace gerdisc
 {
@@ -51,6 +52,11 @@ namespace gerdisc
                 });
 
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
+            });
+
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
             var settings = new AppSettings();
