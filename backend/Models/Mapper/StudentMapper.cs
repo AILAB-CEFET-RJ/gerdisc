@@ -1,5 +1,6 @@
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Mapper
 {
@@ -82,6 +83,40 @@ namespace gerdisc.Models.Mapper
                 DateOfBirth = entity.DateOfBirth.ToUniversalTime(),
                 Scholarship = entity.Scholarship,
                 User = entity.User?.ToDto(),
+            };
+
+        /// <summary>
+        /// Converts a <see cref="StudentCsvDto"/> object to a <see cref="StudentDto"/> object.
+        /// </summary>
+        /// <param name="entity">The <see cref="StudentCsvDto"/> object to convert.</param>
+        /// <returns>A new <see cref="StudentDto"/> object with the values from the <paramref name="entity"/> object.</returns>
+        public static StudentDto ToDto(this StudentCsvDto entity) =>
+            entity is null ? new StudentDto() : new StudentDto
+            {
+                Registration = entity.Registration,
+                RegistrationDate = DateTime.Parse(entity.RegistrationDate).ToUniversalTime(),
+                ProjectId = entity.ProjectId,
+                Status = entity.Status,
+                EntryDate = DateTime.Parse(entity.EntryDate).ToUniversalTime(),
+                ProjectDefenceDate = DateTime.Parse(entity.ProjectDefenceDate).ToUniversalTime(),
+                ProjectQualificationDate = DateTime.Parse(entity.ProjectQualificationDate).ToUniversalTime(),
+                Proficiency = entity.Proficiency,
+                UndergraduateInstitution = entity.UndergraduateInstitution,
+                InstitutionType = entity.InstitutionType,
+                UndergraduateCourse = entity.UndergraduateCourse,
+                GraduationYear = entity.GraduationYear,
+                UndergraduateArea = entity.UndergraduateArea,
+                DateOfBirth = DateTime.Parse(entity.DateOfBirth).ToUniversalTime(),
+                Scholarship = entity.Scholarship,
+                User = new UserDto
+                {
+                    Cpf = entity.Cpf,
+                    Email = entity.Email,
+                    FirstName = entity.FirstName,
+                    LastName = entity.LastName,
+                    Password = entity.Password,
+                    Role = RolesEnum.Student
+                },
             };
     }
 }

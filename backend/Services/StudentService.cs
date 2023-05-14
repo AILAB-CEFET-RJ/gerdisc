@@ -5,7 +5,8 @@ using gerdisc.Models.Mapper;
 using gerdisc.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Threading.Tasks;
+using CsvHelper;
+using System.Globalization;
 
 namespace gerdisc.Services.Student
 {
@@ -34,6 +35,22 @@ namespace gerdisc.Services.Student
 
             _logger.LogInformation($"Student {student.User.Id} created successfully.");
             return student.ToDto();
+        }
+
+        public async Task<IEnumerable<StudentDto>> AddStudentsFromCsvAsync(IFormFile file)
+        {
+            using var reader = new StreamReader(file.OpenReadStream());
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+            var records = await csv.GetRecordsAsync<StudentCsvDto>().ToListAsync();
+
+            var insertedStudents = new List<StudentDto>();
+            foreach (var record in records)
+            {
+                var insertedStudent = await CreateStudentAsync(record.ToDto());
+                insertedStudents.Add(insertedStudent);
+            }
+
+            return insertedStudents;
         }
 
         public async Task<StudentDto> GetStudentAsync(Guid id)

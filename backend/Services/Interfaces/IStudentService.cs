@@ -16,6 +16,16 @@ namespace gerdisc.Services.Interfaces
         Task<StudentDto> CreateStudentAsync(StudentDto student);
 
         /// <summary>
+        /// Adds a list of students from a CSV file asynchronously.
+        /// </summary>
+        /// <param name="file">The CSV file containing the student data.</param>
+        /// <returns>An enumerable of the inserted students.</returns>
+        /// <exception cref="System.ArgumentNullException">Thrown when the input file is null.</exception>
+        /// <exception cref="CsvHelper.CsvReaderException">Thrown when there is an error reading the CSV file.</exception>
+        /// <exception cref="System.Exception">Thrown when there is an error creating the student in the database.</exception>
+        Task<IEnumerable<StudentDto>> AddStudentsFromCsvAsync(IFormFile file);
+
+        /// <summary>
         /// Gets a student entity by its ID.
         /// </summary>
         /// <param name="studentId">The ID of the student entity to retrieve.</param>

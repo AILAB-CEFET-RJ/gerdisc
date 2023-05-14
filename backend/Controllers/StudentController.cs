@@ -31,6 +31,21 @@ namespace gerdisc.Controllers
             }
         }
 
+        [HttpPost("csv")]
+        [Authorize(Roles = "Administrator, StudentManager")]
+        public async Task<ActionResult<IEnumerable<StudentDto>>> AddStudentsFromCsvAsync(IFormFile file)
+        {
+            try
+            {
+                var students = await _studentService.AddStudentsFromCsvAsync(file);
+                return Ok(students);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("{studentId}")]
         [Authorize(Roles = "Administrator, StudentManager")]
         public async Task<ActionResult<StudentDto>> GetStudent(Guid studentId)
