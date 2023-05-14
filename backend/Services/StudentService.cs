@@ -26,14 +26,19 @@ namespace gerdisc.Services.Student
 
         public async Task<StudentDto> CreateStudentAsync(StudentDto studentDto)
         {
-            var user = studentDto.User.ToEntity();
-            user = await _repository.User.AddAsync(user);
+            var user = await _repository.User.GetUserByEmail(studentDto.Email);
+            if (user is not null)
+            {
+                throw new ArgumentException($"Student {studentDto.Email} alredy created.");
+            }
 
             var student = studentDto.ToEntity();
+            user = await _repository.User.AddAsync(student.User);
+
             student.UserId = user.Id;
             student = await _repository.Student.AddAsync(student);
 
-            _logger.LogInformation($"Student {student.User.Id} created successfully.");
+            _logger.LogInformation($"Student {studentDto.Email} created successfully.");
             return student.ToDto();
         }
 
@@ -46,8 +51,15 @@ namespace gerdisc.Services.Student
             var insertedStudents = new List<StudentDto>();
             foreach (var record in records)
             {
-                var insertedStudent = await CreateStudentAsync(record.ToDto());
-                insertedStudents.Add(insertedStudent);
+                try
+                {
+                    var insertedStudent = await CreateStudentAsync(record.ToDto());
+                    insertedStudents.Add(insertedStudent);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex.Message);
+                }
             }
 
             return insertedStudents;

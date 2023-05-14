@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace gerdisc.Models.DTOs
 {
-    public class ProfessorDto
+    public class ProfessorDto : UserDto
     {
-        public Guid? Id { get; set; }
-        public UserDto User { get; set; }
-        public string Siape { get; set; }
+        public string? Siape { get; set; }
     }
 }

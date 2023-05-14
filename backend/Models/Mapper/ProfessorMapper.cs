@@ -1,5 +1,6 @@
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Mapper
 {
@@ -17,7 +18,7 @@ namespace gerdisc.Models.Mapper
             self is null ? new ProfessorEntity() : new ProfessorEntity
             {
                 Siape = self.Siape,
-                UserId = self.User.Id!.Value,
+                User = self.ToUserEntity(RolesEnum.Professor),
             };
 
         /// <summary>
@@ -42,7 +43,6 @@ namespace gerdisc.Models.Mapper
             {
                 Id = self.Id,
                 Siape = self.Siape,
-                User = self.User.ToDto(),
-            };
+            }.AddUserDto(self.User);
     }
 }

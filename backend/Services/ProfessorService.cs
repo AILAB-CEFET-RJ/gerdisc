@@ -20,10 +20,8 @@ namespace gerdisc.Services.Professor
 
         public async Task<ProfessorDto> CreateProfessorAsync(ProfessorDto professorDto)
         {
-            var user = professorDto.User.ToEntity();
-            user = await _repository.User.AddAsync(user);
-
             var professor = professorDto.ToEntity();
+            var user = await _repository.User.AddAsync(professor.User);
             professor.UserId = user.Id;
             await _repository.Professor.AddAsync(professor);
 

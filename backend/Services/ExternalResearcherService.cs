@@ -20,11 +20,9 @@ namespace gerdisc.Services.ExternalResearcher
 
         public async Task<ExternalResearcherDto> CreateExternalResearcherAsync(ExternalResearcherDto externalResearcherDto)
         {
-            var user = externalResearcherDto.User.ToEntity();
-            user = await _repository.User.AddAsync(user);
-
             var externalResearcher = externalResearcherDto.ToEntity();
-            externalResearcher.UserId = user.Id;
+            var userId = (await _repository.User.AddAsync(externalResearcher.User)).Id;
+            externalResearcher.UserId = userId;
             await _repository.ExternalResearcher.AddAsync(externalResearcher);
 
             _logger.LogInformation($"ExternalResearcher {externalResearcher.User.Id} created successfully.");

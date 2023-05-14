@@ -20,12 +20,12 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The cpf of the user.
         /// </summary>
-        public string? Cpf { get; set; }
+        public string Cpf { get; set; }
 
         /// <summary>
         /// The email of the user.
         /// </summary>
-        public string? Email { get; init; }
+        public string Email { get; init; }
 
         /// <summary>
         /// The password hash of the user.

@@ -20,7 +20,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The date on which the student registered.
         /// </summary>
-        public DateTime RegistrationDate { get; set; }
+        public DateTime? RegistrationDate { get; set; }
         
         /// <summary>
         /// The ID of the project associated with this student entity.
@@ -35,17 +35,17 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The date on which the student entered the program.
         /// </summary>
-        public DateTime EntryDate { get; set; }
+        public DateTime? EntryDate { get; set; }
         
         /// <summary>
         /// The date on which the student defended their project.
         /// </summary>
-        public DateTime ProjectDefenceDate { get; set; }
+        public DateTime? ProjectDefenceDate { get; set; }
         
         /// <summary>
         /// The date on which the student qualified for their project.
         /// </summary>
-        public DateTime ProjectQualificationDate { get; set; }
+        public DateTime? ProjectQualificationDate { get; set; }
         
         /// <summary>
         /// The proficiency level of the student.
@@ -85,7 +85,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The date of birth of the student.
         /// </summary>
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         
         /// <summary>
         /// The scholarship status of the student.
@@ -98,7 +98,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property allows lazy loading of the associated <see cref="UserEntity"/> entity.
         /// </remarks>
-        public virtual UserEntity? User { get; set; }
+        public virtual UserEntity User { get; set; }
 
         /// <summary>
         /// Gets or sets the navigation property for the collection of student course entities associated with this student.
@@ -123,6 +123,7 @@ namespace gerdisc.Models.Entities
         {
             Dissertations = new List<DissertationEntity>();
             StudentCourses = new List<StudentCourseEntity>();
+            User = new UserEntity();
         }
     }
 }

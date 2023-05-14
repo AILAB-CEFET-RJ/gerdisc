@@ -11,11 +11,8 @@ namespace gerdisc.Infrastructure.Repositories.Project
         {
         }
 
-        public override async Task<ProjectEntity> GetByIdAsync(Guid id)
+        public override async Task<ProjectEntity?> GetByIdAsync(Guid id)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-
             return await _dbSet
                 .Include(x => x.ProfessorProjects)
                 .ThenInclude(x => x.Professor)

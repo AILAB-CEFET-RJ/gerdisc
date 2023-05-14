@@ -16,11 +16,19 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property allows lazy loading of the associated <see cref="UserEntity"/> entity.
         /// </remarks>
-        public virtual UserEntity? User { get; set; }
+        public virtual UserEntity User { get; set; }
 
         /// <summary>
         /// The SIAPE (System for Electronic Management of Educational Documentation) number of the professor.
         /// </summary>
         public string? Siape { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProfessorEntity"/> class with the specified properties.
+        /// </summary>
+        public ProfessorEntity()
+        {
+            User = new UserEntity();
+        }
     }
 }

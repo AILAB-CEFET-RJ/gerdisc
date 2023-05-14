@@ -1,5 +1,6 @@
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Mapper
 {
@@ -16,8 +17,8 @@ namespace gerdisc.Models.Mapper
         public static ExternalResearcherEntity ToEntity(this ExternalResearcherDto self) =>
             self is null ? new ExternalResearcherEntity() : new ExternalResearcherEntity
             {
-                UserId = self.User.Id!.Value,
-                Institution = self.Institution
+                Institution = self.Institution,
+                User = self.ToUserEntity(RolesEnum.ExternalResearcher),
             };
 
         /// <summary>
@@ -41,8 +42,7 @@ namespace gerdisc.Models.Mapper
             self is null ? new ExternalResearcherDto() : new ExternalResearcherDto
             {
                 Id = self.Id,
-                User = self.User.ToDto(),
                 Institution = self.Institution
-            };
+            }.AddUserDto(self.User);
     }
 }

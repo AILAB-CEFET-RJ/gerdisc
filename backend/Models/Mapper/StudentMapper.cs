@@ -1,5 +1,6 @@
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
+using gerdisc.Infrastructure.Extensions;
 using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Mapper
@@ -18,20 +19,21 @@ namespace gerdisc.Models.Mapper
             dto is null ? new StudentEntity() : new StudentEntity
             {
                 Registration = dto.Registration,
-                RegistrationDate = dto.RegistrationDate.ToUniversalTime(),
+                RegistrationDate = dto.RegistrationDate?.ToUniversalTime(),
                 ProjectId = dto.ProjectId,
                 Status = dto.Status,
-                EntryDate = dto.EntryDate.ToUniversalTime(),
-                ProjectDefenceDate = dto.ProjectDefenceDate.ToUniversalTime(),
-                ProjectQualificationDate = dto.ProjectQualificationDate.ToUniversalTime(),
+                EntryDate = dto.EntryDate?.ToUniversalTime(),
+                ProjectDefenceDate = dto.ProjectDefenceDate?.ToUniversalTime(),
+                ProjectQualificationDate = dto.ProjectQualificationDate?.ToUniversalTime(),
                 Proficiency = dto.Proficiency,
                 UndergraduateInstitution = dto.UndergraduateInstitution,
                 InstitutionType = dto.InstitutionType,
                 UndergraduateCourse = dto.UndergraduateCourse,
                 GraduationYear = dto.GraduationYear,
                 UndergraduateArea = dto.UndergraduateArea,
-                DateOfBirth = dto.DateOfBirth.ToUniversalTime(),
-                Scholarship = dto.Scholarship
+                DateOfBirth = dto.DateOfBirth?.ToUniversalTime(),
+                Scholarship = dto.Scholarship,
+                User = dto.ToUserEntity(RolesEnum.Student),
             };
 
         /// <summary>
@@ -68,22 +70,21 @@ namespace gerdisc.Models.Mapper
             {
                 Id = entity.Id,
                 Registration = entity.Registration,
-                RegistrationDate = entity.RegistrationDate.ToUniversalTime(),
+                RegistrationDate = entity.RegistrationDate?.ToUniversalTime(),
                 ProjectId = entity.ProjectId,
                 Status = entity.Status,
-                EntryDate = entity.EntryDate.ToUniversalTime(),
-                ProjectDefenceDate = entity.ProjectDefenceDate.ToUniversalTime(),
-                ProjectQualificationDate = entity.ProjectQualificationDate.ToUniversalTime(),
+                EntryDate = entity.EntryDate?.ToUniversalTime(),
+                ProjectDefenceDate = entity.ProjectDefenceDate?.ToUniversalTime(),
+                ProjectQualificationDate = entity.ProjectQualificationDate?.ToUniversalTime(),
                 Proficiency = entity.Proficiency,
                 UndergraduateInstitution = entity.UndergraduateInstitution,
                 InstitutionType = entity.InstitutionType,
                 UndergraduateCourse = entity.UndergraduateCourse,
                 GraduationYear = entity.GraduationYear,
                 UndergraduateArea = entity.UndergraduateArea,
-                DateOfBirth = entity.DateOfBirth.ToUniversalTime(),
-                Scholarship = entity.Scholarship,
-                User = entity.User?.ToDto(),
-            };
+                DateOfBirth = entity.DateOfBirth?.ToUniversalTime(),
+                Scholarship = entity.Scholarship
+            }.AddUserDto(entity.User);
 
         /// <summary>
         /// Converts a <see cref="StudentCsvDto"/> object to a <see cref="StudentDto"/> object.
@@ -94,29 +95,25 @@ namespace gerdisc.Models.Mapper
             entity is null ? new StudentDto() : new StudentDto
             {
                 Registration = entity.Registration,
-                RegistrationDate = DateTime.Parse(entity.RegistrationDate).ToUniversalTime(),
+                RegistrationDate = entity.RegistrationDate.Parse()?.ToUniversalTime(),
                 ProjectId = entity.ProjectId,
                 Status = entity.Status,
-                EntryDate = DateTime.Parse(entity.EntryDate).ToUniversalTime(),
-                ProjectDefenceDate = DateTime.Parse(entity.ProjectDefenceDate).ToUniversalTime(),
-                ProjectQualificationDate = DateTime.Parse(entity.ProjectQualificationDate).ToUniversalTime(),
+                EntryDate = entity.EntryDate.Parse()?.ToUniversalTime(),
+                ProjectDefenceDate = entity.ProjectDefenceDate.Parse()?.ToUniversalTime(),
+                ProjectQualificationDate = entity.ProjectQualificationDate.Parse()?.ToUniversalTime(),
                 Proficiency = entity.Proficiency,
                 UndergraduateInstitution = entity.UndergraduateInstitution,
                 InstitutionType = entity.InstitutionType,
                 UndergraduateCourse = entity.UndergraduateCourse,
                 GraduationYear = entity.GraduationYear,
                 UndergraduateArea = entity.UndergraduateArea,
-                DateOfBirth = DateTime.Parse(entity.DateOfBirth).ToUniversalTime(),
+                DateOfBirth = entity.DateOfBirth.Parse()?.ToUniversalTime(),
                 Scholarship = entity.Scholarship,
-                User = new UserDto
-                {
-                    Cpf = entity.Cpf,
-                    Email = entity.Email,
-                    FirstName = entity.FirstName,
-                    LastName = entity.LastName,
-                    Password = entity.Password,
-                    Role = RolesEnum.Student
-                },
+                Cpf = entity.Cpf,
+                Email = entity.Email,
+                FirstName = entity.FirstName,
+                LastName = entity.LastName,
+                Password = entity.Password,
             };
     }
 }

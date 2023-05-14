@@ -22,19 +22,20 @@ namespace gerdisc.Infrastructure.Repositories
             return await _dbSet.ToListAsync();
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(Guid id)
+        public virtual async Task<TEntity?> GetByIdAsync(Guid id)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-            
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<TEntity> GetByIdAsync(Guid id, params Expression<Func<TEntity, object>>[] includeProperties)
+        public async Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            await _dbSet.AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+            return entities;
+        }
 
+        public async Task<TEntity?> GetByIdAsync(Guid id, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
             return await _dbSet.IncludeMultiple(includeProperties).SingleOrDefaultAsync(p => p.Id == id);
         }
 
@@ -95,12 +96,12 @@ namespace gerdisc.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteByIdAsync(object id)
+        public virtual async Task DeleteByIdAsync(Guid id)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            TEntity? entityToDelete = await _dbSet.FindAsync(id);
+            if (entityToDelete == null)
+                throw new ArgumentNullException(nameof(entityToDelete));
             
-            TEntity entityToDelete = await _dbSet.FindAsync(id);
             _dbSet.Remove(entityToDelete);
             await _context.SaveChangesAsync();
         }
