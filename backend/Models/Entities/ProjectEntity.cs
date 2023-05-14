@@ -8,12 +8,12 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Gets or sets the name of the project.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the status of the project.
         /// </summary>
-        public string? Status { get; set; }
+        public string Status { get; set; }
 
         /// <summary>
         /// Gets or sets the list of professors associated with the project.
