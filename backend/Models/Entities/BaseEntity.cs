@@ -13,12 +13,15 @@ namespace gerdisc.Models.Entities
         [Key]
         public Guid Id { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         /// <summary>
         /// Default constructor.
         /// </summary>
         public BaseEntity()
         {
             Id = Guid.NewGuid();
+            IsDeleted = false;
         }
     }
 }

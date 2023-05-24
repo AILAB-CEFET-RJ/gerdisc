@@ -24,12 +24,12 @@ namespace gerdisc.Controllers
         /// <returns>The created project.</returns>
         [HttpPost]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<ProjectDto>> CreateProject(ProjectDto projectDto)
+        public async Task<ActionResult<ProjectDto>> CreateProject(CreateProjectDto projectDto)
         {
             try
             {
-                var project = await _projectService.CreateProjectAsync(projectDto);
-                return CreatedAtAction(nameof(GetProject), new { id = project.Id }, project);
+                var projectId = await _projectService.CreateProjectAsync(projectDto);
+                return CreatedAtAction(nameof(GetProject), new { id = projectId });
             }
             catch (Exception ex)
             {
@@ -74,12 +74,12 @@ namespace gerdisc.Controllers
         /// <returns>The updated project.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<ProjectDto>> UpdateProject(Guid id, ProjectDto projectDto)
+        public async Task<ActionResult<ProjectDto>> UpdateProject(Guid id, CreateProjectDto projectDto)
         {
             try
             {
-                var project = await _projectService.UpdateProjectAsync(id, projectDto);
-                return Ok(project);
+                var projectId = await _projectService.UpdateProjectAsync(id, projectDto);
+                return CreatedAtAction(nameof(GetProject), new { id = projectId });
             }
             catch (Exception ex)
             {

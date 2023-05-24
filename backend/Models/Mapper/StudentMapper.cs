@@ -63,28 +63,31 @@ namespace gerdisc.Models.Mapper
         /// <summary>
         /// Converts a <see cref="StudentEntity"/> object to a <see cref="StudentDto"/> object.
         /// </summary>
-        /// <param name="entity">The <see cref="StudentEntity"/> object to convert.</param>
-        /// <returns>A new <see cref="StudentDto"/> object with the values from the <paramref name="entity"/> object.</returns>
-        public static StudentDto ToDto(this StudentEntity entity) =>
-            entity is null ? new StudentDto() : new StudentDto
+        /// <param name="self">The <see cref="StudentEntity"/> object to convert.</param>
+        /// <returns>A new <see cref="StudentDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static StudentDto ToDto(this StudentEntity self)
+        {
+            var entity = self is null ? new StudentDto() : new StudentDto
             {
-                Id = entity.Id,
-                Registration = entity.Registration,
-                RegistrationDate = entity.RegistrationDate?.ToUniversalTime(),
-                ProjectId = entity.ProjectId,
-                Status = entity.Status,
-                EntryDate = entity.EntryDate?.ToUniversalTime(),
-                ProjectDefenceDate = entity.ProjectDefenceDate?.ToUniversalTime(),
-                ProjectQualificationDate = entity.ProjectQualificationDate?.ToUniversalTime(),
-                Proficiency = entity.Proficiency,
-                UndergraduateInstitution = entity.UndergraduateInstitution,
-                InstitutionType = entity.InstitutionType,
-                UndergraduateCourse = entity.UndergraduateCourse,
-                GraduationYear = entity.GraduationYear,
-                UndergraduateArea = entity.UndergraduateArea,
-                DateOfBirth = entity.DateOfBirth?.ToUniversalTime(),
-                Scholarship = entity.Scholarship
-            }.AddUserDto(entity.User);
+                Id = self.Id,
+                Registration = self.Registration,
+                RegistrationDate = self.RegistrationDate?.ToUniversalTime(),
+                ProjectId = self.ProjectId,
+                Status = self.Status,
+                EntryDate = self.EntryDate?.ToUniversalTime(),
+                ProjectDefenceDate = self.ProjectDefenceDate?.ToUniversalTime(),
+                ProjectQualificationDate = self.ProjectQualificationDate?.ToUniversalTime(),
+                Proficiency = self.Proficiency,
+                UndergraduateInstitution = self.UndergraduateInstitution,
+                InstitutionType = self.InstitutionType,
+                UndergraduateCourse = self.UndergraduateCourse,
+                GraduationYear = self.GraduationYear,
+                UndergraduateArea = self.UndergraduateArea,
+                DateOfBirth = self.DateOfBirth?.ToUniversalTime(),
+                Scholarship = self.Scholarship
+            };
+            return entity.AddUserDto(self.User);
+        }
 
         /// <summary>
         /// Converts a <see cref="StudentCsvDto"/> object to a <see cref="StudentDto"/> object.

@@ -12,7 +12,7 @@ namespace gerdisc.Services.Project
         /// </summary>
         /// <param name="projectDto">The project DTO containing the project details.</param>
         /// <returns>The created project DTO.</returns>
-        Task<ProjectDto> CreateProjectAsync(ProjectDto projectDto);
+        Task<Guid> CreateProjectAsync(CreateProjectDto projectDto);
 
         /// <summary>
         /// Retrieves a project by ID.
@@ -33,7 +33,7 @@ namespace gerdisc.Services.Project
         /// <param name="id">The ID of the project to update.</param>
         /// <param name="projectDto">The project DTO containing the updated project details.</param>
         /// <returns>The updated project DTO.</returns>
-        Task<ProjectDto> UpdateProjectAsync(Guid id, ProjectDto projectDto);
+        Task<Guid> UpdateProjectAsync(Guid id, CreateProjectDto projectDto);
 
         /// <summary>
         /// Deletes a project.

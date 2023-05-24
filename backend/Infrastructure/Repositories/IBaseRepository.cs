@@ -115,6 +115,13 @@ namespace gerdisc.Infrastructure.Repositories
         Task DeleteRangeAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
+        /// Deletes a range of entities based on the specified predicate.
+        /// </summary>
+        /// <param name="predicate">The predicate to filter the entities to be deleted.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        Task DeleteRangeAsync(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
         /// Counts the number of entities that satisfy the specified condition asynchronously.
         /// </summary>
         /// <param name="predicate">The condition that the entities must satisfy.</param>

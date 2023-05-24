@@ -22,14 +22,17 @@ namespace gerdisc.Services.Project
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<ProjectDto> CreateProjectAsync(ProjectDto projectDto)
+        public async Task<Guid> CreateProjectAsync(CreateProjectDto projectDto)
         {
             var project = projectDto.ToEntity();
 
-            await _repository.Project.AddAsync(project);
+            var professorIds = projectDto.ProfessorIds.Select(x => Guid.Parse(x));
+
+            project = await _repository.Project.AddAsync(project);
+            await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(project.Id));
 
             _logger.LogInformation($"Project {project.Name} created successfully.");
-            return projectDto;
+            return project.Id;
         }
 
         public async Task<ProjectDto> GetProjectAsync(Guid id)
@@ -59,7 +62,7 @@ namespace gerdisc.Services.Project
             return projectDtos;
         }
 
-        public async Task<ProjectDto> UpdateProjectAsync(Guid id, ProjectDto projectDto)
+        public async Task<Guid> UpdateProjectAsync(Guid id, CreateProjectDto projectDto)
         {
             var existingProject = await _repository.Project.GetByIdAsync(id);
             if (existingProject == null)
@@ -67,10 +70,25 @@ namespace gerdisc.Services.Project
                 throw new ArgumentException($"Project with id {id} does not exist.");
             }
 
+            var professorIds = projectDto
+                .ProfessorIds
+                .Select(x => Guid.Parse(x))
+                .Except(existingProject.ProfessorProjects.Select(x => x.Id));
+
+            var professorIdsToDelete = existingProject
+                .ProfessorProjects
+                .Select(x => x.Id)
+                .Except(
+                    projectDto
+                    .ProfessorIds
+                    .Select(x => Guid.Parse(x)));
+
+            await _repository.ProfessorProject.DeleteRangeAsync(entity => professorIdsToDelete.Contains(entity.Id));
+
             existingProject = projectDto.ToEntity(existingProject);
+            await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(existingProject.Id));
 
-
-            return existingProject.ToDto();
+            return existingProject.Id;
         }
 
         public async Task DeleteProjectAsync(Guid id)

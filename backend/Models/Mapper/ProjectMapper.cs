@@ -9,24 +9,40 @@ namespace gerdisc.Models.Mapper
     public static class ProjectMapper
     {
         /// <summary>
-        /// Converts a <see cref="ProjectDto"/> object to a <see cref="ProjectEntity"/> object.
+        /// Converts a <see cref="CreateProjectDto"/> object to a <see cref="ProjectEntity"/> object.
         /// </summary>
-        /// <param name="self">The <see cref="ProjectDto"/> object to convert.</param>
+        /// <param name="self">The <see cref="CreateProjectDto"/> object to convert.</param>
         /// <returns>A new <see cref="ProjectEntity"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static ProjectEntity ToEntity(this ProjectDto self) =>
+        public static ProjectEntity ToEntity(this CreateProjectDto self) =>
             self is null ? new ProjectEntity() : new ProjectEntity
             {
                 Name = self.Name,
-                Status = self.Status,
+                Status = self.Status
             };
 
         /// <summary>
-        /// Updates the values of an existing <see cref="ProjectEntity"/> object using the values from a <see cref="ProjectDto"/> object.
+        /// Creates a collection of <see cref="ProfessorProjectEntity"/> objects using the values from a <see cref="CreateProjectDto"/> object.
         /// </summary>
-        /// <param name="self">The <see cref="ProjectDto"/> object containing the updated values.</param>
+        /// <param name="professorIds">The <see cref="CreateProjectDto"/> object containing the professor IDs.</param>
+        /// <param name="projectId">The ID of the project.</param>
+        /// <returns>A collection of <see cref="ProfessorProjectEntity"/> objects.</returns>
+        public static IEnumerable<ProfessorProjectEntity> CreateProfessorProjects(this IEnumerable<Guid> professorIds, Guid projectId)
+        {
+            return professorIds
+                .Select(x => new ProfessorProjectEntity
+                {
+                    ProfessorId = x,
+                    ProjectId = projectId
+                });
+        }
+
+        /// <summary>
+        /// Updates the values of an existing <see cref="ProjectEntity"/> object using the values from a <see cref="CreateProjectDto"/> object.
+        /// </summary>
+        /// <param name="self">The <see cref="CreateProjectDto"/> object containing the updated values.</param>
         /// <param name="entityToUpdate">The existing <see cref="ProjectEntity"/> object to update.</param>
         /// <returns>The updated <see cref="ProjectEntity"/> object.</returns>
-        public static ProjectEntity ToEntity(this ProjectDto self, ProjectEntity entityToUpdate)
+        public static ProjectEntity ToEntity(this CreateProjectDto self, ProjectEntity entityToUpdate)
         {
             entityToUpdate.Name = self.Name;
             entityToUpdate.Status = self.Status;

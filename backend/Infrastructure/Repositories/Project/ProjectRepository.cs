@@ -14,6 +14,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
         public override async Task<ProjectEntity?> GetByIdAsync(Guid id)
         {
             return await _dbSet
+                .Where(e => !e.IsDeleted)
                 .Include(x => x.ProfessorProjects)
                 .ThenInclude(x => x.Professor)
                 .Include(x => x.Dissertations)
