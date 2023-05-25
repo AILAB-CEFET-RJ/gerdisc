@@ -13,7 +13,11 @@ namespace gerdisc.Infrastructure.Repositories
         public DbSet<CourseEntity>? Courses { get; set; }
         public DbSet<ProjectEntity>? Projects { get; set; }
         public DbSet<ExternalResearcherEntity>? ExternalResearcher { get; set; }
-
+        public DbSet<DissertationEntity>? Dissertations { get; set; } 
+        public DbSet<ExtensionEntity>? Extensions { get; set; } 
+        public DbSet<ProfessorProjectEntity>? ProfessorProjects { get; set; } 
+        public DbSet<StudentCourseEntity>? StudentCourses { get; set; } 
+        public DbSet<OrientationEntity>? Orientations { get; set; } 
 
         public ContexRepository(DbContextOptions<ContexRepository> options)
             : base(options)
