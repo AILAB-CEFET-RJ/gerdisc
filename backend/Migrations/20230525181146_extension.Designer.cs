@@ -12,8 +12,8 @@ using gerdisc.Infrastructure.Repositories;
 namespace gerdisc.Migrations
 {
     [DbContext(typeof(ContexRepository))]
-    [Migration("20230525002734_external")]
-    partial class external
+    [Migration("20230525181146_extension")]
+    partial class extension
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,7 +82,35 @@ namespace gerdisc.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("DissertationEntity");
+                    b.ToTable("Dissertations");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.ExtensionEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("NumberOfDays")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Extensions");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.ExternalResearcherEntity", b =>
@@ -105,6 +133,38 @@ namespace gerdisc.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ExternalResearcher");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.OrientationEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("DissertationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ExternalResearcherId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ProfessorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ResearcherId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DissertationId");
+
+                    b.HasIndex("ExternalResearcherId");
+
+                    b.HasIndex("ProfessorId");
+
+                    b.ToTable("Orientations");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProfessorEntity", b =>
@@ -150,7 +210,7 @@ namespace gerdisc.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("ProfessorProjectEntity");
+                    b.ToTable("ProfessorProjects");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProjectEntity", b =>
@@ -205,7 +265,7 @@ namespace gerdisc.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentCourseEntity");
+                    b.ToTable("StudentCourses");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>
@@ -327,6 +387,17 @@ namespace gerdisc.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("gerdisc.Models.Entities.ExtensionEntity", b =>
+                {
+                    b.HasOne("gerdisc.Models.Entities.StudentEntity", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("gerdisc.Models.Entities.ExternalResearcherEntity", b =>
                 {
                     b.HasOne("gerdisc.Models.Entities.UserEntity", "User")
@@ -336,6 +407,33 @@ namespace gerdisc.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.OrientationEntity", b =>
+                {
+                    b.HasOne("gerdisc.Models.Entities.DissertationEntity", "Dissertation")
+                        .WithMany()
+                        .HasForeignKey("DissertationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("gerdisc.Models.Entities.ExternalResearcherEntity", "ExternalResearcher")
+                        .WithMany()
+                        .HasForeignKey("ExternalResearcherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("gerdisc.Models.Entities.ProfessorEntity", "Professor")
+                        .WithMany()
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dissertation");
+
+                    b.Navigation("ExternalResearcher");
+
+                    b.Navigation("Professor");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProfessorEntity", b =>
