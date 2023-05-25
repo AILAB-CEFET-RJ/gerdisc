@@ -77,7 +77,7 @@ namespace gerdisc.Services.Extension
                 throw new ArgumentException($"Extension with id {id} does not exist.");
             }
 
-            await _repository.Extension.DeleteAsync(existingExtension);
+            await _repository.Extension.DeactiveAsync(existingExtension);
         }
     }
 }

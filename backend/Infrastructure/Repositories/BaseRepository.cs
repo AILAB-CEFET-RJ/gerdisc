@@ -49,8 +49,8 @@ namespace gerdisc.Infrastructure.Repositories
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(params
-        Expression<Func<TEntity, object>>[] includeProperties)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(
+            params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return await _dbSet
                 .Where(e => !e.IsDeleted)
@@ -96,7 +96,7 @@ namespace gerdisc.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> FindAsync(
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(
             Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet
@@ -132,13 +132,13 @@ namespace gerdisc.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteAsync(TEntity entity)
+        public virtual async Task DeactiveAsync(TEntity entity)
         {
             entity.IsDeleted = true;
             await UpdateAsync(entity);
         }
 
-        public virtual async Task DeleteByIdAsync(Guid id)
+        public virtual async Task DeactiveByIdAsync(Guid id)
         {
             TEntity? entityToDelete = await _dbSet.FindAsync(id);
             if (entityToDelete == null)
@@ -148,7 +148,7 @@ namespace gerdisc.Infrastructure.Repositories
             await UpdateAsync(entityToDelete);
         }
 
-        public virtual async Task DeleteRangeAsync(
+        public virtual async Task DeactiveRangeAsync(
             IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
@@ -158,7 +158,7 @@ namespace gerdisc.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteRangeAsync(
+        public virtual async Task DeactiveRangeAsync(
             Expression<Func<TEntity, bool>> predicate)
         {
             var entitiesToDelete = await _dbSet

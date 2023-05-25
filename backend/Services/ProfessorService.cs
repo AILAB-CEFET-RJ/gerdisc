@@ -74,7 +74,7 @@ namespace gerdisc.Services.Professor
                 throw new ArgumentException($"Professor with id {id} does not exist.");
             }
 
-            await _repository.Professor.DeleteAsync(existingProfessor);
+            await _repository.Professor.DeactiveAsync(existingProfessor);
         }
     }
 }

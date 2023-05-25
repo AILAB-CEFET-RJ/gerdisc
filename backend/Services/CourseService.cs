@@ -77,7 +77,7 @@ namespace gerdisc.Services.Course
                 throw new ArgumentException($"Course with id {id} does not exist.");
             }
 
-            await _repository.Course.DeleteAsync(existingCourse);
+            await _repository.Course.DeactiveAsync(existingCourse);
         }
     }
 }

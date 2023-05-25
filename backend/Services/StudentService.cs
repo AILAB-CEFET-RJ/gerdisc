@@ -110,7 +110,7 @@ namespace gerdisc.Services.Student
                 throw new ArgumentException($"Student with id {id} does not exist.");
             }
 
-            await _repository.Student.DeleteAsync(existingStudent);
+            await _repository.Student.DeactiveAsync(existingStudent);
         }
     }
 }

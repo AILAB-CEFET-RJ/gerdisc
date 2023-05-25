@@ -80,7 +80,7 @@ namespace gerdisc.Services.Dissertation
                 throw new ArgumentException($"Dissertation with id {id} does not exist.");
             }
 
-            await _repository.Dissertation.DeleteAsync(existingDissertation);
+            await _repository.Dissertation.DeactiveAsync(existingDissertation);
         }
     }
 }

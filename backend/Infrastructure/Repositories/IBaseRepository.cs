@@ -64,7 +64,7 @@ namespace gerdisc.Infrastructure.Repositories
         /// </summary>
         /// <param name="predicate">The predicate to match.</param>
         /// <returns>A collection of entities that match the predicate.</returns>
-        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// Gets a paged collection of entities that match the specified predicate.
@@ -99,27 +99,27 @@ namespace gerdisc.Infrastructure.Repositories
         /// Deletes an entity from the repository.
         /// </summary>
         /// <param name="entity">The entity to delete.</param>
-        Task DeleteAsync(TEntity entity);
+        Task DeactiveAsync(TEntity entity);
 
         /// <summary>
         /// Deletes an entity with the specified ID from the repository.
         /// </summary>
         /// <param name="id">The ID of the entity to delete.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="id"/> is null.</exception>
-        Task DeleteByIdAsync(Guid id);
+        Task DeactiveByIdAsync(Guid id);
 
         /// <summary>
         /// Deletes a range of entities from the repository.
         /// </summary>
         /// <param name="entities">The entities to delete.</param>
-        Task DeleteRangeAsync(IEnumerable<TEntity> entities);
+        Task DeactiveRangeAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
         /// Deletes a range of entities based on the specified predicate.
         /// </summary>
         /// <param name="predicate">The predicate to filter the entities to be deleted.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task DeleteRangeAsync(Expression<Func<TEntity, bool>> predicate);
+        Task DeactiveRangeAsync(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// Counts the number of entities that satisfy the specified condition asynchronously.

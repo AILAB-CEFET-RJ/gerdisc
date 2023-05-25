@@ -83,7 +83,7 @@ namespace gerdisc.Services.Project
                     .ProfessorIds
                     .Select(x => Guid.Parse(x)));
 
-            await _repository.ProfessorProject.DeleteRangeAsync(entity => professorIdsToDelete.Contains(entity.Id));
+            await _repository.ProfessorProject.DeactiveRangeAsync(entity => professorIdsToDelete.Contains(entity.Id));
 
             existingProject = projectDto.ToEntity(existingProject);
             await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(existingProject.Id));
@@ -99,7 +99,7 @@ namespace gerdisc.Services.Project
                 throw new ArgumentException($"Project with id {id} does not exist.");
             }
 
-            await _repository.Project.DeleteAsync(existingProject);
+            await _repository.Project.DeactiveAsync(existingProject);
         }
     }
 }

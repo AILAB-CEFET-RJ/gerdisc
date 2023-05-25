@@ -74,7 +74,7 @@ namespace gerdisc.Services.ExternalResearcher
                 throw new ArgumentException($"ExternalResearcher with id {id} does not exist.");
             }
 
-            await _repository.ExternalResearcher.DeleteAsync(existingExternalResearcher);
+            await _repository.ExternalResearcher.DeactiveAsync(existingExternalResearcher);
         }
     }
 }
