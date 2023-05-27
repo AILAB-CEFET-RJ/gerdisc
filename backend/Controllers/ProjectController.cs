@@ -1,4 +1,3 @@
-using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Services.Project;
 using Microsoft.AspNetCore.Authorization;
@@ -57,12 +56,15 @@ namespace gerdisc.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets all projects.
+        /// </summary>
+        /// <returns>A list of projects.</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ProjectDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProjectDto>), 200)]
         public async Task<ActionResult<IEnumerable<ProjectDto>>> GetAllProjectsAsync()
         {
             var projectDtos = await _projectService.GetAllProjectsAsync();
-
             return Ok(projectDtos);
         }
 
