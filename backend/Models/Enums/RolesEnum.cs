@@ -4,8 +4,6 @@ namespace gerdisc.Models.Enums
     {
         Student,
         Professor,
-        TeachingAssistant,
-        Researcher,
         Administrator,
         ExternalResearcher
     }

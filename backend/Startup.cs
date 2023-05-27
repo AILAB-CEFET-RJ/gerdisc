@@ -10,10 +10,10 @@ using gerdisc.Services.Project;
 using gerdisc.Services.Student;
 using gerdisc.Services.User;
 using gerdisc.Settings;
+using Hangfire;
+using Hangfire.PostgreSql;
+using Jobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -94,6 +94,13 @@ namespace gerdisc
                         IssuerSigningKey = signingConfig.Key
                     };
                 });
+
+            services.AddHangfireServer();
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UsePostgreSqlStorage(connectionString));
         }
 
         public void Configure(IApplicationBuilder app)
@@ -114,10 +121,13 @@ namespace gerdisc
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseHangfireDashboard();
+            RecurringJob.AddOrUpdate<StudentsFinishing>("daily-job", x => x.ExecuteAsync(null), Cron.Daily);
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHangfireDashboard();
             });
         }
     }

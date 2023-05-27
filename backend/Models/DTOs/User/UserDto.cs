@@ -22,6 +22,8 @@ namespace gerdisc.Models.DTOs
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Cpf is required")]
+        [ValidCpf]
         public string Cpf { get; set; }
 
         public RolesEnum Role { get; set; }
