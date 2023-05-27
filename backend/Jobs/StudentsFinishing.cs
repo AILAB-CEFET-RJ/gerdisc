@@ -6,9 +6,9 @@ namespace Jobs
     {
         private readonly IRepository _repository;
 
-        public StudentsFinishing(ILogger<StudentsFinishing> logger, IRepository studentRepository) : base(logger)
+        public StudentsFinishing(ILogger<StudentsFinishing> logger, IRepository repository) : base(logger)
         {
-            _repository = studentRepository;
+            _repository = repository;
         }
 
         protected override async Task ProcessJobAsync()

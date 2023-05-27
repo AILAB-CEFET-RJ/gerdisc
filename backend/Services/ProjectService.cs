@@ -22,7 +22,7 @@ namespace gerdisc.Services.Project
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<Guid> CreateProjectAsync(CreateProjectDto projectDto)
+        public async Task<ProjectDto> CreateProjectAsync(CreateProjectDto projectDto)
         {
             var project = projectDto.ToEntity();
 
@@ -32,7 +32,7 @@ namespace gerdisc.Services.Project
             await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(project.Id));
 
             _logger.LogInformation($"Project {project.Name} created successfully.");
-            return project.Id;
+            return project.ToDto();
         }
 
         public async Task<ProjectDto> GetProjectAsync(Guid id)

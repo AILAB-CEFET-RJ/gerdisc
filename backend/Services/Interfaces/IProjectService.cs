@@ -12,7 +12,7 @@ namespace gerdisc.Services.Project
         /// </summary>
         /// <param name="projectDto">The project DTO containing the project details.</param>
         /// <returns>The created project DTO.</returns>
-        Task<Guid> CreateProjectAsync(CreateProjectDto projectDto);
+        Task<ProjectDto> CreateProjectAsync(CreateProjectDto projectDto);
 
         /// <summary>
         /// Retrieves a project by ID.
