@@ -35,7 +35,7 @@ export default function Home() {
                             <div id='student' className={"itemIcon"} >
                                 <img src="student.png" />
                             </div>
-                            <label htmlFor='student' className={"iconLabel"}>Students</label>
+                            <label htmlFor='student' className={"iconLabel"}>Estudantes</label>
                         </div>}
                         {(role === "Student") && <div className={"boardItem"} onClick={()=> navigate('/student/perfil')}>
                             <div id='Profile' className={"itemIcon"} >
@@ -53,25 +53,31 @@ export default function Home() {
                             <div id='professor' className={"itemIcon"} >
                                 <img src="professor.png" />
                             </div>
-                            <label htmlFor='professor' className={"iconLabel"}>Professors</label>
+                            <label htmlFor='professor' className={"iconLabel"}>Professores</label>
                         </div>}
                         {(role === "Administrator" || role === "Professor") && <div className={"boardItem"} onClick={()=> navigate('/researches')}>
                             <div id='research' className={"itemIcon"} >
                                 <img src="research.png" />
                             </div>
-                            <label htmlFor='research' className={"iconLabel"}>Research</label>
+                            <label htmlFor='research' className={"iconLabel"}>Dissertações</label>
                         </div>}
                         {(role === "Administrator" || role === "Professor") && <div className={"boardItem"} onClick={()=> navigate('/projects')}>
                             <div id='project' className={"itemIcon"} >
                                 <img className={"filtered"} src="lamp.png" />
                             </div>
-                            <label htmlFor='project' className={"iconLabel"}>Project</label>
+                            <label htmlFor='project' className={"iconLabel"}>Projetos</label>
                         </div>}
                         {(role === "Administrator") && <div className={"boardItem"} onClick={()=> navigate('/reports')}>
                             <div id='report' className={"itemIcon"} >
                                 <img className={"filtered"} src="report.png" />
                             </div>
-                            <label htmlFor='report' className={"iconLabel"}>Report</label>
+                            <label htmlFor='report' className={"iconLabel"}>Relatorios</label>
+                        </div>}
+                        {(role === "Administrator") && <div className={"boardItem"} onClick={()=> navigate('/extensions')}>
+                            <div id='extension' className={"itemIcon"} >
+                                <img className={"filtered"} src="calender.png" />
+                            </div>
+                            <label htmlFor='extension' className={"iconLabel"}>Extensões</label>
                         </div>}
                     </div>
                     <Footer></Footer>

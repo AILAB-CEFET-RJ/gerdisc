@@ -1,12 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react"
 import '../../styles/researcherList.scss';
-import Header from "../../components/header"
 import Table from "../../components/Table/table"
 import { getResearchers } from "../../api/researcher_service"
 import { useNavigate } from "react-router"
 import jwt_decode from "jwt-decode";
-import Footer from "../../components/footer";
+import BackButton from "../../components/BackButton";
+import PageContainer from "../../components/PageContainer";
+
 
 export default function ResearcherList() {
     const navigate = useNavigate()
@@ -50,31 +51,27 @@ export default function ResearcherList() {
     }, [setResearchers, setIsLoading])
 
 
-    return (<div className="researcherList">
-        <main className="main">
-            <div className="body">
-                <Header name={name} />
-                <div className="researcherBar">
-                    <div className="left-bar">
-                        <div>
-                            <img src="professor.png" alt="A logo representing researchers" height={"100rem"} />
-                        </div>
-                        <div className="title">Pesquisadores</div>
+    return (
+        <PageContainer name={name} isLoading={isLoading}>
+            <div className="researcherBar">
+                <div className="left-bar">
+                    <div>
+                        <img src="professor.png" alt="A logo representing researchers" height={"100rem"} />
                     </div>
-                    <div className="right-bar">
-                        <div className="search">
-                            <input type="search" name="search" id="search" />
-                            <i className="fas fa-" />
-                        </div>
-                        <div className="create-button">
-                            <button>Novo Pesquisador</button>
-                        </div>
+                    <div className="title">Pesquisadores</div>
+                </div>
+                <div className="right-bar">
+                    <div className="search">
+                        <input type="search" name="search" id="search" />
+                        <i className="fas fa-" />
+                    </div>
+                    <div className="create-button">
+                        <button>Novo Pesquisador</button>
                     </div>
                 </div>
-                {!isLoading && <Table data={researchers} />}
-                {isLoading && <div>Loading</div>}
-                <Footer></Footer>
             </div>
-        </main>
-    </div>)
+            <BackButton />
+            <Table data={researchers} />
+        </PageContainer>
+    )
 }

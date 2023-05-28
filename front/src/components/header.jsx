@@ -1,11 +1,13 @@
 import React from 'react'
-
+import { useNavigate } from "react-router"
+import '../styles/header.scss'
 
 export default function Header({ name }) {
+    const navigate = useNavigate()
     return (
         <>
             <div className={"header"}>
-                <div className={"appName"}>
+                <div className={"appName"} style={{cursor:'pointer'}} onClick={()=> navigate('/')}>
                     <div className={"bleap"}> </div>
                     <span>GERDISC</span>
                 </div>

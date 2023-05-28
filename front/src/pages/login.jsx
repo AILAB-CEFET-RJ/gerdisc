@@ -13,15 +13,30 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError(undefined)
-        const user = await login({email, password})
+        const user = login({ email, password })
+            .then((response) => {
+                if (response.status === 200) {
+                    localStorage.setItem('token', response.data.token)
+                    localStorage.setItem('role', response.data?.user?.role)
+                    localStorage.setItem('name', `${response.data?.user?.firstName} ${response.data?.user?.lastName}`)
+                    return response.data?.user
+                }
+                else {
+                    return null
+                }
+            })
+            .catch((promise) => {
+                return null
+            })
         if (user !== null) {
             console.log(user)
             navigate("/")
         }
-        else{
+        else {
             setError('login failed')
         }
     }
+
 
     return (
         <>
@@ -43,7 +58,7 @@ export default function Login() {
                         <label htmlFor='password'>Senha</label>
                         <input type='password' id='password' placeholder='Digite sua senha' value={password} onChange={(e) => setPassword(e.target.value)} />
                         <input type='submit' id='submit' value={'Login'} onClick={(e) => handleSubmit(e)} />
-                        {error && <p> { error} </p>}
+                        {error && <p> {error} </p>}
                     </div>
                 </div>
             </main>

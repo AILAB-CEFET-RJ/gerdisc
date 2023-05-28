@@ -2,10 +2,13 @@ import { useEffect, useState } from "react"
 import '../../styles/studentList.scss'
 import Header from "../../components/header"
 import Table from "../../components/Table/table"
-import { getStudents } from "../../api/student_service"
+import { getStudents, deleteStudent } from "../../api/student_service"
 import { useNavigate } from "react-router"
 import jwt_decode from "jwt-decode";
 import Footer from "../../components/footer"
+import BackButton from "../../components/BackButton"
+import Spinner from "../../components/spinner"
+import PageContainer from "../../components/PageContainer"
 
 export default function StudentList() {
     const navigate = useNavigate()
@@ -36,7 +39,8 @@ export default function StudentList() {
                     console.log(result)
                     mapped = result.map((student) => {
                         return {
-                            Nome: `${student.user?.firstName} ${student.user?.lastName}`,
+                            Id: student.id,
+                            Nome: `${student.firstName} ${student.lastName}`,
                             Status: student.status,
                             Registração: student.registration,
                             "Data de defesa": student.projectDefenceDate,
@@ -50,32 +54,27 @@ export default function StudentList() {
             })
     }, [setStudents, setIsLoading])
 
-
-    return (<div className="StudentList">
-        <main className="main">
-            <div className="body">
-                <Header name={name} />
-                <div className="studentBar">
-                    <div className="left-bar">
-                        <div>
-                            <img src="student.png" alt="A logo representing students" height={"100rem"} />
-                        </div>
-                        <div className="title">Estudantes</div>
+    return (
+        <PageContainer name={name} isLoading={isLoading}>
+            <div className="studentBar">
+                <div className="left-bar">
+                    <div>
+                        <img src="student.png" alt="A logo representing students" height={"100rem"} />
                     </div>
-                    <div className="right-bar">
-                        <div className="search">
-                            <input type="search" name="search" id="search" />
-                            <i className="fas fa-"/>
-                        </div>
-                        <div className="create-button">
-                            <button onClick={()=>navigate('/students/add')}>Novo Estudante</button>
-                        </div>
+                    <div className="title">Estudantes</div>
+                </div>
+                <div className="right-bar">
+                    <div className="search">
+                        <input type="search" name="search" id="search" />
+                        <i className="fas fa-" />
+                    </div>
+                    <div className="create-button">
+                        <button onClick={() => navigate('/students/add')}>Novo Estudante</button>
                     </div>
                 </div>
-                {!isLoading && <Table data={students} />}
-                {isLoading && <div>Loading</div>}
-                <Footer></Footer>
             </div>
-        </main>
-    </div>)
+            <BackButton ></BackButton>
+            <Table data={students} useOptions={true} detailsCallback={(id) => navigate(`${id}`)} />
+        </PageContainer>
+    )
 }

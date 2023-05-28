@@ -1,67 +1,95 @@
-.table{
-    display: flex;
-    width: 80vw;
-    align-content: center;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-    thead, th {
-        font-size: larger;
-        font-weight: bold;
-        text-decoration: solid;
-        text-transform: uppercase;
-    }
-    table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      
-      th,
-      td {
-        text-align: center;
-        padding: 8px;
-      }
-      tr:nth-child(even) {
-        background-color: #f2f2f2;
-      } 
-      @media (max-width: 600px) {
-        table,
-        thead,
-        tbody,
-        th,
-        td,
-        tr {
-          display: block;
-        }
-      
-        thead tr {
-          position: absolute;
-          top: -9999px;
-          left: -9999px;
-        }
+.table {
+  display: flex;
+  color: #004AAD;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
 
-        tr {
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-          }
-        
-          td {
-            border: none;
-            border-bottom: 1px solid #eee;
-            position: relative;
-            padding-left: 50%;
-            text-align: right;
-          }
-          td:before {
-            content: attr(data-label);
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            width: 45%;
-            padding-right: 10px;
-            white-space: nowrap;
-            text-align: left;
-            font-weight: bold;
-          }
-        }
+  thead,
+  th {
+    font-size: large;
+    font-weight: bold;
+    text-decoration: solid;
+    text-transform: uppercase;
+  }
+
+  tbody {
+    tr {
+      border: 2px solid #004AAD;
+      border-width: 0 0 1px 0;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    text-align: center;
+    padding: 0.5rem;
+    text-align: center;
+    text-overflow: ellipsis;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    align-items: center;
+    justify-content: space-around;
+
+    .option {
+      margin: 0.5rem;
+      cursor: pointer;
+    }
+  }
+
+  tr:nth-child(even) {
+    background-color: #84c2df4c;
+  }
+
+  @media (max-width: 600px) {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+    }
+
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    tr {
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    td {
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding-left: 50%;
+      text-align: right;
+    }
+
+    td:before {
+      content: attr(data-label);
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      text-align: left;
+      font-weight: bold;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-.projectBar {
+.researchBar {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -11,10 +11,6 @@
         align-items: center;
         flex-wrap: wrap;
         flex-direction: row;
-
-        img {
-            filter: invert(19%) sepia(72%) saturate(2408%) hue-rotate(202deg) brightness(99%) contrast(106%);
-        }
 
         .title {
             text-align: center;

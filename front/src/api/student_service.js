@@ -7,3 +7,10 @@ export async function getStudents(){
 export async function postStudents(data){
     return (await api.post("api/Students",data))?.data
 }
+
+export async function deleteStudent(id){
+    return (await api.delete(`api/Students/${id}`))
+}
+export async function getStudentById(id){
+    return (await api.get(`api/Students/${id}`))?.data
+}
