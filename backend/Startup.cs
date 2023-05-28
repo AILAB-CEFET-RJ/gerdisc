@@ -16,14 +16,13 @@ using Jobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace gerdisc
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration Configuration;
 
         public Startup(IConfiguration configuration)
         {
@@ -32,15 +31,20 @@ namespace gerdisc
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(
-                options => options
-                    .AddPolicy("CorsPolicy",
-                        builder => builder
-                            .AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
+
             services.AddEndpointsApiExplorer();
             services.AddAuthorization();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gerdisc", Version = "v1" });
@@ -68,7 +72,6 @@ namespace gerdisc
             var signingConfig = new SigningConfiguration(settings.SinginKey);
 
             services.AddNpgsql<ContexRepository>(connectionString);
-            services.AddControllers();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IProjectService, ProjectService>();

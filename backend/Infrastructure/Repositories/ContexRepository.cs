@@ -7,22 +7,23 @@ namespace gerdisc.Infrastructure.Repositories
     {
         public string? DbUrl { get; }
 
-        public DbSet<UserEntity>? Users { get; set; }
-        public DbSet<StudentEntity>? Students { get; set; }
-        public DbSet<ProfessorEntity>? Professors { get; set; }
-        public DbSet<CourseEntity>? Courses { get; set; }
-        public DbSet<ProjectEntity>? Projects { get; set; }
-        public DbSet<ExternalResearcherEntity>? ExternalResearcher { get; set; }
-        public DbSet<DissertationEntity>? Dissertations { get; set; } 
-        public DbSet<ExtensionEntity>? Extensions { get; set; } 
-        public DbSet<ProfessorProjectEntity>? ProfessorProjects { get; set; } 
-        public DbSet<StudentCourseEntity>? StudentCourses { get; set; } 
-        public DbSet<OrientationEntity>? Orientations { get; set; } 
+        public DbSet<UserEntity> Users { get; set; } = null!;
+        public DbSet<StudentEntity> Students { get; set; } = null!;
+        public DbSet<ProfessorEntity> Professors { get; set; } = null!;
+        public DbSet<CourseEntity> Courses { get; set; } = null!;
+        public DbSet<ProjectEntity> Projects { get; set; } = null!;
+        public DbSet<ExternalResearcherEntity> ExternalResearchers { get; set; } = null!;
+        public DbSet<DissertationEntity> Dissertations { get; set; } = null!;
+        public DbSet<ExtensionEntity> Extensions { get; set; } = null!;
+        public DbSet<ProfessorProjectEntity> ProfessorProjects { get; set; } = null!;
+        public DbSet<StudentCourseEntity> StudentCourses { get; set; } = null!;
+        public DbSet<OrientationEntity> Orientations { get; set; } = null!;
 
         public ContexRepository(DbContextOptions<ContexRepository> options)
             : base(options)
         {
         }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserEntity>().ToTable("Users");
