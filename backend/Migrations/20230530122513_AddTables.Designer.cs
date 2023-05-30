@@ -12,8 +12,8 @@ using gerdisc.Infrastructure.Repositories;
 namespace gerdisc.Migrations
 {
     [DbContext(typeof(ContexRepository))]
-    [Migration("20230511014218_Initial")]
-    partial class Initial
+    [Migration("20230530122513_AddTables")]
+    partial class AddTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,9 @@ namespace gerdisc.Migrations
                     b.Property<int>("Credits")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsElective")
                         .HasColumnType("boolean");
 
@@ -56,6 +59,9 @@ namespace gerdisc.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -76,7 +82,89 @@ namespace gerdisc.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("DissertationEntity");
+                    b.ToTable("Dissertations");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.ExtensionEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("NumberOfDays")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Extensions");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.ExternalResearcherEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Institution")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ExternalResearchers");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.OrientationEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("DissertationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ExternalResearcherId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ProfessorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ResearcherId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DissertationId");
+
+                    b.HasIndex("ExternalResearcherId");
+
+                    b.HasIndex("ProfessorId");
+
+                    b.ToTable("Orientations");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProfessorEntity", b =>
@@ -84,6 +172,9 @@ namespace gerdisc.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Siape")
                         .HasColumnType("text");
@@ -104,6 +195,9 @@ namespace gerdisc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid>("ProfessorId")
                         .HasColumnType("uuid");
 
@@ -116,7 +210,7 @@ namespace gerdisc.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("ProfessorProjectEntity");
+                    b.ToTable("ProfessorProjects");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProjectEntity", b =>
@@ -125,10 +219,15 @@ namespace gerdisc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -148,6 +247,9 @@ namespace gerdisc.Migrations
                     b.Property<char>("Grade")
                         .HasColumnType("character(1)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uuid");
 
@@ -163,7 +265,7 @@ namespace gerdisc.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentCourseEntity");
+                    b.ToTable("StudentCourses");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>
@@ -175,10 +277,10 @@ namespace gerdisc.Migrations
                     b.Property<string>("CPF")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("EntryDate")
+                    b.Property<DateTime?>("EntryDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("GraduationYear")
@@ -187,22 +289,25 @@ namespace gerdisc.Migrations
                     b.Property<int>("InstitutionType")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Proficiency")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ProjectDefenceDate")
+                    b.Property<DateTime?>("ProjectDefenceDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ProjectId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ProjectQualificationDate")
+                    b.Property<DateTime?>("ProjectQualificationDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Registration")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("RegistrationDate")
+                    b.Property<DateTime?>("RegistrationDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Scholarship")
@@ -237,16 +342,21 @@ namespace gerdisc.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Cpf")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .HasColumnType("text");
@@ -275,6 +385,55 @@ namespace gerdisc.Migrations
                         .IsRequired();
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.ExtensionEntity", b =>
+                {
+                    b.HasOne("gerdisc.Models.Entities.StudentEntity", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.ExternalResearcherEntity", b =>
+                {
+                    b.HasOne("gerdisc.Models.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.OrientationEntity", b =>
+                {
+                    b.HasOne("gerdisc.Models.Entities.DissertationEntity", "Dissertation")
+                        .WithMany()
+                        .HasForeignKey("DissertationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("gerdisc.Models.Entities.ExternalResearcherEntity", "ExternalResearcher")
+                        .WithMany()
+                        .HasForeignKey("ExternalResearcherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("gerdisc.Models.Entities.ProfessorEntity", "Professor")
+                        .WithMany()
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dissertation");
+
+                    b.Navigation("ExternalResearcher");
+
+                    b.Navigation("Professor");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProfessorEntity", b =>

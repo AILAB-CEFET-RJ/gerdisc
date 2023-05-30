@@ -129,7 +129,7 @@ namespace gerdisc.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ExternalResearcher");
+                    b.ToTable("ExternalResearchers");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.OrientationEntity", b =>
