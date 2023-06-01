@@ -47,6 +47,7 @@ namespace gerdisc.Controllers
         {
             try
             {
+                
                 var externalResearcher = await _externalResearcherService.GetExternalResearcherAsync(id);
                 return Ok(externalResearcher);
             }

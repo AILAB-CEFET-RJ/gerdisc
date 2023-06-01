@@ -1,5 +1,3 @@
-import Header from "../../components/header";
-import Footer from "../../components/footer";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import "../../styles/profile.scss";
@@ -8,7 +6,6 @@ import { getStudentById } from "../../api/student_service";
 import BackButton from "../../components/BackButton";
 import ErrorPage from "../../components/error/Error";
 import jwt_decode from "jwt-decode";
-import Spinner from "../../components/spinner"
 import PageContainer from "../../components/PageContainer";
 
 
@@ -59,7 +56,7 @@ export default function StudentProfile() {
                         <p>Email: {student.email}</p>
                         <p>Proficiencia: {student.proficiency}</p>
                         <p>Matricula: {student.registration}</p>
-                        <p>Projeto de pesquisa: {student.project}</p>
+                        <p>Projeto de pesquisa: {student.projectId}</p>
                         <p>Data de ingresso: {student.entryDate}</p>
                         <p>Previsao de defesa: {student.projectDefenceDate}</p>
                         <p>Previsao de qualificação: {student.projectQualificationDate}</p>

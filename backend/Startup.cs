@@ -14,6 +14,7 @@ using Hangfire;
 using Hangfire.PostgreSql;
 using Jobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
@@ -82,6 +83,7 @@ namespace gerdisc
             services.AddScoped<IExtensionService, ExtensionService>();
             services.AddSingleton<ISigningConfiguration>(signingConfig);
             services.AddSingleton<ISettings>(settings);
+            services.AddDbContext<ContexRepository>(optionsAction=> optionsAction.UseNpgsql(connectionString));
             services.AddSingleton<IRepository>(x => new Repository(x.GetService<ContexRepository>()));
             services.AddAuthorization();
 

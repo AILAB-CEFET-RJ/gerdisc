@@ -1,7 +1,5 @@
-import Header from "../../components/header";
-import Footer from "../../components/footer";
 import { useEffect, useState } from "react";
-import "../../styles/createResearch.scss";
+import "../../styles/form.scss";
 import { useNavigate, useParams } from "react-router"
 import jwt_decode from "jwt-decode";
 import Select from "../../components/select";
@@ -10,8 +8,8 @@ import { getStudentById } from "../../api/student_service";
 import { getProjectById } from "../../api/project_service";
 import { getResearchers } from "../../api/researcher_service";
 import ErrorPage from "../../components/error/Error";
-import Spinner from "../../components/spinner";
 import PageContainer from "../../components/PageContainer";
+import { postResearch } from "../../api/research_service";
 
 
 export default function ResearchForm() {
@@ -101,19 +99,22 @@ export default function ResearchForm() {
 
     useEffect(() => {
         setIsLoading(true)
-        getResearchers()
-            .then(reserchers => {
-                setExternalResearchers(reserchers)
-            })
-            .catch(err => {
-                setError(true)
-                setErrorMessage(err.message)
-            })
+        // getResearchers()
+        //     .then(reserchers => {
+        //         setExternalResearchers(reserchers)
+        //     })
+        //     .catch(err => {
+        //         setError(true)
+        //         setErrorMessage(err.message)
+        //     })
+        setExternalResearchers([])
         setIsLoading(false)
     }, [setExternalResearchers, setErrorMessage, setError])
 
     const handlepost = async () => {
-
+        postResearch(research)
+        .then(result =>navigate(-1))
+        .catch(err =>setError(true))
     }
 
     const handleSave = (e) => {
@@ -122,10 +123,10 @@ export default function ResearchForm() {
     }
 
     return (
-        <PageContainer>
+        <PageContainer name={name} isLoading={isLoading}>
             <BackButton />
             {!error && student && project && <>
-                <div className="researchForm">
+                <div className="form">
                     <div className="form-section">
                         <div className="formInput">
                             <label htmlFor="name">Nome</label>
@@ -142,7 +143,6 @@ export default function ResearchForm() {
                         </div>
                     </div>
                 </div>
-                <Footer></Footer>
             </>
             }
             {error && <ErrorPage errorMessage={errorMessage} />}

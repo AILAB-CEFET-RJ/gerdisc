@@ -5,7 +5,7 @@
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-
+  overflow-y: scroll;
   thead,
   th {
     font-size: large;
@@ -50,45 +50,52 @@
     background-color: #84c2df4c;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 700px) {
 
+    .table{
+      overflow-y: hidden;
+    }
     table,
     thead,
     tbody,
     th,
     td,
     tr {
-      display: block;
+      display: flex;
+      flex-direction: column;
     }
 
     thead tr {
-      position: absolute;
-      top: -9999px;
-      left: -9999px;
+      display: none;
     }
 
     tr {
-      border: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      flex:1;
+      justify-content: center;
+      align-items: center;
       margin-bottom: 10px;
+      width: max-content;
     }
 
     td {
+      display: flex;
+      flex: 1;
+      justify-content:space-between;
+      align-items: center;
+      flex-direction: row;
       border: none;
-      border-bottom: 1px solid #eee;
-      position: relative;
-      padding-left: 50%;
+      width: 90%;
+      border-bottom: 1px solid #004AAD;
       text-align: right;
     }
 
     td:before {
       content: attr(data-label);
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      width: 45%;
-      padding-right: 10px;
+      padding: 0.5rem;
       white-space: nowrap;
-      text-align: left;
+      margin-right: 1rem;
       font-weight: bold;
     }
   }

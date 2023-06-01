@@ -5,18 +5,18 @@ import Spinner from './spinner';
 import '../styles/form.scss';
 import '../styles/pageContainer.scss';
 
-export default function PageContainer({children, name, isLoading}){
+export default function PageContainer({ children, name, isLoading }) {
 
     return (<div className="container">
         <main className="main">
             <div className="body">
                 <Header name={name} />
                 {!isLoading && children}
-            </div>
-            {isLoading && <Spinner/>}
+                {isLoading && <Spinner />}
                 <Footer></Footer>
+            </div>
         </main>
-        </div>
-        )
+    </div>
+    )
 
 }
