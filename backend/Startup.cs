@@ -1,5 +1,6 @@
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Properties;
+using gerdisc.Services;
 using gerdisc.Services.Course;
 using gerdisc.Services.Dissertation;
 using gerdisc.Services.Extension;
