@@ -86,6 +86,7 @@ namespace gerdisc
             services.AddScoped<IExtensionService, ExtensionService>();
             services.AddSingleton<ISigningConfiguration>(signingConfig);
             services.AddSingleton<ISettings>(settings);
+            services.AddDbContext<ContexRepository>(optionsAction=> optionsAction.UseNpgsql(connectionString));
             services.AddSingleton<IRepository>(x => new Repository(x.GetService<ContexRepository>()));
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddAuthorization();

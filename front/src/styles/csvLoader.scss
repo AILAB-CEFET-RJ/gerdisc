@@ -1,0 +1,32 @@
+@import './variables.scss';
+.form{
+    .form-section{
+        min-width: 100%;
+        justify-content: space-around;
+        .formInput{
+            flex: 0.5;
+            width: 50%;
+            align-self: center;
+        }
+    }
+}
+.reader {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    input{
+        display: none;
+    }
+    #file-label {
+        padding: 0.4rem;
+        border-radius: 1rem;
+        color: white;
+        height: 1.5rem;
+        text-align: center;
+        width: 100%;
+        background-color: $primary-color;
+        font: $font-family;
+        cursor: pointer;
+    }
+}

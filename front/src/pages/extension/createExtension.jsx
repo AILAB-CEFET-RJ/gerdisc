@@ -1,5 +1,4 @@
-import Header from "../../components/header";
-import Footer from "../../components/footer";
+
 import { useEffect, useState } from "react";
 import "../../styles/createExtension.scss";
 import { useParams } from "react-router";
@@ -20,14 +19,15 @@ export default function ExtensionForm() {
     const [extension, setExtension] = useState(
         {
             studentId: id,
-            days: '',
+            numberOfDays: 0,
             type: 1,
+            status: 'pending'
 
         }
     );
 
-    const setDays = (days)=> {
-        setExtension({...extension,...{'days': days}});
+    const setDays = (numberOfDays)=> {
+        setExtension({...extension,...{'numberOfDays':Number(numberOfDays)}});
     }
     const setType = (type)=> {
         type = type === "Defesa"? 1: 2
@@ -66,7 +66,7 @@ export default function ExtensionForm() {
                 <div className="form-section">
                     <div className="formInput">
                         <label htmlFor="name">Quantidade de Dias</label>
-                        <input type="number" name="days" value={extension.name} onChange={(e)=>setDays(e.target.value)} id="days" />
+                        <input type="number" name="numberOfDays" value={extension.name} onChange={(e)=>setDays(e.target.value)} id="numberOfDays" />
                     </div>
                     <Select className="formInput" onSelect={setType} options={["Defesa", "Qualificação"]} label="Type" name="type" />
                 </div>

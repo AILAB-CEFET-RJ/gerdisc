@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react"
 import '../../styles/extensionList.scss';
-import Header from "../../components/header"
 import Table from "../../components/Table/table"
 import { getExtensions } from "../../api/extension_service"
 import { useNavigate } from "react-router"
 import jwt_decode from "jwt-decode";
-import Footer from "../../components/footer"
 import BackButton from "../../components/BackButton";
-import Spinner from "../../components/spinner";
 import ErrorPage from "../../components/error/Error";
+import PageContainer from "../../components/PageContainer";
 
 
 export default function ExtensionList() {
@@ -55,10 +53,7 @@ export default function ExtensionList() {
     }, [setextensions, setIsLoading])
 
 
-    return (<div className="extensionList">
-        <main className="main">
-            <div className="body">
-                <Header name={name} />
+    return (<PageContainer isLoading={isLoading} name={name} >
                 <div className="extensionBar">
                     <div className="left-bar">
                         <div>
@@ -77,11 +72,7 @@ export default function ExtensionList() {
                     </div>
                 </div>
                 <BackButton />
-                {!isLoading && <Table data={extensions} useOptions={false} />}
-                {isLoading && <Spinner />}
+                <Table data={extensions} useOptions={false} />
                 {error && < ErrorPage/>}
-                <Footer></Footer>
-            </div>
-        </main>
-    </div>)
+    </PageContainer>)
 }

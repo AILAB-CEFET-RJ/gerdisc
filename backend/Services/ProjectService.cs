@@ -81,9 +81,9 @@ namespace gerdisc.Services.Project
                 .Except(
                     projectDto
                     .ProfessorIds
-                    .Select(x => Guid.Parse(x)));
+                    .Select(x => Guid.Parse(x))).ToList();
 
-            await _repository.ProfessorProject.DeactiveRangeAsync(entity => professorIdsToDelete.Contains(entity.Id));
+            await _repository.ProfessorProject.DeactiveRangeAsync(entity => professorIdsToDelete.Contains(entity.ProfessorId));
 
             existingProject = projectDto.ToEntity(existingProject);
             await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(existingProject.Id));

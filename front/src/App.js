@@ -13,7 +13,7 @@ import ExtensionList from './pages/extension/extensionList';
 import ResearchForm from './pages/research/createResearch';
 import ResearchList from './pages/research/researchList';
 import ExtensionForm from './pages/extension/createExtension';
-
+import CsvLoader from './pages/CsvLoader';
 
 
 export default function App() {
@@ -30,6 +30,7 @@ export default function App() {
         <Route path="/extensions" element={<ExtensionList />} />
         <Route path="/projects" element={<ProjectList />} />
         <Route path="/user/add" element={<UserForm />} />
+        <Route path="/entities/csv" element={<CsvLoader />} />
         <Route path="/students/:id/researches/add" element={<ResearchForm />} />
         <Route path="/students/add" element={<UserForm  type={"Estudante"}/>} />
         <Route path="/professors/add" element={<UserForm type={"Professor"}/>} />

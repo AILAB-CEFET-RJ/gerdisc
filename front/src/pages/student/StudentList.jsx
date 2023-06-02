@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react"
 import '../../styles/studentList.scss'
-import Header from "../../components/header"
 import Table from "../../components/Table/table"
-import { getStudents, deleteStudent } from "../../api/student_service"
+import { getStudents } from "../../api/student_service"
 import { useNavigate } from "react-router"
 import jwt_decode from "jwt-decode";
-import Footer from "../../components/footer"
 import BackButton from "../../components/BackButton"
-import Spinner from "../../components/spinner"
 import PageContainer from "../../components/PageContainer"
 
 export default function StudentList() {
     const navigate = useNavigate()
-    const [name, setName] = useState(localStorage.getItem('name'))
+    const [name, _] = useState(localStorage.getItem('name'))
     const [role, setRole] = useState(localStorage.getItem('role'))
     const [isLoading, setIsLoading] = useState(true)
     const [students, setStudents] = useState([])
