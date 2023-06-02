@@ -13,5 +13,6 @@ namespace gerdisc.Settings
         public string PostgresUser { get; }
         public string PostgresPassword { get; }
         public string PostgresDb { get; }
+        public EmailSettings EmailSettings { get; }
     }
 }

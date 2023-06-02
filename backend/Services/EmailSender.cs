@@ -15,9 +15,9 @@ namespace gerdisc.Services.Professor
     {
         private readonly EmailSettings _emailSettings;
 
-        public EmailSender(IOptions<EmailSettings> emailSettings)
+        public EmailSender(ISettings settings)
         {
-            _emailSettings = emailSettings.Value;
+            _emailSettings = settings.EmailSettings;
         }
 
         public Task SendEmail(string recipient, string subject, string body)
