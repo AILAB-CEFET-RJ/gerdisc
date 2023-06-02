@@ -16,14 +16,14 @@ namespace Jobs
 
         protected override async Task ProcessJobAsync()
         {
-            var dangerousDate = (DateTime.Today).AddDays(-30).ToUniversalTime();
+            var dangerousDate = DateTime.UtcNow.Date.AddDays(-30);
 
             var endOfCourseStudents = await _repository.Student.GetAllAsync(x => x.ProjectDefenceDate <= dangerousDate);
 
             foreach (var student in endOfCourseStudents)
             {
                 _logger.LogInformation($"End of Course Student: {student.Id}");
-                _emailSender.SendEmail(student.User.Email, "Data de defesa proxima", "End of Course Student");
+                await _emailSender.SendEmail(student.User.Email, "Data de defesa proxima", "End of Course Student");
             }
         }
     }
