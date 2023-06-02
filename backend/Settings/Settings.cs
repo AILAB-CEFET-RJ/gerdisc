@@ -10,6 +10,9 @@ namespace gerdisc.Settings
         public string PostgresUser => config[nameof(PostgresUser)]??"";
         public string PostgresPassword => config[nameof(PostgresPassword)]??"";
         public string PostgresDb => config[nameof(PostgresDb)]??"";
+
+        public EmailSettings EmailSettings => new EmailSettings(config);
+
         public AppSettings()
         {
             config = new ConfigurationBuilder()
