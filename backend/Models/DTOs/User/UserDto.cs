@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using gerdisc.Infrastructure.Validations;
 using gerdisc.Models.Enums;
-using gerdisc.Models.Validations;
 
 namespace gerdisc.Models.DTOs
 {

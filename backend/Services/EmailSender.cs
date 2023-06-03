@@ -18,7 +18,7 @@ namespace gerdisc.Services
         public async Task SendEmail(string recipient, string subject, string body)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("PPCIC", "ppcic@cefet-rj.br"));
+            message.From.Add(new MailboxAddress("PPCIC", "ppcic-nra@cefet-rj.br"));
             message.To.Add(new MailboxAddress("", recipient));
             message.Subject = subject;
             message.Body = new TextPart("plain") { Text = body };

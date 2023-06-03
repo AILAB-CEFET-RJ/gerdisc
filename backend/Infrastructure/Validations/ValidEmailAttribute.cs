@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace gerdisc.Models.Validations
+namespace gerdisc.Infrastructure.Validations
 {
     /// <summary>
     /// A custom validation attribute used to validate email addresses.

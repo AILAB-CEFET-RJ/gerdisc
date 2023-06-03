@@ -1,7 +1,7 @@
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Services.Interfaces;
 
-namespace Jobs
+namespace Infrastructure.Jobs
 {
     public class StudentsFinishing : HangfireJobBase
     {

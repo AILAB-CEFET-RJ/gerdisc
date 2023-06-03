@@ -1,6 +1,6 @@
 using Hangfire.Server;
 
-namespace Jobs
+namespace Infrastructure.Jobs
 {
     public abstract class HangfireJobBase
     {

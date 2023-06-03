@@ -13,7 +13,7 @@ using gerdisc.Services.User;
 using gerdisc.Settings;
 using Hangfire;
 using Hangfire.PostgreSql;
-using Jobs;
+using Infrastructure.Jobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
