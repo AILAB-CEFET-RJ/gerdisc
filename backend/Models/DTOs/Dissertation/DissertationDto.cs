@@ -9,7 +9,7 @@ namespace gerdisc.Models.DTOs
     {
         public Guid? Id { get; set; }
         public Guid StudentId { get; set; }
-        public string Name { get; set; } = "";
+        public string? Name { get; set; }
         public Guid ProjectId { get; set; }
     }
 }
