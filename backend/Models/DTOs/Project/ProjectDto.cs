@@ -5,8 +5,8 @@ namespace gerdisc.Models.DTOs
     public class ProjectDto
     {
         public Guid? Id { get; set; }
-        public string Name { get; set; } = "";
-        public string Status { get; set; }
+        public string? Name { get; set; }
+        public string? Status { get; set; }
         [BindNever]
         public List<ProfessorDto> Professors { get; set; }
         [BindNever]

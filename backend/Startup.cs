@@ -1,5 +1,8 @@
+using gerdisc.Infrastructure.Providers;
+using gerdisc.Infrastructure.Providers.Interfaces;
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Properties;
+using gerdisc.Services;
 using gerdisc.Services.Course;
 using gerdisc.Services.Dissertation;
 using gerdisc.Services.Extension;
@@ -12,7 +15,7 @@ using gerdisc.Services.User;
 using gerdisc.Settings;
 using Hangfire;
 using Hangfire.PostgreSql;
-using Jobs;
+using Infrastructure.Jobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -72,6 +75,10 @@ namespace gerdisc
 
             var signingConfig = new SigningConfiguration(settings.SinginKey);
 
+            services.AddDbContext<ContexRepository>(options =>
+            {
+                options.UseNpgsql(connectionString);
+            }, ServiceLifetime.Scoped);
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IProjectService, ProjectService>();
@@ -82,8 +89,8 @@ namespace gerdisc
             services.AddScoped<IExtensionService, ExtensionService>();
             services.AddSingleton<ISigningConfiguration>(signingConfig);
             services.AddSingleton<ISettings>(settings);
-            services.AddDbContext<ContexRepository>(optionsAction=> optionsAction.UseNpgsql(connectionString),ServiceLifetime.Scoped);
             services.AddSingleton<IRepository>(x => new Repository(x.GetService<ContexRepository>()));
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddAuthorization();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

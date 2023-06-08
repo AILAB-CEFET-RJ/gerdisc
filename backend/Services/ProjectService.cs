@@ -24,15 +24,23 @@ namespace gerdisc.Services.Project
 
         public async Task<ProjectDto> CreateProjectAsync(CreateProjectDto projectDto)
         {
-            var project = projectDto.ToEntity();
+            try
+            {
+                var project = projectDto.ToEntity();
 
-            var professorIds = projectDto.ProfessorIds.Select(x => Guid.Parse(x));
+                var professorIds = projectDto.ProfessorIds.Select(x => Guid.Parse(x));
 
-            project = await _repository.Project.AddAsync(project);
-            await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(project.Id));
+                project = await _repository.Project.AddAsync(project);
+                await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(project.Id));
 
-            _logger.LogInformation($"Project {project.Name} created successfully.");
-            return project.ToDto();
+                _logger.LogInformation($"Project {project.Name} created successfully.");
+                return project.ToDto();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Project {projectDto.Name} as {ex}");
+                return projectDto.ToEntity().ToDto();
+            };
         }
 
         public async Task<ProjectDto> GetProjectAsync(Guid id)
@@ -62,7 +70,7 @@ namespace gerdisc.Services.Project
             return projectDtos;
         }
 
-        public async Task<Guid> UpdateProjectAsync(Guid id, CreateProjectDto projectDto)
+        public async Task<ProjectDto> UpdateProjectAsync(Guid id, CreateProjectDto projectDto)
         {
             var existingProject = await _repository.Project.GetByIdAsync(id);
             if (existingProject == null)
@@ -88,7 +96,7 @@ namespace gerdisc.Services.Project
             existingProject = projectDto.ToEntity(existingProject);
             await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(existingProject.Id));
 
-            return existingProject.Id;
+            return existingProject.ToDto();
         }
 
         public async Task DeleteProjectAsync(Guid id)

@@ -12,7 +12,7 @@ using gerdisc.Infrastructure.Repositories;
 namespace gerdisc.Migrations
 {
     [DbContext(typeof(ContexRepository))]
-    [Migration("20230530122513_AddTables")]
+    [Migration("20230608204039_AddTables")]
     partial class AddTables
     {
         /// <inheritdoc />
@@ -64,7 +64,6 @@ namespace gerdisc.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid?>("ProjectEntityId")
@@ -223,11 +222,9 @@ namespace gerdisc.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -342,14 +339,12 @@ namespace gerdisc.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Cpf")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")

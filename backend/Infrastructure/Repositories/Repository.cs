@@ -28,7 +28,7 @@ namespace gerdisc.Infrastructure.Repositories
         /// <param name="database">Database name.</param>
         public Repository(ContexRepository? dbContext)
         {
-            if(dbContext is not null)
+            if (dbContext is not null)
             {
                 _dbContext = dbContext;
                 _dbContext.Database.EnsureCreated();

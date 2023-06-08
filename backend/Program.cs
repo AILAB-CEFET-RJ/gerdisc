@@ -11,4 +11,4 @@ namespace gerdisc
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
-}              
+}

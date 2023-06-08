@@ -14,14 +14,14 @@ namespace gerdisc.Infrastructure.Repositories
 {
     public interface IRepository
     {
-        public IUserRepository User{ get; }
-        public IStudentRepository Student{ get; }
-        public IProfessorRepository Professor{ get; }
-        public IProjectRepository Project{ get; }
-        public IDissertationRepository Dissertation{ get; }
-        public IExtensionRepository Extension{ get; }
-        public IExternalResearcherRepository ExternalResearcher{ get; }
-        public ICourseRepository Course{ get; }
+        public IUserRepository User { get; }
+        public IStudentRepository Student { get; }
+        public IProfessorRepository Professor { get; }
+        public IProjectRepository Project { get; }
+        public IDissertationRepository Dissertation { get; }
+        public IExtensionRepository Extension { get; }
+        public IExternalResearcherRepository ExternalResearcher { get; }
+        public ICourseRepository Course { get; }
         public IProfessorProjectRepository ProfessorProject { get; }
         public IStudentCourseRepository StudentCourse { get; }
         public IOrientationRepository Orientation { get; }
