@@ -24,6 +24,8 @@ namespace gerdisc.Services.Project
 
         public async Task<ProjectDto> CreateProjectAsync(CreateProjectDto projectDto)
         {
+            try
+            {
             var project = projectDto.ToEntity();
 
             var professorIds = projectDto.ProfessorIds.Select(x => Guid.Parse(x));
@@ -33,6 +35,12 @@ namespace gerdisc.Services.Project
 
             _logger.LogInformation($"Project {project.Name} created successfully.");
             return project.ToDto();
+            }
+            catch  (Exception ex)
+            {
+                _logger.LogInformation($"Project {projectDto.Name} as {ex}");
+                return projectDto.ToEntity().ToDto();
+            };
         }
 
         public async Task<ProjectDto> GetProjectAsync(Guid id)
