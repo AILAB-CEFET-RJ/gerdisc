@@ -26,10 +26,10 @@ namespace gerdisc.Services.Extension
         {
             var extension = extensionDto.ToEntity();
 
-            await _repository.Extension.AddAsync(extension);
+            extension = await _repository.Extension.AddAsync(extension);
 
             _logger.LogInformation($"Extension {extension.StudentId} created successfully.");
-            return extensionDto;
+            return extension.ToDto();
         }
 
         public async Task<ExtensionDto> GetExtensionAsync(Guid id)

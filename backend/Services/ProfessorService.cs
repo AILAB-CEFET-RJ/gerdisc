@@ -23,20 +23,17 @@ namespace gerdisc.Services.Professor
             var professor = professorDto.ToEntity();
             var user = await _repository.User.AddAsync(professor.User);
             professor.UserId = user.Id;
-            await _repository.Professor.AddAsync(professor);
+            professor = await _repository.Professor.AddAsync(professor);
 
             _logger.LogInformation($"Professor {professor.User.Id} created successfully.");
-            return professorDto;
+            return professor.ToDto();
         }
 
         public async Task<ProfessorDto> GetProfessorAsync(Guid id)
         {
-            var professorEntity = await _repository.Professor.GetByIdAsync(id, x => x.User);
-            if (professorEntity == null)
-            {
-                throw new ArgumentException("Professor not found.");
-            }
-
+            var professorEntity = await _repository
+                .Professor
+                .GetByIdAsync(id, x => x.User) ?? throw new ArgumentException("Professor not found.");
             return professorEntity.ToDto();
         }
 

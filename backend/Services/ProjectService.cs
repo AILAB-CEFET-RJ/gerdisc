@@ -70,7 +70,7 @@ namespace gerdisc.Services.Project
             return projectDtos;
         }
 
-        public async Task<Guid> UpdateProjectAsync(Guid id, CreateProjectDto projectDto)
+        public async Task<ProjectDto> UpdateProjectAsync(Guid id, CreateProjectDto projectDto)
         {
             var existingProject = await _repository.Project.GetByIdAsync(id);
             if (existingProject == null)
@@ -96,7 +96,7 @@ namespace gerdisc.Services.Project
             existingProject = projectDto.ToEntity(existingProject);
             await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(existingProject.Id));
 
-            return existingProject.Id;
+            return existingProject.ToDto();
         }
 
         public async Task DeleteProjectAsync(Guid id)
