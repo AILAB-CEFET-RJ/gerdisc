@@ -20,7 +20,6 @@ namespace gerdisc.Models.Entities
         /// </summary>
         public BaseEntity()
         {
-            Id = Guid.NewGuid();
             IsDeleted = false;
         }
     }
