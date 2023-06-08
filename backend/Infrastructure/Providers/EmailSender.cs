@@ -1,10 +1,10 @@
-using gerdisc.Services.Interfaces;
+using gerdisc.Infrastructure.Providers.Interfaces;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 using gerdisc.Settings;
 
-namespace gerdisc.Services
+namespace gerdisc.Infrastructure.Providers
 {
     public class EmailSender : IEmailSender
     {

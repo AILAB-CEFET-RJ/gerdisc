@@ -1,5 +1,5 @@
+using gerdisc.Infrastructure.Providers.Interfaces;
 using gerdisc.Infrastructure.Repositories;
-using gerdisc.Services.Interfaces;
 
 namespace Infrastructure.Jobs
 {

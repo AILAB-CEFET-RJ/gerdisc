@@ -4,7 +4,7 @@ using System.Security.Claims;
 using gerdisc.Models.Entities;
 using Microsoft.IdentityModel.Tokens;
 
-namespace gerdisc.Services
+namespace gerdisc.Infrastructure.Providers
 {
     /// <summary>
     /// Generates a token.

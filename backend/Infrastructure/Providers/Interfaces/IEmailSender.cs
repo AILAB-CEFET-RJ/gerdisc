@@ -2,7 +2,7 @@ using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
 using System.Threading.Tasks;
 
-namespace gerdisc.Services.Interfaces
+namespace gerdisc.Infrastructure.Providers.Interfaces
 {
     /// <summary>
     /// Represents a service for sending emails.
