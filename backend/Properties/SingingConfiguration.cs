@@ -8,7 +8,7 @@ namespace gerdisc.Properties
         public RsaSecurityKey Key { get; set; }
         public SigningConfiguration(string key)
         {
-            using( var rsa = new RSACryptoServiceProvider(2048))
+            using (var rsa = new RSACryptoServiceProvider(2048))
             {
                 try
                 {

@@ -33,7 +33,7 @@ namespace gerdisc.Infrastructure.Repositories
         /// <param name="includeProperties">An optional array of expressions specifying the related entities to include in the result.</param>
         /// <returns>The entity with the specified primary key value, or null if no matching entity is found.</returns>
         Task<TEntity?> GetByIdAsync(Guid id, params Expression<Func<TEntity, object>>[] includeProperties);
-    
+
         /// <summary>
         /// Retrieves all entities of type <typeparamref name="TEntity"/> from the repository.
         /// </summary>

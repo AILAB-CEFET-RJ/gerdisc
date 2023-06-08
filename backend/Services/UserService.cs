@@ -31,7 +31,7 @@ namespace gerdisc.Services.User
                 throw new ArgumentException($"User with email {loginDto.Email} not found.");
             }
 
-            if (!VerifyPassword(loginDto.Password??"", user.PasswordHash??""))
+            if (!VerifyPassword(loginDto.Password ?? "", user.PasswordHash ?? ""))
             {
                 throw new ArgumentException("Invalid password.");
             }

@@ -341,8 +341,8 @@ namespace gerdisc.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id","FirstName", "LastName", "Email", "PasswordHash", "Role", "CreatedAt", "Cpf" , "IsDeleted"},
-                values: new object[] {Guid.NewGuid(), "admin", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), (int)Models.Enums.RolesEnum.Administrator, DateTime.UtcNow, "11111111111", false });
+                columns: new[] { "Id", "FirstName", "LastName", "Email", "PasswordHash", "Role", "CreatedAt", "Cpf", "IsDeleted" },
+                values: new object[] { Guid.NewGuid(), "admin", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), (int)Models.Enums.RolesEnum.Administrator, DateTime.UtcNow, "11111111111", false });
 
         }
 

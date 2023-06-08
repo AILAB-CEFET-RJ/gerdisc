@@ -23,7 +23,7 @@ namespace gerdisc.Infrastructure.Repositories
             : base(options)
         {
         }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserEntity>().ToTable("Users");
