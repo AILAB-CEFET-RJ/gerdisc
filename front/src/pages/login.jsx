@@ -13,28 +13,26 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError(undefined)
-        const user = login({ email, password })
+        login({ email, password })
             .then((response) => {
                 if (response.status === 200) {
                     localStorage.setItem('token', response.data.token)
                     localStorage.setItem('role', response.data?.user?.role)
                     localStorage.setItem('name', `${response.data?.user?.firstName} ${response.data?.user?.lastName}`)
-                    return response.data?.user
+                    if (response.data?.user) {
+                        navigate("/")
+                    }
+                    else {
+                        setError('login failed')
+                    }
                 }
                 else {
-                    return null
+                    setError('login failed')
                 }
             })
             .catch((promise) => {
-                return null
+                setError('login failed')
             })
-        if (user !== null) {
-            console.log(user)
-            navigate("/")
-        }
-        else {
-            setError('login failed')
-        }
     }
 
 

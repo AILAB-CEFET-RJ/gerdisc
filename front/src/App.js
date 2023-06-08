@@ -23,6 +23,7 @@ export default function App() {
         <Route exact path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/students/:id" element={<StudentProfile />} />
+        <Route path="/students/:id/edit" element={<UserForm isUpdate={true} type={"Estudante"} />} />
         <Route path="/students" element={<StudentList />} />
         <Route path="/professors" element={<ProfessorList />} />
         <Route path="/researchers" element={<ResearcherList />} />
@@ -34,8 +35,10 @@ export default function App() {
         <Route path="/students/:id/researches/add" element={<ResearchForm />} />
         <Route path="/students/add" element={<UserForm  type={"Estudante"}/>} />
         <Route path="/professors/add" element={<UserForm type={"Professor"}/>} />
-        <Route path="/researchers/add" element={<UserForm type={"Externo"}/>} />
+        <Route path="/professors/:id" element={<UserForm type={"Professor"} isUpdate={true}/>} />
+        <Route path="/researchers/:id" element={<UserForm type={"Externo"} isUpdate={true}/>} />
         <Route path="/projects/add" element={<ProjectForm />} />
+        <Route path="/projects/:id" element={<ProjectForm isUpdate={true} />} />
         <Route path="/students/:id/extensions/add" element={<ExtensionForm />} />
       </Routes>
     </Router>

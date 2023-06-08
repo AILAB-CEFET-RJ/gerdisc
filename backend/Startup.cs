@@ -72,7 +72,6 @@ namespace gerdisc
 
             var signingConfig = new SigningConfiguration(settings.SinginKey);
 
-            services.AddNpgsql<ContexRepository>(connectionString);
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IProjectService, ProjectService>();
@@ -83,7 +82,7 @@ namespace gerdisc
             services.AddScoped<IExtensionService, ExtensionService>();
             services.AddSingleton<ISigningConfiguration>(signingConfig);
             services.AddSingleton<ISettings>(settings);
-            services.AddDbContext<ContexRepository>(optionsAction=> optionsAction.UseNpgsql(connectionString));
+            services.AddDbContext<ContexRepository>(optionsAction=> optionsAction.UseNpgsql(connectionString),ServiceLifetime.Scoped);
             services.AddSingleton<IRepository>(x => new Repository(x.GetService<ContexRepository>()));
             services.AddAuthorization();
 

@@ -36,7 +36,9 @@
         align-content: center;
         align-self: center;
         height: 50vh;
-        margin-bottom: 10vh;
+        margin-top: 20vh;
+        margin-bottom: 20vh;
+        border: 0.2rem solid white;
     }
     .form input[type="text"], .form input[type="password"]{
         border-radius: 1rem;
@@ -62,17 +64,6 @@
         color: white;
         font-weight: bolder;
         align-self: center;
-    }
-    .form input::placeholder {
-        font-style: italic;
-        font-weight: lighter;
-        opacity: 0.4;
-        color: gray;
-    }
-    .form input:hover{
-        border: none;
-    }
-    .form input[type="text"]:focus{
-        outline:none;
+        cursor: pointer;
     }
 }

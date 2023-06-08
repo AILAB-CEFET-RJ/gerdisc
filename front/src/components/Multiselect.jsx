@@ -2,7 +2,6 @@ import {Multiselect as Multi} from 'multiselect-react-dropdown';
 import Spinner from "./spinner"
 
 
-
 export default function MultiSelect(
     {
         options,
@@ -24,10 +23,6 @@ export default function MultiSelect(
         onRemove={onRemove} // Function will trigger on remove event
         displayValue={displayValue} // Property name to display in the dropdown options
         style={{
-            chips: {
-                background: '#004AAD',
-                color: '#004AAD'
-            },
             multiselectContainer: {
                 display: 'flex',
                 flex: 1,

@@ -15,6 +15,11 @@ export default function ProfessorList() {
     const [isLoading, setIsLoading] = useState(true)
     const [professors, setProfessors] = useState([])
 
+    const detailsCallback = (id)=>
+    {
+        navigate(id)
+    }
+
     useEffect(() => {
         const roles = ['Administrator']
         const token = localStorage.getItem('token')
@@ -49,7 +54,7 @@ export default function ProfessorList() {
     }, [setProfessors, setIsLoading])
 
 
-    return (<PageContainer name={name}>
+    return (<PageContainer name={name} isLoading={isLoading}>
         <div className="bar professorBar">
             <div className="left-bar">
                 <div>
@@ -68,7 +73,7 @@ export default function ProfessorList() {
             </div>
         </div>
         <BackButton />
-        {!isLoading && <Table data={professors} useOptions={true} />}
+        {!isLoading && <Table data={professors} useOptions={true} detailsCallback={detailsCallback} />}
     </PageContainer>
 )
 }

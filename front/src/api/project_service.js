@@ -10,3 +10,7 @@ export async function getProjectById(id) {
 export async function postProjects(data) {
     return (await api.post("projects", data))?.data
 }
+
+export async function putProjectsById(id, data) {
+    return (await api.put(`projects/${id}`, data))?.data
+}
