@@ -21,5 +21,17 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .ThenInclude(x => x.Student)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public override async Task<IEnumerable<ProjectEntity>> GetAllAsync()
+        {
+            return await _dbSet
+                .Where(e => !e.IsDeleted)
+                .Include(x => x.ProfessorProjects)
+                .ThenInclude(x => x.Professor)
+                .ThenInclude(x => x.User)
+                .Include(x => x.Dissertations)
+                .ThenInclude(x => x.Student)
+                .ToListAsync();
+        }
     }
 }

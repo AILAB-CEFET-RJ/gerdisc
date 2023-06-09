@@ -16,7 +16,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property allows lazy loading of the <see cref="ProfessorEntity"/> entity.
         /// </remarks>
-        public virtual ProfessorEntity Professor { get; set; }
+        public virtual ProfessorEntity? Professor { get; set; }
 
         /// <summary>
         /// Gets or sets the unique identifier of the project.
@@ -32,12 +32,12 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property allows lazy loading of the <see cref="ProjectEntity"/> entity.
         /// </remarks>
-        public virtual ProjectEntity Project { get; set; }
+        public virtual ProjectEntity? Project { get; set; }
 
         public ProfessorProjectEntity()
         {
-            Professor = new ProfessorEntity();
-            Project = new ProjectEntity();
+            Professor = null;
+            Project = null;
         }
     }
 }

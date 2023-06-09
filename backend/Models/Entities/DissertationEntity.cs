@@ -20,6 +20,6 @@ namespace gerdisc.Models.Entities
         /// </summary>
         public Guid ProjectId { get; set; }
 
-        public StudentEntity Student { get; set; }
+        public StudentEntity? Student { get; set; }
     }
 }
