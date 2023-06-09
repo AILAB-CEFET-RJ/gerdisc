@@ -14,3 +14,7 @@ export async function deleteStudent(id){
 export async function getStudentById(id){
     return (await api.get(`api/Students/${id}`))?.data
 }
+
+export async function putStudentById(id, data){
+    return (await api.put(`api/Students/${id}`,data))?.data
+}

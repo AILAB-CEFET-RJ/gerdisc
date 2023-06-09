@@ -15,6 +15,10 @@ export default function ProjectList() {
     const [isLoading, setIsLoading] = useState(true)
     const [projects, setProjects] = useState([])
 
+    const detailsCallback = (id)=>
+    {
+        navigate(id)
+    }
     useEffect(() => {
         const roles = ['Administrator']
         const token = localStorage.getItem('token')
@@ -72,7 +76,7 @@ export default function ProjectList() {
                     </div>
                 </div>
             </div>
-            <BackButton /><Table data={projects} useOptions={false} />
+            <BackButton /><Table data={projects} useOptions={true} detailsCallback={detailsCallback} />
         </PageContainer>
     )
 }

@@ -1,3 +1,4 @@
+@import './variables.scss';
 .form {
     display: flex;
     justify-content: center;
@@ -5,6 +6,11 @@
     margin: 2rem;
     flex-direction: column;
     padding: 1rem;
+    flex: 1;
+    margin-top: 0.1rem;
+    border: 0.2rem solid $primary-color;
+    flex-wrap: wrap;
+    border-radius: 1rem;
 
     .form-section {
         display: flex;
