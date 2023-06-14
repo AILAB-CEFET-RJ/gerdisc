@@ -2,11 +2,12 @@ using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
 using gerdisc.Models.Mapper;
+using gerdisc.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace gerdisc.Services.Dissertation
+namespace gerdisc.Services
 {
     public class DissertationService : IDissertationService
     {

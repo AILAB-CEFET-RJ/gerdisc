@@ -19,7 +19,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property allows lazy loading of the <see cref="ProfessorEntity"/> entity.
         /// </remarks>
-        public virtual ProfessorEntity Professor { get; set; }
+        public virtual ProfessorEntity? Professor { get; set; }
 
         /// <summary>
         /// Gets or sets the unique identifier of the external researcher.
@@ -35,7 +35,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property allows lazy loading of the <see cref="ExternalResearcherEntity"/> entity.
         /// </remarks>
-        public virtual ExternalResearcherEntity ExternalResearcher { get; set; }
+        public virtual ExternalResearcherEntity? ExternalResearcher { get; set; }
 
         /// <summary>
         /// Gets or sets the unique identifier of the dissertation.
@@ -51,13 +51,6 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property allows lazy loading of the <see cref="DissertationEntity"/> entity.
         /// </remarks>
-        public virtual DissertationEntity Dissertation { get; set; }
-
-        public OrientationEntity()
-        {
-            Professor = new ProfessorEntity();
-            ExternalResearcher = new ExternalResearcherEntity();
-            Dissertation = new DissertationEntity();
-        }
+        public virtual DissertationEntity? Dissertation { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using gerdisc.Models.DTOs;
-using gerdisc.Services.Professor;
+using gerdisc.Services;
+using gerdisc.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +29,7 @@ namespace gerdisc.Controllers
             try
             {
                 var professor = await _professorService.CreateProfessorAsync(professorDto);
-                return CreatedAtAction(nameof(GetProfessor), new { id = professor.Id }, professor);
+                return CreatedAtAction(nameof(GetProfessor), new { id = professor.UserId }, professor);
             }
             catch (Exception ex)
             {

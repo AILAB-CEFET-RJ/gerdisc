@@ -1,6 +1,7 @@
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
-using gerdisc.Services.Extension;
+using gerdisc.Services;
+using gerdisc.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

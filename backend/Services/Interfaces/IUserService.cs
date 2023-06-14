@@ -1,6 +1,7 @@
 using gerdisc.Models.DTOs;
+using gerdisc.Models.Entities;
 
-namespace gerdisc.Services.User
+namespace gerdisc.Services.Interfaces
 {
     /// <summary>
     /// provides the contract for user-related operations in the application.
@@ -8,6 +9,13 @@ namespace gerdisc.Services.User
     /// </summary>
     public interface IUserService
     {
+        /// <summary>
+        /// Creates a new user entity.
+        /// </summary>
+        /// <param name="userDto">The user entity to create.</param>
+        /// <returns>The created user entity.</returns>
+        Task<UserEntity> CreateUserAsync(UserDto userDto);
+
         /// <summary>
         /// Authenticate user with provided email and password
         /// </summary>

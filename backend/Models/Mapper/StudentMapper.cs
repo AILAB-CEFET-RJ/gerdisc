@@ -15,7 +15,7 @@ namespace gerdisc.Models.Mapper
         /// </summary>
         /// <param name="dto">The <see cref="StudentDto"/> object to convert.</param>
         /// <returns>A new <see cref="StudentEntity"/> object with the values from the <paramref name="dto"/> object.</returns>
-        public static StudentEntity ToEntity(this StudentDto dto) =>
+        public static StudentEntity ToEntity(this StudentDto dto, Guid userId) =>
             dto is null ? new StudentEntity() : new StudentEntity
             {
                 Registration = dto.Registration,
@@ -33,7 +33,7 @@ namespace gerdisc.Models.Mapper
                 UndergraduateArea = dto.UndergraduateArea,
                 DateOfBirth = dto.DateOfBirth?.ToUniversalTime(),
                 Scholarship = dto.Scholarship,
-                User = dto.ToUserEntity(RolesEnum.Student),
+                UserId = userId
             };
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace gerdisc.Models.Mapper
         {
             var entity = self is null ? new StudentDto() : new StudentDto
             {
-                Id = self.Id,
+                UserId = self.Id,
                 Registration = self.Registration,
                 RegistrationDate = self.RegistrationDate?.ToUniversalTime(),
                 ProjectId = self.ProjectId,

@@ -1,6 +1,6 @@
 using gerdisc.Models.DTOs;
 
-namespace gerdisc.Services.Project
+namespace gerdisc.Services.Interfaces
 {
     /// <summary>
     /// Defines methods for managing projects.

@@ -14,11 +14,11 @@ namespace gerdisc.Models.Mapper
         /// </summary>
         /// <param name="self">The <see cref="ExternalResearcherDto"/> object to convert.</param>
         /// <returns>A new <see cref="ExternalResearcherEntity"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static ExternalResearcherEntity ToEntity(this ExternalResearcherDto self) =>
+        public static ExternalResearcherEntity ToEntity(this ExternalResearcherDto self, Guid userId) =>
             self is null ? new ExternalResearcherEntity() : new ExternalResearcherEntity
             {
                 Institution = self.Institution,
-                User = self.ToUserEntity(RolesEnum.ExternalResearcher),
+                UserId = userId,
             };
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace gerdisc.Models.Mapper
         public static ExternalResearcherDto ToDto(this ExternalResearcherEntity self) =>
             self is null ? new ExternalResearcherDto() : new ExternalResearcherDto
             {
-                Id = self.Id,
+                UserId = self.Id,
                 Institution = self.Institution
             }.AddUserDto(self.User);
     }

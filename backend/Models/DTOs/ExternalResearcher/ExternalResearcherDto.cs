@@ -7,5 +7,10 @@ namespace gerdisc.Models.DTOs
         [Required]
         [StringLength(20)]
         public string? Institution { get; set; }
+
+        public ExternalResearcherDto()
+        {
+            Role = Enums.RolesEnum.ExternalResearcher;
+        }
     }
 }

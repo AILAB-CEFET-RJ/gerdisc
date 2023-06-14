@@ -2,26 +2,27 @@ using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
 using gerdisc.Models.Mapper;
-using gerdisc.Services.Interfaces;
-using Microsoft.Extensions.Logging;
-using System;
 using CsvHelper;
 using System.Globalization;
+using gerdisc.Services.Interfaces;
 
-namespace gerdisc.Services.Student
+namespace gerdisc.Services
 {
     public class StudentService : IStudentService
     {
         private readonly IRepository _repository;
         private readonly ILogger<StudentService> _logger;
+        private readonly IUserService _userService;
 
         public StudentService(
             IRepository repository,
-            ILogger<StudentService> logger
+            ILogger<StudentService> logger,
+            IUserService userService
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         public async Task<StudentDto> CreateStudentAsync(StudentDto studentDto)
@@ -32,10 +33,9 @@ namespace gerdisc.Services.Student
                 throw new ArgumentException($"Student {studentDto.Email} alredy created.");
             }
 
-            var student = studentDto.ToEntity();
-            user = await _repository.User.AddAsync(student.User);
+            user = await _userService.CreateUserAsync(studentDto);
+            var student = studentDto.ToEntity(user.Id);
 
-            student.UserId = user.Id;
             student = await _repository.Student.AddAsync(student);
 
             _logger.LogInformation($"Student {studentDto.Email} created successfully.");

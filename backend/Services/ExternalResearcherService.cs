@@ -1,28 +1,31 @@
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Mapper;
+using gerdisc.Services.Interfaces;
 
-namespace gerdisc.Services.ExternalResearcher
+namespace gerdisc.Services
 {
     public class ExternalResearcherService : IExternalResearcherService
     {
         private readonly IRepository _repository;
         private readonly ILogger<ExternalResearcherService> _logger;
+        private readonly IUserService _userService;
 
         public ExternalResearcherService(
             IRepository repository,
-            ILogger<ExternalResearcherService> logger
+            ILogger<ExternalResearcherService> logger,
+            IUserService userService
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         public async Task<ExternalResearcherDto> CreateExternalResearcherAsync(ExternalResearcherDto externalResearcherDto)
         {
-            var externalResearcher = externalResearcherDto.ToEntity();
-            var userId = (await _repository.User.AddAsync(externalResearcher.User)).Id;
-            externalResearcher.UserId = userId;
+            var userId = (await _userService.CreateUserAsync(externalResearcherDto)).Id;
+            var externalResearcher = externalResearcherDto.ToEntity(userId);
             externalResearcher = await _repository.ExternalResearcher.AddAsync(externalResearcher);
 
             _logger.LogInformation($"ExternalResearcher {externalResearcher.User.Id} created successfully.");

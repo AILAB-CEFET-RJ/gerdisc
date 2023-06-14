@@ -31,5 +31,10 @@ namespace gerdisc.Models.DTOs
         public DateTime? DateOfBirth { get; set; }
 
         public int Scholarship { get; set; }
+
+        public StudentDto()
+        {
+            Role = Enums.RolesEnum.Student;
+        }
     }
 }

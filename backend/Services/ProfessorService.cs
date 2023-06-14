@@ -1,28 +1,31 @@
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Mapper;
+using gerdisc.Services.Interfaces;
 
-namespace gerdisc.Services.Professor
+namespace gerdisc.Services
 {
     public class ProfessorService : IProfessorService
     {
         private readonly IRepository _repository;
         private readonly ILogger<ProfessorService> _logger;
+        private readonly IUserService _userService;
 
         public ProfessorService(
             IRepository repository,
-            ILogger<ProfessorService> logger
+            ILogger<ProfessorService> logger,
+            IUserService userService
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         public async Task<ProfessorDto> CreateProfessorAsync(ProfessorDto professorDto)
         {
-            var professor = professorDto.ToEntity();
-            var user = await _repository.User.AddAsync(professor.User);
-            professor.UserId = user.Id;
+            var user = await _userService.CreateUserAsync(professorDto);
+            var professor = professorDto.ToEntity(user.Id);
             professor = await _repository.Professor.AddAsync(professor);
 
             _logger.LogInformation($"Professor {professor.User.Id} created successfully.");

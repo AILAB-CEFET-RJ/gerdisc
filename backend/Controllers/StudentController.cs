@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using gerdisc.Models.DTOs;
-using gerdisc.Services.Interfaces;
+using gerdisc.Services;
 using Microsoft.AspNetCore.Authorization;
+using gerdisc.Services.Interfaces;
 
 namespace gerdisc.Controllers
 {
@@ -23,7 +24,7 @@ namespace gerdisc.Controllers
             try
             {
                 var student = await _studentService.CreateStudentAsync(studentDto);
-                return CreatedAtAction(nameof(GetStudent), new { studentId = student.Id }, student);
+                return CreatedAtAction(nameof(GetStudent), new { studentId = student.UserId }, student);
             }
             catch (Exception ex)
             {
