@@ -2,11 +2,9 @@ using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
 using gerdisc.Models.Mapper;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
+using gerdisc.Services.Interfaces;
 
-namespace gerdisc.Services.Project
+namespace gerdisc.Services
 {
     public class ProjectService : IProjectService
     {

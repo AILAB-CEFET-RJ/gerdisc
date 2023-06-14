@@ -1,26 +1,43 @@
 using gerdisc.Infrastructure.Providers;
+using gerdisc.Infrastructure.Providers.Interfaces;
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
+using gerdisc.Models.Entities;
 using gerdisc.Models.Mapper;
 using gerdisc.Properties;
+using gerdisc.Services.Interfaces;
 
-namespace gerdisc.Services.User
+namespace gerdisc.Services
 {
     public class UserService : IUserService
     {
         private readonly IRepository _repository;
+        private readonly IEmailSender _emailSender;
         private readonly ISigningConfiguration _singingConfig;
         private readonly ILogger<UserService> _logger;
 
         public UserService(
             IRepository repository,
             ISigningConfiguration singingConfig,
-            ILogger<UserService> logger
+            ILogger<UserService> logger,
+            IEmailSender emailSender
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _singingConfig = singingConfig ?? throw new ArgumentNullException(nameof(singingConfig));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
+        }
+
+        public async Task<UserEntity> CreateUserAsync(UserDto userDto)
+        {
+            _logger.LogInformation($"Creating user{userDto.Email}");
+            if (userDto == null || userDto.Email == null)
+            {
+                throw new ArgumentException("userDto.");
+            }
+            await _emailSender.SendEmail(userDto.Email, "", "");
+            return await _repository.User.AddAsync(userDto.ToUserEntity());
         }
 
         public async Task<LoginResultDto> AuthenticateAsync(LoginDto loginDto)

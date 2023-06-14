@@ -5,9 +5,10 @@ using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Mapper;
+using gerdisc.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace gerdisc.Services.Course
+namespace gerdisc.Services
 {
     public class CourseService : ICourseService
     {

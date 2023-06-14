@@ -15,7 +15,7 @@ namespace gerdisc.Models.Mapper
         /// <param name="self">The <see cref="UserDto"/> object to convert.</param>
         /// <param name="role">The role to set for the <see cref="UserEntity"/> object.</param>
         /// <returns>A new <see cref="UserEntity"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static UserEntity ToUserEntity(this UserDto self, RolesEnum role) =>
+        public static UserEntity ToUserEntity(this UserDto self) =>
             self is null ? new UserEntity() : new UserEntity
             {
                 FirstName = self.FirstName,
@@ -24,7 +24,7 @@ namespace gerdisc.Models.Mapper
                 Email = self.Email,
                 CreatedAt = DateTime.UtcNow,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(self.Password),
-                Role = role
+                Role = self.Role
             };
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace gerdisc.Models.Mapper
         public static UserDto ToUserDto(this UserEntity self) =>
             self is null ? new UserDto() : new UserDto
             {
-                Id = self.Id,
+                UserId = self.Id,
                 FirstName = self.FirstName,
                 LastName = self.LastName,
                 Cpf = self.Cpf,
@@ -65,6 +65,7 @@ namespace gerdisc.Models.Mapper
         public static TUserDto AddUserDto<TUserDto>(this TUserDto self, UserEntity entity)
             where TUserDto : UserDto
         {
+            self.UserId = entity.Id;
             self.Cpf = entity.Cpf;
             self.Email = entity.Email;
             self.FirstName = entity.FirstName;

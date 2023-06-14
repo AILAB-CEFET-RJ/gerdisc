@@ -1,5 +1,6 @@
 using gerdisc.Models.DTOs;
-using gerdisc.Services.ExternalResearcher;
+using gerdisc.Services;
+using gerdisc.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +29,7 @@ namespace gerdisc.Controllers
             try
             {
                 var externalResearcher = await _externalResearcherService.CreateExternalResearcherAsync(externalResearcherDto);
-                return CreatedAtAction(nameof(GetExternalResearcher), new { id = externalResearcher.Id }, externalResearcher);
+                return CreatedAtAction(nameof(GetExternalResearcher), new { id = externalResearcher.UserId }, externalResearcher);
             }
             catch (Exception ex)
             {

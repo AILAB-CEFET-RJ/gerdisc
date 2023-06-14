@@ -1,6 +1,6 @@
 using gerdisc.Models.DTOs;
 
-namespace gerdisc.Services.Professor
+namespace gerdisc.Services.Interfaces
 {
     /// <summary>
     /// Defines methods for managing professors.

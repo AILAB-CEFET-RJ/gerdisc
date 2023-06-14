@@ -1,6 +1,6 @@
 using gerdisc.Models.DTOs;
 
-namespace gerdisc.Services.Dissertation
+namespace gerdisc.Services.Interfaces
 {
     /// <summary>
     /// Defines methods for managing dissertations.

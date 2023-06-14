@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using gerdisc.Models.DTOs;
 
-namespace gerdisc.Services.Course
+namespace gerdisc.Services.Interfaces
 {
     /// <summary>
     /// Interface for CourseService that defines the methods to manage courses.

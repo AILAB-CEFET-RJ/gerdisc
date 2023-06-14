@@ -1,6 +1,7 @@
-using gerdisc.Services.User;
+using gerdisc.Services;
 using gerdisc.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using gerdisc.Services.Interfaces;
 
 namespace gerdisc.Controllers
 {
