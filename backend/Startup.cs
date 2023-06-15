@@ -125,6 +125,7 @@ namespace gerdisc
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseHangfireDashboard();
+            app.UseMiddleware<UserContextMiddleware>();
             RecurringJob.AddOrUpdate<StudentsFinishing>("daily-job", x => x.ExecuteAsync(null), Cron.Daily);
 
             app.UseEndpoints(endpoints =>

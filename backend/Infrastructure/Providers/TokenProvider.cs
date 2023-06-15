@@ -20,6 +20,7 @@ namespace gerdisc.Infrastructure.Providers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()??""),
                     new Claim(ClaimTypes.Name, user.FirstName??""),
                     new Claim(ClaimTypes.Surname, user.LastName??""),
                     new Claim(ClaimTypes.Email, user.Email??""),
@@ -40,6 +41,7 @@ namespace gerdisc.Infrastructure.Providers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()??""),
                     new Claim(ClaimTypes.Name, user.FirstName??""),
                     new Claim(ClaimTypes.Surname, user.LastName??""),
                     new Claim(ClaimTypes.Email, user.Email??""),

@@ -10,14 +10,17 @@ namespace gerdisc.Services
     {
         private readonly IRepository _repository;
         private readonly ILogger<ProjectService> _logger;
+        private readonly IUserContext _userContext;
 
         public ProjectService(
             IRepository repository,
-            ILogger<ProjectService> logger
+            ILogger<ProjectService> logger,
+            IUserContext userContext
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
         }
 
         public async Task<ProjectDto> CreateProjectAsync(CreateProjectDto projectDto)
