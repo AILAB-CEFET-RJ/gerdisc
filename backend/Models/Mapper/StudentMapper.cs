@@ -69,7 +69,7 @@ namespace gerdisc.Models.Mapper
         {
             var entity = self is null ? new StudentDto() : new StudentDto
             {
-                UserId = self.Id,
+                Id = self.Id,
                 Registration = self.Registration,
                 RegistrationDate = self.RegistrationDate?.ToUniversalTime(),
                 ProjectId = self.ProjectId,
@@ -116,7 +116,6 @@ namespace gerdisc.Models.Mapper
                 Email = entity.Email,
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
-                Password = entity.Password,
             };
     }
 }

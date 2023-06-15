@@ -1,3 +1,4 @@
+using System.Text;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
 using gerdisc.Models.Enums;
@@ -23,7 +24,7 @@ namespace gerdisc.Models.Mapper
                 Cpf = self.Cpf,
                 Email = self.Email,
                 CreatedAt = DateTime.UtcNow,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(self.Password),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(GeneratePassword(23)),
                 Role = self.Role
             };
 
@@ -100,5 +101,21 @@ namespace gerdisc.Models.Mapper
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(entity.Password),
             Role = RolesEnum.Student
         };
+
+        public static string GeneratePassword(int length)
+        {
+            var allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=<>?";
+            Random random = new();
+            StringBuilder password = new();
+
+            for (int i = 0; i < length; i++)
+            {
+                int index = random.Next(allowedChars.Length);
+                password.Append(allowedChars[index]);
+            }
+
+            return password.ToString();
+        }
+
     }
 }

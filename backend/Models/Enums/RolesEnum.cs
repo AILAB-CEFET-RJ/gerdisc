@@ -5,6 +5,7 @@ namespace gerdisc.Models.Enums
         Student,
         Professor,
         Administrator,
-        ExternalResearcher
+        ExternalResearcher,
+        ResetPassword
     }
 }

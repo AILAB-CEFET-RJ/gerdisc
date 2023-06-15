@@ -41,7 +41,7 @@ namespace gerdisc.Models.Mapper
         public static ExternalResearcherDto ToDto(this ExternalResearcherEntity self) =>
             self is null ? new ExternalResearcherDto() : new ExternalResearcherDto
             {
-                UserId = self.Id,
+                Id = self.Id,
                 Institution = self.Institution
             }.AddUserDto(self.User);
     }

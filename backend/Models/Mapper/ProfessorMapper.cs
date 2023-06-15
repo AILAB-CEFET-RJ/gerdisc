@@ -41,7 +41,7 @@ namespace gerdisc.Models.Mapper
         public static ProfessorDto ToDto(this ProfessorEntity self) =>
             self is null ? new ProfessorDto() : new ProfessorDto
             {
-                UserId = self.Id,
+                Id = self.Id,
                 Siape = self.Siape,
             }.AddUserDto(self.User);
     }

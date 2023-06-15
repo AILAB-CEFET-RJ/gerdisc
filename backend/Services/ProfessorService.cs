@@ -62,7 +62,6 @@ namespace gerdisc.Services
 
             existingProfessor = professorDto.ToEntity(existingProfessor);
 
-
             return existingProfessor.ToDto();
         }
 
