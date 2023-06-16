@@ -40,14 +40,5 @@ services:
       postgres:
         condition: service_healthy
 
-  nginx:
-    image: nginx
-    ports:
-      - 8000:80
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/gerdisc.conf
-    depends_on:
-      - gerdisc
-
 volumes:
   db_data:
