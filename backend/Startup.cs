@@ -79,7 +79,7 @@ namespace gerdisc
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDissertationService, DissertationService>();
             services.AddScoped<IExtensionService, ExtensionService>();
-            services.AddScoped<IUserContext>();
+            services.AddScoped<IUserContext, UserContext>();
             services.AddSingleton<ISigningConfiguration>(signingConfig);
             services.AddSingleton<ISettings>(settings);
             services.AddSingleton<IRepository>(x => new Repository(x.GetService<ContexRepository>()));
