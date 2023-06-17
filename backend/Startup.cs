@@ -55,6 +55,7 @@ namespace gerdisc
                 });
 
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
+                c.DocumentFilter<BasePathDocumentFilter>(); 
             });
 
             services.AddControllers().AddJsonOptions(options =>
@@ -109,11 +110,13 @@ namespace gerdisc
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UsePathBase("/gerdisc");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gerdisc V1");
+                c.SwaggerEndpoint("/gerdisc/swagger/v1/swagger.json", "Gerdisc V1");
                 c.DefaultModelsExpandDepth(-1);
+                c.RoutePrefix = string.Empty;
                 c.DocumentTitle = "Gerdisc API Documentation";
                 c.EnableDeepLinking();
                 c.DisplayRequestDuration();
