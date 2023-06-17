@@ -15,10 +15,9 @@ import ResearchList from './pages/research/researchList';
 import ExtensionForm from './pages/extension/createExtension';
 import CsvLoader from './pages/CsvLoader';
 
-
 export default function App() {
   return (
-    <Router>
+    <Router basename="/gerdisc">
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -33,7 +32,7 @@ export default function App() {
         <Route path="/user/add" element={<UserForm />} />
         <Route path="/entities/csv" element={<CsvLoader />} />
         <Route path="/students/:id/researches/add" element={<ResearchForm />} />
-        <Route path="/students/add" element={<UserForm  type={"Estudante"}/>} />
+        <Route path="/students/add" element={<UserForm type={"Estudante"}/>} />
         <Route path="/professors/add" element={<UserForm type={"Professor"}/>} />
         <Route path="/professors/:id" element={<UserForm type={"Professor"} isUpdate={true}/>} />
         <Route path="/researchers/:id" element={<UserForm type={"Externo"} isUpdate={true}/>} />
