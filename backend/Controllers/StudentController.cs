@@ -7,7 +7,7 @@ using gerdisc.Services.Interfaces;
 namespace gerdisc.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("students")]
     public class StudentsController : ControllerBase
     {
         private readonly IStudentService _studentService;
