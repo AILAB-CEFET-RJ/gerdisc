@@ -57,6 +57,8 @@ namespace gerdisc.Services
 
             user.PasswordHash = HashPassword(loginDto.Password);
 
+            await _repository.User.UpdateAsync(user);
+
             var jwtToken = user.GenerateJwtToken(_singingConfig.Key);
 
             return user.ToDto(jwtToken);
