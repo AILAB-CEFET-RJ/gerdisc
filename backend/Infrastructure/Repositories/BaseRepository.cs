@@ -31,35 +31,13 @@ namespace gerdisc.Infrastructure.Repositories
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<TEntity?> GetByIdAsync(
-            Guid id,
-            params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            return await _dbSet
-                .Where(e => !e.IsDeleted)
-                .IncludeMultiple(includeProperties)
-                .SingleOrDefaultAsync(p => p.Id == id);
-        }
-
         public virtual async Task<TEntity?> GetByIdAsync(
             Guid id,
-            Expression<Func<TEntity, bool>> predicate)
-        {
-            return await _dbSet
-                .Where(e => !e.IsDeleted)
-                .Where(predicate)
-                .FirstOrDefaultAsync(e => e.Id == id);
-        }
-
-        public async Task<TEntity?> GetByIdAsync(
-            Guid id,
-            Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return await _dbSet
                 .Where(e => !e.IsDeleted)
                 .IncludeMultiple(includeProperties)
-                .Where(predicate)
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
 
@@ -71,7 +49,7 @@ namespace gerdisc.Infrastructure.Repositories
             return entities;
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(
             params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return await _dbSet

@@ -83,7 +83,7 @@ namespace gerdisc
             services.AddScoped<IUserContext, UserContext>();
             services.AddSingleton<ISigningConfiguration>(signingConfig);
             services.AddSingleton<ISettings>(settings);
-            services.AddSingleton<IRepository>(x => new Repository(x.GetService<ContexRepository>()));
+            services.AddScoped<IRepository,Repository>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddAuthorization();
 

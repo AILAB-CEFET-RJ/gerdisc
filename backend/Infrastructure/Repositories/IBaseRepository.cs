@@ -35,27 +35,6 @@ namespace gerdisc.Infrastructure.Repositories
         Task<TEntity?> GetByIdAsync(Guid id, params Expression<Func<TEntity, object>>[] includeProperties);
 
         /// <summary>
-        /// Gets an entity by its ID.
-        /// </summary>
-        /// <param name="id">The ID of the entity to get.</param>
-        /// <returns>The entity with the specified ID, or null if not found.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="id"/> is null.</exception>
-        Task<TEntity?> GetByIdAsync(
-            Guid id,
-            Expression<Func<TEntity, bool>> predicate);
-
-        /// <summary>
-        /// Gets a single entity by its primary key value, including any related entities specified in the includeProperties parameter.
-        /// </summary>
-        /// <param name="id">The primary key value of the entity to retrieve.</param>
-        /// <param name="includeProperties">An optional array of expressions specifying the related entities to include in the result.</param>
-        /// <returns>The entity with the specified primary key value, or null if no matching entity is found.</returns>
-        Task<TEntity?> GetByIdAsync(
-            Guid id,
-            Expression<Func<TEntity, bool>> predicate,
-            params Expression<Func<TEntity, object>>[] includeProperties);
-
-        /// <summary>
         /// Retrieves all entities of type <typeparamref name="TEntity"/> from the repository.
         /// </summary>
         /// <param name="includeProperties">An array of property expressions to include in the query results.</param>

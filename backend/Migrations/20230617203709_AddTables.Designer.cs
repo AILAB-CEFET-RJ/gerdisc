@@ -12,7 +12,7 @@ using gerdisc.Infrastructure.Repositories;
 namespace gerdisc.Migrations
 {
     [DbContext(typeof(ContexRepository))]
-    [Migration("20230608204039_AddTables")]
+    [Migration("20230617203709_AddTables")]
     partial class AddTables
     {
         /// <inheritdoc />
@@ -66,6 +66,9 @@ namespace gerdisc.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("ProfessorId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid?>("ProjectEntityId")
                         .HasColumnType("uuid");
 
@@ -76,6 +79,8 @@ namespace gerdisc.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfessorId");
 
                     b.HasIndex("ProjectEntityId");
 
@@ -143,7 +148,7 @@ namespace gerdisc.Migrations
                     b.Property<Guid>("DissertationId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ExternalResearcherId")
+                    b.Property<Guid?>("ExternalResearcherId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("IsDeleted")
@@ -295,6 +300,9 @@ namespace gerdisc.Migrations
                     b.Property<DateTime?>("ProjectDefenceDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid?>("ProjectEntityId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("ProjectId")
                         .HasColumnType("text");
 
@@ -326,6 +334,8 @@ namespace gerdisc.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectEntityId");
 
                     b.HasIndex("UserId");
 
@@ -369,6 +379,10 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.DissertationEntity", b =>
                 {
+                    b.HasOne("gerdisc.Models.Entities.ProfessorEntity", "Professor")
+                        .WithMany()
+                        .HasForeignKey("ProfessorId");
+
                     b.HasOne("gerdisc.Models.Entities.ProjectEntity", null)
                         .WithMany("Dissertations")
                         .HasForeignKey("ProjectEntityId");
@@ -378,6 +392,8 @@ namespace gerdisc.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Professor");
 
                     b.Navigation("Student");
                 });
@@ -414,9 +430,7 @@ namespace gerdisc.Migrations
 
                     b.HasOne("gerdisc.Models.Entities.ExternalResearcherEntity", "ExternalResearcher")
                         .WithMany()
-                        .HasForeignKey("ExternalResearcherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ExternalResearcherId");
 
                     b.HasOne("gerdisc.Models.Entities.ProfessorEntity", "Professor")
                         .WithMany()
@@ -482,6 +496,10 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>
                 {
+                    b.HasOne("gerdisc.Models.Entities.ProjectEntity", null)
+                        .WithMany("Students")
+                        .HasForeignKey("ProjectEntityId");
+
                     b.HasOne("gerdisc.Models.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -496,6 +514,8 @@ namespace gerdisc.Migrations
                     b.Navigation("Dissertations");
 
                     b.Navigation("ProfessorProjects");
+
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>

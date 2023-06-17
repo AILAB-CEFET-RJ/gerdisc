@@ -42,8 +42,7 @@ namespace gerdisc.Services
 
         public async Task<DissertationDto> GetDissertationAsync(Guid id)
         {
-            var filters = DissertationExtensions.FilterByUserRole(_userContext);
-            var dissertationEntity = await _repository.Dissertation.GetByIdAsync(id, filters);
+            var dissertationEntity = await _repository.Dissertation.GetByIdAsync(id, x => x.Student, x => x.Professor);
             if (dissertationEntity == null)
             {
                 throw new ArgumentException("Dissertation not found.");
@@ -54,8 +53,7 @@ namespace gerdisc.Services
 
         public async Task<IEnumerable<DissertationDto>> GetAllDissertationsAsync()
         {
-            var filters = DissertationExtensions.FilterByUserRole(_userContext);
-            var dissertations = await _repository.Dissertation.GetAllAsync(filters);
+            var dissertations = await _repository.Dissertation.GetAllAsync(x => x.Student, x => x.Professor);
             var dissertationDtos = new List<DissertationDto>();
             foreach (var dissertation in dissertations)
             {

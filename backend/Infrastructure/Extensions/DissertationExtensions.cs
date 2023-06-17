@@ -7,17 +7,17 @@ namespace gerdisc.Infrastructure.Extensions
 {
     public static class DissertationExtensions
     {
-        public static Expression<Func<DissertationEntity, bool>> FilterByUserRole(IUserContext userContext)
+        public static IQueryable<DissertationEntity> FilterByUserRole(this IQueryable<DissertationEntity> query,IUserContext userContext)
         {
             switch (userContext.Role)
             {
                 case RolesEnum.Professor:
-                    return d => d.ProjectId == userContext.UserId;
+                    return query.Where(d => d.ProjectId == userContext.UserId);
                 case RolesEnum.Student:
-                    return d => d.StudentId == userContext.UserId;
+                    return query.Where(d => d.StudentId == userContext.UserId);
                 case RolesEnum.Administrator:
                 default:
-                    return d => true;
+                    return query;
             }
         }
     }

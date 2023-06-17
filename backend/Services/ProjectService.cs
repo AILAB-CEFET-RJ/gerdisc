@@ -47,10 +47,9 @@ namespace gerdisc.Services
 
         public async Task<ProjectDto> GetProjectAsync(Guid id)
         {
-            var filters = ProjectExtensions.FilterByUserRole(_userContext);
             var projectEntity = await _repository
                 .Project
-                .GetByIdAsync(id, filters);
+                .GetByIdAsync(id);
             if (projectEntity == null)
             {
                 throw new ArgumentException("Project not found.");
@@ -61,10 +60,9 @@ namespace gerdisc.Services
 
         public async Task<IEnumerable<ProjectDto>> GetAllProjectsAsync()
         {
-            var filters = ProjectExtensions.FilterByUserRole(_userContext);
             var projects = await _repository
                 .Project
-                .GetAllAsync(filters);
+                .GetAllAsync();
             var projectDtos = new List<ProjectDto>();
             foreach (var project in projects)
             {

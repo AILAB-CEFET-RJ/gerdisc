@@ -20,6 +20,7 @@ namespace gerdisc.Models.Entities
         /// </summary>
         public Guid ProjectId { get; set; }
 
-        public StudentEntity? Student { get; set; }
+        public virtual StudentEntity? Student { get; set; }
+        public virtual ProfessorEntity? Professor { get; set; }
     }
 }

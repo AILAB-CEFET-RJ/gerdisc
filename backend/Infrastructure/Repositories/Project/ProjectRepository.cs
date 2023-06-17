@@ -1,19 +1,19 @@
-using System.Linq.Expressions;
+using gerdisc.Infrastructure.Extensions;
 using gerdisc.Models.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace gerdisc.Infrastructure.Repositories.Project
 {
     public class ProjectRepository : BaseRepository<ProjectEntity>, IProjectRepository
     {
-        public ProjectRepository(ContexRepository dbContext) : base(dbContext)
+        private readonly IUserContext _userContext;
+        public ProjectRepository(ContexRepository dbContext, IUserContext userContext) : base(dbContext)
         {
+            _userContext = userContext;
         }
 
         public override async Task<ProjectEntity?> GetByIdAsync(
-            Guid id,
-            Expression<Func<ProjectEntity, bool>> predicate)
+            Guid id)
         {
             return await _dbSet
                 .Where(e => !e.IsDeleted)
@@ -21,6 +21,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .ThenInclude(x => x.Professor)
                 .Include(x => x.Dissertations)
                 .ThenInclude(x => x.Student)
+                .FilterByUserRole(_userContext)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -33,6 +34,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .ThenInclude(x => x.User)
                 .Include(x => x.Dissertations)
                 .ThenInclude(x => x.Student)
+                .FilterByUserRole(_userContext)
                 .ToListAsync();
         }
     }

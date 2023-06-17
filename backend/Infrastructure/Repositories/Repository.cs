@@ -18,6 +18,7 @@ namespace gerdisc.Infrastructure.Repositories
     public class Repository : IRepository
     {
         public ContexRepository _dbContext;
+        private readonly IUserContext _userContext;
 
         /// <summary>
         /// Default constructor to create the data base context to access the database.
@@ -26,8 +27,9 @@ namespace gerdisc.Infrastructure.Repositories
         /// <param name="login">Database login.</param>
         /// <param name="password">Database password.</param>
         /// <param name="database">Database name.</param>
-        public Repository(ContexRepository? dbContext)
+        public Repository(ContexRepository? dbContext, IUserContext userContext)
         {
+            _userContext = userContext;
             if (dbContext is not null)
             {
                 _dbContext = dbContext;
@@ -42,8 +44,8 @@ namespace gerdisc.Infrastructure.Repositories
         public IUserRepository User => new UserRepository(_dbContext);
         public IStudentRepository Student => new StudentRepository(_dbContext);
         public IProfessorRepository Professor => new ProfessorRepository(_dbContext);
-        public IProjectRepository Project => new ProjectRepository(_dbContext);
-        public IDissertationRepository Dissertation => new DissertationRepository(_dbContext);
+        public IProjectRepository Project => new ProjectRepository(_dbContext, _userContext);
+        public IDissertationRepository Dissertation => new DissertationRepository(_dbContext, _userContext);
         public IExtensionRepository Extension => new ExtensionRepository(_dbContext);
         public IExternalResearcherRepository ExternalResearcher => new ExternalResearcherRepository(_dbContext);
         public ICourseRepository Course => new CourseRepository(_dbContext);

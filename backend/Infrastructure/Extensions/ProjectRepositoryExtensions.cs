@@ -6,19 +6,19 @@ using gerdisc.Models.Enums;
 
 namespace gerdisc.Infrastructure.Extensions
 {
-    public static class ProjectExtensions
+    public static class ProjectRepositoryExtensions
     {
-        public static Expression<Func<ProjectEntity, bool>> FilterByUserRole(IUserContext userContext)
+        public static IQueryable<ProjectEntity> FilterByUserRole(this IQueryable<ProjectEntity> query, IUserContext userContext)
         {
             switch (userContext.Role)
             {
                 case RolesEnum.Professor:
-                    return project => project.ProfessorProjects.Any(professor => professor.ProfessorId == userContext.UserId);
+                    return query.Where(project => project.ProfessorProjects.Any(professor => professor.ProfessorId == userContext.UserId));
                 case RolesEnum.Student:
-                    return p => p.Students.Any(student => student.User.Id == userContext.UserId);
+                    return query.Where(p => p.Students.Any(student => student.User.Id == userContext.UserId));
                 case RolesEnum.Administrator:
                 default:
-                    return P => true;
+                    return query;
             }
         }
     }
