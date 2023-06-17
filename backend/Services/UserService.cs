@@ -44,21 +44,24 @@ namespace gerdisc.Services
 
         public async Task ResetPasswordRequestAsync(RequestResetPasswordDto request)
         {
-            var user = await _repository
-                .User
-                .GetUserByEmail(request.Email) ?? throw new ArgumentException($"User with email {request.Email} not found.");
+            var user = await _repository.User.GetUserByEmail(request.Email) ?? throw new ArgumentException($"User with email {request.Email} not found.");
+
             var token = user.GenerateResetPasswordJwt(_singingConfig.Key, DateTime.Now.AddMinutes(30));
-            await _emailSender.SendEmail(request.Email, "reset password", $"Reset your password with the link: {token} .");
+
+            await _emailSender.SendEmail(request.Email, "Reset Password", $"Reset your password with the link: {token}.");
         }
 
         public async Task<LoginResultDto> ResetPasswordAsync(ResetPasswordDto loginDto)
         {
-            var user = await _repository
-                .User
-                .GetUserByEmail(loginDto.Email) ?? throw new ArgumentException($"User with email {loginDto.Email} not found.");
+            var user = await _repository.User.GetUserByEmail(loginDto.Email) ?? throw new ArgumentException($"User with email {loginDto.Email} not found.");
+
             user.PasswordHash = HashPassword(loginDto.Password);
-            return user.ToDto(user.GenerateJwtToken(_singingConfig.Key));
+
+            var jwtToken = user.GenerateJwtToken(_singingConfig.Key);
+
+            return user.ToDto(jwtToken);
         }
+
 
         public async Task<LoginResultDto> AuthenticateAsync(LoginDto loginDto)
         {
