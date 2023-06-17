@@ -1,3 +1,4 @@
+using gerdisc.Infrastructure.Extensions;
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
@@ -13,14 +14,17 @@ namespace gerdisc.Services
     {
         private readonly IRepository _repository;
         private readonly ILogger<DissertationService> _logger;
+        private readonly IUserContext _userContext;
 
         public DissertationService(
             IRepository repository,
-            ILogger<DissertationService> logger
+            ILogger<DissertationService> logger,
+            IUserContext userContext
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
         }
 
         public async Task<OrientationDto> CreateDissertationAsync(OrientationDto orientationDto)
@@ -38,7 +42,8 @@ namespace gerdisc.Services
 
         public async Task<DissertationDto> GetDissertationAsync(Guid id)
         {
-            var dissertationEntity = await _repository.Dissertation.GetByIdAsync(id);
+            var filters = DissertationExtensions.FilterByUserRole(_userContext);
+            var dissertationEntity = await _repository.Dissertation.GetByIdAsync(id, filters);
             if (dissertationEntity == null)
             {
                 throw new ArgumentException("Dissertation not found.");
@@ -49,7 +54,8 @@ namespace gerdisc.Services
 
         public async Task<IEnumerable<DissertationDto>> GetAllDissertationsAsync()
         {
-            var dissertations = await _repository.Dissertation.GetAllAsync();
+            var filters = DissertationExtensions.FilterByUserRole(_userContext);
+            var dissertations = await _repository.Dissertation.GetAllAsync(filters);
             var dissertationDtos = new List<DissertationDto>();
             foreach (var dissertation in dissertations)
             {

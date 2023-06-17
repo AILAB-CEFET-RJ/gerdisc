@@ -1,5 +1,7 @@
+using gerdisc.Models.Enums;
+
 public interface IUserContext
 {
-    string UserId { get; set; }
-    string Role { get; set; }
+    Guid UserId { get; set; }
+    RolesEnum Role { get; set; }
 }

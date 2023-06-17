@@ -11,7 +11,9 @@ namespace gerdisc.Infrastructure.Repositories.Project
         {
         }
 
-        public override async Task<ProjectEntity?> GetByIdAsync(Guid id)
+        public override async Task<ProjectEntity?> GetByIdAsync(
+            Guid id,
+            Expression<Func<ProjectEntity, bool>> predicate)
         {
             return await _dbSet
                 .Where(e => !e.IsDeleted)

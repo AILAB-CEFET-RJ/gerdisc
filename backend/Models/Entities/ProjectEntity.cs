@@ -21,6 +21,11 @@ namespace gerdisc.Models.Entities
         public IEnumerable<ProfessorProjectEntity> ProfessorProjects { get; set; }
 
         /// <summary>
+        /// Gets or sets the list of students associated with the project.
+        /// </summary>
+        public IEnumerable<StudentEntity> Students { get; set; }
+
+        /// <summary>
         /// Gets or sets the list of dissertations associated with the project.
         /// </summary>
         public IEnumerable<DissertationEntity> Dissertations { get; set; }
@@ -32,6 +37,7 @@ namespace gerdisc.Models.Entities
         {
             ProfessorProjects = new List<ProfessorProjectEntity>();
             Dissertations = new List<DissertationEntity>();
+            Students = new List<StudentEntity>();
         }
     }
 }

@@ -1,3 +1,4 @@
+using gerdisc.Infrastructure.Extensions;
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
@@ -46,9 +47,10 @@ namespace gerdisc.Services
 
         public async Task<ProjectDto> GetProjectAsync(Guid id)
         {
+            var filters = ProjectExtensions.FilterByUserRole(_userContext);
             var projectEntity = await _repository
                 .Project
-                .GetByIdAsync(id);
+                .GetByIdAsync(id, filters);
             if (projectEntity == null)
             {
                 throw new ArgumentException("Project not found.");
@@ -59,9 +61,10 @@ namespace gerdisc.Services
 
         public async Task<IEnumerable<ProjectDto>> GetAllProjectsAsync()
         {
+            var filters = ProjectExtensions.FilterByUserRole(_userContext);
             var projects = await _repository
                 .Project
-                .GetAllAsync();
+                .GetAllAsync(filters);
             var projectDtos = new List<ProjectDto>();
             foreach (var project in projects)
             {
