@@ -110,11 +110,11 @@ namespace gerdisc
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UsePathBase("/gerdisc");
+            app.UsePathBase("/api");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/gerdisc/swagger/v1/swagger.json", "Gerdisc V1");
+                c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Gerdisc V1");
                 c.DefaultModelsExpandDepth(-1);
                 c.RoutePrefix = string.Empty;
                 c.DocumentTitle = "Gerdisc API Documentation";
