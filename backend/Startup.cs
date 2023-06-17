@@ -133,9 +133,6 @@ namespace gerdisc
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapControllerRoute(
-                    name: "gerdisc",
-                    pattern: "gerdisc/{controller}/{action=Index}/{id?}");
                 endpoints.MapHangfireDashboard();
             });
         }
