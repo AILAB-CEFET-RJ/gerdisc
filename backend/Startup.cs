@@ -113,7 +113,6 @@ namespace gerdisc
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/gerdisc/swagger/v1/swagger.json", "Gerdisc V1");
-                c.RoutePrefix = "gerdisc";
                 c.DefaultModelsExpandDepth(-1);
                 c.DocumentTitle = "Gerdisc API Documentation";
                 c.EnableDeepLinking();
@@ -134,6 +133,9 @@ namespace gerdisc
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "gerdisc",
+                    pattern: "gerdisc/{controller}/{action=Index}/{id?}");
                 endpoints.MapHangfireDashboard();
             });
         }
