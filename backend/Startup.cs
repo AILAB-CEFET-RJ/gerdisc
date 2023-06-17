@@ -112,7 +112,7 @@ namespace gerdisc
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/gerdisc/swagger/v1/swagger.json", "Gerdisc V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gerdisc V1");
                 c.DefaultModelsExpandDepth(-1);
                 c.DocumentTitle = "Gerdisc API Documentation";
                 c.EnableDeepLinking();
