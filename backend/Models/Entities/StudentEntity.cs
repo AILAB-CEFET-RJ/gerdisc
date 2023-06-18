@@ -117,6 +117,11 @@ namespace gerdisc.Models.Entities
         public virtual ICollection<DissertationEntity> Dissertations { get; set; }
 
         /// <summary>
+        /// The date on which the student qualified for their project.
+        /// </summary>
+        public DateTime? LastNotification { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="StudentEntity"/> class with the specified properties.
         /// </summary>
         public StudentEntity()

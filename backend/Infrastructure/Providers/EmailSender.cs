@@ -1,8 +1,8 @@
 using gerdisc.Infrastructure.Providers.Interfaces;
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using MimeKit;
 using gerdisc.Settings;
+using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace gerdisc.Infrastructure.Providers
 {
@@ -17,18 +17,14 @@ namespace gerdisc.Infrastructure.Providers
 
         public async Task SendEmail(string recipient, string subject, string body)
         {
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("PPCIC", "ppcic-nra@cefet-rj.br"));
-            message.To.Add(new MailboxAddress("", recipient));
-            message.Subject = subject;
-            message.Body = new TextPart("plain") { Text = body };
-
-            using (var client = new SmtpClient())
+            using (var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort))
             {
-                await client.ConnectAsync(_emailSettings.SmtpServer, _emailSettings.SmtpPort, SecureSocketOptions.StartTls);
-                await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
+                client.EnableSsl = true;
+                client.Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password);
+
+                var message = new MailMessage(_emailSettings.SenderEmail, recipient, subject, body);
+
+                await client.SendMailAsync(message);
             }
         }
     }

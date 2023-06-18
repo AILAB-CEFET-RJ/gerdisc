@@ -38,7 +38,7 @@ namespace gerdisc.Services
             }
             var user = await _repository.User.AddAsync(userDto.ToUserEntity());
             var token = user.GenerateResetPasswordJwt(_singingConfig.Key, DateTime.Now.AddDays(7));
-            await _emailSender.SendEmail(userDto.Email, "Create user", $"Create an password: {token}");
+            await _emailSender.SendEmail(userDto.Email, "Create user", $"Create an password: {token}").ConfigureAwait(false);
             return user;
         }
 
@@ -48,7 +48,7 @@ namespace gerdisc.Services
 
             var token = user.GenerateResetPasswordJwt(_singingConfig.Key, DateTime.Now.AddMinutes(30));
 
-            await _emailSender.SendEmail(request.Email, "Reset Password", $"Reset your password with the link: {token}.");
+            await _emailSender.SendEmail(request.Email, "Reset Password", $"Reset your password with the link: {token}.").ConfigureAwait(false);
         }
 
         public async Task<LoginResultDto> ResetPasswordAsync(ResetPasswordDto loginDto)
