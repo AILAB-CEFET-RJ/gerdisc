@@ -98,6 +98,7 @@ namespace gerdisc.Services
 
             existingStudent = studentDto.ToEntity(existingStudent);
 
+            await _repository.Student.UpdateAsync(existingStudent);
 
             return existingStudent.ToDto();
         }

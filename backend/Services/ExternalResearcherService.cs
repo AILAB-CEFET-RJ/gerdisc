@@ -65,6 +65,7 @@ namespace gerdisc.Services
 
             existingExternalResearcher = externalResearcherDto.ToEntity(existingExternalResearcher);
 
+            await _repository.ExternalResearcher.UpdateAsync(existingExternalResearcher);
 
             return existingExternalResearcher.ToDto();
         }

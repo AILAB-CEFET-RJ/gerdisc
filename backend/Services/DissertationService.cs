@@ -73,6 +73,7 @@ namespace gerdisc.Services
 
             existingDissertation = orientationDto.ToEntity(existingDissertation);
 
+            await _repository.Orientation.UpdateAsync(existingDissertation);
 
             return existingDissertation.ToDto();
         }

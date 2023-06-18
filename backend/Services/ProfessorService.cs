@@ -62,6 +62,8 @@ namespace gerdisc.Services
 
             existingProfessor = professorDto.ToEntity(existingProfessor);
 
+            await _repository.Professor.UpdateAsync(existingProfessor);
+
             return existingProfessor.ToDto();
         }
 

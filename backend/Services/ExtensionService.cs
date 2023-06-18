@@ -66,6 +66,7 @@ namespace gerdisc.Services
 
             existingExtension = extensionDto.ToEntity(existingExtension);
 
+            await _repository.Extension.UpdateAsync(existingExtension);
 
             return existingExtension.ToDto();
         }

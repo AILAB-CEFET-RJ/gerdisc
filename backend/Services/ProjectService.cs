@@ -98,6 +98,8 @@ namespace gerdisc.Services
             existingProject = projectDto.ToEntity(existingProject);
             await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(existingProject.Id));
 
+            await _repository.Project.UpdateAsync(existingProject);
+
             return existingProject.ToDto();
         }
 
