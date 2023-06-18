@@ -9,22 +9,43 @@ namespace gerdisc.Infrastructure.Providers
     public class EmailSender : IEmailSender
     {
         private readonly EmailSettings _emailSettings;
+        private readonly ILogger<EmailSender> _logger;
 
-        public EmailSender(ISettings settings)
+        public EmailSender(ISettings settings, ILogger<EmailSender> logger)
         {
             _emailSettings = settings.EmailSettings;
+            _logger = logger;
         }
 
         public async Task SendEmail(string recipient, string subject, string body)
         {
-            using (var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort))
+            try
             {
-                client.EnableSsl = true;
-                client.Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password);
+                using (var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort))
+                {
+                    client.EnableSsl = true;
+                    client.Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password);
 
-                var message = new MailMessage(_emailSettings.SenderEmail, recipient, subject, body);
+                    var message = new MailMessage(_emailSettings.SenderEmail, recipient, subject, body);
 
-                await client.SendMailAsync(message);
+                    using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30)))
+                    {
+                        var sendTask = client.SendMailAsync(message);
+                        var completedTask = await Task.WhenAny(sendTask, Task.Delay(-1, cts.Token));
+                        if (completedTask == sendTask)
+                        {
+                            await sendTask;
+                        }
+                        else
+                        {
+                            _logger.LogError($"Smtp server is not work, was not possible the email to: {recipient}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"error sending email to: {recipient} error: {ex.Message}");
             }
         }
     }
