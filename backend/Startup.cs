@@ -78,7 +78,7 @@ namespace gerdisc
             services.AddScoped<IProfessorService, ProfessorService>();
             services.AddScoped<IExternalResearcherService, ExternalResearcherService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IDissertationService, DissertationService>();
+            services.AddScoped<IOrientationService, OrientationService>();
             services.AddScoped<IExtensionService, ExtensionService>();
             services.AddScoped<IUserContext, UserContext>();
             services.AddSingleton<ISigningConfiguration>(signingConfig);

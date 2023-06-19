@@ -39,5 +39,13 @@ namespace gerdisc.Models.Entities
         /// This property allows lazy loading of the <see cref="DissertationEntity"/> entity.
         /// </remarks>
         public virtual DissertationEntity? Dissertation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the foreign key of the professor associated with the dissertation.
+        /// </summary>
+        public Guid ProfessorId { get; set; }
+
+        [ForeignKey("ProfessorId")]
+        public virtual UserEntity? Professor { get; set; }
     }
 }

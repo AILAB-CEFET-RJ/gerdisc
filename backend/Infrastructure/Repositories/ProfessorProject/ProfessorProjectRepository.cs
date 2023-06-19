@@ -38,7 +38,7 @@ namespace gerdisc.Infrastructure.Repositories.ProfessorProject
             await this.AddRangeAsync(professorProjectIds.Select(
                 x => new ProfessorProjectEntity
                 {
-                    ProfessorId = Professor.Id,
+                    ProfessorId = Professor.UserId,
                     ProjectId = x
                 }
             ));

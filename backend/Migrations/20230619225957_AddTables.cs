@@ -199,7 +199,6 @@ namespace gerdisc.Migrations
                     StudentId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
                     ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProfessorId = table.Column<Guid>(type: "uuid", nullable: false),
                     ProjectEntityId = table.Column<Guid>(type: "uuid", nullable: true),
                     StudentEntityId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -217,12 +216,6 @@ namespace gerdisc.Migrations
                         column: x => x.StudentEntityId,
                         principalTable: "Students",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Dissertations_Users_ProfessorId",
-                        column: x => x.ProfessorId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Dissertations_Users_StudentId",
                         column: x => x.StudentId,
@@ -267,6 +260,7 @@ namespace gerdisc.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CoorientatorId = table.Column<Guid>(type: "uuid", nullable: false),
                     DissertationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProfessorId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -284,12 +278,13 @@ namespace gerdisc.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orientations_Users_ProfessorId",
+                        column: x => x.ProfessorId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Dissertations_ProfessorId",
-                table: "Dissertations",
-                column: "ProfessorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dissertations_ProjectEntityId",
@@ -327,6 +322,11 @@ namespace gerdisc.Migrations
                 column: "DissertationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orientations_ProfessorId",
+                table: "Orientations",
+                column: "ProfessorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProfessorProjects_ProfessorId",
                 table: "ProfessorProjects",
                 column: "ProfessorId");
@@ -360,12 +360,6 @@ namespace gerdisc.Migrations
                 name: "IX_Users_StudentId",
                 table: "Users",
                 column: "StudentId");
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "FirstName", "LastName", "Email", "PasswordHash", "Role", "CreatedAt", "Cpf", "IsDeleted" },
-                values: new object[] { Guid.NewGuid(), "Coordenator", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), (int)Models.Enums.RolesEnum.Administrator, DateTime.UtcNow, "11111111111", false });
-
         }
 
         /// <inheritdoc />

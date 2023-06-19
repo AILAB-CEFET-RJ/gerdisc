@@ -63,9 +63,6 @@ namespace gerdisc.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("ProfessorId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid?>("ProjectEntityId")
                         .HasColumnType("uuid");
 
@@ -79,8 +76,6 @@ namespace gerdisc.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfessorId");
 
                     b.HasIndex("ProjectEntityId");
 
@@ -156,11 +151,16 @@ namespace gerdisc.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<Guid>("ProfessorId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CoorientatorId");
 
                     b.HasIndex("DissertationId");
+
+                    b.HasIndex("ProfessorId");
 
                     b.ToTable("Orientations");
                 });
@@ -376,12 +376,6 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.DissertationEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.UserEntity", "Professor")
-                        .WithMany()
-                        .HasForeignKey("ProfessorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("gerdisc.Models.Entities.ProjectEntity", null)
                         .WithMany("Dissertations")
                         .HasForeignKey("ProjectEntityId");
@@ -395,8 +389,6 @@ namespace gerdisc.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Professor");
 
                     b.Navigation("Student");
                 });
@@ -437,9 +429,17 @@ namespace gerdisc.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("gerdisc.Models.Entities.UserEntity", "Professor")
+                        .WithMany()
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Coorientator");
 
                     b.Navigation("Dissertation");
+
+                    b.Navigation("Professor");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProfessorEntity", b =>

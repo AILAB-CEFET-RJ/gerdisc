@@ -22,15 +22,7 @@ namespace gerdisc.Models.Entities
         /// </summary>
         public Guid ProjectId { get; set; }
 
-        /// <summary>
-        /// Gets or sets the foreign key of the professor associated with the dissertation.
-        /// </summary>
-        public Guid ProfessorId { get; set; }
-
         [ForeignKey("StudentId")]
         public virtual UserEntity? Student { get; set; }
-
-        [ForeignKey("ProfessorId")]
-        public virtual UserEntity? Professor { get; set; }
     }
 }

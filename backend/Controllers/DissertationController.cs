@@ -8,29 +8,29 @@ using Microsoft.AspNetCore.Mvc;
 namespace gerdisc.Controllers
 {
     [ApiController]
-    [Route("dissertations")]
-    public class DissertationController : ControllerBase
+    [Route("orientations")]
+    public class OrientationController : ControllerBase
     {
-        private readonly IDissertationService _dissertationService;
+        private readonly IOrientationService _orientationService;
 
-        public DissertationController(IDissertationService dissertationService)
+        public OrientationController(IOrientationService orientationService)
         {
-            _dissertationService = dissertationService;
+            _orientationService = orientationService;
         }
 
         /// <summary>
-        /// Creates a new dissertation.
+        /// Creates a new orientation.
         /// </summary>
-        /// <param name="orientationDto">The dissertation data.</param>
-        /// <returns>The created dissertation.</returns>
+        /// <param name="orientationDto">The orientation data.</param>
+        /// <returns>The created orientation.</returns>
         [HttpPost]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<OrientationDto>> CreateDissertation(OrientationDto orientationDto)
+        public async Task<ActionResult<OrientationDto>> CreateOrientation(OrientationDto orientationDto)
         {
             try
             {
-                var dissertation = await _dissertationService.CreateDissertationAsync(orientationDto);
-                return CreatedAtAction(nameof(GetDissertation), new { id = dissertation.Id }, dissertation);
+                var orientation = await _orientationService.CreateOrientationAsync(orientationDto);
+                return CreatedAtAction(nameof(GetOrientation), new { id = orientation.Id }, orientation);
             }
             catch (Exception ex)
             {
@@ -39,18 +39,18 @@ namespace gerdisc.Controllers
         }
 
         /// <summary>
-        /// Gets a dissertation by its ID.
+        /// Gets a orientation by its ID.
         /// </summary>
-        /// <param name="id">The dissertation ID.</param>
-        /// <returns>The dissertation.</returns>
+        /// <param name="id">The orientation ID.</param>
+        /// <returns>The orientation.</returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "Administrator, ProjectManager, Developer")]
-        public async Task<ActionResult<DissertationDto>> GetDissertation(Guid id)
+        public async Task<ActionResult<OrientationDto>> GetOrientation(Guid id)
         {
             try
             {
-                var dissertation = await _dissertationService.GetDissertationAsync(id);
-                return Ok(dissertation);
+                var orientation = await _orientationService.GetOrientationAsync(id);
+                return Ok(orientation);
             }
             catch (Exception ex)
             {
@@ -59,28 +59,28 @@ namespace gerdisc.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<DissertationDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<DissertationDto>>> GetAllDissertationsAsync()
+        [ProducesResponseType(typeof(IEnumerable<OrientationDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<OrientationDto>>> GetAllOrientationsAsync()
         {
-            var dissertationDtos = await _dissertationService.GetAllDissertationsAsync();
+            var orientationDtos = await _orientationService.GetAllOrientationsAsync();
 
-            return Ok(dissertationDtos);
+            return Ok(orientationDtos);
         }
 
         /// <summary>
-        /// Updates a dissertation by its ID.
+        /// Updates a orientation by its ID.
         /// </summary>
-        /// <param name="id">The dissertation ID.</param>
-        /// <param name="orientationDto">The dissertation data.</param>
-        /// <returns>The updated dissertation.</returns>
+        /// <param name="id">The orientation ID.</param>
+        /// <param name="orientationDto">The orientation data.</param>
+        /// <returns>The updated orientation.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<OrientationDto>> UpdateDissertation(Guid id, OrientationDto orientationDto)
+        public async Task<ActionResult<OrientationDto>> UpdateOrientation(Guid id, OrientationDto orientationDto)
         {
             try
             {
-                var dissertation = await _dissertationService.UpdateDissertationAsync(id, orientationDto);
-                return Ok(dissertation);
+                var orientation = await _orientationService.UpdateOrientationAsync(id, orientationDto);
+                return Ok(orientation);
             }
             catch (Exception ex)
             {
@@ -89,17 +89,17 @@ namespace gerdisc.Controllers
         }
 
         /// <summary>
-        /// Deletes a dissertation by its ID.
+        /// Deletes a orientation by its ID.
         /// </summary>
-        /// <param name="id">The dissertation ID.</param>
+        /// <param name="id">The orientation ID.</param>
         /// <returns>No content.</returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<IActionResult> DeleteDissertation(Guid id)
+        public async Task<IActionResult> DeleteOrientation(Guid id)
         {
             try
             {
-                await _dissertationService.DeleteDissertationAsync(id);
+                await _orientationService.DeleteOrientationAsync(id);
                 return NoContent();
             }
             catch (Exception ex)
