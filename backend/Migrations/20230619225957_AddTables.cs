@@ -360,6 +360,12 @@ namespace gerdisc.Migrations
                 name: "IX_Users_StudentId",
                 table: "Users",
                 column: "StudentId");
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "FirstName", "LastName", "Email", "PasswordHash", "Role", "CreatedAt", "Cpf", "IsDeleted" },
+                values: new object[] { Guid.NewGuid(), "Coordenator", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), (int)Models.Enums.RolesEnum.Administrator, DateTime.UtcNow, "11111111111", false });
+
         }
 
         /// <inheritdoc />
