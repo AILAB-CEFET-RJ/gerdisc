@@ -60,6 +60,7 @@ namespace gerdisc.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<OrientationDto>), StatusCodes.Status200OK)]
+        [Authorize(Roles = "Administrator, ProjectManager")]
         public async Task<ActionResult<IEnumerable<OrientationDto>>> GetAllOrientationsAsync()
         {
             var orientationDtos = await _orientationService.GetAllOrientationsAsync();
