@@ -20,7 +20,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .Include(x => x.ProfessorProjects)
                 .ThenInclude(x => x.Professor)
                 .Include(x => x.Dissertations)
-                .ThenInclude(x => x.Student)
+                .Include(x => x.Students)
                 .FilterByUserRole(_userContext)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -32,7 +32,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .Include(x => x.ProfessorProjects)
                 .ThenInclude(x => x.Professor)
                 .Include(x => x.Dissertations)
-                .ThenInclude(x => x.Student)
+                .Include(x => x.Students)
                 .FilterByUserRole(_userContext)
                 .ToListAsync();
         }

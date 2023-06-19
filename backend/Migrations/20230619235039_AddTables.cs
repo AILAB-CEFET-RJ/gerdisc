@@ -199,7 +199,6 @@ namespace gerdisc.Migrations
                     StudentId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
                     ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProjectEntityId = table.Column<Guid>(type: "uuid", nullable: true),
                     StudentEntityId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -207,10 +206,11 @@ namespace gerdisc.Migrations
                 {
                     table.PrimaryKey("PK_Dissertations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Dissertations_Projects_ProjectEntityId",
-                        column: x => x.ProjectEntityId,
+                        name: "FK_Dissertations_Projects_ProjectId",
+                        column: x => x.ProjectId,
                         principalTable: "Projects",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Dissertations_Students_StudentEntityId",
                         column: x => x.StudentEntityId,
@@ -287,9 +287,9 @@ namespace gerdisc.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Dissertations_ProjectEntityId",
+                name: "IX_Dissertations_ProjectId",
                 table: "Dissertations",
-                column: "ProjectEntityId");
+                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dissertations_StudentEntityId",
@@ -365,7 +365,6 @@ namespace gerdisc.Migrations
                 table: "Users",
                 columns: new[] { "Id", "FirstName", "LastName", "Email", "PasswordHash", "Role", "CreatedAt", "Cpf", "IsDeleted" },
                 values: new object[] { Guid.NewGuid(), "Coordenator", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), (int)Models.Enums.RolesEnum.Administrator, DateTime.UtcNow, "11111111111", false });
-
         }
 
         /// <inheritdoc />

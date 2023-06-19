@@ -63,9 +63,6 @@ namespace gerdisc.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ProjectEntityId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
@@ -77,7 +74,7 @@ namespace gerdisc.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectEntityId");
+                    b.HasIndex("ProjectId");
 
                     b.HasIndex("StudentEntityId");
 
@@ -376,9 +373,11 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.DissertationEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.ProjectEntity", null)
+                    b.HasOne("gerdisc.Models.Entities.ProjectEntity", "Project")
                         .WithMany("Dissertations")
-                        .HasForeignKey("ProjectEntityId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("gerdisc.Models.Entities.StudentEntity", null)
                         .WithMany("Dissertations")
@@ -389,6 +388,8 @@ namespace gerdisc.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Project");
 
                     b.Navigation("Student");
                 });

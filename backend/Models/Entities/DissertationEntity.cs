@@ -24,5 +24,6 @@ namespace gerdisc.Models.Entities
 
         [ForeignKey("StudentId")]
         public virtual UserEntity? Student { get; set; }
+        public virtual ProjectEntity? Project { get; set; }
     }
 }
