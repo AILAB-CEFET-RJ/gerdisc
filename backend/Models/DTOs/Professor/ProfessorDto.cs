@@ -8,9 +8,11 @@ namespace gerdisc.Models.DTOs
     public class ProfessorDto : UserDto
     {
         public string? Siape { get; set; }
+        public List<string> ProjectIds { get; set; }
         public ProfessorDto()
         {
             Role = Enums.RolesEnum.Professor;
+            ProjectIds = new List<string>();
         }
     }
 }

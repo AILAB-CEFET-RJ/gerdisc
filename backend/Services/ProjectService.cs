@@ -1,7 +1,6 @@
 using gerdisc.Infrastructure.Extensions;
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
 using gerdisc.Models.Mapper;
 using gerdisc.Services.Interfaces;
 
@@ -33,7 +32,7 @@ namespace gerdisc.Services
                 var professorIds = projectDto.ProfessorIds.Select(x => Guid.Parse(x));
 
                 project = await _repository.Project.AddAsync(project);
-                await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(project.Id));
+                await _repository.ProfessorProject.HandlesByProject(projectDto.ProfessorIds.Select(Guid.Parse), project);
 
                 _logger.LogInformation($"Project {project.Name} created successfully.");
                 return project.ToDto();
@@ -80,25 +79,9 @@ namespace gerdisc.Services
                 throw new ArgumentException($"Project with id {id} does not exist.");
             }
 
-            var professorIds = projectDto
-                .ProfessorIds
-                .Select(x => Guid.Parse(x))
-                .Except(existingProject.ProfessorProjects.Select(x => x.Id));
-
-            var professorIdsToDelete = existingProject
-                .ProfessorProjects
-                .Select(x => x.Id)
-                .Except(
-                    projectDto
-                    .ProfessorIds
-                    .Select(x => Guid.Parse(x))).ToList();
-
-            await _repository.ProfessorProject.DeactiveRangeAsync(entity => professorIdsToDelete.Contains(entity.ProfessorId));
-
             existingProject = projectDto.ToEntity(existingProject);
-            await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(existingProject.Id));
-
             await _repository.Project.UpdateAsync(existingProject);
+            await _repository.ProfessorProject.HandlesByProject(projectDto.ProfessorIds.Select(Guid.Parse), existingProject);
 
             return existingProject.ToDto();
         }

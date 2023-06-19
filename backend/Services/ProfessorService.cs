@@ -27,6 +27,8 @@ namespace gerdisc.Services
             var user = await _userService.CreateUserAsync(professorDto);
             var professor = professorDto.ToEntity(user.Id);
             professor = await _repository.Professor.AddAsync(professor);
+            if (professorDto.ProjectIds.Any())
+                await _repository.ProfessorProject.HandleByProfessor(professorDto.ProjectIds.Select(Guid.Parse), professor);
 
             _logger.LogInformation($"Professor {professor.User.Id} created successfully.");
             return professor.ToDto();
@@ -61,8 +63,8 @@ namespace gerdisc.Services
             }
 
             existingProfessor = professorDto.ToEntity(existingProfessor);
-
             await _repository.Professor.UpdateAsync(existingProfessor);
+            await _repository.ProfessorProject.HandleByProfessor(professorDto.ProjectIds.Select(Guid.Parse), existingProfessor);
 
             return existingProfessor.ToDto();
         }

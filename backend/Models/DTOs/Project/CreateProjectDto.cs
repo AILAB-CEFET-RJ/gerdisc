@@ -8,5 +8,9 @@ namespace gerdisc.Models.DTOs
         public string? Name { get; set; }
         public string? Status { get; set; }
         public List<string> ProfessorIds { get; set; }
+        public CreateProjectDto()
+        {
+            ProfessorIds = new List<string>();
+        }
     }
 }

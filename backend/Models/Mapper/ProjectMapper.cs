@@ -21,22 +21,6 @@ namespace gerdisc.Models.Mapper
             };
 
         /// <summary>
-        /// Creates a collection of <see cref="ProfessorProjectEntity"/> objects using the values from a <see cref="CreateProjectDto"/> object.
-        /// </summary>
-        /// <param name="professorIds">The <see cref="CreateProjectDto"/> object containing the professor IDs.</param>
-        /// <param name="projectId">The ID of the project.</param>
-        /// <returns>A collection of <see cref="ProfessorProjectEntity"/> objects.</returns>
-        public static IEnumerable<ProfessorProjectEntity> CreateProfessorProjects(this IEnumerable<Guid> professorIds, Guid projectId)
-        {
-            return professorIds
-                .Select(x => new ProfessorProjectEntity
-                {
-                    ProfessorId = x,
-                    ProjectId = projectId
-                });
-        }
-
-        /// <summary>
         /// Updates the values of an existing <see cref="ProjectEntity"/> object using the values from a <see cref="CreateProjectDto"/> object.
         /// </summary>
         /// <param name="self">The <see cref="CreateProjectDto"/> object containing the updated values.</param>
