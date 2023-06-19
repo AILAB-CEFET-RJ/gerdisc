@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace gerdisc.Models.Entities
 {
     /// <summary>
@@ -9,33 +11,18 @@ namespace gerdisc.Models.Entities
         /// Gets or sets the unique identifier of the professor.
         /// </summary>
         /// <remarks>
-        /// This property is a foreign key to the <see cref="ProfessorEntity"/> entity.
+        /// This property is a foreign key to the <see cref="UserEntity"/> entity.
         /// </remarks>
-        public Guid ProfessorId { get; set; }
+        public Guid CoorientatorId { get; set; }
 
         /// <summary>
         /// Gets or sets the professor navigation property.
         /// </summary>
         /// <remarks>
-        /// This property allows lazy loading of the <see cref="ProfessorEntity"/> entity.
+        /// This property allows lazy loading of the <see cref="UserEntity"/> entity.
         /// </remarks>
-        public virtual ProfessorEntity? Professor { get; set; }
-
-        /// <summary>
-        /// Gets or sets the unique identifier of the external researcher.
-        /// </summary>
-        /// <remarks>
-        /// This property is a foreign key to the <see cref="ExternalResearcherEntity"/> entity.
-        /// </remarks>
-        public Guid? ResearcherId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the external researcher navigation property.
-        /// </summary>
-        /// <remarks>
-        /// This property allows lazy loading of the <see cref="ExternalResearcherEntity"/> entity.
-        /// </remarks>
-        public virtual ExternalResearcherEntity? ExternalResearcher { get; set; }
+        [ForeignKey("CoorientatorId")]
+        public virtual UserEntity? Coorientator { get; set; }
 
         /// <summary>
         /// Gets or sets the unique identifier of the dissertation.

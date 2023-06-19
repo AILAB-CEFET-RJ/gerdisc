@@ -15,7 +15,7 @@ namespace gerdisc.Infrastructure.Extensions
                 case RolesEnum.Professor:
                     return query.Where(project => project.ProfessorProjects.Any(professor => professor.ProfessorId == userContext.UserId));
                 case RolesEnum.Student:
-                    return query.Where(p => p.Students.Any(student => student.User.Id == userContext.UserId));
+                    return query.Where(p => p.Students.Any(student => student.Id == userContext.UserId));
                 case RolesEnum.Administrator:
                 default:
                     return query;

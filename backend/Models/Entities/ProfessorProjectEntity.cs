@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace gerdisc.Models.Entities
 {
     public record ProfessorProjectEntity : BaseEntity
@@ -14,9 +16,10 @@ namespace gerdisc.Models.Entities
         /// Gets or sets the professor navigation property.
         /// </summary>
         /// <remarks>
-        /// This property allows lazy loading of the <see cref="ProfessorEntity"/> entity.
+        /// This property allows lazy loading of the <see cref="UserEntity"/> entity.
         /// </remarks>
-        public virtual ProfessorEntity? Professor { get; set; }
+        [ForeignKey("ProfessorId")]
+        public virtual UserEntity? Professor { get; set; }
 
         /// <summary>
         /// Gets or sets the unique identifier of the project.

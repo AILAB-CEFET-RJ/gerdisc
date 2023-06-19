@@ -31,7 +31,6 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .Where(e => !e.IsDeleted)
                 .Include(x => x.ProfessorProjects)
                 .ThenInclude(x => x.Professor)
-                .ThenInclude(x => x.User)
                 .Include(x => x.Dissertations)
                 .ThenInclude(x => x.Student)
                 .FilterByUserRole(_userContext)

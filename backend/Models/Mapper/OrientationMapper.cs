@@ -17,8 +17,7 @@ namespace gerdisc.Models.Mapper
             self is null ? new OrientationEntity() : new OrientationEntity
             {
                 DissertationId = self.Dissertation.Id ?? Guid.Empty,
-                ProfessorId = self.ProfessorId,
-                ResearcherId = self.ResearcherId,
+                CoorientatorId = self.ResearcherId,
             };
 
         /// <summary>
@@ -30,8 +29,7 @@ namespace gerdisc.Models.Mapper
         public static OrientationEntity ToEntity(this OrientationDto self, OrientationEntity entityToUpdate)
         {
             entityToUpdate.DissertationId = self.Dissertation.Id ?? Guid.Empty;
-            entityToUpdate.ProfessorId = self.ProfessorId;
-            entityToUpdate.ResearcherId = self.ResearcherId;
+            entityToUpdate.CoorientatorId = self.ResearcherId;
             return entityToUpdate;
         }
 
@@ -44,9 +42,8 @@ namespace gerdisc.Models.Mapper
             self is null ? new OrientationDto() : new OrientationDto
             {
                 Id = self.Id,
-                ProfessorId = self.ProfessorId,
                 Dissertation = self.Dissertation.ToDto(),
-                ResearcherId = self.ResearcherId ?? Guid.Empty,
+                ResearcherId = self.CoorientatorId,
             };
     }
 }

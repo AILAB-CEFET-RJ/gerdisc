@@ -44,8 +44,8 @@ namespace gerdisc.Models.Mapper
                 Id = self.Id,
                 Name = self.Name,
                 Status = self.Status,
-                Professors = self.ProfessorProjects.Select(p => p.Professor.ToDto()).ToList(),
-                Students = self.Dissertations.Select(s => s.Student.ToDto()).ToList(),
+                Professors = self.ProfessorProjects.Select(p => p.Professor.ToUserDto()).ToList(),
+                Students = self.Dissertations.Select(s => s.Student.ToUserDto()).ToList(),
                 Dissertations = self.Dissertations.Select(d => d.ToDto()).ToList()
             };
     }

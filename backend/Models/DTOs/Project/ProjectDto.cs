@@ -8,15 +8,15 @@ namespace gerdisc.Models.DTOs
         public string? Name { get; set; }
         public string? Status { get; set; }
         [BindNever]
-        public List<ProfessorDto> Professors { get; set; }
+        public List<UserDto> Professors { get; set; }
         [BindNever]
-        public List<StudentDto> Students { get; set; }
+        public List<UserDto> Students { get; set; }
         public List<DissertationDto> Dissertations { get; set; }
 
         public ProjectDto()
         {
-            Professors = new List<ProfessorDto>();
-            Students = new List<StudentDto>();
+            Professors = new List<UserDto>();
+            Students = new List<UserDto>();
             Dissertations = new List<DissertationDto>();
         }
     }
