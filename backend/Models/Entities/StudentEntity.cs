@@ -106,7 +106,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property allows lazy loading of the associated collection of <see cref="StudentCourseEntity"/> entities.
         /// </remarks>
-        public virtual ICollection<StudentCourseEntity> StudentCourses { get; set; }
+        public virtual IEnumerable<StudentCourseEntity> StudentCourses { get; set; }
 
         /// <summary>
         /// Gets or sets the navigation property for the collection of dissertation entities associated with this student.
@@ -114,7 +114,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property allows lazy loading of the associated collection of <see cref="DissertationEntity"/> entities.
         /// </remarks>
-        public virtual ICollection<DissertationEntity> Dissertations { get; set; }
+        public virtual IEnumerable<DissertationEntity> Dissertations { get; set; }
 
         /// <summary>
         /// The date on which the student qualified for their project.

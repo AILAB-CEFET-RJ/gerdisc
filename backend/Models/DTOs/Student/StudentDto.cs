@@ -32,6 +32,8 @@ namespace gerdisc.Models.DTOs
 
         public int Scholarship { get; set; }
 
+        public IEnumerable<StudentCourseDto>? StudentCourses { get; set; }
+
         public StudentDto()
         {
             Role = Enums.RolesEnum.Student;

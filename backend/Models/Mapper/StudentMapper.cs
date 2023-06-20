@@ -33,6 +33,7 @@ namespace gerdisc.Models.Mapper
                 UndergraduateArea = dto.UndergraduateArea,
                 DateOfBirth = dto.DateOfBirth?.ToUniversalTime(),
                 Scholarship = dto.Scholarship,
+                StudentCourses = dto.StudentCourses?.Select(x => x.ToEntity()) ?? new List<StudentCourseEntity>(),
                 UserId = userId
             };
 
@@ -57,6 +58,12 @@ namespace gerdisc.Models.Mapper
             entityToUpdate.UndergraduateArea = self.UndergraduateArea;
             entityToUpdate.DateOfBirth = self.DateOfBirth;
             entityToUpdate.Scholarship = self.Scholarship;
+            
+            var coursesToAdd = self.StudentCourses?
+                .Where(x => !entityToUpdate.StudentCourses.Select(sc => sc.CourseId).Contains(x.CourseId))
+                .Select(x => x.ToEntity()) ?? new List<StudentCourseEntity>();
+
+            entityToUpdate.StudentCourses = entityToUpdate.StudentCourses.Concat(coursesToAdd);
             return entityToUpdate;
         }
 
@@ -84,7 +91,8 @@ namespace gerdisc.Models.Mapper
                 GraduationYear = self.GraduationYear,
                 UndergraduateArea = self.UndergraduateArea,
                 DateOfBirth = self.DateOfBirth?.ToUniversalTime(),
-                Scholarship = self.Scholarship
+                Scholarship = self.Scholarship,
+                StudentCourses = self.StudentCourses.Select(x => x.ToDto())
             };
             return entity.AddUserDto(self.User);
         }
