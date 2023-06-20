@@ -16,6 +16,11 @@ namespace gerdisc.Models.Mapper
         public static StudentCourseEntity ToEntity(this StudentCourseDto self) =>
             self is null ? new StudentCourseEntity() : new StudentCourseEntity
             {
+                CourseId = self.CourseId,
+                Grade = self.Grade,
+                StudentId = self.StudentId,
+                Trimester = self.Trimester,
+                Year = self.Year
             };
 
         /// <summary>
@@ -27,6 +32,10 @@ namespace gerdisc.Models.Mapper
         public static StudentCourseEntity ToEntity(this StudentCourseDto self, StudentCourseEntity entityToUpdate)
         {
             entityToUpdate.CourseId = self.CourseId;
+            entityToUpdate.Grade = self.Grade;
+            entityToUpdate.StudentId = self.StudentId;
+            entityToUpdate.Trimester = self.Trimester;
+            entityToUpdate.Year = self.Year;
             return entityToUpdate;
         }
 
@@ -38,6 +47,11 @@ namespace gerdisc.Models.Mapper
         public static StudentCourseDto ToDto(this StudentCourseEntity self) =>
             self is null ? new StudentCourseDto() : new StudentCourseDto
             {
+                CourseId = self.CourseId,
+                Grade = self.Grade,
+                StudentId = self.StudentId,
+                Trimester = self.Trimester,
+                Year = self.Year
             };
     }
 }
