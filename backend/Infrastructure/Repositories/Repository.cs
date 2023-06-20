@@ -45,13 +45,13 @@ namespace gerdisc.Infrastructure.Repositories
         public IStudentRepository Student => new StudentRepository(_dbContext);
         public IProfessorRepository Professor => new ProfessorRepository(_dbContext);
         public IProjectRepository Project => new ProjectRepository(_dbContext, _userContext);
-        public IDissertationRepository Dissertation => new DissertationRepository(_dbContext, _userContext);
+        public IDissertationRepository Dissertation => new DissertationRepository(_dbContext);
         public IExtensionRepository Extension => new ExtensionRepository(_dbContext);
         public IExternalResearcherRepository ExternalResearcher => new ExternalResearcherRepository(_dbContext);
         public ICourseRepository Course => new CourseRepository(_dbContext);
         public IProfessorProjectRepository ProfessorProject => new ProfessorProjectRepository(_dbContext);
         public IStudentCourseRepository StudentCourse => new StudentCourseRepository(_dbContext);
-        public IOrientationRepository Orientation => new OrientationRepository(_dbContext);
+        public IOrientationRepository Orientation => new OrientationRepository(_dbContext, _userContext);
 
         public async Task<int> CommitAsync()
         {
