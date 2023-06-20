@@ -1,9 +1,9 @@
 import api from './_api'
 
 export async function getResearch(){
-    return (await api.get("dissertations"))?.data
+    return (await api.get("orientations"))?.data
 }
 
 export async function postResearch(data){
-    return (await api.post("dissertations",data))?.data
+    return (await api.post("orientations",data))?.data
 }
