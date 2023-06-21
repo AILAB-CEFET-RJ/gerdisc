@@ -23,6 +23,7 @@ namespace gerdisc.Services
             _validator = validator ?? throw new ArgumentNullException(nameof(validator));
         }
 
+        /// <inheritdoc />
         public async Task<OrientationDto> CreateOrientationAsync(OrientationDto orientationDto)
         {
             (var isValid, var message) = await _validator.CanAddDissertationToProject(orientationDto);
@@ -37,6 +38,7 @@ namespace gerdisc.Services
             return orientation.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<OrientationDto> GetOrientationAsync(Guid id)
         {
             var orientationEntity = await _repository.Orientation.GetByIdAsync(id, x => x.Dissertation, x => x.Professor, x => x.Coorientator);
@@ -48,6 +50,7 @@ namespace gerdisc.Services
             return orientationEntity.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<OrientationDto>> GetAllOrientationsAsync()
         {
             var orientations = await _repository.Orientation.GetAllAsync(x => x.Dissertation, x => x.Professor, x => x.Coorientator);
@@ -60,6 +63,7 @@ namespace gerdisc.Services
             return orientationDtos;
         }
 
+        /// <inheritdoc />
         public async Task<OrientationDto> UpdateOrientationAsync(Guid id, OrientationDto orientationDto)
         {
             var existingDissertation = await _repository.Orientation.GetByIdAsync(id);
@@ -75,6 +79,7 @@ namespace gerdisc.Services
             return existingDissertation.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteOrientationAsync(Guid id)
         {
             var existingDissertation = await _repository.Dissertation.GetByIdAsync(id);

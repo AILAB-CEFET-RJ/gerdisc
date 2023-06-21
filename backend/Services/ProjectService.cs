@@ -23,6 +23,7 @@ namespace gerdisc.Services
             _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
         }
 
+        /// <inheritdoc />
         public async Task<ProjectDto> CreateProjectAsync(CreateProjectDto projectDto)
         {
             try
@@ -44,6 +45,7 @@ namespace gerdisc.Services
             };
         }
 
+        /// <inheritdoc />
         public async Task<ProjectDto> GetProjectAsync(Guid id)
         {
             var projectEntity = await _repository
@@ -57,6 +59,7 @@ namespace gerdisc.Services
             return projectEntity.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<ProjectDto>> GetAllProjectsAsync()
         {
             var projects = await _repository
@@ -71,6 +74,7 @@ namespace gerdisc.Services
             return projectDtos;
         }
 
+        /// <inheritdoc />
         public async Task<ProjectDto> UpdateProjectAsync(Guid id, CreateProjectDto projectDto)
         {
             var existingProject = await _repository.Project.GetByIdAsync(id);
@@ -86,6 +90,7 @@ namespace gerdisc.Services
             return existingProject.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteProjectAsync(Guid id)
         {
             var existingProject = await _repository.Project.GetByIdAsync(id);

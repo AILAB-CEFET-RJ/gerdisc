@@ -22,6 +22,7 @@ namespace gerdisc.Services
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
+        /// <inheritdoc />
         public async Task<ProfessorDto> CreateProfessorAsync(ProfessorDto professorDto)
         {
             var user = await _userService.CreateUserAsync(professorDto);
@@ -34,6 +35,7 @@ namespace gerdisc.Services
             return professor.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<ProfessorDto> GetProfessorAsync(Guid id)
         {
             var professorEntity = await _repository
@@ -42,6 +44,7 @@ namespace gerdisc.Services
             return professorEntity.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<ProfessorDto>> GetAllProfessorsAsync()
         {
             var professors = await _repository.Professor.GetAllAsync(x => x.User);
@@ -54,6 +57,7 @@ namespace gerdisc.Services
             return professorDtos;
         }
 
+        /// <inheritdoc />
         public async Task<ProfessorDto> UpdateProfessorAsync(Guid id, ProfessorDto professorDto)
         {
             var existingProfessor = await _repository.Professor.GetByIdAsync(id);
@@ -69,6 +73,7 @@ namespace gerdisc.Services
             return existingProfessor.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteProfessorAsync(Guid id)
         {
             var existingProfessor = await _repository.Professor.GetByIdAsync(id);

@@ -25,6 +25,7 @@ namespace gerdisc.Services
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
+        /// <inheritdoc />
         public async Task<StudentDto> CreateStudentAsync(StudentDto studentDto)
         {
             var user = await _repository.User.GetUserByEmail(studentDto.Email);
@@ -42,6 +43,7 @@ namespace gerdisc.Services
             return student.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<StudentDto>> AddStudentsFromCsvAsync(IFormFile file)
         {
             using var reader = new StreamReader(file.OpenReadStream());
@@ -65,6 +67,7 @@ namespace gerdisc.Services
             return insertedStudents;
         }
 
+        /// <inheritdoc />
         public async Task<StudentDto> GetStudentAsync(Guid id)
         {
             var studentEntity = await _repository.Student.GetByIdAsync(id, s => s.User);
@@ -76,6 +79,7 @@ namespace gerdisc.Services
             return studentEntity.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync()
         {
             var students = await _repository.Student.GetAllAsync(s => s.User);
@@ -88,6 +92,7 @@ namespace gerdisc.Services
             return studentDtos;
         }
 
+        /// <inheritdoc />
         public async Task<StudentDto> UpdateStudentAsync(Guid id, StudentDto studentDto)
         {
             var existingStudent = await _repository.Student.GetByIdAsync(id);
@@ -103,6 +108,7 @@ namespace gerdisc.Services
             return existingStudent.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteStudentAsync(Guid id)
         {
             var existingStudent = await _repository.Student.GetByIdAsync(id);

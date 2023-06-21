@@ -23,6 +23,7 @@ namespace gerdisc.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <inheritdoc />
         public async Task<ExtensionDto> CreateExtensionAsync(ExtensionDto extensionDto)
         {
             var extension = extensionDto.ToEntity();
@@ -33,6 +34,7 @@ namespace gerdisc.Services
             return extension.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<ExtensionDto> GetExtensionAsync(Guid id)
         {
             var extensionEntity = await _repository.Extension.GetByIdAsync(id);
@@ -44,6 +46,7 @@ namespace gerdisc.Services
             return extensionEntity.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<ExtensionDto>> GetAllExtensionsAsync()
         {
             var extensions = await _repository.Extension.GetAllAsync();
@@ -56,6 +59,7 @@ namespace gerdisc.Services
             return extensionDtos;
         }
 
+        /// <inheritdoc />
         public async Task<ExtensionDto> UpdateExtensionAsync(Guid id, ExtensionDto extensionDto)
         {
             var existingExtension = await _repository.Extension.GetByIdAsync(id);
@@ -71,6 +75,7 @@ namespace gerdisc.Services
             return existingExtension.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteExtensionAsync(Guid id)
         {
             var existingExtension = await _repository.Extension.GetByIdAsync(id);

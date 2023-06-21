@@ -29,6 +29,7 @@ namespace gerdisc.Services
             _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
         }
 
+        /// <inheritdoc />
         public async Task<UserEntity> CreateUserAsync(UserDto userDto)
         {
             _logger.LogInformation($"Creating user{userDto.Email}");
@@ -42,6 +43,7 @@ namespace gerdisc.Services
             return user;
         }
 
+        /// <inheritdoc />
         public async Task ResetPasswordRequestAsync(RequestResetPasswordDto request)
         {
             var user = await _repository.User.GetUserByEmail(request.Email) ?? throw new ArgumentException($"User with email {request.Email} not found.");
@@ -51,6 +53,7 @@ namespace gerdisc.Services
             await _emailSender.SendEmail(request.Email, "Reset Password", $"Reset your password with the link: {token}.").ConfigureAwait(false);
         }
 
+        /// <inheritdoc />
         public async Task<LoginResultDto> ResetPasswordAsync(ResetPasswordDto loginDto)
         {
             var user = await _repository.User.GetUserByEmail(loginDto.Email) ?? throw new ArgumentException($"User with email {loginDto.Email} not found.");
@@ -65,6 +68,7 @@ namespace gerdisc.Services
         }
 
 
+        /// <inheritdoc />
         public async Task<LoginResultDto> AuthenticateAsync(LoginDto loginDto)
         {
             var user = await _repository.User.GetUserByEmail(loginDto.Email);
