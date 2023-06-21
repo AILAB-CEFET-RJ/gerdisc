@@ -74,6 +74,7 @@ namespace gerdisc
                 options.UseNpgsql(connectionString);
             }, ServiceLifetime.Scoped);
             services.AddScoped<OrientationValidator>();
+            services.AddScoped<UserValidator>();
             services.AddScoped<ITokenProvider, TokenProvider>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();

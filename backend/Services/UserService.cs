@@ -1,6 +1,7 @@
 using gerdisc.Infrastructure.Providers;
 using gerdisc.Infrastructure.Providers.Interfaces;
 using gerdisc.Infrastructure.Repositories;
+using gerdisc.Infrastructure.Validations;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
 using gerdisc.Models.Mapper;
@@ -15,27 +16,30 @@ namespace gerdisc.Services
         private readonly IEmailSender _emailSender;
         private readonly ITokenProvider _tokenProvider;
         private readonly ILogger<UserService> _logger;
-
+        private readonly UserValidator _userValidator;
         public UserService(
             IRepository repository,
             ITokenProvider tokenProvider,
             ILogger<UserService> logger,
-            IEmailSender emailSender
+            IEmailSender emailSender,
+            UserValidator userValidator
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _tokenProvider = tokenProvider ?? throw new ArgumentNullException(nameof(tokenProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
+            _userValidator= userValidator?? throw new ArgumentNullException(nameof(userValidator));
         }
 
         /// <inheritdoc />
         public async Task<UserEntity> CreateUserAsync(UserDto userDto)
         {
+            (var isValid, var message) = await _userValidator.CanAddUser(userDto);
             _logger.LogInformation($"Creating user{userDto.Email}");
-            if (userDto == null || userDto.Email == null)
+            if (isValid)
             {
-                throw new ArgumentException("userDto.");
+                throw new ArgumentException(message);
             }
             var user = await _repository.User.AddAsync(userDto.ToUserEntity());
             var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromDays(7));

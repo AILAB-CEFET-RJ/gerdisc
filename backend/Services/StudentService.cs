@@ -28,13 +28,7 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<StudentDto> CreateStudentAsync(StudentDto studentDto)
         {
-            var user = await _repository.User.GetUserByEmail(studentDto.Email);
-            if (user is not null)
-            {
-                throw new ArgumentException($"Student {studentDto.Email} alredy created.");
-            }
-
-            user = await _userService.CreateUserAsync(studentDto);
+            var user = await _userService.CreateUserAsync(studentDto);
             var student = studentDto.ToEntity(user.Id);
 
             student = await _repository.Student.AddAsync(student);
