@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace gerdisc.Models.Entities
 {
     /// <summary>
     /// Represents a course in the application.
     /// </summary>
+    [Table("Courses")]
     public record CourseEntity : BaseEntity
     {
         /// <summary>

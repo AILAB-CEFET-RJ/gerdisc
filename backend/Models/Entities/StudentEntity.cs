@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace gerdisc.Models.Entities
 {
     /// <summary>
     /// Represents a student entity in the system.
     /// </summary>
+    [Table("Students")]
     public record StudentEntity : BaseEntity
     {
         /// <summary>
@@ -93,12 +96,25 @@ namespace gerdisc.Models.Entities
         public int Scholarship { get; set; }
 
         /// <summary>
+        /// The date on which the student qualified for their project.
+        /// </summary>
+        public DateTime? LastNotification { get; set; }
+
+        /// <summary>
         /// Gets or sets the navigation property for the associated user entity.
         /// </summary>
         /// <remarks>
         /// This property allows lazy loading of the associated <see cref="UserEntity"/> entity.
         /// </remarks>
         public virtual UserEntity? User { get; set; }
+
+        /// <summary>
+        /// Gets or sets the navigation property for the associated project entity.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the associated <see cref="ProjectEntity"/> entity.
+        /// </remarks>
+        public virtual ProjectEntity? Project { get; set; }
 
         /// <summary>
         /// Gets or sets the navigation property for the collection of student course entities associated with this student.
@@ -109,24 +125,18 @@ namespace gerdisc.Models.Entities
         public virtual IEnumerable<StudentCourseEntity> StudentCourses { get; set; }
 
         /// <summary>
-        /// Gets or sets the navigation property for the collection of dissertation entities associated with this student.
+        /// Gets or sets the navigation property for the dissertation entity associated with this student.
         /// </summary>
         /// <remarks>
-        /// This property allows lazy loading of the associated collection of <see cref="DissertationEntity"/> entities.
+        /// This property allows lazy loading of the associated <see cref="DissertationEntity"/> entity.
         /// </remarks>
-        public virtual IEnumerable<DissertationEntity> Dissertations { get; set; }
-
-        /// <summary>
-        /// The date on which the student qualified for their project.
-        /// </summary>
-        public DateTime? LastNotification { get; set; }
+        public virtual DissertationEntity? Dissertations { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StudentEntity"/> class with the specified properties.
         /// </summary>
         public StudentEntity()
         {
-            Dissertations = new List<DissertationEntity>();
             StudentCourses = new List<StudentCourseEntity>();
         }
     }

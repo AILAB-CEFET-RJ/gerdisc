@@ -3,10 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace gerdisc.Infrastructure.Repositories
 {
+    /// <summary>
+    /// Represents the database context for the application, providing access to various entity sets.
+    /// </summary>
     public class ContexRepository : DbContext
     {
+        /// <summary>
+        /// Gets the database URL.
+        /// </summary>
         public string? DbUrl { get; }
 
+        // Entity sets
         public DbSet<UserEntity> Users { get; set; } = null!;
         public DbSet<StudentEntity> Students { get; set; } = null!;
         public DbSet<ProfessorEntity> Professors { get; set; } = null!;
@@ -19,18 +26,18 @@ namespace gerdisc.Infrastructure.Repositories
         public DbSet<StudentCourseEntity> StudentCourses { get; set; } = null!;
         public DbSet<OrientationEntity> Orientations { get; set; } = null!;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContexRepository"/> class with the specified options.
+        /// </summary>
+        /// <param name="options">The options for configuring the database context.</param>
         public ContexRepository(DbContextOptions<ContexRepository> options)
             : base(options)
         {
         }
 
+        /// <inheritdoc />
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserEntity>().ToTable("Users");
-            modelBuilder.Entity<StudentEntity>().ToTable("Students");
-            modelBuilder.Entity<ProfessorEntity>().ToTable("Professors");
-            modelBuilder.Entity<CourseEntity>().ToTable("Courses");
-            modelBuilder.Entity<ProjectEntity>().ToTable("Projects");
         }
     }
 }

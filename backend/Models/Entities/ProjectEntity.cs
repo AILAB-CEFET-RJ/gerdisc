@@ -5,6 +5,7 @@ namespace gerdisc.Models.Entities
     /// <summary>
     /// Represents a project in the system.
     /// </summary>
+    [Table("Projects")]
     public record ProjectEntity : BaseEntity
     {
         /// <summary>

@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace gerdisc.Models.Entities
 {
     /// <summary>
     /// Represents the association between a student and a course they are enrolled in.
     /// </summary>
+    [Table("StudentCourses")]
     public record StudentCourseEntity : BaseEntity
     {
         /// <summary>

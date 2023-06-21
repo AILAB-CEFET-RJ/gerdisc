@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Entities
@@ -5,6 +6,7 @@ namespace gerdisc.Models.Entities
     /// <summary>
     /// Represents a user in the Database.
     /// </summary>
+    [Table("Users")]
     public record UserEntity : BaseEntity
     {
         /// <summary>

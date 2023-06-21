@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace gerdisc.Models.Entities
 {
+    [Table("ProfessorProjects")]
     public record ProfessorProjectEntity : BaseEntity
     {
         /// <summary>

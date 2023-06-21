@@ -5,6 +5,7 @@ namespace gerdisc.Models.Entities
     /// <summary>
     /// Represents a Dissertation in the system.
     /// </summary>
+    [Table("Dissertations")]
     public record DissertationEntity : BaseEntity
     {
         /// <summary>

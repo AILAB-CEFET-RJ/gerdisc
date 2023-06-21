@@ -5,6 +5,7 @@ namespace gerdisc.Models.Entities
     /// <summary>
     /// Represents an extension in the system.
     /// </summary>
+    [Table("Extensions")]
     public record ExtensionEntity : BaseEntity
     {
         /// <summary>
