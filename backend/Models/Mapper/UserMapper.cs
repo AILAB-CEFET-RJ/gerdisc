@@ -55,7 +55,6 @@ namespace gerdisc.Models.Mapper
                 LastName = self.LastName,
                 Cpf = self.Cpf,
                 Email = self.Email,
-                Role = self.Role
             };
 
         /// <summary>
@@ -71,7 +70,6 @@ namespace gerdisc.Models.Mapper
             self.Email = entity.Email;
             self.FirstName = entity.FirstName;
             self.LastName = entity.LastName;
-            self.Role = entity.Role;
             return self;
         }
 

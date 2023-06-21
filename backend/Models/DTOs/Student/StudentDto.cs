@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using gerdisc.Infrastructure.Validations;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.DTOs
 {
@@ -36,6 +38,9 @@ namespace gerdisc.Models.DTOs
         public int Scholarship { get; set; }
 
         public IEnumerable<StudentCourseDto>? StudentCourses { get; set; }
+
+        [ValidRolesEnum(RolesEnum.Student)]
+        public override RolesEnum Role { get; set; }
 
         public StudentDto()
         {
