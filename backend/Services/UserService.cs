@@ -37,7 +37,7 @@ namespace gerdisc.Services
         {
             (var isValid, var message) = await _userValidator.CanAddUser(userDto);
             _logger.LogInformation($"Creating user{userDto.Email}");
-            if (isValid)
+            if (!isValid)
             {
                 throw new ArgumentException(message);
             }
