@@ -38,7 +38,7 @@ namespace gerdisc.Services
                 throw new ArgumentException("userDto.");
             }
             var user = await _repository.User.AddAsync(userDto.ToUserEntity());
-            var token = _tokenProvider.GenerateResetPasswordJwt(user, DateTime.Now.AddDays(7));
+            var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromDays(7));
             await _emailSender.SendEmail(userDto.Email, "Create user", $"Create an password: {token}").ConfigureAwait(false);
             return user;
         }
@@ -48,7 +48,7 @@ namespace gerdisc.Services
         {
             var user = await _repository.User.GetUserByEmail(request.Email) ?? throw new ArgumentException($"User with email {request.Email} not found.");
 
-            var token = _tokenProvider.GenerateResetPasswordJwt(user, DateTime.Now.AddMinutes(30));
+            var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromMinutes(30));
 
             await _emailSender.SendEmail(request.Email, "Reset Password", $"Reset your password with the link: {token}.").ConfigureAwait(false);
         }

@@ -43,7 +43,7 @@ namespace gerdisc.Infrastructure.Providers
         }
 
         /// <inheritdoc />
-        public string GenerateResetPasswordJwt(UserEntity user, DateTime ExpireDate)
+        public string GenerateResetPasswordJwt(UserEntity user, TimeSpan durationTime)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -57,7 +57,7 @@ namespace gerdisc.Infrastructure.Providers
                     new Claim(ClaimTypes.Email, user.Email??""),
                     new Claim(ClaimTypes.Role, RolesEnum.ResetPassword.ToString())
                 }),
-                Expires = ExpireDate,
+                Expires = DateTime.UtcNow + durationTime,
                 SigningCredentials = new SigningCredentials(_singingConfig.Key, SecurityAlgorithms.RsaSha256Signature)
             };
 
