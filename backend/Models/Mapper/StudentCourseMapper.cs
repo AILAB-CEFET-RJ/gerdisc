@@ -18,7 +18,6 @@ namespace gerdisc.Models.Mapper
             {
                 CourseId = self.CourseId,
                 Grade = self.Grade,
-                StudentId = self.StudentId,
                 Trimester = self.Trimester,
                 Year = self.Year
             };
@@ -33,7 +32,6 @@ namespace gerdisc.Models.Mapper
         {
             entityToUpdate.CourseId = self.CourseId;
             entityToUpdate.Grade = self.Grade;
-            entityToUpdate.StudentId = self.StudentId;
             entityToUpdate.Trimester = self.Trimester;
             entityToUpdate.Year = self.Year;
             return entityToUpdate;
