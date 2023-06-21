@@ -23,8 +23,21 @@ namespace gerdisc.Models.Entities
         /// </summary>
         public Guid ProjectId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the navigation property for the associated student entity.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the associated <see cref="UserEntity"/> entity.
+        /// </remarks>
         [ForeignKey("StudentId")]
         public virtual UserEntity? Student { get; set; }
+
+        /// <summary>
+        /// Gets or sets the navigation property for the associated project entity.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the associated <see cref="ProjectEntity"/> entity.
+        /// </remarks>
         public virtual ProjectEntity? Project { get; set; }
     }
 }

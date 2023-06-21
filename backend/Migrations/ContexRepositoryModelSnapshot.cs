@@ -48,7 +48,7 @@ namespace gerdisc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.DissertationEntity", b =>
@@ -66,17 +66,12 @@ namespace gerdisc.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("StudentEntityId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("StudentEntityId");
 
                     b.HasIndex("StudentId");
 
@@ -181,7 +176,7 @@ namespace gerdisc.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Professors", (string)null);
+                    b.ToTable("Professors");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProfessorProjectEntity", b =>
@@ -225,7 +220,7 @@ namespace gerdisc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentCourseEntity", b =>
@@ -273,6 +268,9 @@ namespace gerdisc.Migrations
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid?>("DissertationsId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("EntryDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -294,8 +292,8 @@ namespace gerdisc.Migrations
                     b.Property<DateTime?>("ProjectDefenceDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("ProjectId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("ProjectQualificationDate")
                         .HasColumnType("timestamp with time zone");
@@ -326,9 +324,13 @@ namespace gerdisc.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DissertationsId");
+
+                    b.HasIndex("ProjectId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.UserEntity", b =>
@@ -368,7 +370,7 @@ namespace gerdisc.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.DissertationEntity", b =>
@@ -378,10 +380,6 @@ namespace gerdisc.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("gerdisc.Models.Entities.StudentEntity", null)
-                        .WithMany("Dissertations")
-                        .HasForeignKey("StudentEntityId");
 
                     b.HasOne("gerdisc.Models.Entities.UserEntity", "Student")
                         .WithMany()
@@ -494,11 +492,25 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>
                 {
+                    b.HasOne("gerdisc.Models.Entities.DissertationEntity", "Dissertations")
+                        .WithMany()
+                        .HasForeignKey("DissertationsId");
+
+                    b.HasOne("gerdisc.Models.Entities.ProjectEntity", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("gerdisc.Models.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Dissertations");
+
+                    b.Navigation("Project");
 
                     b.Navigation("User");
                 });
@@ -521,8 +533,6 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>
                 {
-                    b.Navigation("Dissertations");
-
                     b.Navigation("StudentCourses");
                 });
 #pragma warning restore 612, 618
