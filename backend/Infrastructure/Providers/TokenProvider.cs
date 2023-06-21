@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using gerdisc.Models.Entities;
 using gerdisc.Models.Enums;
+using gerdisc.Properties;
 using Microsoft.IdentityModel.Tokens;
 
 namespace gerdisc.Infrastructure.Providers
@@ -10,9 +11,16 @@ namespace gerdisc.Infrastructure.Providers
     /// <summary>
     /// Generates a token.
     /// </summary>
-    public static class TokenProvider
+    public class TokenProvider : ITokenProvider
     {
-        public static string GenerateJwtToken(this UserEntity user, RsaSecurityKey privateKeys)
+        private readonly ISigningConfiguration _singingConfig;
+        public TokenProvider(ISigningConfiguration singingConfig)
+        {
+            _singingConfig = singingConfig ?? throw new ArgumentNullException(nameof(singingConfig));
+        }
+
+        /// <inheritdoc />
+        public string GenerateJwtToken(UserEntity user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -26,14 +34,16 @@ namespace gerdisc.Infrastructure.Providers
                     new Claim(ClaimTypes.Email, user.Email??""),
                     new Claim(ClaimTypes.Role, user.Role.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(privateKeys, SecurityAlgorithms.RsaSha256Signature)
+                Expires = DateTime.UtcNow.AddMinutes(50),
+                SigningCredentials = new SigningCredentials(_singingConfig.Key, SecurityAlgorithms.RsaSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-        public static string GenerateResetPasswordJwt(this UserEntity user, RsaSecurityKey privateKeys, DateTime ExpireDate)
+
+        /// <inheritdoc />
+        public string GenerateResetPasswordJwt(UserEntity user, DateTime ExpireDate)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -48,7 +58,7 @@ namespace gerdisc.Infrastructure.Providers
                     new Claim(ClaimTypes.Role, RolesEnum.ResetPassword.ToString())
                 }),
                 Expires = ExpireDate,
-                SigningCredentials = new SigningCredentials(privateKeys, SecurityAlgorithms.RsaSha256Signature)
+                SigningCredentials = new SigningCredentials(_singingConfig.Key, SecurityAlgorithms.RsaSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

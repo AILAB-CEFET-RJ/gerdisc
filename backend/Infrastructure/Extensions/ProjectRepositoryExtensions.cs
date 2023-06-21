@@ -1,6 +1,4 @@
-using System.Linq.Expressions;
-using gerdisc.Infrastructure.Repositories.ProfessorProject;
-using gerdisc.Infrastructure.Repositories.Project;
+using gerdisc.Infrastructure.Providers;
 using gerdisc.Models.Entities;
 using gerdisc.Models.Enums;
 

@@ -7,7 +7,7 @@ using gerdisc.Models.Entities;
 namespace gerdisc.Infrastructure.Repositories
 {
     /// <summary>
-    /// Represents a base repository for entities of a certain type.
+    /// Represents a base repository for entities of type <typeparamref name="TEntity"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity that this repository works with.</typeparam>
     public interface IBaseRepository<TEntity> where TEntity : BaseEntity

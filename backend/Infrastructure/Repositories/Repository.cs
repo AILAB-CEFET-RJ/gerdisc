@@ -1,3 +1,4 @@
+using gerdisc.Infrastructure.Providers;
 using gerdisc.Infrastructure.Repositories.Course;
 using gerdisc.Infrastructure.Repositories.Dissertation;
 using gerdisc.Infrastructure.Repositories.Extension;
@@ -41,18 +42,41 @@ namespace gerdisc.Infrastructure.Repositories
             }
         }
 
+        
+        /// <inheritdoc />
         public IUserRepository User => new UserRepository(_dbContext);
+        
+        /// <inheritdoc />
         public IStudentRepository Student => new StudentRepository(_dbContext);
+        
+        /// <inheritdoc />
         public IProfessorRepository Professor => new ProfessorRepository(_dbContext);
+        
+        /// <inheritdoc />
         public IProjectRepository Project => new ProjectRepository(_dbContext, _userContext);
+        
+        /// <inheritdoc />
         public IDissertationRepository Dissertation => new DissertationRepository(_dbContext);
+        
+        /// <inheritdoc />
         public IExtensionRepository Extension => new ExtensionRepository(_dbContext);
+        
+        /// <inheritdoc />
         public IExternalResearcherRepository ExternalResearcher => new ExternalResearcherRepository(_dbContext);
+        
+        /// <inheritdoc />
         public ICourseRepository Course => new CourseRepository(_dbContext);
+        
+        /// <inheritdoc />
         public IProfessorProjectRepository ProfessorProject => new ProfessorProjectRepository(_dbContext);
+        
+        /// <inheritdoc />
         public IStudentCourseRepository StudentCourse => new StudentCourseRepository(_dbContext);
+        
+        /// <inheritdoc />
         public IOrientationRepository Orientation => new OrientationRepository(_dbContext, _userContext);
 
+        /// <inheritdoc />
         public async Task<int> CommitAsync()
         {
             return await _dbContext.SaveChangesAsync();

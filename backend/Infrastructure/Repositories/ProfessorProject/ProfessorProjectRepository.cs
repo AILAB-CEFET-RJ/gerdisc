@@ -3,11 +3,14 @@ using gerdisc.Models.Entities;
 
 namespace gerdisc.Infrastructure.Repositories.ProfessorProject
 {
+    /// <inheritdoc />
     public class ProfessorProjectRepository : BaseRepository<ProfessorProjectEntity>, IProfessorProjectRepository
     {
         public ProfessorProjectRepository(ContexRepository dbContext) : base(dbContext)
         {
         }
+
+        /// <inheritdoc />
         public async Task HandlesByProject(IEnumerable<Guid> newProfessors, ProjectEntity Project)
         {
             var professorProjects = await this.GetAllAsync(x => x.ProjectId == Project.Id);
@@ -26,6 +29,8 @@ namespace gerdisc.Infrastructure.Repositories.ProfessorProject
             ));
             await this.DeactiveRangeAsync(entity => professorProjectIdsToDelete.Contains(entity.ProfessorId));
         }
+
+        /// <inheritdoc />
         public async Task HandleByProfessor(IEnumerable<Guid> newProjects, ProfessorEntity Professor)
         {
             var professorProjects = await this.GetAllAsync(x => x.ProfessorId == Professor.Id);

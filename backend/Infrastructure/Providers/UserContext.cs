@@ -1,7 +1,13 @@
 using gerdisc.Models.Enums;
 
-public class UserContext : IUserContext
+namespace gerdisc.Infrastructure.Providers
 {
-    public Guid? UserId { get; set; }
-    public RolesEnum? Role { get; set; }
+    public class UserContext : IUserContext
+    {
+        /// <inheritdoc />
+        public Guid? UserId { get; set; }
+
+        /// <inheritdoc />
+        public RolesEnum? Role { get; set; }
+    }
 }

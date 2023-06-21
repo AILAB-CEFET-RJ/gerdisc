@@ -6,6 +6,10 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace gerdisc.Infrastructure.Repositories
 {
+    /// <summary>
+    /// Represents the repository with CRUD operaton.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of entity that this repository works with.</typeparam>
     public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         where TEntity : BaseEntity
     {

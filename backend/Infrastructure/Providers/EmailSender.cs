@@ -17,6 +17,7 @@ namespace gerdisc.Infrastructure.Providers
             _logger = logger;
         }
 
+        /// <inheritdoc />
         public async Task SendEmail(string recipient, string subject, string body)
         {
             try

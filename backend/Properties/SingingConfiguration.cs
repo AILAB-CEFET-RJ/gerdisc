@@ -3,9 +3,18 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace gerdisc.Properties
 {
+    /// <summary>
+    /// Represents the signing configuration for generating tokens using an RSA key.
+    /// </summary>
     public class SigningConfiguration : ISigningConfiguration
     {
-        public RsaSecurityKey Key { get; set; }
+        /// <inheritdoc />
+        public RsaSecurityKey Key { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SigningConfiguration"/> class with the specified RSA key.
+        /// </summary>
+        /// <param name="key">The RSA key XML string.</param>
         public SigningConfiguration(string key)
         {
             using (var rsa = new RSACryptoServiceProvider(2048))

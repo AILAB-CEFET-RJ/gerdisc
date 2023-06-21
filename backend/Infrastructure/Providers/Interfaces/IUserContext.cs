@@ -1,7 +1,10 @@
 using gerdisc.Models.Enums;
 
-public interface IUserContext
+namespace gerdisc.Infrastructure.Providers
 {
-    Guid? UserId { get; set; }
-    RolesEnum? Role { get; set; }
+    public interface IUserContext
+    {
+        Guid? UserId { get; set; }
+        RolesEnum? Role { get; set; }
+    }
 }

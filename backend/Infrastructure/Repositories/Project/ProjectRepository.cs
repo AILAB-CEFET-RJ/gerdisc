@@ -1,9 +1,11 @@
 using gerdisc.Infrastructure.Extensions;
+using gerdisc.Infrastructure.Providers;
 using gerdisc.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace gerdisc.Infrastructure.Repositories.Project
 {
+    /// <inheritdoc />
     public class ProjectRepository : BaseRepository<ProjectEntity>, IProjectRepository
     {
         private readonly IUserContext _userContext;
@@ -12,6 +14,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
             _userContext = userContext;
         }
 
+        /// <inheritdoc />
         public override async Task<ProjectEntity?> GetByIdAsync(
             Guid id)
         {
@@ -25,6 +28,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        /// <inheritdoc />
         public override async Task<IEnumerable<ProjectEntity>> GetAllAsync()
         {
             return await _dbSet

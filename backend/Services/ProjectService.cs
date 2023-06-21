@@ -10,17 +10,14 @@ namespace gerdisc.Services
     {
         private readonly IRepository _repository;
         private readonly ILogger<ProjectService> _logger;
-        private readonly IUserContext _userContext;
 
         public ProjectService(
             IRepository repository,
-            ILogger<ProjectService> logger,
-            IUserContext userContext
+            ILogger<ProjectService> logger
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
         }
 
         /// <inheritdoc />
