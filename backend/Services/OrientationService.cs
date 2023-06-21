@@ -1,4 +1,5 @@
 using gerdisc.Infrastructure.Repositories;
+using gerdisc.Infrastructure.Validations;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Mapper;
 using gerdisc.Services.Interfaces;
@@ -9,18 +10,27 @@ namespace gerdisc.Services
     {
         private readonly IRepository _repository;
         private readonly ILogger<OrientationService> _logger;
+        private readonly OrientationValidator _validator;
 
         public OrientationService(
             IRepository repository,
-            ILogger<OrientationService> logger
+            ILogger<OrientationService> logger,
+            OrientationValidator validator
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _validator = validator ?? throw new ArgumentNullException(nameof(validator));
         }
 
         public async Task<OrientationDto> CreateOrientationAsync(OrientationDto orientationDto)
         {
+            (var isValid, var message) = await _validator.CanAddDissertationToProject(orientationDto);
+            if(!isValid)
+            {
+                throw new ArgumentException(message);
+            }
+
             var orientation = await _repository.Orientation.AddAsync(orientationDto.ToEntity());
 
             _logger.LogInformation($"Orientation {orientationDto.Id} created successfully.");

@@ -1,6 +1,7 @@
 using gerdisc.Infrastructure.Providers;
 using gerdisc.Infrastructure.Providers.Interfaces;
 using gerdisc.Infrastructure.Repositories;
+using gerdisc.Infrastructure.Validations;
 using gerdisc.Properties;
 using gerdisc.Services;
 using gerdisc.Services.Interfaces;
@@ -72,6 +73,7 @@ namespace gerdisc
             {
                 options.UseNpgsql(connectionString);
             }, ServiceLifetime.Scoped);
+            services.AddScoped<OrientationValidator>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IProjectService, ProjectService>();

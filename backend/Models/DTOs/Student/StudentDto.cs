@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace gerdisc.Models.DTOs
 {
     public class StudentDto : UserDto
@@ -6,7 +8,8 @@ namespace gerdisc.Models.DTOs
 
         public DateTime? RegistrationDate { get; set; }
 
-        public string? ProjectId { get; set; }
+        [Required(ErrorMessage = "ProjectId is required")]
+        public Guid ProjectId { get; set; }
 
         public int Status { get; set; }
 

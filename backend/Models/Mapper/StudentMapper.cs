@@ -107,7 +107,7 @@ namespace gerdisc.Models.Mapper
             {
                 Registration = entity.Registration,
                 RegistrationDate = entity.RegistrationDate.Parse()?.ToUniversalTime(),
-                ProjectId = entity.ProjectId,
+                // ProjectId = entity.ProjectId, Tem que arrumar aqui, provavlmente a planilha não tera Id
                 Status = entity.Status,
                 EntryDate = entity.EntryDate.Parse()?.ToUniversalTime(),
                 ProjectDefenceDate = entity.ProjectDefenceDate.Parse()?.ToUniversalTime(),
