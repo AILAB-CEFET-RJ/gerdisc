@@ -9,14 +9,16 @@ namespace gerdisc.Infrastructure.Validations
     public class UserValidator
     {
         private readonly IRepository _repository;
+        private readonly ILogger<UserValidator> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserValidator"/> class.
         /// </summary>
         /// <param name="repository">The repository used for data access.</param>
-        public UserValidator(IRepository repository)
+        public UserValidator(IRepository repository, ILogger<UserValidator> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         /// <summary>
@@ -26,8 +28,10 @@ namespace gerdisc.Infrastructure.Validations
         /// <returns>A tuple containing a boolean indicating if the user can be added and an error message if applicable.</returns>
         public async Task<(bool exists, string errorMessage)> CanAddUser(UserDto userDto)
         {
+            _logger.LogInformation("starting verifi userDto");
             if (userDto is null || userDto.Email is null)
             {
+                _logger.LogInformation("Invalid user DTO.");
                 return (false, $"Invalid user DTO.");
             }
 
@@ -35,9 +39,11 @@ namespace gerdisc.Infrastructure.Validations
 
             if (user is not null)
             {
+                _logger.LogInformation($"User with email '{userDto.Email}' already exists.");
                 return (false, $"User with email '{userDto.Email}' already exists.");
             }
 
+            _logger.LogInformation($"User dto verified.");
             return (true, "Success");
         }
     }
