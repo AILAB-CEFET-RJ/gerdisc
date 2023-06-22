@@ -1,11 +1,16 @@
+using CsvHelper.Configuration.Attributes;
+
 namespace gerdisc.Models.DTOs
 {
     public class StudentCsvDto
     {
-	[CsvField("First Name")]
+	    [Name("First Name")]
         public string? FirstName { get; set; }
 
+	    [Name("Last Name")]
         public string? LastName { get; set; }
+
+	    [Name("E-mail")]
         public string? Email { get; set; }
 
         public string? Password { get; set; }

@@ -43,7 +43,6 @@ namespace gerdisc.Services
             using var reader = new StreamReader(file.OpenReadStream());
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
             var records = await csv.GetRecordsAsync<StudentCsvDto>().ToListAsync();
-            csv.Configuration.HasHeaderRecord = true;
 
             var insertedStudents = new List<StudentDto>();
             foreach (var record in records)
