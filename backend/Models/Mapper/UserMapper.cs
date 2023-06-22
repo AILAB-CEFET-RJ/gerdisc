@@ -85,21 +85,6 @@ namespace gerdisc.Models.Mapper
                 Token = token,
             };
 
-        /// <summary>
-        /// Converts a <see cref="UserEntity"/> object to a <see cref="StudentCsvDto"/> object.
-        /// </summary>
-        /// <param name="self">The <see cref="UserEntity"/> object to convert.</param>
-        /// <returns>A new <see cref="StudentCsvDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static UserEntity ToUserEntity(this StudentCsvDto entity) => new UserEntity
-        {
-            Cpf = entity.Cpf,
-            Email = entity.Email,
-            FirstName = entity.FirstName,
-            LastName = entity.LastName,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(entity.Password),
-            Role = RolesEnum.Student
-        };
-
         public static string GeneratePassword(int length)
         {
             var allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=<>?";

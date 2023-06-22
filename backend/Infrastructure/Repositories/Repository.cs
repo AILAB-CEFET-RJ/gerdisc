@@ -7,6 +7,7 @@ using gerdisc.Infrastructure.Repositories.Orientation;
 using gerdisc.Infrastructure.Repositories.Professor;
 using gerdisc.Infrastructure.Repositories.ProfessorProject;
 using gerdisc.Infrastructure.Repositories.Project;
+using gerdisc.Infrastructure.Repositories.ResearchLine;
 using gerdisc.Infrastructure.Repositories.Student;
 using gerdisc.Infrastructure.Repositories.StudentCourse;
 using gerdisc.Infrastructure.Repositories.User;
@@ -75,6 +76,8 @@ namespace gerdisc.Infrastructure.Repositories
 
         /// <inheritdoc />
         public IOrientationRepository Orientation => new OrientationRepository(_dbContext, _userContext);
+
+        public IResearchLineRepository ResearchLine => new ResearchLineRepository(_dbContext);
 
         /// <inheritdoc />
         public async Task<int> CommitAsync()

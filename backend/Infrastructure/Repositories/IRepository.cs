@@ -6,6 +6,7 @@ using gerdisc.Infrastructure.Repositories.Orientation;
 using gerdisc.Infrastructure.Repositories.Professor;
 using gerdisc.Infrastructure.Repositories.ProfessorProject;
 using gerdisc.Infrastructure.Repositories.Project;
+using gerdisc.Infrastructure.Repositories.ResearchLine;
 using gerdisc.Infrastructure.Repositories.Student;
 using gerdisc.Infrastructure.Repositories.StudentCourse;
 using gerdisc.Infrastructure.Repositories.User;
@@ -71,6 +72,11 @@ namespace gerdisc.Infrastructure.Repositories
         /// Gets the repository for orientation entities.
         /// </summary>
         IOrientationRepository Orientation { get; }
+
+        /// <summary>
+        /// Gets the repository for research line entities.
+        /// </summary>
+        IResearchLineRepository ResearchLine { get; }
 
         /// <summary>
         /// Commits the pending changes asynchronously.

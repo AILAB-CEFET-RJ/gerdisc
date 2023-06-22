@@ -122,8 +122,8 @@ namespace gerdisc.Models.Mapper
                 Scholarship = entity.Scholarship,
                 Cpf = entity.Cpf,
                 Email = entity.Email,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
+                FirstName = entity.Name?.Split(' ').FirstOrDefault(),
+                LastName = entity.Name?.Split(' ').LastOrDefault(),
             };
     }
 }

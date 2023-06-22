@@ -9,6 +9,14 @@ namespace gerdisc.Models.Entities
     public record ProjectEntity : BaseEntity
     {
         /// <summary>
+        /// Gets or sets the unique identifier of the research line.
+        /// </summary>
+        /// <remarks>
+        /// This property is a foreign key to the <see cref="ResearchLineEntity"/> entity.
+        /// </remarks>
+        public Guid ResearchLineId { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the project.
         /// </summary>
         public string? Name { get; set; }
@@ -26,13 +34,17 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Gets or sets the list of students associated with the project.
         /// </summary>
-        [ForeignKey("StudentId")]
-        public IEnumerable<UserEntity> Students { get; set; }
+        public IEnumerable<StudentEntity> Students { get; set; }
 
         /// <summary>
         /// Gets or sets the list of dissertations associated with the project.
         /// </summary>
         public IEnumerable<DissertationEntity> Dissertations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of research line associated with the project.
+        /// </summary>
+        public ResearchLineEntity? ResearchLines { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectEntity"/> class.
@@ -41,7 +53,7 @@ namespace gerdisc.Models.Entities
         {
             ProfessorProjects = new List<ProfessorProjectEntity>();
             Dissertations = new List<DissertationEntity>();
-            Students = new List<UserEntity>();
+            Students = new List<StudentEntity>();
         }
     }
 }

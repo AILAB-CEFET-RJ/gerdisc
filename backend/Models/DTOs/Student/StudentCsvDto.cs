@@ -4,19 +4,16 @@ namespace gerdisc.Models.DTOs
 {
     public class StudentCsvDto
     {
-	    [Name("First Name")]
-        public string? FirstName { get; set; }
-
-	    [Name("Last Name")]
-        public string? LastName { get; set; }
+	    [Name("Nome")]
+        public string? Name { get; set; }
 
 	    [Name("E-mail")]
         public string? Email { get; set; }
 
-        public string? Password { get; set; }
-
+	    [Name("CPF")]
         public string? Cpf { get; set; }
 
+	    [Name("Inscrição")]
         public string? Registration { get; set; }
 
         public string? RegistrationDate { get; set; }
@@ -45,6 +42,7 @@ namespace gerdisc.Models.DTOs
 
         public int UndergraduateArea { get; set; }
 
+	    [Name("Nascimento")]
         public string? DateOfBirth { get; set; }
 
         public int Scholarship { get; set; }

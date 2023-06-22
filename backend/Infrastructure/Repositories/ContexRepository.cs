@@ -25,6 +25,7 @@ namespace gerdisc.Infrastructure.Repositories
         public DbSet<ProfessorProjectEntity> ProfessorProjects { get; set; } = null!;
         public DbSet<StudentCourseEntity> StudentCourses { get; set; } = null!;
         public DbSet<OrientationEntity> Orientations { get; set; } = null!;
+        public DbSet<ResearchLineEntity> ResearchLines { get; set; } = null!;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContexRepository"/> class with the specified options.

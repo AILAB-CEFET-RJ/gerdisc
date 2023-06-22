@@ -12,7 +12,7 @@ using gerdisc.Infrastructure.Repositories;
 namespace gerdisc.Migrations
 {
     [DbContext(typeof(ContexRepository))]
-    [Migration("20230621165814_AddTables")]
+    [Migration("20230622175543_AddTables")]
     partial class AddTables
     {
         /// <inheritdoc />
@@ -218,12 +218,40 @@ namespace gerdisc.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("ResearchLineId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ResearchLinesId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Status")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ResearchLinesId");
+
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.ResearchLineEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ResearchLines");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentCourseEntity", b =>
@@ -366,12 +394,7 @@ namespace gerdisc.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("StudentId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Users");
                 });
@@ -474,6 +497,15 @@ namespace gerdisc.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("gerdisc.Models.Entities.ProjectEntity", b =>
+                {
+                    b.HasOne("gerdisc.Models.Entities.ResearchLineEntity", "ResearchLines")
+                        .WithMany("Projects")
+                        .HasForeignKey("ResearchLinesId");
+
+                    b.Navigation("ResearchLines");
+                });
+
             modelBuilder.Entity("gerdisc.Models.Entities.StudentCourseEntity", b =>
                 {
                     b.HasOne("gerdisc.Models.Entities.CourseEntity", "Course")
@@ -500,7 +532,7 @@ namespace gerdisc.Migrations
                         .HasForeignKey("DissertationsId");
 
                     b.HasOne("gerdisc.Models.Entities.ProjectEntity", "Project")
-                        .WithMany()
+                        .WithMany("Students")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -518,13 +550,6 @@ namespace gerdisc.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.UserEntity", b =>
-                {
-                    b.HasOne("gerdisc.Models.Entities.ProjectEntity", null)
-                        .WithMany("Students")
-                        .HasForeignKey("StudentId");
-                });
-
             modelBuilder.Entity("gerdisc.Models.Entities.ProjectEntity", b =>
                 {
                     b.Navigation("Dissertations");
@@ -532,6 +557,11 @@ namespace gerdisc.Migrations
                     b.Navigation("ProfessorProjects");
 
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("gerdisc.Models.Entities.ResearchLineEntity", b =>
+                {
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>

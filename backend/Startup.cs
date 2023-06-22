@@ -79,6 +79,7 @@ namespace gerdisc
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IResearchLineService, ResearchLineService>();
             services.AddScoped<IProfessorService, ProfessorService>();
             services.AddScoped<IExternalResearcherService, ExternalResearcherService>();
             services.AddScoped<IUserService, UserService>();
