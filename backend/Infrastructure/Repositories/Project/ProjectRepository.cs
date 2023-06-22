@@ -37,6 +37,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .ThenInclude(x => x.Professor)
                 .Include(x => x.Dissertations)
                 .Include(x => x.Students)
+                .ThenInclude(x => x.User)
                 .FilterByUserRole(_userContext)
                 .ToListAsync();
         }

@@ -12,7 +12,7 @@ using gerdisc.Infrastructure.Repositories;
 namespace gerdisc.Migrations
 {
     [DbContext(typeof(ContexRepository))]
-    [Migration("20230622175543_AddTables")]
+    [Migration("20230622181639_AddTables")]
     partial class AddTables
     {
         /// <inheritdoc />
@@ -221,15 +221,12 @@ namespace gerdisc.Migrations
                     b.Property<Guid>("ResearchLineId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ResearchLinesId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Status")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ResearchLinesId");
+                    b.HasIndex("ResearchLineId");
 
                     b.ToTable("Projects");
                 });
@@ -499,11 +496,13 @@ namespace gerdisc.Migrations
 
             modelBuilder.Entity("gerdisc.Models.Entities.ProjectEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.ResearchLineEntity", "ResearchLines")
+                    b.HasOne("gerdisc.Models.Entities.ResearchLineEntity", "ResearchLine")
                         .WithMany("Projects")
-                        .HasForeignKey("ResearchLinesId");
+                        .HasForeignKey("ResearchLineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("ResearchLines");
+                    b.Navigation("ResearchLine");
                 });
 
             modelBuilder.Entity("gerdisc.Models.Entities.StudentCourseEntity", b =>

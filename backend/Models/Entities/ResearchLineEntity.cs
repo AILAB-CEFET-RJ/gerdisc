@@ -21,7 +21,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Gets or sets the list of professors associated with the researchLine.
         /// </summary>
-        public IEnumerable<ProjectEntity> Projects { get; set; }
+        public virtual IEnumerable<ProjectEntity> Projects { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResearchLineEntity"/> class.

@@ -44,7 +44,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Gets or sets the list of research line associated with the project.
         /// </summary>
-        public ResearchLineEntity? ResearchLines { get; set; }
+        public virtual ResearchLineEntity? ResearchLine { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectEntity"/> class.

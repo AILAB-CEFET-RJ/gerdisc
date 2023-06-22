@@ -69,17 +69,17 @@ namespace gerdisc.Migrations
                     ResearchLineId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Status = table.Column<string>(type: "text", nullable: true),
-                    ResearchLinesId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projects_ResearchLines_ResearchLinesId",
-                        column: x => x.ResearchLinesId,
+                        name: "FK_Projects_ResearchLines_ResearchLineId",
+                        column: x => x.ResearchLineId,
                         principalTable: "ResearchLines",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -358,9 +358,9 @@ namespace gerdisc.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_ResearchLinesId",
+                name: "IX_Projects_ResearchLineId",
                 table: "Projects",
-                column: "ResearchLinesId");
+                column: "ResearchLineId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentCourses_CourseId",
