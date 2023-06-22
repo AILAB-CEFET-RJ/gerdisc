@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using gerdisc.Infrastructure.Validations;
 using gerdisc.Models.Enums;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace gerdisc.Models.DTOs
 {
@@ -24,7 +24,6 @@ namespace gerdisc.Models.DTOs
         [ValidCpf]
         public string? Cpf { get; set; }
 
-        [JsonIgnore]
-        public RolesEnum Role { get; set; }
+        public virtual RolesEnum Role { get; set; }
     }
 }
