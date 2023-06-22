@@ -18,6 +18,7 @@ namespace gerdisc.Models.Mapper
         public static StudentEntity ToEntity(this StudentDto dto, Guid userId) =>
             dto is null ? new StudentEntity() : new StudentEntity
             {
+                Id = userId,
                 Registration = dto.Registration,
                 RegistrationDate = dto.RegistrationDate?.ToUniversalTime(),
                 ProjectId = dto.ProjectId,
@@ -76,7 +77,6 @@ namespace gerdisc.Models.Mapper
         {
             var entity = self is null ? new StudentDto() : new StudentDto
             {
-                Id = self.Id,
                 Registration = self.Registration,
                 RegistrationDate = self.RegistrationDate?.ToUniversalTime(),
                 ProjectId = self.ProjectId,

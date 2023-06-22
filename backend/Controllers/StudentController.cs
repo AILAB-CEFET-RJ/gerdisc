@@ -24,7 +24,7 @@ namespace gerdisc.Controllers
             try
             {
                 var student = await _studentService.CreateStudentAsync(studentDto);
-                return CreatedAtAction(nameof(GetStudent), new { studentId = student.UserId }, student);
+                return CreatedAtAction(nameof(GetStudent), new { studentId = student.Id }, student);
             }
             catch (Exception ex)
             {

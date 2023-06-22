@@ -50,7 +50,7 @@ namespace gerdisc.Models.Mapper
         public static UserDto ToUserDto(this UserEntity self) =>
             self is null ? new UserDto() : new UserDto
             {
-                UserId = self.Id,
+                Id = self.Id,
                 FirstName = self.FirstName,
                 LastName = self.LastName,
                 Cpf = self.Cpf,
@@ -65,7 +65,7 @@ namespace gerdisc.Models.Mapper
         public static TUserDto AddUserDto<TUserDto>(this TUserDto self, UserEntity entity)
             where TUserDto : UserDto
         {
-            self.UserId = entity.Id;
+            self.Id = entity.Id;
             self.Cpf = entity.Cpf;
             self.Email = entity.Email;
             self.FirstName = entity.FirstName;
