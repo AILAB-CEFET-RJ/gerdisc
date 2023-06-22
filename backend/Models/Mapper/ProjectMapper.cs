@@ -17,6 +17,7 @@ namespace gerdisc.Models.Mapper
             self is null ? new ProjectEntity() : new ProjectEntity
             {
                 Name = self.Name,
+                ResearchLineId = self.ResearchLineId,
                 Status = self.Status
             };
 
@@ -29,6 +30,7 @@ namespace gerdisc.Models.Mapper
         public static ProjectEntity ToEntity(this CreateProjectDto self, ProjectEntity entityToUpdate)
         {
             entityToUpdate.Name = self.Name;
+            entityToUpdate.ResearchLineId = self.ResearchLineId;
             entityToUpdate.Status = self.Status;
             return entityToUpdate;
         }
@@ -44,6 +46,7 @@ namespace gerdisc.Models.Mapper
                 Id = self.Id,
                 Name = self.Name,
                 Status = self.Status,
+                ResearchLineId = self.ResearchLineId,
                 Professors = self.ProfessorProjects.Select(p => p.Professor.ToUserDto()).ToList(),
                 Students = self.Students.Select(s => s.ToDto()).ToList(),
                 Dissertations = self.Dissertations.Select(d => d.ToDto()).ToList()
