@@ -25,7 +25,7 @@ namespace gerdisc.Controllers
         /// <returns>The created orientation.</returns>
         [HttpPost]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<OrientationDto>> CreateOrientation(OrientationDto orientationDto)
+        public async Task<ActionResult<OrientationDto>> CreateOrientation(CreateOrientationDto orientationDto)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace gerdisc.Controllers
         /// <returns>The updated orientation.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<OrientationDto>> UpdateOrientation(Guid id, OrientationDto orientationDto)
+        public async Task<ActionResult<OrientationDto>> UpdateOrientation(Guid id, CreateOrientationDto orientationDto)
         {
             try
             {

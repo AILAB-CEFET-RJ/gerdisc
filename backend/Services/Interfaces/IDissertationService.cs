@@ -12,7 +12,7 @@ namespace gerdisc.Services.Interfaces
         /// </summary>
         /// <param name="orientationDto">The orientation DTO containing the orientation details.</param>
         /// <returns>The created orientation DTO.</returns>
-        Task<OrientationDto> CreateOrientationAsync(OrientationDto orientationDto);
+        Task<OrientationDto> CreateOrientationAsync(CreateOrientationDto orientationDto);
 
         /// <summary>
         /// Retrieves a orientation by ID.
@@ -33,7 +33,7 @@ namespace gerdisc.Services.Interfaces
         /// <param name="id">The ID of the orientation to update.</param>
         /// <param name="orientationDto">The orientation DTO containing the updated orientation details.</param>
         /// <returns>The updated orientation DTO.</returns>
-        Task<OrientationDto> UpdateOrientationAsync(Guid id, OrientationDto orientationDto);
+        Task<OrientationDto> UpdateOrientationAsync(Guid id, CreateOrientationDto orientationDto);
 
         /// <summary>
         /// Deletes a orientation.

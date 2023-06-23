@@ -24,7 +24,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<OrientationDto> CreateOrientationAsync(OrientationDto orientationDto)
+        public async Task<OrientationDto> CreateOrientationAsync(CreateOrientationDto orientationDto)
         {
             (var isValid, var message) = await _validator.CanAddOrientationToProject(orientationDto);
             if(!isValid)
@@ -34,7 +34,7 @@ namespace gerdisc.Services
 
             var orientation = await _repository.Orientation.AddAsync(orientationDto.ToEntity());
 
-            _logger.LogInformation($"Orientation {orientationDto.Id} created successfully.");
+            _logger.LogInformation($"Orientation {orientation.Id} created successfully.");
             return orientation.ToDto();
         }
 
@@ -64,7 +64,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<OrientationDto> UpdateOrientationAsync(Guid id, OrientationDto orientationDto)
+        public async Task<OrientationDto> UpdateOrientationAsync(Guid id, CreateOrientationDto orientationDto)
         {
             var existingOrientation = await _repository.Orientation.GetByIdAsync(id);
             if (existingOrientation == null)
