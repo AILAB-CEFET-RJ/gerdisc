@@ -68,7 +68,7 @@ namespace gerdisc.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ResearchLineId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    Status = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -223,7 +223,7 @@ namespace gerdisc.Migrations
                     EntryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ProjectDefenceDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ProjectQualificationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Proficiency = table.Column<string>(type: "text", nullable: true),
+                    Proficiency = table.Column<bool>(type: "boolean", nullable: false),
                     CPF = table.Column<string>(type: "text", nullable: true),
                     UndergraduateInstitution = table.Column<string>(type: "text", nullable: true),
                     InstitutionType = table.Column<int>(type: "integer", nullable: false),

@@ -199,8 +199,8 @@ namespace gerdisc.Migrations
                     b.Property<Guid>("ResearchLineId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -292,8 +292,8 @@ namespace gerdisc.Migrations
                     b.Property<Guid?>("OrientationId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Proficiency")
-                        .HasColumnType("text");
+                    b.Property<bool>("Proficiency")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("ProjectDefenceDate")
                         .HasColumnType("timestamp with time zone");

@@ -13,7 +13,7 @@ namespace gerdisc.Models.DTOs
         [Required(ErrorMessage = "ProjectId is required")]
         public Guid ProjectId { get; set; }
 
-        public int Status { get; set; }
+        public StatusEnum Status { get; set; }
 
         public DateTime? EntryDate { get; set; }
 
@@ -21,17 +21,17 @@ namespace gerdisc.Models.DTOs
 
         public DateTime? ProjectQualificationDate { get; set; }
 
-        public string? Proficiency { get; set; }
+        public bool Proficiency { get; set; }
 
         public string? UndergraduateInstitution { get; set; }
 
-        public int InstitutionType { get; set; }
+        public InstitutionTypeEnum InstitutionType { get; set; }
 
         public string? UndergraduateCourse { get; set; }
 
         public int GraduationYear { get; set; }
 
-        public int UndergraduateArea { get; set; }
+        public UndergraduateAreaEnum UndergraduateArea { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
 

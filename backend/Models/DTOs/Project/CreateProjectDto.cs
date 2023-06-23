@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using gerdisc.Models.Enums;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace gerdisc.Models.DTOs
@@ -8,7 +9,7 @@ namespace gerdisc.Models.DTOs
         [Required]
         public Guid ResearchLineId { get; set; }
         public string? Name { get; set; }
-        public string? Status { get; set; }
+        public ProjectStatusEnum Status { get; set; }
         public List<string> ProfessorIds { get; set; }
         public CreateProjectDto()
         {

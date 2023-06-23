@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Entities
 {
@@ -33,7 +34,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The status of the student.
         /// </summary>
-        public int Status { get; set; }
+        public StatusEnum Status { get; set; }
 
         /// <summary>
         /// The date on which the student entered the program.
@@ -53,7 +54,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The proficiency level of the student.
         /// </summary>
-        public string? Proficiency { get; set; }
+        public bool Proficiency { get; set; }
 
         /// <summary>
         /// The CPF (taxpayer ID) of the student.
@@ -68,7 +69,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The type of institution the student attended.
         /// </summary>
-        public int InstitutionType { get; set; }
+        public InstitutionTypeEnum InstitutionType { get; set; }
 
         /// <summary>
         /// The name of the undergraduate course the student completed.
@@ -83,7 +84,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The academic area in which the student completed their undergraduate program.
         /// </summary>
-        public int UndergraduateArea { get; set; }
+        public UndergraduateAreaEnum UndergraduateArea { get; set; }
 
         /// <summary>
         /// The date of birth of the student.

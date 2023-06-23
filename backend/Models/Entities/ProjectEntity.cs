@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Entities
 {
@@ -24,7 +25,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Gets or sets the status of the project.
         /// </summary>
-        public string? Status { get; set; }
+        public ProjectStatusEnum Status { get; set; }
 
         /// <summary>
         /// Gets or sets the list of professors associated with the project.
