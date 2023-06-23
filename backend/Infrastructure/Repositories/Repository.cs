@@ -1,6 +1,5 @@
 using gerdisc.Infrastructure.Providers;
 using gerdisc.Infrastructure.Repositories.Course;
-using gerdisc.Infrastructure.Repositories.Dissertation;
 using gerdisc.Infrastructure.Repositories.Extension;
 using gerdisc.Infrastructure.Repositories.ExternalResearcher;
 using gerdisc.Infrastructure.Repositories.Orientation;
@@ -55,9 +54,6 @@ namespace gerdisc.Infrastructure.Repositories
 
         /// <inheritdoc />
         public IProjectRepository Project => new ProjectRepository(_dbContext, _userContext);
-
-        /// <inheritdoc />
-        public IDissertationRepository Dissertation => new DissertationRepository(_dbContext);
 
         /// <inheritdoc />
         public IExtensionRepository Extension => new ExtensionRepository(_dbContext);

@@ -14,7 +14,7 @@ namespace gerdisc.Models.Entities
         /// <remarks>
         /// This property is a foreign key to the <see cref="UserEntity"/> entity.
         /// </remarks>
-        public Guid CoorientatorId { get; set; }
+        public Guid? CoorientatorId { get; set; }
 
         /// <summary>
         /// Gets or sets the professor navigation property.
@@ -26,26 +26,48 @@ namespace gerdisc.Models.Entities
         public virtual UserEntity? Coorientator { get; set; }
 
         /// <summary>
-        /// Gets or sets the unique identifier of the dissertation.
+        /// Gets or sets the foreign key of the student that wrote the orientation.
         /// </summary>
-        /// <remarks>
-        /// This property is a foreign key to the <see cref="DissertationEntity"/> entity.
-        /// </remarks>
-        public Guid DissertationId { get; set; }
+        public Guid StudentId { get; set; }
 
         /// <summary>
-        /// Gets or sets the dissertation navigation property.
+        /// Name of the dissertation.
         /// </summary>
-        /// <remarks>
-        /// This property allows lazy loading of the <see cref="DissertationEntity"/> entity.
-        /// </remarks>
-        public virtual DissertationEntity? Dissertation { get; set; }
+        public string? Dissertation { get; set; }
 
         /// <summary>
-        /// Gets or sets the foreign key of the professor associated with the dissertation.
+        /// Gets or sets the foreign key of the project associated with the orientation.
+        /// </summary>
+        public Guid ProjectId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the navigation property for the associated student entity.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the associated <see cref="UserEntity"/> entity.
+        /// </remarks>
+        [ForeignKey("StudentId")]
+        public virtual UserEntity? Student { get; set; }
+
+        /// <summary>
+        /// Gets or sets the navigation property for the associated project entity.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the associated <see cref="ProjectEntity"/> entity.
+        /// </remarks>
+        public virtual ProjectEntity? Project { get; set; }
+
+        /// <summary>
+        /// Gets or sets the foreign key of the professor associated with the orientation.
         /// </summary>
         public Guid ProfessorId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the project navigation property.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the <see cref="ProjectEntity"/> entity.
+        /// </remarks>
         [ForeignKey("ProfessorId")]
         public virtual UserEntity? Professor { get; set; }
     }

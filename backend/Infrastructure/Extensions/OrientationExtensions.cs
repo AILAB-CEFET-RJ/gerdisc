@@ -15,10 +15,13 @@ namespace gerdisc.Infrastructure.Extensions
                 case RolesEnum.Professor:
                     return query.Where(d => d.ProfessorId == userContext.UserId | d.CoorientatorId == userContext.UserId);
                 case RolesEnum.Student:
-                    return query.Where(d => d.Dissertation.StudentId == userContext.UserId);
+                    return query.Where(d => d.StudentId == userContext.UserId);
                 case RolesEnum.Administrator:
-                default:
                     return query;
+                case RolesEnum.ExternalResearcher:
+                    return query.Where(d => d.CoorientatorId == userContext.UserId);
+                default:
+                    return query.Where(d => false);
             }
         }
     }

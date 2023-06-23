@@ -1,5 +1,4 @@
 using gerdisc.Infrastructure.Repositories.Course;
-using gerdisc.Infrastructure.Repositories.Dissertation;
 using gerdisc.Infrastructure.Repositories.Extension;
 using gerdisc.Infrastructure.Repositories.ExternalResearcher;
 using gerdisc.Infrastructure.Repositories.Orientation;
@@ -37,11 +36,6 @@ namespace gerdisc.Infrastructure.Repositories
         /// Gets the repository for project entities.
         /// </summary>
         IProjectRepository Project { get; }
-
-        /// <summary>
-        /// Gets the repository for dissertation entities.
-        /// </summary>
-        IDissertationRepository Dissertation { get; }
 
         /// <summary>
         /// Gets the repository for extension entities.

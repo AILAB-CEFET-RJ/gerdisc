@@ -22,7 +22,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .Where(e => !e.IsDeleted)
                 .Include(x => x.ProfessorProjects)
                 .ThenInclude(x => x.Professor)
-                .Include(x => x.Dissertations)
+                .Include(x => x.Orientations)
                 .Include(x => x.Students)
                 .FilterByUserRole(_userContext)
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -35,7 +35,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .Where(e => !e.IsDeleted)
                 .Include(x => x.ProfessorProjects)
                 .ThenInclude(x => x.Professor)
-                .Include(x => x.Dissertations)
+                .Include(x => x.Orientations)
                 .Include(x => x.Students)
                 .ThenInclude(x => x.User)
                 .FilterByUserRole(_userContext)

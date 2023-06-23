@@ -20,7 +20,6 @@ namespace gerdisc.Infrastructure.Repositories
         public DbSet<CourseEntity> Courses { get; set; } = null!;
         public DbSet<ProjectEntity> Projects { get; set; } = null!;
         public DbSet<ExternalResearcherEntity> ExternalResearchers { get; set; } = null!;
-        public DbSet<DissertationEntity> Dissertations { get; set; } = null!;
         public DbSet<ExtensionEntity> Extensions { get; set; } = null!;
         public DbSet<ProfessorProjectEntity> ProfessorProjects { get; set; } = null!;
         public DbSet<StudentCourseEntity> StudentCourses { get; set; } = null!;

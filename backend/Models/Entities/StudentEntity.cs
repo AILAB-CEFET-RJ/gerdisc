@@ -125,12 +125,12 @@ namespace gerdisc.Models.Entities
         public virtual IEnumerable<StudentCourseEntity> StudentCourses { get; set; }
 
         /// <summary>
-        /// Gets or sets the navigation property for the dissertation entity associated with this student.
+        /// Gets or sets the navigation property for the orientations entity associated with this student.
         /// </summary>
         /// <remarks>
-        /// This property allows lazy loading of the associated <see cref="DissertationEntity"/> entity.
+        /// This property allows lazy loading of the associated <see cref="OrientationEntity"/> entity.
         /// </remarks>
-        public virtual DissertationEntity? Dissertations { get; set; }
+        public virtual OrientationEntity? Orientation { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StudentEntity"/> class with the specified properties.

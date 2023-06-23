@@ -20,14 +20,14 @@ namespace gerdisc.Infrastructure.Validations
         }
 
         /// <summary>
-        /// Determines whether a dissertation can be added to a project in the given orientation.
+        /// Determines whether a orientation can be added to a project in the given orientation.
         /// </summary>
-        /// <param name="orientationDto">The orientation DTO containing the dissertation and student IDs.</param>
-        /// <returns>A tuple with a boolean indicating whether the dissertation can be added, and a message describing the result.</returns>
-        public async Task<(bool, string)> CanAddDissertationToProject(OrientationDto orientationDto)
+        /// <param name="orientationDto">The orientation DTO containing the orientation and student IDs.</param>
+        /// <returns>A tuple with a boolean indicating whether the orientation can be added, and a message describing the result.</returns>
+        public async Task<(bool, string)> CanAddOrientationToProject(OrientationDto orientationDto)
         {
-            var project = await _repository.Project.GetByIdAsync(orientationDto.Dissertation.ProjectId);
-            var student = await _repository.Student.GetByIdAsync(orientationDto.Dissertation.StudentId);
+            var project = await _repository.Project.GetByIdAsync(orientationDto.ProjectId);
+            var student = await _repository.Student.GetByIdAsync(orientationDto.StudentId);
 
             if (project == null || student == null)
             {
