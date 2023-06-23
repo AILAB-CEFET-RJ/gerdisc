@@ -7,7 +7,7 @@ namespace gerdisc.Models.DTOs
 	    [Name("Nome")]
         public string? Name { get; set; }
 
-	    [Name("E-mail")]
+	    [Name("Email")]
         public string? Email { get; set; }
 
 	    [Name("CPF")]
@@ -30,14 +30,15 @@ namespace gerdisc.Models.DTOs
 
         public string? Proficiency { get; set; }
 
-        public string? CPF { get; set; }
-
+	    [Name("Instituição de Formação")]
         public string? UndergraduateInstitution { get; set; }
 
         public int InstitutionType { get; set; }
 
+	    [Name("Curso")]
         public string? UndergraduateCourse { get; set; }
 
+	    [Name("Ano de Formação")]
         public int GraduationYear { get; set; }
 
         public int UndergraduateArea { get; set; }
