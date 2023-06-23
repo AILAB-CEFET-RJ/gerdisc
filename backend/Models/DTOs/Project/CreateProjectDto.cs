@@ -5,7 +5,6 @@ namespace gerdisc.Models.DTOs
 {
     public class CreateProjectDto
     {
-        public Guid? Id { get; set; }
         [Required]
         public Guid ResearchLineId { get; set; }
         public string? Name { get; set; }
