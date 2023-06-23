@@ -66,11 +66,13 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<OrientationDto> UpdateOrientationAsync(Guid id, CreateOrientationDto orientationDto)
         {
-            var existingOrientation = await _repository.Orientation.GetByIdAsync(id);
-            if (existingOrientation == null)
+            (var isValid, var message) = await _validator.CanAddOrientationToProject(orientationDto);
+            if(!isValid)
             {
-                throw new ArgumentException($"Orientation with id {id} does not exist.");
+                throw new ArgumentException(message);
             }
+
+            var existingOrientation = await _repository.Orientation.GetByIdAsync(id) ?? throw new ArgumentException($"Orientation with id {id} does not exist.");
 
             existingOrientation = orientationDto.ToEntity(existingOrientation);
 
