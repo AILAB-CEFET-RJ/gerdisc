@@ -1,4 +1,5 @@
 using CsvHelper.Configuration.Attributes;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.DTOs
 {
@@ -7,7 +8,7 @@ namespace gerdisc.Models.DTOs
 	    [Name("Nome")]
         public string? Name { get; set; }
 
-	    [Name("Email")]
+	    [Name("E-mail")]
         public string? Email { get; set; }
 
 	    [Name("CPF")]
@@ -16,24 +17,32 @@ namespace gerdisc.Models.DTOs
 	    [Name("Inscrição")]
         public string? Registration { get; set; }
 
+        [Optional]
         public string? RegistrationDate { get; set; }
 
+        [Optional]
         public string? ProjectId { get; set; }
 
-        public int Status { get; set; }
+        [Optional]
+        public StatusEnum Status { get; set; }
 
+        [Optional]
         public string? EntryDate { get; set; }
 
+        [Optional]
         public string? ProjectDefenceDate { get; set; }
 
+        [Optional]
         public string? ProjectQualificationDate { get; set; }
 
+        [Optional]
         public string? Proficiency { get; set; }
 
 	    [Name("Instituição de Formação")]
         public string? UndergraduateInstitution { get; set; }
 
-        public int InstitutionType { get; set; }
+        [Optional]
+        public InstitutionTypeEnum InstitutionType { get; set; }
 
 	    [Name("Curso")]
         public string? UndergraduateCourse { get; set; }
@@ -41,11 +50,13 @@ namespace gerdisc.Models.DTOs
 	    [Name("Ano de Formação")]
         public int GraduationYear { get; set; }
 
-        public int UndergraduateArea { get; set; }
+        [Optional]
+        public UndergraduateAreaEnum UndergraduateArea { get; set; }
 
 	    [Name("Nascimento")]
         public string? DateOfBirth { get; set; }
 
+        [Optional]
         public int Scholarship { get; set; }
     }
 }
