@@ -35,7 +35,6 @@ export default function ResearcherList() {
             .then(result => {
                 let mapped = []
                 if (result !== null && result !== undefined) {
-                    console.log(result)
                     mapped = result.map((professor) => {
                         return {
                             Id: professor.Id,
@@ -46,7 +45,6 @@ export default function ResearcherList() {
                 }
                 setResearchers(mapped)
                 setIsLoading(false)
-
             })
     }, [setResearchers, setIsLoading])
 
@@ -56,7 +54,7 @@ export default function ResearcherList() {
             <div className="researcherBar">
                 <div className="left-bar">
                     <div>
-                        <img src="professor.png" alt="A logo representing researchers" height={"100rem"} />
+                        <img className="filtered" src="researcher.png" alt="A logo representing researchers" height={"100rem"} />
                     </div>
                     <div className="title">Pesquisadores</div>
                 </div>

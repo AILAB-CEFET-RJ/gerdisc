@@ -13,6 +13,7 @@ export default function StudentProfile() {
     const { id } = useParams()
     const [student, setStudent] = useState(undefined)
     const [error, setError] = useState(false)
+    const [role, setRole] = useState()
 
     const navigate = useNavigate()
     const [name,] = useState(localStorage.getItem('name'))
@@ -22,6 +23,7 @@ export default function StudentProfile() {
         const token = localStorage.getItem('token')
         try {
             const decoded = jwt_decode(token)
+            setRole(decoded.role)
         } catch (error) {
             navigate('/login', { replace: true })
         }
@@ -44,23 +46,24 @@ export default function StudentProfile() {
             }>
                 <div className="bar">
                     <BackButton />
-                    <div className="options">
+                    {role === "Administrator" && <div className="options">
                         <input type={'button'} className="option" value={"Criar Dissertação"} onClick={(e) => navigate(`researches/add`)} />
                         <input type={'button'} className="option" value={'Criar Extensão'} onClick={(e) => navigate('extensions/add')} />
-                    </div>
+                        <input type={'button'} className="option" value={'Editar Estudante'} onClick={(e) => navigate('edit')} />
+                    </div>}
                 </div>
                 {!isLoading && <>
                     <div className="card-label">Perfil estudante</div>
                     <div className="studentCard">
-                        <p>Nome: {`${student.firstName} ${student.lastName}`}</p>
-                        <p>Email: {student.email}</p>
-                        <p>Proficiencia: {student.proficiency}</p>
-                        <p>Matricula: {student.registration}</p>
-                        <p>Projeto de pesquisa: {student.projectId}</p>
-                        <p>Data de ingresso: {student.entryDate}</p>
-                        <p>Previsao de defesa: {student.projectDefenceDate}</p>
-                        <p>Previsao de qualificação: {student.projectQualificationDate}</p>
-                        <p>Bolsa: {student.scholarship}</p>
+                        <p data-label="Nome">{`${student.firstName} ${student.lastName}`}</p>
+                        <p data-label="Email">{student.email}</p>
+                        <p data-label="Proficiencia">{student.proficiency}</p>
+                        <p data-label="Matricula">{student.registration}</p>
+                        <p data-label="Projeto de pesquisa">{student.projectId}</p>
+                        <p data-label="Data de ingresso">{student.entryDate}</p>
+                        <p data-label="Previsao de defesa">{student.projectDefenceDate}</p>
+                        <p data-label="Previsao de qualificação">{student.projectQualificationDate}</p>
+                        <p data-label="Bolsa">{student.scholarship}</p>
                     </div>
                 </>}
             </div>

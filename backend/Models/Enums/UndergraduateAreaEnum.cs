@@ -1,12 +1,24 @@
+using System.ComponentModel;
+using CsvHelper.Configuration.Attributes;
+
 namespace gerdisc.Models.Enums
 {
     public enum UndergraduateAreaEnum
     {
         Default,
-        COMPUTACAO,
-        EXATAS,
-        HUMANAS,
-        SAUDE,
-        ENGENHARIA
+        [Name("Computação")]
+        COMPUTATION,
+
+        [Name("Exatas")]
+        EXACT_SCIENCES,
+
+        [Name("Humanas")]
+        HUMANITIES,
+
+        [Name("Saúde")]
+        HEALTH,
+
+        [Name("Engenharia")]
+        ENGINEERING
     }
 }

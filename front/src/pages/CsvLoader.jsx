@@ -10,21 +10,25 @@ import Select from '../components/select';
 const CsvLoader = () => {
     const [fileData, setFileData] = useState(null);
     const [name,] = useState(localStorage.getItem('name'))
+    const [entity, setEntity] = useState('Estudantes')
     const handleFileLoaded = (data) => {
         setFileData(data);
     };
 
     const handleFileUpload = () => {
-        axios.post('/api/upload', { data: fileData })
+        let endpoint = entity === 'Estudantes'? 'students/csv': 'courses/csv'
+        axios.post(endpoint, { data: fileData })
             .then((response) => {
-                // Handle the response from the backend
                 console.log(response.data);
             })
             .catch((error) => {
-                // Handle any errors
                 console.error(error);
             });
     };
+
+    const handleEntitySelect = (entity) => {
+        setEntity(entity)
+    }
     const options = {
         header: true,
         preview: 5
@@ -35,7 +39,7 @@ const CsvLoader = () => {
             <div className="form csv">
                 <div className='form-section'>
                     <div className='formInput'>
-                        <Select options={["Estudantes", "Professores", "Materias cursados"]} label={"Entitidade a criar"} name={"entity"} />
+                        <Select onSelect={setEntity} options={["Estudantes", "Materias cursados"]} label={"Entitidade a criar"} name={"entity"} />
                     </div>
                 </div>
                 <div className='form-section'>

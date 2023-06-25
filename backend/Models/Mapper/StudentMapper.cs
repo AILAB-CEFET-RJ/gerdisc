@@ -122,8 +122,8 @@ namespace gerdisc.Models.Mapper
                 Scholarship = csv.Scholarship,
                 Cpf = csv.Cpf,
                 Email = csv.Email,
-                FirstName = csv.Name?.Split(' ').FirstOrDefault(),
-                LastName = csv.Name?.Split(' ').LastOrDefault(),
+                FirstName = csv.Name?.TrimStart().Split(' ').FirstOrDefault(),
+                LastName = csv.Name?.TrimEnd().Split(' ').LastOrDefault(),
             };
     }
 }

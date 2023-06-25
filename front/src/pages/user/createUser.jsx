@@ -57,6 +57,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
             if (isStudent) {
                 getStudentById(id)
                     .then(student => {
+                        console.log(student)
                         setUser(student)
                         SetStudent(student)
                     })
@@ -154,7 +155,6 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         else {
             SetStudent({ ...student, ...{ projectId: project?.Id } });
         }
-        console.log(project)
     };
 
     useEffect(() => {

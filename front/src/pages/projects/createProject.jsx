@@ -10,11 +10,12 @@ import ErrorPage from "../../components/error/Error";
 import PageContainer from "../../components/PageContainer";
 import { postProjects, getProjectById, putProjectsById } from "../../api/project_service";
 
-export default function ProjectForm({ isUpdate = false }) {
+export default function ProjectForm({ Update = false }) {
     const {id} = useParams()
     const navigate = useNavigate()
     const [name,] = useState(localStorage.getItem('name'))
     const [error, setError] = useState(null);
+    const [isUpdate] = useState(Update)
     const [isLoading, setIsLoading] = useState(true)
     const [professors, setProfessor] = useState([])
     const [role, setRole] = useState(localStorage.getItem('role'))
