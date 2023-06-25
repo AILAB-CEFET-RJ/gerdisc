@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace gerdisc.Models.Entities
 {
     /// <summary>
     /// Represents an external researcher in the system.
     /// </summary>
+    [Table("ExternalResearchers")]
     public record ExternalResearcherEntity : BaseEntity
     {
         /// <summary>

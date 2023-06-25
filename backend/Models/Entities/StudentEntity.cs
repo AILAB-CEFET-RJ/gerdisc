@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Entities
 {
     /// <summary>
     /// Represents a student entity in the system.
     /// </summary>
+    [Table("Students")]
     public record StudentEntity : BaseEntity
     {
         /// <summary>
@@ -25,12 +29,12 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The ID of the project associated with this student entity.
         /// </summary>
-        public string? ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
 
         /// <summary>
         /// The status of the student.
         /// </summary>
-        public int Status { get; set; }
+        public StatusEnum Status { get; set; }
 
         /// <summary>
         /// The date on which the student entered the program.
@@ -50,7 +54,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The proficiency level of the student.
         /// </summary>
-        public string? Proficiency { get; set; }
+        public bool Proficiency { get; set; }
 
         /// <summary>
         /// The CPF (taxpayer ID) of the student.
@@ -65,7 +69,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The type of institution the student attended.
         /// </summary>
-        public int InstitutionType { get; set; }
+        public InstitutionTypeEnum InstitutionType { get; set; }
 
         /// <summary>
         /// The name of the undergraduate course the student completed.
@@ -80,7 +84,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The academic area in which the student completed their undergraduate program.
         /// </summary>
-        public int UndergraduateArea { get; set; }
+        public UndergraduateAreaEnum UndergraduateArea { get; set; }
 
         /// <summary>
         /// The date of birth of the student.
@@ -93,6 +97,11 @@ namespace gerdisc.Models.Entities
         public int Scholarship { get; set; }
 
         /// <summary>
+        /// The date on which the student qualified for their project.
+        /// </summary>
+        public DateTime? LastNotification { get; set; }
+
+        /// <summary>
         /// Gets or sets the navigation property for the associated user entity.
         /// </summary>
         /// <remarks>
@@ -101,27 +110,34 @@ namespace gerdisc.Models.Entities
         public virtual UserEntity? User { get; set; }
 
         /// <summary>
+        /// Gets or sets the navigation property for the associated project entity.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the associated <see cref="ProjectEntity"/> entity.
+        /// </remarks>
+        public virtual ProjectEntity? Project { get; set; }
+
+        /// <summary>
         /// Gets or sets the navigation property for the collection of student course entities associated with this student.
         /// </summary>
         /// <remarks>
         /// This property allows lazy loading of the associated collection of <see cref="StudentCourseEntity"/> entities.
         /// </remarks>
-        public virtual ICollection<StudentCourseEntity> StudentCourses { get; set; }
+        public virtual IEnumerable<StudentCourseEntity> StudentCourses { get; set; }
 
         /// <summary>
-        /// Gets or sets the navigation property for the collection of dissertation entities associated with this student.
+        /// Gets or sets the navigation property for the orientations entity associated with this student.
         /// </summary>
         /// <remarks>
-        /// This property allows lazy loading of the associated collection of <see cref="DissertationEntity"/> entities.
+        /// This property allows lazy loading of the associated <see cref="OrientationEntity"/> entity.
         /// </remarks>
-        public virtual ICollection<DissertationEntity> Dissertations { get; set; }
+        public virtual OrientationEntity? Orientation { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StudentEntity"/> class with the specified properties.
         /// </summary>
         public StudentEntity()
         {
-            Dissertations = new List<DissertationEntity>();
             StudentCourses = new List<StudentCourseEntity>();
         }
     }

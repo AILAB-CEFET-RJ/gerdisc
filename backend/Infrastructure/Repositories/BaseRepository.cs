@@ -6,7 +6,12 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace gerdisc.Infrastructure.Repositories
 {
-    public abstract class BaseRepository<TEntity> where TEntity : BaseEntity
+    /// <summary>
+    /// Represents the repository with CRUD operaton.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of entity that this repository works with.</typeparam>
+    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
+        where TEntity : BaseEntity
     {
         protected readonly ContexRepository _context;
         protected readonly DbSet<TEntity> _dbSet;
@@ -17,6 +22,7 @@ namespace gerdisc.Infrastructure.Repositories
             _dbSet = context.Set<TEntity>();
         }
 
+        /// <inheritdoc />
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _dbSet
@@ -24,6 +30,7 @@ namespace gerdisc.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public virtual async Task<TEntity?> GetByIdAsync(Guid id)
         {
             return await _dbSet
@@ -31,15 +38,8 @@ namespace gerdisc.Infrastructure.Repositories
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<IEnumerable<TEntity>> AddRangeAsync(
-            IEnumerable<TEntity> entities)
-        {
-            await _dbSet.AddRangeAsync(entities);
-            await _context.SaveChangesAsync();
-            return entities;
-        }
-
-        public async Task<TEntity?> GetByIdAsync(
+        /// <inheritdoc />
+        public virtual async Task<TEntity?> GetByIdAsync(
             Guid id,
             params Expression<Func<TEntity, object>>[] includeProperties)
         {
@@ -49,7 +49,17 @@ namespace gerdisc.Infrastructure.Repositories
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(
+        /// <inheritdoc />
+        public async Task<IEnumerable<TEntity>> AddRangeAsync(
+            IEnumerable<TEntity> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+            return entities;
+        }
+
+        /// <inheritdoc />
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(
             params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return await _dbSet
@@ -58,6 +68,7 @@ namespace gerdisc.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<TEntity>> GetAllAsync(
             params Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>[] includeProperties)
         {
@@ -71,6 +82,7 @@ namespace gerdisc.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<TEntity>> GetPagedAsync(
             Expression<Func<TEntity, bool>> predicate,
             int pageNumber,
@@ -85,6 +97,7 @@ namespace gerdisc.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public virtual async Task<IEnumerable<TEntity>> GetPagedAsync(
             int pageNumber,
             int pageSize)
@@ -96,6 +109,7 @@ namespace gerdisc.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync(
             Expression<Func<TEntity, bool>> predicate)
         {
@@ -105,6 +119,7 @@ namespace gerdisc.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public virtual async Task<IEnumerable<TEntity>> GetPagedAsync(
             int pageNumber,
             int pageSize,
@@ -118,6 +133,7 @@ namespace gerdisc.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public virtual async Task<TEntity> AddAsync(TEntity entity)
         {
             _dbSet.Add(entity);
@@ -125,6 +141,7 @@ namespace gerdisc.Infrastructure.Repositories
             return entity;
         }
 
+        /// <inheritdoc />
         public virtual async Task UpdateAsync(TEntity entity)
         {
             _dbSet.Attach(entity);
@@ -132,12 +149,14 @@ namespace gerdisc.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        /// <inheritdoc />
         public virtual async Task DeactiveAsync(TEntity entity)
         {
             entity.IsDeleted = true;
             await UpdateAsync(entity);
         }
 
+        /// <inheritdoc />
         public virtual async Task DeactiveByIdAsync(Guid id)
         {
             TEntity? entityToDelete = await _dbSet.FindAsync(id);
@@ -148,6 +167,7 @@ namespace gerdisc.Infrastructure.Repositories
             await UpdateAsync(entityToDelete);
         }
 
+        /// <inheritdoc />
         public virtual async Task DeactiveRangeAsync(
             IEnumerable<TEntity> entities)
         {
@@ -158,6 +178,7 @@ namespace gerdisc.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        /// <inheritdoc />
         public virtual async Task DeactiveRangeAsync(
             Expression<Func<TEntity, bool>> predicate)
         {
@@ -172,6 +193,7 @@ namespace gerdisc.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        /// <inheritdoc />
         public virtual async Task<int> CountAsync(
             Expression<Func<TEntity, bool>> predicate)
         {

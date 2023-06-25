@@ -7,7 +7,7 @@ using gerdisc.Services.Interfaces;
 namespace gerdisc.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("students")]
     public class StudentsController : ControllerBase
     {
         private readonly IStudentService _studentService;
@@ -24,7 +24,7 @@ namespace gerdisc.Controllers
             try
             {
                 var student = await _studentService.CreateStudentAsync(studentDto);
-                return CreatedAtAction(nameof(GetStudent), new { studentId = student.UserId }, student);
+                return CreatedAtAction(nameof(GetStudent), new { studentId = student.Id }, student);
             }
             catch (Exception ex)
             {

@@ -21,6 +21,7 @@ namespace gerdisc.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <inheritdoc />
         public async Task<CourseDto> CreateCourseAsync(CourseDto courseDto)
         {
             var course = courseDto.ToEntity();
@@ -32,6 +33,7 @@ namespace gerdisc.Services
             return course.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<CourseDto> GetCourseAsync(Guid id)
         {
             var courseEntity = await _repository.Course.GetByIdAsync(id);
@@ -43,6 +45,7 @@ namespace gerdisc.Services
             return courseEntity.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<CourseDto>> GetCoursesAsync()
         {
             var courses = await _repository.Course.GetAllAsync();
@@ -55,6 +58,7 @@ namespace gerdisc.Services
             return courseDtos;
         }
 
+        /// <inheritdoc />
         public async Task<CourseDto> UpdateCourseAsync(Guid id, CourseDto courseDto)
         {
             var existingCourse = await _repository.Course.GetByIdAsync(id);
@@ -70,6 +74,7 @@ namespace gerdisc.Services
             return existingCourse.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteCourseAsync(Guid id)
         {
             var existingCourse = await _repository.Course.GetByIdAsync(id);

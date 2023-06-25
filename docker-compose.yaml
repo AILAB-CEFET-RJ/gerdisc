@@ -20,25 +20,34 @@ services:
 
   gerdisc:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     env_file:
       - .env
     ports:
-      - "80:80"
+      - "5000:80"
     depends_on:
       postgres:
         condition: service_healthy
 
   database-updater:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile.update
     env_file:
       - .env
     depends_on:
       postgres:
         condition: service_healthy
+
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
 
 volumes:
   db_data:

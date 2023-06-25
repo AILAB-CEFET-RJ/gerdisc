@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Entities
 {
+    [Table("Professors")]
     public record ProfessorEntity : BaseEntity
     {
         /// <summary>

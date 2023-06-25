@@ -18,6 +18,7 @@ namespace gerdisc.Models.Mapper
         public static StudentEntity ToEntity(this StudentDto dto, Guid userId) =>
             dto is null ? new StudentEntity() : new StudentEntity
             {
+                Id = userId,
                 Registration = dto.Registration,
                 RegistrationDate = dto.RegistrationDate?.ToUniversalTime(),
                 ProjectId = dto.ProjectId,
@@ -33,6 +34,7 @@ namespace gerdisc.Models.Mapper
                 UndergraduateArea = dto.UndergraduateArea,
                 DateOfBirth = dto.DateOfBirth?.ToUniversalTime(),
                 Scholarship = dto.Scholarship,
+                StudentCourses = dto.StudentCourses?.Select(x => x.ToEntity()) ?? new List<StudentCourseEntity>(),
                 UserId = userId
             };
 
@@ -57,6 +59,12 @@ namespace gerdisc.Models.Mapper
             entityToUpdate.UndergraduateArea = self.UndergraduateArea;
             entityToUpdate.DateOfBirth = self.DateOfBirth;
             entityToUpdate.Scholarship = self.Scholarship;
+            
+            var coursesToAdd = self.StudentCourses?
+                .Where(x => !entityToUpdate.StudentCourses.Select(sc => sc.CourseId).Contains(x.CourseId))
+                .Select(x => x.ToEntity()) ?? new List<StudentCourseEntity>();
+
+            entityToUpdate.StudentCourses = entityToUpdate.StudentCourses.Concat(coursesToAdd);
             return entityToUpdate;
         }
 
@@ -69,7 +77,6 @@ namespace gerdisc.Models.Mapper
         {
             var entity = self is null ? new StudentDto() : new StudentDto
             {
-                Id = self.Id,
                 Registration = self.Registration,
                 RegistrationDate = self.RegistrationDate?.ToUniversalTime(),
                 ProjectId = self.ProjectId,
@@ -84,7 +91,8 @@ namespace gerdisc.Models.Mapper
                 GraduationYear = self.GraduationYear,
                 UndergraduateArea = self.UndergraduateArea,
                 DateOfBirth = self.DateOfBirth?.ToUniversalTime(),
-                Scholarship = self.Scholarship
+                Scholarship = self.Scholarship,
+                StudentCourses = self.StudentCourses.Select(x => x.ToDto())
             };
             return entity.AddUserDto(self.User);
         }
@@ -99,23 +107,23 @@ namespace gerdisc.Models.Mapper
             {
                 Registration = entity.Registration,
                 RegistrationDate = entity.RegistrationDate.Parse()?.ToUniversalTime(),
-                ProjectId = entity.ProjectId,
-                Status = entity.Status,
+                // ProjectId = entity.ProjectId, Tem que arrumar aqui, provavlmente a planilha não tera Id
+                Status = (StatusEnum)entity.Status,
                 EntryDate = entity.EntryDate.Parse()?.ToUniversalTime(),
                 ProjectDefenceDate = entity.ProjectDefenceDate.Parse()?.ToUniversalTime(),
                 ProjectQualificationDate = entity.ProjectQualificationDate.Parse()?.ToUniversalTime(),
-                Proficiency = entity.Proficiency,
+                Proficiency = entity.Proficiency?.ToLower() == "sim",
                 UndergraduateInstitution = entity.UndergraduateInstitution,
-                InstitutionType = entity.InstitutionType,
+                InstitutionType = (InstitutionTypeEnum)entity.InstitutionType,
                 UndergraduateCourse = entity.UndergraduateCourse,
                 GraduationYear = entity.GraduationYear,
-                UndergraduateArea = entity.UndergraduateArea,
+                UndergraduateArea = (UndergraduateAreaEnum)entity.UndergraduateArea,
                 DateOfBirth = entity.DateOfBirth.Parse()?.ToUniversalTime(),
                 Scholarship = entity.Scholarship,
                 Cpf = entity.Cpf,
                 Email = entity.Email,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
+                FirstName = entity.Name?.TrimStart().Split(' ').FirstOrDefault(),
+                LastName = entity.Name?.TrimEnd().Split(' ').LastOrDefault(),
             };
     }
 }

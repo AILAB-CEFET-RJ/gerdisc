@@ -50,12 +50,11 @@ namespace gerdisc.Models.Mapper
         public static UserDto ToUserDto(this UserEntity self) =>
             self is null ? new UserDto() : new UserDto
             {
-                UserId = self.Id,
+                Id = self.Id,
                 FirstName = self.FirstName,
                 LastName = self.LastName,
                 Cpf = self.Cpf,
                 Email = self.Email,
-                Role = self.Role
             };
 
         /// <summary>
@@ -66,12 +65,11 @@ namespace gerdisc.Models.Mapper
         public static TUserDto AddUserDto<TUserDto>(this TUserDto self, UserEntity entity)
             where TUserDto : UserDto
         {
-            self.UserId = entity.Id;
+            self.Id = entity.Id;
             self.Cpf = entity.Cpf;
             self.Email = entity.Email;
             self.FirstName = entity.FirstName;
             self.LastName = entity.LastName;
-            self.Role = entity.Role;
             return self;
         }
 
@@ -86,21 +84,6 @@ namespace gerdisc.Models.Mapper
                 User = user.ToUserDto(),
                 Token = token,
             };
-
-        /// <summary>
-        /// Converts a <see cref="UserEntity"/> object to a <see cref="StudentCsvDto"/> object.
-        /// </summary>
-        /// <param name="self">The <see cref="UserEntity"/> object to convert.</param>
-        /// <returns>A new <see cref="StudentCsvDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static UserEntity ToUserEntity(this StudentCsvDto entity) => new UserEntity
-        {
-            Cpf = entity.Cpf,
-            Email = entity.Email,
-            FirstName = entity.FirstName,
-            LastName = entity.LastName,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(entity.Password),
-            Role = RolesEnum.Student
-        };
 
         public static string GeneratePassword(int length)
         {

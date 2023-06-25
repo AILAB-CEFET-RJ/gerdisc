@@ -1,36 +1,44 @@
-using System.Linq.Expressions;
+using gerdisc.Infrastructure.Extensions;
+using gerdisc.Infrastructure.Providers;
 using gerdisc.Models.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace gerdisc.Infrastructure.Repositories.Project
 {
+    /// <inheritdoc />
     public class ProjectRepository : BaseRepository<ProjectEntity>, IProjectRepository
     {
-        public ProjectRepository(ContexRepository dbContext) : base(dbContext)
+        private readonly IUserContext _userContext;
+        public ProjectRepository(ContexRepository dbContext, IUserContext userContext) : base(dbContext)
         {
+            _userContext = userContext;
         }
 
-        public override async Task<ProjectEntity?> GetByIdAsync(Guid id)
+        /// <inheritdoc />
+        public override async Task<ProjectEntity?> GetByIdAsync(
+            Guid id)
         {
             return await _dbSet
                 .Where(e => !e.IsDeleted)
                 .Include(x => x.ProfessorProjects)
                 .ThenInclude(x => x.Professor)
-                .Include(x => x.Dissertations)
-                .ThenInclude(x => x.Student)
+                .Include(x => x.Orientations)
+                .Include(x => x.Students)
+                .FilterByUserRole(_userContext)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        /// <inheritdoc />
         public override async Task<IEnumerable<ProjectEntity>> GetAllAsync()
         {
             return await _dbSet
                 .Where(e => !e.IsDeleted)
                 .Include(x => x.ProfessorProjects)
                 .ThenInclude(x => x.Professor)
+                .Include(x => x.Orientations)
+                .Include(x => x.Students)
                 .ThenInclude(x => x.User)
-                .Include(x => x.Dissertations)
-                .ThenInclude(x => x.Student)
+                .FilterByUserRole(_userContext)
                 .ToListAsync();
         }
     }

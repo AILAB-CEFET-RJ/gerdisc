@@ -29,7 +29,7 @@ namespace gerdisc.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
+                name: "ResearchLines",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -39,7 +39,7 @@ namespace gerdisc.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.PrimaryKey("PK_ResearchLines", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,6 +59,49 @@ namespace gerdisc.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ResearchLineId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Projects_ResearchLines_ResearchLineId",
+                        column: x => x.ResearchLineId,
+                        principalTable: "ResearchLines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Extensions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    NumberOfDays = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: true),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Extensions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Extensions_Users_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,35 +145,40 @@ namespace gerdisc.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Students",
+                name: "Orientations",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Registration = table.Column<string>(type: "text", nullable: true),
-                    RegistrationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ProjectId = table.Column<string>(type: "text", nullable: true),
-                    Status = table.Column<int>(type: "integer", nullable: false),
-                    EntryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ProjectDefenceDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ProjectQualificationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Proficiency = table.Column<string>(type: "text", nullable: true),
-                    CPF = table.Column<string>(type: "text", nullable: true),
-                    UndergraduateInstitution = table.Column<string>(type: "text", nullable: true),
-                    InstitutionType = table.Column<int>(type: "integer", nullable: false),
-                    UndergraduateCourse = table.Column<string>(type: "text", nullable: true),
-                    GraduationYear = table.Column<int>(type: "integer", nullable: false),
-                    UndergraduateArea = table.Column<int>(type: "integer", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Scholarship = table.Column<int>(type: "integer", nullable: false),
+                    CoorientatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    StudentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Dissertation = table.Column<string>(type: "text", nullable: true),
+                    ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProfessorId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.PrimaryKey("PK_Orientations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Orientations_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orientations_Users_CoorientatorId",
+                        column: x => x.CoorientatorId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orientations_Users_ProfessorId",
+                        column: x => x.ProfessorId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orientations_Users_StudentId",
+                        column: x => x.StudentId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -149,64 +197,63 @@ namespace gerdisc.Migrations
                 {
                     table.PrimaryKey("PK_ProfessorProjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProfessorProjects_Professors_ProfessorId",
-                        column: x => x.ProfessorId,
-                        principalTable: "Professors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_ProfessorProjects_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Dissertations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    StudentId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProjectEntityId = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Dissertations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Dissertations_Projects_ProjectEntityId",
-                        column: x => x.ProjectEntityId,
-                        principalTable: "Projects",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Dissertations_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
+                        name: "FK_ProfessorProjects_Users_ProfessorId",
+                        column: x => x.ProfessorId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Extensions",
+                name: "Students",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    StudentId = table.Column<Guid>(type: "uuid", nullable: false),
-                    NumberOfDays = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: true),
-                    Type = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Registration = table.Column<string>(type: "text", nullable: true),
+                    RegistrationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    EntryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ProjectDefenceDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ProjectQualificationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Proficiency = table.Column<bool>(type: "boolean", nullable: false),
+                    CPF = table.Column<string>(type: "text", nullable: true),
+                    UndergraduateInstitution = table.Column<string>(type: "text", nullable: true),
+                    InstitutionType = table.Column<int>(type: "integer", nullable: false),
+                    UndergraduateCourse = table.Column<string>(type: "text", nullable: true),
+                    GraduationYear = table.Column<int>(type: "integer", nullable: false),
+                    UndergraduateArea = table.Column<int>(type: "integer", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Scholarship = table.Column<int>(type: "integer", nullable: false),
+                    LastNotification = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    OrientationId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Extensions", x => x.Id);
+                    table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Extensions_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
+                        name: "FK_Students_Orientations_OrientationId",
+                        column: x => x.OrientationId,
+                        principalTable: "Orientations",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Students_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Students_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -240,50 +287,6 @@ namespace gerdisc.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Orientations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProfessorId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ResearcherId = table.Column<Guid>(type: "uuid", nullable: true),
-                    ExternalResearcherId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DissertationId = table.Column<Guid>(type: "uuid", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orientations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orientations_Dissertations_DissertationId",
-                        column: x => x.DissertationId,
-                        principalTable: "Dissertations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orientations_ExternalResearchers_ExternalResearcherId",
-                        column: x => x.ExternalResearcherId,
-                        principalTable: "ExternalResearchers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orientations_Professors_ProfessorId",
-                        column: x => x.ProfessorId,
-                        principalTable: "Professors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Dissertations_ProjectEntityId",
-                table: "Dissertations",
-                column: "ProjectEntityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Dissertations_StudentId",
-                table: "Dissertations",
-                column: "StudentId");
-
             migrationBuilder.CreateIndex(
                 name: "IX_Extensions_StudentId",
                 table: "Extensions",
@@ -295,19 +298,24 @@ namespace gerdisc.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orientations_DissertationId",
+                name: "IX_Orientations_CoorientatorId",
                 table: "Orientations",
-                column: "DissertationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orientations_ExternalResearcherId",
-                table: "Orientations",
-                column: "ExternalResearcherId");
+                column: "CoorientatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orientations_ProfessorId",
                 table: "Orientations",
                 column: "ProfessorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orientations_ProjectId",
+                table: "Orientations",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orientations_StudentId",
+                table: "Orientations",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProfessorProjects_ProfessorId",
@@ -325,6 +333,11 @@ namespace gerdisc.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Projects_ResearchLineId",
+                table: "Projects",
+                column: "ResearchLineId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StudentCourses_CourseId",
                 table: "StudentCourses",
                 column: "CourseId");
@@ -335,6 +348,16 @@ namespace gerdisc.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Students_OrientationId",
+                table: "Students",
+                column: "OrientationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_ProjectId",
+                table: "Students",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_UserId",
                 table: "Students",
                 column: "UserId");
@@ -342,8 +365,7 @@ namespace gerdisc.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "FirstName", "LastName", "Email", "PasswordHash", "Role", "CreatedAt", "Cpf", "IsDeleted" },
-                values: new object[] { Guid.NewGuid(), "admin", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), (int)Models.Enums.RolesEnum.Administrator, DateTime.UtcNow, "11111111111", false });
-
+                values: new object[] { Guid.NewGuid(), "Coordenator", "admin", "admin@gmail.com", BCrypt.Net.BCrypt.HashPassword("admin"), (int)Models.Enums.RolesEnum.Administrator, DateTime.UtcNow, "11111111111", false });
         }
 
         /// <inheritdoc />
@@ -353,34 +375,34 @@ namespace gerdisc.Migrations
                 name: "Extensions");
 
             migrationBuilder.DropTable(
-                name: "Orientations");
+                name: "ExternalResearchers");
 
             migrationBuilder.DropTable(
                 name: "ProfessorProjects");
 
             migrationBuilder.DropTable(
-                name: "StudentCourses");
-
-            migrationBuilder.DropTable(
-                name: "Dissertations");
-
-            migrationBuilder.DropTable(
-                name: "ExternalResearchers");
-
-            migrationBuilder.DropTable(
                 name: "Professors");
+
+            migrationBuilder.DropTable(
+                name: "StudentCourses");
 
             migrationBuilder.DropTable(
                 name: "Courses");
 
             migrationBuilder.DropTable(
-                name: "Projects");
-
-            migrationBuilder.DropTable(
                 name: "Students");
 
             migrationBuilder.DropTable(
+                name: "Orientations");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "ResearchLines");
         }
     }
 }

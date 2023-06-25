@@ -1,6 +1,7 @@
 using gerdisc.Infrastructure.Providers;
 using gerdisc.Infrastructure.Providers.Interfaces;
 using gerdisc.Infrastructure.Repositories;
+using gerdisc.Infrastructure.Validations;
 using gerdisc.Properties;
 using gerdisc.Services;
 using gerdisc.Services.Interfaces;
@@ -55,6 +56,7 @@ namespace gerdisc
                 });
 
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
+                c.DocumentFilter<BasePathDocumentFilter>(); 
             });
 
             services.AddControllers().AddJsonOptions(options =>
@@ -71,17 +73,22 @@ namespace gerdisc
             {
                 options.UseNpgsql(connectionString);
             }, ServiceLifetime.Scoped);
+            services.AddScoped<OrientationValidator>();
+            services.AddScoped<UserValidator>();
+            services.AddScoped<ITokenProvider, TokenProvider>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IResearchLineService, ResearchLineService>();
             services.AddScoped<IProfessorService, ProfessorService>();
             services.AddScoped<IExternalResearcherService, ExternalResearcherService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IDissertationService, DissertationService>();
+            services.AddScoped<IOrientationService, OrientationService>();
             services.AddScoped<IExtensionService, ExtensionService>();
+            services.AddScoped<IUserContext, UserContext>();
             services.AddSingleton<ISigningConfiguration>(signingConfig);
             services.AddSingleton<ISettings>(settings);
-            services.AddSingleton<IRepository>(x => new Repository(x.GetService<ContexRepository>()));
+            services.AddScoped<IRepository,Repository>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddAuthorization();
 
@@ -108,12 +115,14 @@ namespace gerdisc
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UsePathBase("/api");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gerdisc V1");
+                c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Gerdisc V1");
                 c.DefaultModelsExpandDepth(-1);
-                c.DocumentTitle = "Gerdisc Api Documentation";
+                c.RoutePrefix = string.Empty;
+                c.DocumentTitle = "Gerdisc API Documentation";
                 c.EnableDeepLinking();
                 c.DisplayRequestDuration();
             });
@@ -125,6 +134,8 @@ namespace gerdisc
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseHangfireDashboard();
+            app.UseMiddleware<UserContextMiddleware>();
+            app.UseMiddleware<LogRequest>();
             RecurringJob.AddOrUpdate<StudentsFinishing>("daily-job", x => x.ExecuteAsync(null), Cron.Daily);
 
             app.UseEndpoints(endpoints =>

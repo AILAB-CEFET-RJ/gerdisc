@@ -29,7 +29,7 @@ namespace gerdisc.Controllers
             try
             {
                 var externalResearcher = await _externalResearcherService.CreateExternalResearcherAsync(externalResearcherDto);
-                return CreatedAtAction(nameof(GetExternalResearcher), new { id = externalResearcher.UserId }, externalResearcher);
+                return CreatedAtAction(nameof(GetExternalResearcher), new { id = externalResearcher.Id }, externalResearcher);
             }
             catch (Exception ex)
             {

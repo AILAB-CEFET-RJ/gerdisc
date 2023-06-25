@@ -17,24 +17,9 @@ namespace gerdisc.Models.Mapper
             self is null ? new ProjectEntity() : new ProjectEntity
             {
                 Name = self.Name,
+                ResearchLineId = self.ResearchLineId,
                 Status = self.Status
             };
-
-        /// <summary>
-        /// Creates a collection of <see cref="ProfessorProjectEntity"/> objects using the values from a <see cref="CreateProjectDto"/> object.
-        /// </summary>
-        /// <param name="professorIds">The <see cref="CreateProjectDto"/> object containing the professor IDs.</param>
-        /// <param name="projectId">The ID of the project.</param>
-        /// <returns>A collection of <see cref="ProfessorProjectEntity"/> objects.</returns>
-        public static IEnumerable<ProfessorProjectEntity> CreateProfessorProjects(this IEnumerable<Guid> professorIds, Guid projectId)
-        {
-            return professorIds
-                .Select(x => new ProfessorProjectEntity
-                {
-                    ProfessorId = x,
-                    ProjectId = projectId
-                });
-        }
 
         /// <summary>
         /// Updates the values of an existing <see cref="ProjectEntity"/> object using the values from a <see cref="CreateProjectDto"/> object.
@@ -45,6 +30,7 @@ namespace gerdisc.Models.Mapper
         public static ProjectEntity ToEntity(this CreateProjectDto self, ProjectEntity entityToUpdate)
         {
             entityToUpdate.Name = self.Name;
+            entityToUpdate.ResearchLineId = self.ResearchLineId;
             entityToUpdate.Status = self.Status;
             return entityToUpdate;
         }
@@ -60,9 +46,10 @@ namespace gerdisc.Models.Mapper
                 Id = self.Id,
                 Name = self.Name,
                 Status = self.Status,
-                Professors = self.ProfessorProjects.Select(p => p.Professor.ToDto()).ToList(),
-                Students = self.Dissertations.Select(s => s.Student.ToDto()).ToList(),
-                Dissertations = self.Dissertations.Select(d => d.ToDto()).ToList()
+                ResearchLineId = self.ResearchLineId,
+                Professors = self.ProfessorProjects.Select(p => p.Professor.ToUserDto()).ToList(),
+                Students = self.Students.Select(s => s.ToDto()).ToList(),
+                Orientations = self.Orientations.Select(d => d.ToDto()).ToList()
             };
     }
 }

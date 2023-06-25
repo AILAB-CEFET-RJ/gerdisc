@@ -22,16 +22,20 @@ namespace gerdisc.Services
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
+        /// <inheritdoc />
         public async Task<ProfessorDto> CreateProfessorAsync(ProfessorDto professorDto)
         {
             var user = await _userService.CreateUserAsync(professorDto);
             var professor = professorDto.ToEntity(user.Id);
             professor = await _repository.Professor.AddAsync(professor);
+            if (professorDto.ProjectIds.Any())
+                await _repository.ProfessorProject.HandleByProfessor(professorDto.ProjectIds.Select(Guid.Parse), professor);
 
             _logger.LogInformation($"Professor {professor.User.Id} created successfully.");
             return professor.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<ProfessorDto> GetProfessorAsync(Guid id)
         {
             var professorEntity = await _repository
@@ -40,6 +44,7 @@ namespace gerdisc.Services
             return professorEntity.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<ProfessorDto>> GetAllProfessorsAsync()
         {
             var professors = await _repository.Professor.GetAllAsync(x => x.User);
@@ -52,6 +57,7 @@ namespace gerdisc.Services
             return professorDtos;
         }
 
+        /// <inheritdoc />
         public async Task<ProfessorDto> UpdateProfessorAsync(Guid id, ProfessorDto professorDto)
         {
             var existingProfessor = await _repository.Professor.GetByIdAsync(id);
@@ -61,10 +67,13 @@ namespace gerdisc.Services
             }
 
             existingProfessor = professorDto.ToEntity(existingProfessor);
+            await _repository.Professor.UpdateAsync(existingProfessor);
+            await _repository.ProfessorProject.HandleByProfessor(professorDto.ProjectIds.Select(Guid.Parse), existingProfessor);
 
             return existingProfessor.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteProfessorAsync(Guid id)
         {
             var existingProfessor = await _repository.Professor.GetByIdAsync(id);

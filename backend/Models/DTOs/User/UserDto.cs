@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using gerdisc.Infrastructure.Validations;
 using gerdisc.Models.Enums;
+using System.Text.Json.Serialization;
 
 namespace gerdisc.Models.DTOs
 {
@@ -10,7 +11,6 @@ namespace gerdisc.Models.DTOs
     public class UserDto
     {
         public Guid Id { get; set; }
-        public Guid? UserId { get; set; }
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
@@ -23,6 +23,6 @@ namespace gerdisc.Models.DTOs
         [ValidCpf]
         public string? Cpf { get; set; }
 
-        public RolesEnum Role { get; set; }
+        public virtual RolesEnum Role { get; set; }
     }
 }

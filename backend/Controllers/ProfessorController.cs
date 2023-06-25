@@ -29,7 +29,7 @@ namespace gerdisc.Controllers
             try
             {
                 var professor = await _professorService.CreateProfessorAsync(professorDto);
-                return CreatedAtAction(nameof(GetProfessor), new { id = professor.UserId }, professor);
+                return CreatedAtAction(nameof(GetProfessor), new { id = professor.Id }, professor);
             }
             catch (Exception ex)
             {

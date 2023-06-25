@@ -1,6 +1,7 @@
 using gerdisc.Infrastructure.Providers;
 using gerdisc.Infrastructure.Providers.Interfaces;
 using gerdisc.Infrastructure.Repositories;
+using gerdisc.Infrastructure.Validations;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
 using gerdisc.Models.Mapper;
@@ -13,53 +14,65 @@ namespace gerdisc.Services
     {
         private readonly IRepository _repository;
         private readonly IEmailSender _emailSender;
-        private readonly ISigningConfiguration _singingConfig;
+        private readonly ITokenProvider _tokenProvider;
         private readonly ILogger<UserService> _logger;
-
+        private readonly UserValidator _userValidator;
         public UserService(
             IRepository repository,
-            ISigningConfiguration singingConfig,
+            ITokenProvider tokenProvider,
             ILogger<UserService> logger,
-            IEmailSender emailSender
+            IEmailSender emailSender,
+            UserValidator userValidator
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            _singingConfig = singingConfig ?? throw new ArgumentNullException(nameof(singingConfig));
+            _tokenProvider = tokenProvider ?? throw new ArgumentNullException(nameof(tokenProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
+            _userValidator= userValidator?? throw new ArgumentNullException(nameof(userValidator));
         }
 
+        /// <inheritdoc />
         public async Task<UserEntity> CreateUserAsync(UserDto userDto)
         {
+            (var isValid, var message) = await _userValidator.CanAddUser(userDto);
             _logger.LogInformation($"Creating user{userDto.Email}");
-            if (userDto == null || userDto.Email == null)
+            if (!isValid)
             {
-                throw new ArgumentException("userDto.");
+                throw new ArgumentException(message);
             }
             var user = await _repository.User.AddAsync(userDto.ToUserEntity());
-            var token = user.GenerateResetPasswordJwt(_singingConfig.Key, DateTime.Now.AddDays(7));
-            await _emailSender.SendEmail(userDto.Email, "Create user", $"Create an password: {token}");
+            var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromDays(7));
+            await _emailSender.SendEmail(userDto.Email, "Create user", $"Create an password: {token}").ConfigureAwait(false);
             return user;
         }
 
+        /// <inheritdoc />
         public async Task ResetPasswordRequestAsync(RequestResetPasswordDto request)
         {
-            var user = await _repository
-                .User
-                .GetUserByEmail(request.Email) ?? throw new ArgumentException($"User with email {request.Email} not found.");
-            var token = user.GenerateResetPasswordJwt(_singingConfig.Key, DateTime.Now.AddMinutes(30));
-            await _emailSender.SendEmail(request.Email, "reset password", $"Reset your password with the link: {token} .");
+            var user = await _repository.User.GetUserByEmail(request.Email) ?? throw new ArgumentException($"User with email {request.Email} not found.");
+
+            var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromMinutes(30));
+
+            await _emailSender.SendEmail(request.Email, "Reset Password", $"Reset your password with the link: {token}.").ConfigureAwait(false);
         }
 
+        /// <inheritdoc />
         public async Task<LoginResultDto> ResetPasswordAsync(ResetPasswordDto loginDto)
         {
-            var user = await _repository
-                .User
-                .GetUserByEmail(loginDto.Email) ?? throw new ArgumentException($"User with email {loginDto.Email} not found.");
+            var user = await _repository.User.GetUserByEmail(loginDto.Email) ?? throw new ArgumentException($"User with email {loginDto.Email} not found.");
+
             user.PasswordHash = HashPassword(loginDto.Password);
-            return user.ToDto(user.GenerateJwtToken(_singingConfig.Key));
+
+            await _repository.User.UpdateAsync(user);
+
+            var jwtToken = _tokenProvider.GenerateJwtToken(user);
+
+            return user.ToDto(jwtToken);
         }
 
+
+        /// <inheritdoc />
         public async Task<LoginResultDto> AuthenticateAsync(LoginDto loginDto)
         {
             var user = await _repository.User.GetUserByEmail(loginDto.Email);
@@ -73,7 +86,7 @@ namespace gerdisc.Services
                 throw new ArgumentException("Invalid password.");
             }
 
-            return user.ToDto(user.GenerateJwtToken(_singingConfig.Key));
+            return user.ToDto(_tokenProvider.GenerateJwtToken(user));
         }
 
         private string HashPassword(string password)

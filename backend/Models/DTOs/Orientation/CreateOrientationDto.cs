@@ -5,11 +5,16 @@ using System.Threading.Tasks;
 
 namespace gerdisc.Models.DTOs
 {
-    public class DissertationDto
+    public class CreateOrientationDto
     {
-        public Guid? Id { get; set; }
+        public Guid? CoorientatorId { get; set; }
+
         public Guid StudentId { get; set; }
-        public string? Name { get; set; }
+
+        public string? Dissertation { get; set; }
+
         public Guid ProjectId { get; set; }
+
+        public Guid ProfessorId { get; set; }
     }
 }

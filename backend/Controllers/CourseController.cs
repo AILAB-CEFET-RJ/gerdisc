@@ -19,7 +19,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator, Professor")]
+        [Authorize(Roles = "Administrator")]
         [ProducesResponseType(typeof(CourseDto), 201)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateCourse(CourseDto courseDto)
@@ -58,6 +58,7 @@ namespace gerdisc.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<CourseDto>), StatusCodes.Status200OK)]
+        [Authorize(Roles = "Administrator, Professor, Student")]
         public async Task<ActionResult<IEnumerable<CourseDto>>> GetAllCoursesAsync()
         {
             var courseDtos = await _courseService.GetCoursesAsync();

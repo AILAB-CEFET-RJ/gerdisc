@@ -62,6 +62,7 @@ namespace gerdisc.Controllers
         /// </summary>
         /// <returns>A list of projects.</returns>
         [HttpGet]
+        [Authorize(Roles = "Administrator, Student, Professor")]
         [ProducesResponseType(typeof(IEnumerable<ProjectDto>), 200)]
         public async Task<ActionResult<IEnumerable<ProjectDto>>> GetAllProjectsAsync()
         {
