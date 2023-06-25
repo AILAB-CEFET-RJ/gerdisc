@@ -23,6 +23,7 @@ api.interceptors.request.use(
       if(response.status === 401)
       {
         localStorage.removeItem('token')
+        localStorage.removeItem('role')
       }
       return response
     }
