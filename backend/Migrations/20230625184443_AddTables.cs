@@ -218,7 +218,7 @@ namespace gerdisc.Migrations
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Registration = table.Column<string>(type: "text", nullable: true),
                     RegistrationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProjectId = table.Column<Guid>(type: "uuid", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     EntryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ProjectDefenceDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -248,8 +248,7 @@ namespace gerdisc.Migrations
                         name: "FK_Students_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Students_Users_UserId",
                         column: x => x.UserId,

@@ -12,7 +12,7 @@ using gerdisc.Infrastructure.Repositories;
 namespace gerdisc.Migrations
 {
     [DbContext(typeof(ContexRepository))]
-    [Migration("20230623235611_AddTables")]
+    [Migration("20230625184443_AddTables")]
     partial class AddTables
     {
         /// <inheritdoc />
@@ -301,7 +301,7 @@ namespace gerdisc.Migrations
                     b.Property<DateTime?>("ProjectDefenceDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("ProjectId")
+                    b.Property<Guid?>("ProjectId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("ProjectQualificationDate")
@@ -500,9 +500,7 @@ namespace gerdisc.Migrations
 
                     b.HasOne("gerdisc.Models.Entities.ProjectEntity", "Project")
                         .WithMany("Students")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.HasOne("gerdisc.Models.Entities.UserEntity", "User")
                         .WithMany()

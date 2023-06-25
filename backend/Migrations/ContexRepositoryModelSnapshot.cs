@@ -298,7 +298,7 @@ namespace gerdisc.Migrations
                     b.Property<DateTime?>("ProjectDefenceDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("ProjectId")
+                    b.Property<Guid?>("ProjectId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("ProjectQualificationDate")
@@ -497,9 +497,7 @@ namespace gerdisc.Migrations
 
                     b.HasOne("gerdisc.Models.Entities.ProjectEntity", "Project")
                         .WithMany("Students")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.HasOne("gerdisc.Models.Entities.UserEntity", "User")
                         .WithMany()

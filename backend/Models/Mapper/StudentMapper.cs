@@ -100,30 +100,30 @@ namespace gerdisc.Models.Mapper
         /// <summary>
         /// Converts a <see cref="StudentCsvDto"/> object to a <see cref="StudentDto"/> object.
         /// </summary>
-        /// <param name="entity">The <see cref="StudentCsvDto"/> object to convert.</param>
-        /// <returns>A new <see cref="StudentDto"/> object with the values from the <paramref name="entity"/> object.</returns>
-        public static StudentDto ToDto(this StudentCsvDto entity) =>
-            entity is null ? new StudentDto() : new StudentDto
+        /// <param name="csv">The <see cref="StudentCsvDto"/> object to convert.</param>
+        /// <returns>A new <see cref="StudentDto"/> object with the values from the <paramref name="csv"/> object.</returns>
+        public static StudentDto ToDto(this StudentCsvDto csv) =>
+            csv is null ? new StudentDto() : new StudentDto
             {
-                Registration = entity.Registration,
-                RegistrationDate = entity.RegistrationDate.Parse()?.ToUniversalTime(),
-                // ProjectId = entity.ProjectId, Tem que arrumar aqui, provavlmente a planilha não tera Id
-                Status = (StatusEnum)entity.Status,
-                EntryDate = entity.EntryDate.Parse()?.ToUniversalTime(),
-                ProjectDefenceDate = entity.ProjectDefenceDate.Parse()?.ToUniversalTime(),
-                ProjectQualificationDate = entity.ProjectQualificationDate.Parse()?.ToUniversalTime(),
-                Proficiency = entity.Proficiency?.ToLower() == "sim",
-                UndergraduateInstitution = entity.UndergraduateInstitution,
-                InstitutionType = (InstitutionTypeEnum)entity.InstitutionType,
-                UndergraduateCourse = entity.UndergraduateCourse,
-                GraduationYear = entity.GraduationYear,
-                UndergraduateArea = (UndergraduateAreaEnum)entity.UndergraduateArea,
-                DateOfBirth = entity.DateOfBirth.Parse()?.ToUniversalTime(),
-                Scholarship = entity.Scholarship,
-                Cpf = entity.Cpf,
-                Email = entity.Email,
-                FirstName = entity.Name?.Split(' ').FirstOrDefault(),
-                LastName = entity.Name?.Split(' ').LastOrDefault(),
+                Registration = csv.Registration,
+                RegistrationDate = csv.RegistrationDate.Parse()?.ToUniversalTime(),
+                ProjectId = string.IsNullOrEmpty(csv.ProjectId) ? null : Guid.Parse(csv.ProjectId),
+                Status = (StatusEnum)csv.Status,
+                EntryDate = csv.EntryDate.Parse()?.ToUniversalTime(),
+                ProjectDefenceDate = csv.ProjectDefenceDate.Parse()?.ToUniversalTime(),
+                ProjectQualificationDate = csv.ProjectQualificationDate.Parse()?.ToUniversalTime(),
+                Proficiency = csv.Proficiency?.ToLower() == "sim",
+                UndergraduateInstitution = csv.UndergraduateInstitution,
+                InstitutionType = (InstitutionTypeEnum)csv.InstitutionType,
+                UndergraduateCourse = csv.UndergraduateCourse,
+                GraduationYear = csv.GraduationYear,
+                UndergraduateArea = (UndergraduateAreaEnum)csv.UndergraduateArea,
+                DateOfBirth = csv.DateOfBirth.Parse()?.ToUniversalTime(),
+                Scholarship = csv.Scholarship,
+                Cpf = csv.Cpf,
+                Email = csv.Email,
+                FirstName = csv.Name?.Split(' ').FirstOrDefault(),
+                LastName = csv.Name?.Split(' ').LastOrDefault(),
             };
     }
 }
