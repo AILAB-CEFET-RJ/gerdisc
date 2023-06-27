@@ -55,6 +55,7 @@ namespace gerdisc.Models.Mapper
                 LastName = self.LastName,
                 Cpf = self.Cpf,
                 Email = self.Email,
+                Role = self.Role
             };
 
         /// <summary>
