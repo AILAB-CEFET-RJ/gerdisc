@@ -29,7 +29,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The ID of the project associated with this student entity.
         /// </summary>
-        public Guid ProjectId { get; set; }
+        public Guid? ProjectId { get; set; }
 
         /// <summary>
         /// The status of the student.
