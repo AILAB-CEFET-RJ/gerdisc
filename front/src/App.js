@@ -21,9 +21,9 @@ import StudentForm from './pages/student/CreateStudent';
 
 export default function App() {
   return (
-    <Router basename="/gerdisc">
+    <Router basename="gerdisc">
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/students/:id" element={<StudentProfile />} />
         <Route path="/students/:id/edit" element={<StudentUpdate/>} />

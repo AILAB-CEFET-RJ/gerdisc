@@ -37,7 +37,14 @@
                 border: 1px solid #004AAD;
                 color: #004AAD;
                 font-size: medium;
-                padding: 0.4rem
+                padding: 0.4rem;
+            }
+
+            select{
+                width: 100%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
             input[type="submit"] {
@@ -47,6 +54,16 @@
                 :hover {
                     background-color: #022553;
                 }
+            }
+        }
+    }
+    @media(max-width:500px) {
+        .form-section
+        {
+            .formInput{
+                align-items: flex-start;
+                justify-content: flex-start;
+                max-width: 80vw;
             }
         }
     }

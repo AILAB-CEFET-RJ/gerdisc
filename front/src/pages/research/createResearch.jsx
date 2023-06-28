@@ -99,15 +99,14 @@ export default function ResearchForm() {
 
     useEffect(() => {
         setIsLoading(true)
-        // getResearchers()
-        //     .then(reserchers => {
-        //         setExternalResearchers(reserchers)
-        //     })
-        //     .catch(err => {
-        //         setError(true)
-        //         setErrorMessage(err.message)
-        //     })
-        setExternalResearchers([])
+        getResearchers()
+            .then(reserchers => {
+                setExternalResearchers(reserchers)
+            })
+            .catch(err => {
+                setError(true)
+                setErrorMessage(err.message)
+            })
         setIsLoading(false)
     }, [setExternalResearchers, setErrorMessage, setError])
 

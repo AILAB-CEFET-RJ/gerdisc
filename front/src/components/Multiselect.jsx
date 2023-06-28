@@ -9,11 +9,13 @@ export default function MultiSelect(
         onRemove,
         placeholder,
         isLoading,
-        displayValue
+        displayValue,
+        selectedValues=[]
     }
 ) {
     return <div id="multiselect">
     <Multi
+        selectedValues={selectedValues}
         options={options} // Options to display in the dropdown
         closeOnSelect={false}
         loading={isLoading}

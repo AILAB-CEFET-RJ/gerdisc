@@ -32,17 +32,18 @@ export default function ExtensionList() {
     }, [setRole, navigate, role]);
 
     useEffect(() => {
+        setIsLoading(true)
         getExtensions()
             .then(result => {
                 let mapped = []
                 if (result !== null && result !== undefined) {
                     mapped = result.map((extension) => {
                         return {
-                            Id: extension.Id,
-                            Nome: extension.name,
+                            Id: extension.id,
                             Status: extension.status,
-                            Student: extension?.student,
-                            Project: extension?.project
+                            Estudante: extension?.studentId,
+                            Dias: extension?.numberOfDays,
+                            Tipo: extension?.type === 1? "Defesa": "Qualificação" 
                         }
                     })
                 }
@@ -50,25 +51,22 @@ export default function ExtensionList() {
                 setIsLoading(false)
 
             })
-    }, [setextensions, setIsLoading])
+    }, [setextensions, setIsLoading, ])
 
 
     return (<PageContainer isLoading={isLoading} name={name} >
                 <div className="extensionBar">
                     <div className="left-bar">
-                        <div>
-                            <img className="filtered" src="lamp.png" alt="A logo representing extension" height={"100rem"} />
+                        <div style={{margin: "0.5rem"}}>
+                            <img className="filtered" src="calender.png" alt="A logo representing extension" height={"100rem"} />
                         </div>
-                        <div className="title">Dissertações</div>
+                        <div className="title">Extensões</div>
                     </div>
                     <div className="right-bar">
                         <div className="search">
                             <input type="search" name="search" id="search" />
                             <i className="fas fa-" />
                         </div>
-                        {/* {role === 'Administrator' && <div className="create-button">
-                            <button onClick={() => navigate('/extensions/add')}>Nova Extensão</button>
-                        </div>} */}
                     </div>
                 </div>
                 <BackButton />

@@ -42,7 +42,7 @@ export default function ProfessorList() {
                     console.log(result)
                     mapped = result.map((professor) => {
                         return {
-                            Id: professor.userId,
+                            Id: professor.id,
                             Nome: `${professor.firstName} ${professor.lastName}`,
                             Siape: professor.siape,
                         }

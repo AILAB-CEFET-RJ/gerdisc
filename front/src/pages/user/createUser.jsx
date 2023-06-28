@@ -9,6 +9,8 @@ import { postResearchers, getResearcherById, putResearcherById } from "../../api
 import BackButton from "../../components/BackButton";
 import ErrorPage from "../../components/error/Error";
 import PageContainer from "../../components/PageContainer";
+import { ROLES_ENUM, AREA_ENUM, INSTITUTION_TYPE_ENUM } from "../../enum_helpers";
+
 
 
 export default function UserForm({ type = undefined, isUpdate = false }) {
@@ -36,7 +38,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         registrationDate: '',
         status: 1,
         entryDate: '',
-        proficiency: "",
+        proficiency: false,
         undergraduateInstitution: "",
         institutionType: 1,
         undergraduateCourse: "",
@@ -53,6 +55,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
     })
 
     useEffect(() => {
+        console.log({"usertype": userType, "isstudent": isStudent})
         if (isUpdate) {
             if (isStudent) {
                 getStudentById(id)
@@ -79,7 +82,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                         setErrorMessage(error.message)
                     })
             }
-            else {
+            else if(userType === 'Externo'){
                 getResearcherById(id)
                     .then(researcher => {
                         setUser(researcher)
@@ -112,20 +115,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                 .catch(err => setError(true))
             setIsLoading(false);
         }
-    }, [isStudent, setProjects])
-
-    // const [address, setAddress] = useState({
-    //     country: '',
-    //     city: '',
-    //     street: '',
-    //     number: ''
-    // })
-
-    // const changeAddressAtribute = (name, value)=> {
-    //     let newValue = {}
-    //     newValue[name] = value
-    //     setAddress({...address, ...newValue})
-    // }
+    }, [isStudent, setProjects, isUpdate])
 
     const changeUserAtribute = (name, value) => {
         let newValue = {}
@@ -180,7 +170,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
             let _user = user
             _user.createdAt = new Date()
             _user.password = student.registration
-            _user.role = 0
+            _user.role = ROLES_ENUM.Student
             let body = { ..._user, ...student }
             body.entryDate = new Date(body.entryDate)
             body.dateOfBirth = new Date(body.dateOfBirth)
@@ -196,13 +186,13 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
             body.createdAt = new Date()
             body.password = professor.siape
             if (userType === "Professor") {
-                body.role = 1
+                body.role = ROLES_ENUM.Professor
                 postProfessors(body)
                     .then((professor) => navigate("/professors"))
                     .catch(error => { setError('Unable to create Professor') });
             }
             else {
-                body.role = 3
+                body.role = ROLES_ENUM.ExternalResearcher
                 postResearchers(body)
                     .then((researcher) => navigate("/researchers"))
                     .catch(error => { setError('Unable to create Researcher') });
@@ -267,24 +257,6 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                             <input required={true} disabled={isUpdate} type="text" name="cpf" value={user.cpf} id="cpf" onChange={(e) => changeUserAtribute(e.target.name, e.target.value)} />
                         </div>
                     </div>
-                    {/* {isStudent && <div className="form-section" id="adress-section">
-                    <div className="formInput">
-                        <label htmlFor="country">País</label>
-                        <input type="text" name="country" id="country" value={address.country}  onChange={(e)=> changeAddressAtribute(e.target.name, e.target.value)} />
-                    </div>
-                    <div className="formInput">
-                        <label htmlFor="city">Cidade</label>
-                        <input type="text" name="city" id="city" value={address.city}  onChange={(e)=> changeAddressAtribute(e.target.name, e.target.value)} />
-                    </div>
-                    <div className="formInput">
-                        <label htmlFor="street">Rua</label>
-                        <input type="text" name="street" id="street" value={address.street}  onChange={(e)=> changeAddressAtribute(e.target.name, e.target.value)} />
-                    </div>
-                    <div className="formInput">
-                        <label htmlFor="number">Numero</label>
-                        <input type="text" name="number" id="number" value={address.number}  onChange={(e)=> changeAddressAtribute(e.target.name, e.target.value)} />
-                    </div>
-                </div>} */}
                     {isStudent && <div className="form-section" id="registration-section">
                         <div className="formInput">
                             <label htmlFor="registration">Matricula</label>
@@ -317,8 +289,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                             <input required={true} type="text" name="undergraduateCourse" id="undergraduateCourse" value={student.undergraduateCourse} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
                         </div>
                         <div className="formInput">
-                            <label htmlFor="undergraduateArea">Areá</label>
-                            <input required={true} type="number" name="undergraduateArea" id="undergraduateArea" value={student.undergraduateArea} onChange={(e) => changeStudentAtribute(e.target.name, Number(e.target.value))} />
+                            <Select required={true} label={"undergraduateArea"} onSelect={(value)=>changeStudentAtribute('undergraduateArea', Number(AREA_ENUM[value])) } name="undergraduateArea" options={Object.keys(AREA_ENUM)} />
                         </div>
                         <div className="formInput">
                             <label htmlFor="graduationYear">Ano de formação</label>
@@ -327,11 +298,10 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                     </div>}
                     {isStudent && <div className="form-section" id="qualification-section3">
                         <div className="formInput">
-                            <label htmlFor="institutionType">Tipo de Institução</label>
-                            <input type="number" name="institutionType" id="institutionType" value={student.institutionType} onChange={(e) => changeStudentAtribute(e.target.name, Number(e.target.value))} />
+                            <Select required={false} className="formInput" options={Object.keys(INSTITUTION_TYPE_ENUM)} onSelect={(value)=>changeStudentAtribute('institutionType', Number(INSTITUTION_TYPE_ENUM[value])) } label="Tipo de Institução" name="institutionType" />
                         </div>
                         <div className="formInput">
-                            <Select required={true} className="formInput" onSelect={handleProjectSelect} options={projects.map(x => x.Nome)} label="Projeto" name="project" />
+                            <Select required={true} defaultValue="" className="formInput" onSelect={handleProjectSelect} options={[""].concat(projects.map(x => x.Nome))} label="Projeto" name="project" />
                         </div>
                     </div>}
                     {!isStudent && <div className="form-section" id="professor-section">
@@ -340,7 +310,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                             <input required={true} type="text" name="institution" value={professor.institution} id="institution" onChange={(e) => changeProfessorAtribute(e.target.name, e.target.value)} />
                         </div>}
                         {userType === "Professor" && <div className="formInput">
-                            <Select required={true} className="formInput" onSelect={handleProjectSelect} options={projects.map(x => x.Nome)} label="Projeto" name="project" />
+                            <Select required={false} className="formInput" onSelect={handleProjectSelect} options={[""].concat(projects.map(x => x.Nome))} label="Projeto" name="project" />
                         </div>
                         }
                         <div className="formInput">

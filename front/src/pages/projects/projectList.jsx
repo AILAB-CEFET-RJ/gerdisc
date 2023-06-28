@@ -38,14 +38,12 @@ export default function ProjectList() {
             .then(result => {
                 let mapped = []
                 if (result !== null && result !== undefined) {
-                    console.log(result)
                     mapped = result.map((project) => {
                         return {
                             Id: project.id,
                             Nome: project.name,
                             Status: project.status,
                             Professores: project?.professors?.length,
-                            Dissertações: project?.dissertations.length,
                             Students: project?.students?.length
                         }
                     })
