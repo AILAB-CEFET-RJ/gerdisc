@@ -35,7 +35,7 @@ namespace gerdisc.Models.DTOs
 
         public DateTime? DateOfBirth { get; set; }
 
-        public int Scholarship { get; set; }
+        public ScholarshipEnum Scholarship { get; set; }
 
         public IEnumerable<StudentCourseDto>? StudentCourses { get; set; }
 

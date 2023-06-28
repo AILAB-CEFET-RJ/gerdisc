@@ -57,6 +57,6 @@ namespace gerdisc.Models.DTOs
         public string? DateOfBirth { get; set; }
 
         [Optional]
-        public int Scholarship { get; set; }
+        public ScholarshipEnum Scholarship { get; set; }
     }
 }

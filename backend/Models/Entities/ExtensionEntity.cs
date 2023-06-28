@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Entities
 {
@@ -26,7 +27,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Gets or sets the type of extension.
         /// </summary>
-        public int Type { get; set; }
+        public ExtensionTypeEnum Type { get; set; }
 
         /// <summary>
         /// Gets or sets the student associated with the extension.

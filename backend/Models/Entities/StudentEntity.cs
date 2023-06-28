@@ -94,7 +94,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The scholarship status of the student.
         /// </summary>
-        public int Scholarship { get; set; }
+        public ScholarshipEnum Scholarship { get; set; }
 
         /// <summary>
         /// The date on which the student qualified for their project.
