@@ -1,3 +1,5 @@
+using gerdisc.Models.Enums;
+
 namespace gerdisc.Models.DTOs
 {
     public class ExtensionDto
@@ -10,6 +12,6 @@ namespace gerdisc.Models.DTOs
 
         public string? Status { get; set; }
 
-        public int Type { get; set; }
+        public ExtensionTypeEnum Type { get; set; }
     }
 }
