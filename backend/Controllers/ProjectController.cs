@@ -82,8 +82,8 @@ namespace gerdisc.Controllers
         {
             try
             {
-                var projectId = await _projectService.UpdateProjectAsync(id, projectDto);
-                return CreatedAtAction(nameof(GetProject), new { id = projectId });
+                var project = await _projectService.UpdateProjectAsync(id, projectDto);
+                return CreatedAtAction(nameof(GetProject), new { id = project.Id }, project);
             }
             catch (Exception ex)
             {
