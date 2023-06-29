@@ -20,10 +20,10 @@ namespace gerdisc.Infrastructure.Repositories.Project
         {
             return await _dbSet
                 .Where(e => !e.IsDeleted)
-                .Include(x => x.ProfessorProjects)
+                .Include(x => x.ProfessorProjects.Where(pp => !pp.IsDeleted))
                 .ThenInclude(x => x.Professor)
-                .Include(x => x.Orientations)
-                .Include(x => x.Students)
+                .Include(x => x.Orientations.Where(o => !o.IsDeleted))
+                .Include(x => x.Students.Where(s => !s.IsDeleted))
                 .FilterByUserRole(_userContext)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -33,10 +33,10 @@ namespace gerdisc.Infrastructure.Repositories.Project
         {
             return await _dbSet
                 .Where(e => !e.IsDeleted)
-                .Include(x => x.ProfessorProjects)
+                .Include(x => x.ProfessorProjects.Where(pp => !pp.IsDeleted))
                 .ThenInclude(x => x.Professor)
-                .Include(x => x.Orientations)
-                .Include(x => x.Students)
+                .Include(x => x.Orientations.Where(o => !o.IsDeleted))
+                .Include(x => x.Students.Where(s => !s.IsDeleted))
                 .ThenInclude(x => x.User)
                 .FilterByUserRole(_userContext)
                 .ToListAsync();
