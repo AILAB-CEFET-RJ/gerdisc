@@ -24,7 +24,7 @@ namespace gerdisc.Controllers
         /// <param name="orientationDto">The orientation data.</param>
         /// <returns>The created orientation.</returns>
         [HttpPost]
-        [Authorize(Roles = "Administrator, ProjectManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<OrientationDto>> CreateOrientation(CreateOrientationDto orientationDto)
         {
             try
@@ -44,7 +44,7 @@ namespace gerdisc.Controllers
         /// <param name="id">The orientation ID.</param>
         /// <returns>The orientation.</returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator, ProjectManager, Developer")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<OrientationDto>> GetOrientation(Guid id)
         {
             try
@@ -60,7 +60,7 @@ namespace gerdisc.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<OrientationDto>), StatusCodes.Status200OK)]
-        [Authorize(Roles = "Administrator, ProjectManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<OrientationDto>>> GetAllOrientationsAsync()
         {
             var orientationDtos = await _orientationService.GetAllOrientationsAsync();
@@ -75,7 +75,7 @@ namespace gerdisc.Controllers
         /// <param name="orientationDto">The orientation data.</param>
         /// <returns>The updated orientation.</returns>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Administrator, ProjectManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<OrientationDto>> UpdateOrientation(Guid id, CreateOrientationDto orientationDto)
         {
             try

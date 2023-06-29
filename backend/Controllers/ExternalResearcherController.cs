@@ -23,7 +23,7 @@ namespace gerdisc.Controllers
         /// <param name="externalResearcherDto">The externalResearcher data.</param>
         /// <returns>The created externalResearcher.</returns>
         [HttpPost]
-        [Authorize(Roles = "Administrator, ExternalResearcherManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<ExternalResearcherDto>> CreateExternalResearcher(ExternalResearcherDto externalResearcherDto)
         {
             try
@@ -43,7 +43,7 @@ namespace gerdisc.Controllers
         /// <param name="id">The externalResearcher ID.</param>
         /// <returns>The externalResearcher.</returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator, ExternalResearcherManager, Developer")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<ExternalResearcherDto>> GetExternalResearcher(Guid id)
         {
             try
@@ -74,7 +74,7 @@ namespace gerdisc.Controllers
         /// <param name="externalResearcherDto">The externalResearcher data.</param>
         /// <returns>The updated externalResearcher.</returns>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Administrator, ExternalResearcherManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<ExternalResearcherDto>> UpdateExternalResearcher(Guid id, ExternalResearcherDto externalResearcherDto)
         {
             try
@@ -94,7 +94,7 @@ namespace gerdisc.Controllers
         /// <param name="id">The externalResearcher ID.</param>
         /// <returns>No content.</returns>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Administrator, ExternalResearcherManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteExternalResearcher(Guid id)
         {
             try
