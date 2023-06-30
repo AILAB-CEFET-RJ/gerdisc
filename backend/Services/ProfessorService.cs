@@ -23,7 +23,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ProfessorDto> CreateProfessorAsync(ProfessorDto professorDto)
+        public async Task<ProfessorDto> CreateProfessorAsync(CreateProfessorDto professorDto)
         {
             var user = await _userService.CreateUserAsync(professorDto);
             var professor = professorDto.ToEntity(user.Id);
@@ -43,7 +43,7 @@ namespace gerdisc.Services
                 .GetByIdAsync(id, x => x.User) ?? throw new ArgumentException("Professor not found.");
             var professorProgect = await _repository
                 .ProfessorProject
-                .GetAllAsync(x => x.ProfessorId == professor.Id);
+                .GetAllAsync(x => x.ProfessorId == professor.Id, x => x.Project);
             return professor.ToDto(professorProgect);
         }
 
@@ -61,7 +61,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ProfessorDto> UpdateProfessorAsync(Guid id, ProfessorDto professorDto)
+        public async Task<ProfessorDto> UpdateProfessorAsync(Guid id, CreateProfessorDto professorDto)
         {
             var existingProfessor = await _repository.Professor.GetByIdAsync(id);
             if (existingProfessor == null)

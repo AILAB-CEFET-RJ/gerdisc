@@ -24,7 +24,7 @@ namespace gerdisc.Controllers
         /// <returns>The created professor.</returns>
         [HttpPost]
         [Authorize(Roles = "Administrator, ProfessorManager")]
-        public async Task<ActionResult<ProfessorDto>> CreateProfessor(ProfessorDto professorDto)
+        public async Task<ActionResult<ProfessorDto>> CreateProfessor(CreateProfessorDto professorDto)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace gerdisc.Controllers
         /// <returns>The updated professor.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator, ProfessorManager")]
-        public async Task<ActionResult<ProfessorDto>> UpdateProfessor(Guid id, ProfessorDto professorDto)
+        public async Task<ActionResult<ProfessorDto>> UpdateProfessor(Guid id, CreateProfessorDto professorDto)
         {
             try
             {

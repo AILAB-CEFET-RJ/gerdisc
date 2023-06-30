@@ -5,16 +5,16 @@ using gerdisc.Models.Enums;
 namespace gerdisc.Models.Mapper
 {
     /// <summary>
-    /// A static class containing mapper methods for converting between <see cref="ProfessorDto"/> and <see cref="ProfessorEntity"/> objects.
+    /// A static class containing mapper methods for converting between <see cref="CreateProfessorDto"/> and <see cref="ProfessorEntity"/> objects.
     /// </summary>
     public static class ProfessorMapper
     {
         /// <summary>
-        /// Converts a <see cref="ProfessorDto"/> object to a <see cref="ProfessorEntity"/> object.
+        /// Converts a <see cref="CreateProfessorDto"/> object to a <see cref="ProfessorEntity"/> object.
         /// </summary>
-        /// <param name="self">The <see cref="ProfessorDto"/> object to convert.</param>
+        /// <param name="self">The <see cref="CreateProfessorDto"/> object to convert.</param>
         /// <returns>A new <see cref="ProfessorEntity"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static ProfessorEntity ToEntity(this ProfessorDto self, Guid userId) =>
+        public static ProfessorEntity ToEntity(this CreateProfessorDto self, Guid userId) =>
             self is null ? new ProfessorEntity() : new ProfessorEntity
             {
                 Id = userId,
@@ -23,12 +23,12 @@ namespace gerdisc.Models.Mapper
             };
 
         /// <summary>
-        /// Updates the values of an existing <see cref="ProfessorEntity"/> object using the values from a <see cref="ProfessorDto"/> object.
+        /// Updates the values of an existing <see cref="ProfessorEntity"/> object using the values from a <see cref="CreateProfessorDto"/> object.
         /// </summary>
-        /// <param name="self">The <see cref="ProfessorDto"/> object containing the updated values.</param>
+        /// <param name="self">The <see cref="CreateProfessorDto"/> object containing the updated values.</param>
         /// <param name="entityToUpdate">The existing <see cref="ProfessorEntity"/> object to update.</param>
         /// <returns>The updated <see cref="ProfessorEntity"/> object.</returns>
-        public static ProfessorEntity ToEntity(this ProfessorDto self, ProfessorEntity entityToUpdate)
+        public static ProfessorEntity ToEntity(this CreateProfessorDto self, ProfessorEntity entityToUpdate)
         {
             entityToUpdate.Siape = self.Siape;
             return entityToUpdate;
@@ -43,7 +43,7 @@ namespace gerdisc.Models.Mapper
             self is null ? new ProfessorDto() : new ProfessorDto
             {
                 Siape = self.Siape,
-                ProjectIds = professorProjects.Select(x => x.Id.ToString()).ToList()
+                Projects = professorProjects.Select(x => x.Project.ToDto()).ToList()
             }.AddUserDto(self.User);
 
         /// <summary>

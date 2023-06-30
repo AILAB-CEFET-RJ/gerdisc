@@ -12,7 +12,7 @@ namespace gerdisc.Services.Interfaces
         /// </summary>
         /// <param name="professorDto">The professor DTO containing the professor details.</param>
         /// <returns>The created professor DTO.</returns>
-        Task<ProfessorDto> CreateProfessorAsync(ProfessorDto professorDto);
+        Task<ProfessorDto> CreateProfessorAsync(CreateProfessorDto professorDto);
 
         /// <summary>
         /// Retrieves a professor by ID.
@@ -33,7 +33,7 @@ namespace gerdisc.Services.Interfaces
         /// <param name="id">The ID of the professor to update.</param>
         /// <param name="professorDto">The professor DTO containing the updated professor details.</param>
         /// <returns>The updated professor DTO.</returns>
-        Task<ProfessorDto> UpdateProfessorAsync(Guid id, ProfessorDto professorDto);
+        Task<ProfessorDto> UpdateProfessorAsync(Guid id, CreateProfessorDto professorDto);
 
         /// <summary>
         /// Deletes a professor.

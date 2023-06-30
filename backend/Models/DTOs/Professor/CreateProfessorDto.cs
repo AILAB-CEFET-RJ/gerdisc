@@ -1,20 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using gerdisc.Infrastructure.Validations;
 using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.DTOs
 {
-    public class ProfessorDto : UserDto
+    public class CreateProfessorDto : UserDto
     {
         public string? Siape { get; set; }
-        public List<ProjectDto> Projects { get; set; }
+        public List<string> ProjectIds { get; set; }
 
         [ValidRolesEnum(RolesEnum.Administrator, RolesEnum.Professor)]
         public override RolesEnum Role { get; set; }
 
-        public ProfessorDto()
+        public CreateProfessorDto()
         {
             Role = Enums.RolesEnum.Professor;
-            Projects = new List<ProjectDto>();
+            ProjectIds = new List<string>();
         }
     }
 }
