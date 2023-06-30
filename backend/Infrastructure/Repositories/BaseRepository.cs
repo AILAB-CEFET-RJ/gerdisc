@@ -69,6 +69,18 @@ namespace gerdisc.Infrastructure.Repositories
         }
 
         /// <inheritdoc />
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return await _dbSet
+                .Where(e => !e.IsDeleted)
+                .Where(predicate)
+                .IncludeMultiple(includeProperties)
+                .ToListAsync();
+        }
+
+        /// <inheritdoc />
         public async Task<IEnumerable<TEntity>> GetAllAsync(
             params Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>[] includeProperties)
         {
