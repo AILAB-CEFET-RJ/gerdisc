@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using gerdisc.Infrastructure.Extensions;
+using gerdisc.Infrastructure.Providers;
 using gerdisc.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,8 +9,10 @@ namespace gerdisc.Infrastructure.Repositories.Student
     /// <inheritdoc />
     public class StudentRepository : BaseRepository<StudentEntity>, IStudentRepository
     {
-        public StudentRepository(ContexRepository dbContext) : base(dbContext)
+        private readonly IUserContext _userContext;
+        public StudentRepository(ContexRepository dbContext, IUserContext userContext) : base(dbContext)
         {
+            _userContext = userContext;
         }
 
         /// <inheritdoc />
@@ -17,6 +20,7 @@ namespace gerdisc.Infrastructure.Repositories.Student
         {
             return await _dbSet
                 .Where(e => !e.IsDeleted)
+                .FilterByUserRole(_userContext)
                 .FirstOrDefaultAsync(e => e.UserId == id);
         }
 
@@ -28,6 +32,7 @@ namespace gerdisc.Infrastructure.Repositories.Student
             return await _dbSet
                 .Where(e => !e.IsDeleted)
                 .IncludeMultiple(includeProperties)
+                .FilterByUserRole(_userContext)
                 .SingleOrDefaultAsync(p => p.UserId == id);
         }
 

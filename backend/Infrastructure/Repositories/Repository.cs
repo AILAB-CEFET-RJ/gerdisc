@@ -47,7 +47,7 @@ namespace gerdisc.Infrastructure.Repositories
         public IUserRepository User => new UserRepository(_dbContext);
 
         /// <inheritdoc />
-        public IStudentRepository Student => new StudentRepository(_dbContext);
+        public IStudentRepository Student => new StudentRepository(_dbContext, _userContext);
 
         /// <inheritdoc />
         public IProfessorRepository Professor => new ProfessorRepository(_dbContext);
@@ -56,7 +56,7 @@ namespace gerdisc.Infrastructure.Repositories
         public IProjectRepository Project => new ProjectRepository(_dbContext, _userContext);
 
         /// <inheritdoc />
-        public IExtensionRepository Extension => new ExtensionRepository(_dbContext);
+        public IExtensionRepository Extension => new ExtensionRepository(_dbContext, _userContext);
 
         /// <inheritdoc />
         public IExternalResearcherRepository ExternalResearcher => new ExternalResearcherRepository(_dbContext);

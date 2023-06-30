@@ -60,7 +60,7 @@ namespace gerdisc.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ExtensionDto>), StatusCodes.Status200OK)]
-        [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
+        [Authorize(Roles = "Administrator, Student")]
         public async Task<ActionResult<IEnumerable<ExtensionDto>>> GetAllExtensionsAsync()
         {
             var extensionDtos = await _extensionService.GetAllExtensionsAsync();

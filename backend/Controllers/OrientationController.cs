@@ -44,7 +44,7 @@ namespace gerdisc.Controllers
         /// <param name="id">The orientation ID.</param>
         /// <returns>The orientation.</returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
         public async Task<ActionResult<OrientationDto>> GetOrientation(Guid id)
         {
             try

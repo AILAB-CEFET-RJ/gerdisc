@@ -63,7 +63,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpGet("{studentId}")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Professor")]
         public async Task<ActionResult<StudentDto>> GetStudent(Guid studentId)
         {
             var student = await _studentService.GetStudentAsync(studentId);
