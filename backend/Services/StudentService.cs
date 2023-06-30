@@ -62,6 +62,42 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
+        public async Task<IEnumerable<StudentCourseDto>> AddCoursesToStudentsFromCsvAsync(IFormFile file)
+        {
+            using var reader = new StreamReader(file.OpenReadStream());
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+            var records = await csv.GetRecordsAsync<StudentCourseCsvDto>().ToListAsync();
+
+            var courseNames = records.Select(x => x.CourseName).ToList();
+            var courses = await _repository.Course.GetAllAsync(x => courseNames.Contains(x.Name));
+            var courseDictionary = courses?.ToDictionary(x => x.Name, x => x.Id);
+
+            var studentRegistrations = records.Select(x => x.StudentRegistration).ToList();
+            var students = await _repository.Student.GetAllAsync(x => studentRegistrations.Contains(x.Registration));
+            var studentDictionary = students?.ToDictionary(x => x.Registration, x => x);
+
+            var insertedCourses = new List<StudentCourseDto>();
+
+            foreach (var record in records)
+            {
+                if (studentDictionary.TryGetValue(record.StudentRegistration, out var student) &&
+                    courseDictionary.TryGetValue(record.CourseName, out var courseId))
+                {
+                    var studentDto = student.ToDto();
+                    studentDto.StudentCourses = new List<StudentCourseDto> { record.ToDto(courseId) };
+                    var insertedStudent = await UpdateStudentAsync(student.Id, studentDto);
+                    insertedCourses.Add(record.ToDto(courseId));
+                }
+                else
+                {
+                    _logger.LogWarning($"Failed to add course to student: {record.StudentRegistration} - {record.CourseName}");
+                }
+            }
+
+            return insertedCourses;
+        }
+
+        /// <inheritdoc />
         public async Task<StudentDto> GetStudentAsync(Guid id)
         {
             var studentEntity = await _repository.Student.GetByIdAsync(id, s => s.User);
