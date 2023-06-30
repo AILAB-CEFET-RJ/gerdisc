@@ -41,6 +41,10 @@ namespace gerdisc.Infrastructure.Repositories
         /// <returns>An enumerable collection of entities of type <typeparamref name="TEntity"/>.</returns>
         Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includeProperties);
 
+        Task<IEnumerable<TEntity>> GetAllAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] includeProperties);
+
         /// <summary>
         /// Retrieves a paged subset of entities of type <typeparamref name="TEntity"/> from the repository.
         /// </summary>
