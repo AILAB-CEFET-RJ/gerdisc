@@ -11,7 +11,7 @@ namespace gerdisc.Infrastructure.Extensions
             switch (userContext.Role)
             {
                 case RolesEnum.Professor:
-                    return query.Where(p => p.Project.Orientations.Any(x => x.ProfessorId == userContext.UserId));
+                    return query.Where(p => p.Project == null ? false : p.Project.Orientations.Any(x => x.ProfessorId == userContext.UserId));
                 case RolesEnum.Student:
                     return query.Where(p => p.Id == userContext.UserId);
                 case RolesEnum.Administrator:
