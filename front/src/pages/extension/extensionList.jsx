@@ -18,7 +18,7 @@ export default function ExtensionList() {
     const [extensions, setextensions] = useState([])
 
     useEffect(() => {
-        const roles = ['Administrator']
+        const roles = ['Administrator', 'Student']
         const token = localStorage.getItem('token')
         try {
             const decoded = jwt_decode(token)
