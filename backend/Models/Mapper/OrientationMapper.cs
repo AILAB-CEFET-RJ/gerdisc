@@ -52,7 +52,10 @@ namespace gerdisc.Models.Mapper
                 CoorientatorId = self.CoorientatorId,
                 ProfessorId = self.ProfessorId,
                 ProjectId = self.ProjectId,
-                StudentId = self.StudentId
+                StudentId = self.StudentId,
+                Coorientator = self.Coorientator?.ToUserDto(),
+                Professor = self.Professor?.ToUserDto(),
+                Student = self.Student?.ToUserDto()
             };
     }
 }
