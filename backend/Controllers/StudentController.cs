@@ -63,7 +63,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpGet("{studentId}")]
-        [Authorize(Roles = "Administrator, Professor")]
+        [Authorize(Roles = "Administrator, Professor, Student")]
         public async Task<ActionResult<StudentDto>> GetStudent(Guid studentId)
         {
             var student = await _studentService.GetStudentAsync(studentId);
@@ -91,7 +91,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator, Professor")]
+        [Authorize(Roles = "Administrator, Professor, Student")]
         [ProducesResponseType(typeof(IEnumerable<StudentDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetAllStudentsAsync()
         {
