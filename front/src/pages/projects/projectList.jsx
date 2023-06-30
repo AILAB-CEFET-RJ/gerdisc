@@ -20,7 +20,7 @@ export default function ProjectList() {
         navigate(id)
     }
     useEffect(() => {
-        const roles = ['Administrator']
+        const roles = ['Administrator', 'Student', 'Professor']
         const token = localStorage.getItem('token')
         try {
             const decoded = jwt_decode(token)
@@ -69,12 +69,12 @@ export default function ProjectList() {
                         <input type="search" name="search" id="search" />
                         <i className="fas fa-" />
                     </div>
-                    <div className="create-button">
+                    {role === 'Administrator' && <div className="create-button">
                         <button onClick={() => navigate('/projects/add')}>Novo Projeto</button>
-                    </div>
+                    </div>}
                 </div>
             </div>
-            <BackButton /><Table data={projects} useOptions={true} detailsCallback={detailsCallback} />
+            <BackButton /><Table data={projects} useOptions={role === 'Administrator'} detailsCallback={detailsCallback} />
         </PageContainer>
     )
 }
