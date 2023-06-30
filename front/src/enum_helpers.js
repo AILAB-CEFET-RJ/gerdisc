@@ -1,17 +1,17 @@
 export const AREA_ENUM = {
-    "Default": 0,
-    "Computação": 1,
-    "Cienças Exatas": 2,
-    "Humanas": 3,
-    "Saúde": 4,
-    "Engenharia": 5
+    Default: 0,
+    COMPUTATION: 1,
+    EXACT_SCIENCES: 2,
+    HUMANITIES: 3,
+    HEALTH: 4,
+    ENGINEERING: 5
 }
 
 export const STATUS_ENUM = {
-    "Default": 0,
-    "Ativo": 1,
-    "Formado": 2,
-    "Desligador": 3
+    Default: 0,
+    Active: 1,
+    Graduated: 2,
+    Disconnected: 3
 }
 
 export const ROLES_ENUM = {
@@ -31,8 +31,15 @@ export const PROJECT_STATUS_ENUM = {
 }
 
 export const INSTITUTION_TYPE_ENUM = {
-    "Default": 0,
-    "Publica": 1,
-    "Privada": 2,
-    "CEFET-RJ":3,
+    Default: 0,
+    Publica: 1,
+    Particular: 2,
+    CEFET:3,
+}
+
+export const SCHOLARSHIP_TYPE = {
+    Default: 0,
+    Cefet: 1,
+    Capes: 2,
+    FapeRj:3,
 }

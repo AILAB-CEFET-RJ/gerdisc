@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import "../../styles/createExtension.scss";
 import { useParams } from "react-router";
@@ -21,7 +20,7 @@ export default function ExtensionForm() {
             studentId: id,
             numberOfDays: 0,
             type: 1,
-            status: 'pending'
+            status: 'aprovado'
 
         }
     );

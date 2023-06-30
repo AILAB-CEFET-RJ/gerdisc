@@ -18,3 +18,18 @@ export async function getStudentById(id){
 export async function putStudentById(id, data){
     return (await api.put(`api/Students/${id}`,data))?.data
 }
+export async function postStudentCsv(formData){
+    return (await api.post(`api/Students/csv`,formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }))?.data
+}
+
+export async function postStudentCourseCsv(formData){
+    return (await api.post(`api/Students/course/csv`,formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }))?.data
+}
