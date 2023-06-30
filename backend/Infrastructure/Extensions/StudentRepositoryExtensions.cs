@@ -17,7 +17,7 @@ namespace gerdisc.Infrastructure.Extensions
                 case RolesEnum.Administrator:
                     return query;
                 case RolesEnum.ExternalResearcher:
-                    return query.Where(d => d.Project.Orientations.Any(x => x.CoorientatorId == userContext.UserId));
+                    return query.Where(d => d.Project == null ? false : d.Project.Orientations.Any(x => x.CoorientatorId == userContext.UserId));
                 default:
                     return query.Where(d => false);
             }
