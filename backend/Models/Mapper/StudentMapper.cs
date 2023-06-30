@@ -94,7 +94,7 @@ namespace gerdisc.Models.Mapper
                 Scholarship = self.Scholarship,
                 StudentCourses = self.StudentCourses.Select(x => x.ToDto())
             };
-            return entity.AddUserDto(self.User);
+            return self?.User is null ? entity : entity.AddUserDto(self.User);
         }
 
         /// <summary>

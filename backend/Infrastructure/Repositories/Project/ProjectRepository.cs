@@ -24,6 +24,7 @@ namespace gerdisc.Infrastructure.Repositories.Project
                 .ThenInclude(x => x.Professor)
                 .Include(x => x.Orientations.Where(o => !o.IsDeleted))
                 .Include(x => x.Students.Where(s => !s.IsDeleted))
+                .ThenInclude(x => x.User)
                 .FilterByUserRole(_userContext)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }

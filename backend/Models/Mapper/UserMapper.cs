@@ -63,7 +63,7 @@ namespace gerdisc.Models.Mapper
         /// </summary>
         /// <param name="self">The <see cref="UserEntity"/> object to convert.</param>
         /// <returns>A new <see cref="UserDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static TUserDto AddUserDto<TUserDto>(this TUserDto self, UserEntity entity)
+        public static TUserDto AddUserDto<TUserDto>(this TUserDto self, UserEntity? entity)
             where TUserDto : UserDto
         {
             self.Id = entity.Id;
