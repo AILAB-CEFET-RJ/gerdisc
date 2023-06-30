@@ -91,7 +91,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Professor")]
         [ProducesResponseType(typeof(IEnumerable<StudentDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetAllStudentsAsync()
         {
