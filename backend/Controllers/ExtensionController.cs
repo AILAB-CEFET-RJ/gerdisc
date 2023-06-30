@@ -44,7 +44,7 @@ namespace gerdisc.Controllers
         /// <param name="id">The extension ID.</param>
         /// <returns>The extension.</returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
         public async Task<ActionResult<ExtensionDto>> GetExtension(Guid id)
         {
             try
@@ -60,6 +60,7 @@ namespace gerdisc.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ExtensionDto>), StatusCodes.Status200OK)]
+        [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
         public async Task<ActionResult<IEnumerable<ExtensionDto>>> GetAllExtensionsAsync()
         {
             var extensionDtos = await _extensionService.GetAllExtensionsAsync();

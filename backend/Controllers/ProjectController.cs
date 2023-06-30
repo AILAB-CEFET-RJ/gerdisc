@@ -43,7 +43,7 @@ namespace gerdisc.Controllers
         /// <param name="id">The project ID.</param>
         /// <returns>The project.</returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
         public async Task<ActionResult<ProjectDto>> GetProject(Guid id)
         {
             try
@@ -62,7 +62,7 @@ namespace gerdisc.Controllers
         /// </summary>
         /// <returns>A list of projects.</returns>
         [HttpGet]
-        [Authorize(Roles = "Administrator, Student, Professor")]
+        [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
         [ProducesResponseType(typeof(IEnumerable<ProjectDto>), 200)]
         public async Task<ActionResult<IEnumerable<ProjectDto>>> GetAllProjectsAsync()
         {
