@@ -66,28 +66,48 @@ namespace gerdisc.Controllers
         [Authorize(Roles = "Administrator, Professor, Student")]
         public async Task<ActionResult<StudentDto>> GetStudent(Guid studentId)
         {
-            var student = await _studentService.GetStudentAsync(studentId);
-            if (student == null) return NotFound();
-            return Ok(student);
+            try
+            {
+                var student = await _studentService.GetStudentAsync(studentId);
+                return Ok(student);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("{studentId}")]
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<StudentDto>> UpdateStudent(Guid studentId, StudentDto studentDto)
         {
-            var updatedStudentDto = await _studentService.UpdateStudentAsync(studentId, studentDto);
-            if (updatedStudentDto == null) return NotFound();
-            return Ok(updatedStudentDto);
+            try
+            {
+                var updatedStudentDto = await _studentService.UpdateStudentAsync(studentId, studentDto);
+                if (updatedStudentDto == null) return NotFound();
+                return Ok(updatedStudentDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{studentId}")]
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteStudent(Guid studentId)
         {
-            var studentDto = await _studentService.GetStudentAsync(studentId);
-            if (studentDto == null) return NotFound();
-            await _studentService.DeleteStudentAsync(studentId);
-            return NoContent();
+            try
+            {
+                var studentDto = await _studentService.GetStudentAsync(studentId);
+                if (studentDto == null) return NotFound();
+                await _studentService.DeleteStudentAsync(studentId);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
@@ -95,9 +115,15 @@ namespace gerdisc.Controllers
         [ProducesResponseType(typeof(IEnumerable<StudentDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetAllStudentsAsync()
         {
-            var studentDtos = await _studentService.GetAllStudentsAsync();
-
-            return Ok(studentDtos);
+            try
+            {
+                var studentDtos = await _studentService.GetAllStudentsAsync();
+                return Ok(studentDtos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

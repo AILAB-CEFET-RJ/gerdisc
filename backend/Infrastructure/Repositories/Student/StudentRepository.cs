@@ -37,6 +37,17 @@ namespace gerdisc.Infrastructure.Repositories.Student
         }
 
         /// <inheritdoc />
+        public override async Task<IEnumerable<StudentEntity>> GetAllAsync(
+            params Expression<Func<StudentEntity, object>>[] includeProperties)
+        {
+            return await _dbSet
+                .Where(e => !e.IsDeleted)
+                .FilterByUserRole(_userContext)
+                .IncludeMultiple(includeProperties)
+                .ToListAsync();
+        }
+
+        /// <inheritdoc />
         public override async Task DeactiveByIdAsync(Guid id)
         {
             StudentEntity? entityToDelete = await _dbSet.FirstAsync(x => x.UserId == id);
