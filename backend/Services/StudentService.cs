@@ -68,9 +68,9 @@ namespace gerdisc.Services
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
             var records = await csv.GetRecordsAsync<StudentCourseCsvDto>().ToListAsync();
 
-            var courseNames = records.Select(x => x.CourseName).ToList();
-            var courses = await _repository.Course.GetAllAsync(x => courseNames.Contains(x.Name));
-            var courseDictionary = courses?.ToDictionary(x => x.Name, x => x.Id);
+            var courseNames = records.Select(x => x.CourseUnique).ToList();
+            var courses = await _repository.Course.GetAllAsync(x => courseNames.Contains(x.CourseUnique));
+            var courseDictionary = courses?.ToDictionary(x => x.CourseUnique, x => x.Id);
 
             var studentRegistrations = records.Select(x => x.StudentRegistration).ToList();
             var students = await _repository.Student.GetAllAsync(x => studentRegistrations.Contains(x.Registration));
@@ -81,7 +81,7 @@ namespace gerdisc.Services
             foreach (var record in records)
             {
                 if (studentDictionary.TryGetValue(record.StudentRegistration, out var student) &&
-                    courseDictionary.TryGetValue(record.CourseName, out var courseId))
+                    courseDictionary.TryGetValue(record.CourseUnique, out var courseId))
                 {
                     var studentDto = student.ToDto();
                     studentDto.StudentCourses = new List<StudentCourseDto> { record.ToDto(courseId) };

@@ -21,6 +21,7 @@ namespace gerdisc.Models.Mapper
                 Concept = self.Concept,
                 Credits = self.Credits,
                 IsElective = self.IsElective,
+                CourseUnique = self.CourseUnique
             };
 
         /// <summary>
@@ -36,6 +37,7 @@ namespace gerdisc.Models.Mapper
             entityToUpdate.Concept = self.Concept;
             entityToUpdate.Credits = self.Credits;
             entityToUpdate.IsElective = self.IsElective;
+            entityToUpdate.CourseUnique = self.CourseUnique;
             return entityToUpdate;
         }
 
@@ -53,6 +55,7 @@ namespace gerdisc.Models.Mapper
                 Concept = self.Concept,
                 Credits = self.Credits,
                 IsElective = self.IsElective,
+                CourseUnique = self.CourseUnique
             };
     }
 }

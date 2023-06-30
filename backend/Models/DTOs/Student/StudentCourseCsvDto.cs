@@ -1,4 +1,5 @@
 using CsvHelper.Configuration.Attributes;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.DTOs
 {
@@ -18,5 +19,11 @@ namespace gerdisc.Models.DTOs
 
         [Name("PERIODO")]
         public string Trimester { get; set; }
+
+        [Name("DISC")]
+        public string CourseUnique { get; set; }
+
+        [Name("SITUACAO")]
+        public CourseStatusEnum Status { get; set; }
     }
 }
