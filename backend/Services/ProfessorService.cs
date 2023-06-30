@@ -44,8 +44,7 @@ namespace gerdisc.Services
             var professorProgect = await _repository
                 .ProfessorProject
                 .GetAllAsync(x => x.ProfessorId == professor.Id);
-            professor.ProfessorProjects = professorProgect;
-            return professor.ToDto();
+            return professor.ToDto(professorProgect);
         }
 
         /// <inheritdoc />

@@ -39,11 +39,22 @@ namespace gerdisc.Models.Mapper
         /// </summary>
         /// <param name="self">The <see cref="ProfessorEntity"/> object to convert.</param>
         /// <returns>A new <see cref="ProfessorDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static ProfessorDto ToDto(this ProfessorEntity self, IEnumerable<ProfessorProjectEntity> professorProjects) =>
+            self is null ? new ProfessorDto() : new ProfessorDto
+            {
+                Siape = self.Siape,
+                ProjectIds = professorProjects.Select(x => x.Id.ToString()).ToList()
+            }.AddUserDto(self.User);
+
+        /// <summary>
+        /// Converts a <see cref="ProfessorEntity"/> object to a <see cref="ProfessorDto"/> object.
+        /// </summary>
+        /// <param name="self">The <see cref="ProfessorEntity"/> object to convert.</param>
+        /// <returns>A new <see cref="ProfessorDto"/> object with the values from the <paramref name="self"/> object.</returns>
         public static ProfessorDto ToDto(this ProfessorEntity self) =>
             self is null ? new ProfessorDto() : new ProfessorDto
             {
                 Siape = self.Siape,
-                ProjectIds = self.ProfessorProjects.Select(x => x.Id.ToString()).ToList()
             }.AddUserDto(self.User);
     }
 }
