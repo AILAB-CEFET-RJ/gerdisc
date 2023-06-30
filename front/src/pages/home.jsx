@@ -8,6 +8,7 @@ export default function Home() {
     const navigate = useNavigate()
     var [role, setRole] = useState("")
     var [name, setName] = useState("")
+    const [studentId, setStudentId] = useState('')
     useEffect(() => {
 
         let token = localStorage.getItem('token')
@@ -15,6 +16,7 @@ export default function Home() {
         try {
             const decoded = jwt_decode(token)
             setRole(decoded.role)
+            setStudentId(decoded.nameid)
         } catch (error) {
             navigate('/login')
         }
@@ -33,7 +35,7 @@ export default function Home() {
                     </div>
                     <label htmlFor='student' className={"iconLabel"}>Estudantes</label>
                 </div>}
-                {(role === "Student") && <div className={"boardItem"} onClick={() => navigate('/student/perfil')}>
+                {(role === "Student") && <div className={"boardItem"} onClick={() => navigate(`/students/${studentId}`)}>
                     <div id='Profile' className={"itemIcon"} >
                         <img src={process.env.PUBLIC_URL + "/student.png"} />
                     </div>
