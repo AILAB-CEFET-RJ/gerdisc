@@ -22,7 +22,7 @@ namespace gerdisc.Models.Mapper
                 FirstName = self.FirstName,
                 LastName = self.LastName,
                 Cpf = self.Cpf,
-                Email = self.Email,
+                Email = self.Email.ToLower(),
                 CreatedAt = DateTime.UtcNow,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(GeneratePassword(23)),
                 Role = self.Role

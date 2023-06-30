@@ -1,3 +1,4 @@
+using gerdisc.Infrastructure.Providers;
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 
@@ -9,15 +10,17 @@ namespace gerdisc.Infrastructure.Validations
     public class UserValidator
     {
         private readonly IRepository _repository;
+        private readonly IUserContext _userContext;
         private readonly ILogger<UserValidator> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserValidator"/> class.
         /// </summary>
         /// <param name="repository">The repository used for data access.</param>
-        public UserValidator(IRepository repository, ILogger<UserValidator> logger)
+        public UserValidator(IRepository repository, ILogger<UserValidator> logger, IUserContext userContext)
         {
             _repository = repository;
+            _userContext = userContext;
             _logger = logger;
         }
 
@@ -44,6 +47,30 @@ namespace gerdisc.Infrastructure.Validations
             }
 
             _logger.LogInformation($"User dto verified.");
+            return (true, "Success");
+        }
+
+        /// <summary>
+        /// Checks if a user can reset password based on the provided ResetPassword DTO.
+        /// </summary>
+        /// <param name="resetPasswordDto">The ResetPassword DTO to be checked.</param>
+        /// <returns>A tuple containing a boolean indicating if the user can reset password and an error message if applicable.</returns>
+        public async Task<(bool exists, string errorMessage)> CanResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            if (_userContext.UserId is null)
+            {
+                _logger.LogInformation("Token.");
+                return (false, $"Token.");
+            }
+
+            var user = await _repository.User.GetByIdAsync(_userContext.UserId.Value);
+            if (user is null || resetPasswordDto.Email is null || resetPasswordDto.Email.ToLower() != user.Email?.ToLower())
+            {
+                _logger.LogInformation("Invalid reset password  DTO.");
+                return (false, $"Invalid reset password DTO.");
+            }
+
+            _logger.LogInformation($"reset password dto verified.");
             return (true, "Success");
         }
     }
