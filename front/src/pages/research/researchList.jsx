@@ -35,14 +35,14 @@ export default function ResearchList() {
         getResearch()
             .then(result => {
                 let mapped = []
+                console.log(result)
                 if (result !== null && result !== undefined) {
-                    mapped = result.map((project) => {
+                    mapped = result.map((research) => {
                         return {
-                            Id: project.Id,
-                            Nome: project.name,
-                            Status: project.status,
-                            Professores: project.orientator,
-                            Students: project.student
+                            Id: research.id,
+                            Nome: research.dissertation,
+                            Professores: `${research.professor?.firstName} ${research.professor?.lastName}`,
+                            Students: `${research.student?.firstName} ${research.student?.lastName}`
                         }
                     })
                 }
@@ -51,6 +51,7 @@ export default function ResearchList() {
 
             })
             .catch(error => {
+                console.log(error)
                 setError(true)
                 setIsLoading(false)
             })
@@ -66,12 +67,6 @@ export default function ResearchList() {
                             <img src="research.png" alt="A logo representing Researches" height={"100rem"} />
                         </div>
                         <div className="title">Dissertações</div>
-                    </div>
-                    <div className="right-bar">
-                        {/* <div className="search">
-                            <input type="search" name="search" id="search" />
-                            <i className="fas fa-" />
-                        </div> */}
                     </div>
                 </div>
                 <BackButton />

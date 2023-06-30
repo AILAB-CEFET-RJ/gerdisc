@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router"
 import jwt_decode from "jwt-decode";
 import Select from "../../components/select";
-import { postProfessors, getProfessorById,putProfessorById } from "../../api/professor_service";
+import { postProfessors, getProfessorById, putProfessorById } from "../../api/professor_service";
 import { postStudents, getStudentById, putStudentById } from "../../api/student_service";
 import { getProjects } from "../../api/project_service";
 import { postResearchers, getResearcherById, putResearcherById } from "../../api/researcher_service";
 import BackButton from "../../components/BackButton";
 import ErrorPage from "../../components/error/Error";
 import PageContainer from "../../components/PageContainer";
-import { ROLES_ENUM, AREA_ENUM, INSTITUTION_TYPE_ENUM } from "../../enum_helpers";
+import { ROLES_ENUM, AREA_ENUM, INSTITUTION_TYPE_ENUM, STATUS_ENUM, SCHOLARSHIP_TYPE } from "../../enum_helpers";
+import MultiSelect from "../../components/Multiselect";
 
 
 
@@ -21,7 +22,15 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
     const [isStudent, setIsStudent] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
+    const [selectedprojects, setSelectedProject] = useState([])
     const [errorMessage, setErrorMessage] = useState(undefined);
+    const [oldvalues, setOldValues] = useState({
+        status: '',
+        undergraduateArea: '',
+        institutionType: '',
+        scholarship: '',
+
+    })
     const [projects, setProjects] = useState([])
     const [role, setRole] = useState(localStorage.getItem('role'))
     const [user, setUser] = useState({
@@ -46,7 +55,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         undergraduateArea: 1,
         dateOfBirth: '',
         scholarship: 0,
-        projectId: "",
+        projectIds: [],
     })
     const [professor, setProfessor] = useState({
         siape: '',
@@ -55,14 +64,25 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
     })
 
     useEffect(() => {
-        console.log({"usertype": userType, "isstudent": isStudent})
+        var projectsId = undefined
         if (isUpdate) {
             if (isStudent) {
                 getStudentById(id)
                     .then(student => {
-                        console.log(student)
                         setUser(student)
-                        SetStudent(student)
+                        SetStudent(
+                            {
+                                ...student,
+                                undergraduateArea: AREA_ENUM[student.undergraduateArea],
+                                scholarship: student.scholarship,
+                                status: STATUS_ENUM[student.status]
+                            })
+                        projectsId = student.projectId
+                        setOldValues(
+                            { ...oldvalues,
+                                institutionType: student.institutionType,
+                                scholarship: student.scholarship,
+                                undergraduateArea: student.undergraduateArea })
                     })
                     .catch(error => {
                         setError(true)
@@ -75,14 +95,13 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                     .then(professor => {
                         setUser(professor)
                         setProfessor(professor)
-                        console.log(professor)
                     })
                     .catch(error => {
                         setError(true)
                         setErrorMessage(error.message)
                     })
             }
-            else if(userType === 'Externo'){
+            else if (userType === 'Externo') {
                 getResearcherById(id)
                     .then(researcher => {
                         setUser(researcher)
@@ -93,12 +112,6 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                         setErrorMessage(error.message)
                     })
             }
-        }
-    }, [isUpdate, isStudent, setUser, SetStudent, setProfessor, id, userType]);
-
-    useEffect(() => {
-        if (isStudent) {
-            setIsLoading(true);
             getProjects()
                 .then(result => {
                     let mapped = []
@@ -109,13 +122,42 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                                 Nome: project.name
                             }
                         })
+                        setSelectedProject(mapped.filter(project => projectsId === project.Id))
                         setProjects(mapped)
                     }
                 })
-                .catch(err => setError(true))
-            setIsLoading(false);
+                .catch(error => {
+                    setError(true)
+                    setErrorMessage(error.message)
+                })
         }
-    }, [isStudent, setProjects, isUpdate])
+    }, [isUpdate, isStudent, setUser, SetStudent, setProfessor, id, userType]);
+
+
+
+    useEffect(() => {
+        setIsLoading(true);
+        getProjects()
+            .then(result => {
+                let mapped = []
+                if (result !== null && result !== undefined) {
+                    mapped = result.map((project) => {
+                        return {
+                            Id: project.id,
+                            Nome: project.name
+                        }
+                    })
+                    setProjects(mapped)
+                }
+            })
+            .catch(err => setError(true))
+        setIsLoading(false);
+    }, [isStudent, setProjects])
+
+    const onProjectSelect = (selectedList, Item) => {
+        const [selected] = selectedList
+        SetStudent({ ...student, ...{ projectId: selected.Id } })
+    }
 
     const changeUserAtribute = (name, value) => {
         let newValue = {}
@@ -136,15 +178,6 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
 
     const handleUsertypeSelect = (value) => {
         setUserType(value);
-    };
-    const handleProjectSelect = (value) => {
-        let project = projects.find(p => p.Nome === value)
-        if (userType === 'Professor') {
-            setProfessor({ ...professor, ...{ projectId: project?.Id } })
-        }
-        else {
-            SetStudent({ ...student, ...{ projectId: project?.Id } });
-        }
     };
 
     useEffect(() => {
@@ -202,32 +235,31 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
     const handleSave = (e) => {
         e.preventDefault()
         const form = document.querySelector('form')
-        if(form.reportValidity())
-        {
+        if (form.reportValidity()) {
             isUpdate ? handleUpdate() : handlepost()
         }
     }
     const handleUpdate = () => {
-       if (isStudent) {
-        let body = { ...user, ...student }
-        putStudentById(id, body)
-        .then((student) =>{
-            navigate("/students")
-        })
-        .catch(error => setError(true))
-       }
-       else if (userType === 'Professor') {
-        let body = { ...user, ...professor }
-        putProfessorById(id, body)
-        .then((student) =>navigate("/professors"))
-        .catch(error => setError(true))
-       }
-       else{
-        let body = { ...user, ...professor }
-        putResearcherById(id,body)
-        .then((student) =>navigate("/researchers"))
-        .catch(error => setError(true))
-       }
+        if (isStudent) {
+            let body = { ...user, ...student }
+            putStudentById(id, body)
+                .then((student) => {
+                    navigate("/students")
+                })
+                .catch(error => setError(true))
+        }
+        else if (userType === 'Professor') {
+            let body = { ...user, ...professor }
+            putProfessorById(id, body)
+                .then((student) => navigate("/professors"))
+                .catch(error => setError(true))
+        }
+        else {
+            let body = { ...user, ...professor }
+            putResearcherById(id, body)
+                .then((student) => navigate("/researchers"))
+                .catch(error => setError(true))
+        }
     }
     return (
         <PageContainer name={name} isLoading={isLoading}>
@@ -263,8 +295,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                             <input required={true} disabled={isUpdate} type="text" name="registration" id="registration" value={student.registration} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
                         </div>
                         <div className="formInput">
-                            <label htmlFor="scholarship">Bolsa</label>
-                            <input type="number" name="scholarship" id="scholarship" value={student.scholarship} onChange={(e) => changeStudentAtribute(e.target.name, Number(e.target.value))} />
+                            <Select required={false} defaultValue={oldvalues.scholarship} label={"Bolsa"} onSelect={(value) => changeStudentAtribute('scholarship', Number(SCHOLARSHIP_TYPE[value]))} name="scholarship" options={Object.keys(SCHOLARSHIP_TYPE)} />
                         </div>
                         <div className="formInput">
                             <label htmlFor="registrationDate">Data de Matricula</label>
@@ -289,7 +320,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                             <input required={true} type="text" name="undergraduateCourse" id="undergraduateCourse" value={student.undergraduateCourse} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
                         </div>
                         <div className="formInput">
-                            <Select required={true} label={"undergraduateArea"} onSelect={(value)=>changeStudentAtribute('undergraduateArea', Number(AREA_ENUM[value])) } name="undergraduateArea" options={Object.keys(AREA_ENUM)} />
+                            <Select required={true} defaultValue={oldvalues.undergraduateArea} label={"undergraduateArea"} onSelect={(value) => changeStudentAtribute('undergraduateArea', Number(AREA_ENUM[value]))} name="undergraduateArea" options={Object.keys(AREA_ENUM)} />
                         </div>
                         <div className="formInput">
                             <label htmlFor="graduationYear">Ano de formação</label>
@@ -298,10 +329,20 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                     </div>}
                     {isStudent && <div className="form-section" id="qualification-section3">
                         <div className="formInput">
-                            <Select required={false} className="formInput" options={Object.keys(INSTITUTION_TYPE_ENUM)} onSelect={(value)=>changeStudentAtribute('institutionType', Number(INSTITUTION_TYPE_ENUM[value])) } label="Tipo de Institução" name="institutionType" />
+                            <Select required={false} defaultValue={oldvalues.institutionType} className="formInput" options={Object.keys(INSTITUTION_TYPE_ENUM)} onSelect={(value) => changeStudentAtribute('institutionType', Number(INSTITUTION_TYPE_ENUM[value]))} label="Tipo de Institução" name="institutionType" />
                         </div>
                         <div className="formInput">
-                            <Select required={true} defaultValue="" className="formInput" onSelect={handleProjectSelect} options={[""].concat(projects.map(x => x.Nome))} label="Projeto" name="project" />
+                            {console.log(selectedprojects)}
+                            <MultiSelect
+                                isDisabled={isUpdate}
+                                selectedValues={selectedprojects}
+                                options={projects}
+                                loading={isLoading}
+                                placeholder='Selecionar Projetos'
+                                onSelect={onProjectSelect}
+                                onRemove={onProjectSelect}
+                                displayValue="Nome"
+                            />
                         </div>
                     </div>}
                     {!isStudent && <div className="form-section" id="professor-section">
@@ -309,13 +350,9 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                             <label htmlFor="institution">Institução</label>
                             <input required={true} type="text" name="institution" value={professor.institution} id="institution" onChange={(e) => changeProfessorAtribute(e.target.name, e.target.value)} />
                         </div>}
-                        {userType === "Professor" && <div className="formInput">
-                            <Select required={false} className="formInput" onSelect={handleProjectSelect} options={[""].concat(projects.map(x => x.Nome))} label="Projeto" name="project" />
-                        </div>
-                        }
                         <div className="formInput">
                             <label htmlFor="siape">SIAPE</label>
-                            <input required={userType==="Professor"? true: false} disabled={isUpdate} type="text" minLength={3} value={professor.siape} name="siape" id="siape" onChange={(e) => changeProfessorAtribute(e.target.name, e.target.value)} />
+                            <input required={userType === "Professor" ? true : false} disabled={isUpdate} type="text" minLength={3} value={professor.siape} name="siape" id="siape" onChange={(e) => changeProfessorAtribute(e.target.name, e.target.value)} />
                         </div>
                     </div>}
                     <div className="form-section">

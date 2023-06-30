@@ -1,40 +1,76 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CSVReader from 'react-csv-reader';
-import axios from 'axios';
 import PageContainer from '../components/PageContainer';
 import Table from '../components/Table/table';
 import '../styles/form.scss'
 import '../styles/csvLoader.scss'
 import Select from '../components/select';
+import jwt_decode from 'jwt-decode';
+import { useNavigate } from 'react-router';
+import { postStudentCsv, postStudentCourseCsv } from '../api/student_service';
+import ErrorPage from '../components/error/Error';
 
 const CsvLoader = () => {
     const [fileData, setFileData] = useState(null);
+    const [file, setFile] = useState(null);
     const [name,] = useState(localStorage.getItem('name'))
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState(false)
     const [entity, setEntity] = useState('Estudantes')
-    const handleFileLoaded = (data) => {
+
+    const handleFileLoaded = (data,file_info, originalFile) => {
         setFileData(data);
+        setFile(originalFile)
     };
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const roles = ['Administrator']
+        const token = localStorage.getItem('token')
+        try {
+            const decoded = jwt_decode(token)
+            if (!roles.includes(decoded.role)) {
+                navigate('/')
+            }
+        } catch (error) {
+            navigate('/login')
+        }
+    }, [navigate]);
 
     const handleFileUpload = () => {
-        let endpoint = entity === 'Estudantes'? 'students/csv': 'courses/csv'
-        axios.post(endpoint, { data: fileData })
-            .then((response) => {
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        const formData = new FormData();
+        formData.append('file', file);
+        setIsLoading(true);
+        if(entity === 'Estudantes')
+        {       
+            postStudentCsv(formData)
+                .then((response) => {
+                    navigate('/')
+                })
+                .catch((error) => {
+                    setError(true);
+                });
+        }
+        else if (entity === 'Materias cursados')
+        {
+            postStudentCourseCsv(formData)
+                .then((response) => {
+                    navigate('/')
+                })
+                .catch((error) => {
+                    setError(true);
+                }); 
+        }
+        setIsLoading(false)
     };
 
-    const handleEntitySelect = (entity) => {
-        setEntity(entity)
-    }
     const options = {
         header: true,
         preview: 5
     }
     return (
-        <PageContainer name={name}>
+        <PageContainer name={name} isLoading={isLoading}>
+            { !error &&
             <div className='csv-loader'>
             <div className="form csv">
                 <div className='form-section'>
@@ -59,7 +95,8 @@ const CsvLoader = () => {
                 </div>
             </div>
             {fileData && <Table data={fileData} />}
-            </div>
+            </div>}
+            {error && <ErrorPage/>}
         </PageContainer>)
 };
 

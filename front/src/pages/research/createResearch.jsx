@@ -27,20 +27,21 @@ export default function ResearchForm() {
     const [project, setproject] = useState({})
     const [research, setResearch] = useState(
         {
-            name: '',
+            dissertation: '',
             studentId: id,
-            orientator: '',
-            'co-orientator': '',
+            projectId: '',
+            professorId: undefined,
+            coorientatorId: undefined,
         })
     const setName = (name) => {
-        setResearch(...research, ...{ 'name': name });
+        setResearch({...research, dissertation: name });
     }
     const setOrientator = (name) => {
-
-        setResearch(...research, ...{ 'orientator': name });
+        let id = project?.professors?.find(p => `${p.firstName} ${p.lastName}` === name)?.id;
+        setResearch({...research, professorId: id });
     }
     const setCoorientator = (name) => {
-        setResearch(...research, ...{ 'co-orientator': name });
+        setResearch({...research, coorientatorId: name });
     }
 
     useEffect(() => {
@@ -77,14 +78,13 @@ export default function ResearchForm() {
                 })
         }
         setIsLoading(false)
-    }, [student.projectId,]);
+    }, [student,setproject, setErrorMessage]);
 
     useEffect(() => {
         setIsLoading(true)
         getStudentById(id)
             .then(student => {
                 setStudent(student)
-                return student
             })
             .catch(error => {
                 setError(true)
@@ -95,7 +95,7 @@ export default function ResearchForm() {
 
     useEffect(() => {
         setProfessorOptions(project?.professors?.map(p => `${p.firstName} ${p.lastName}`))
-    }, [project,])
+    }, [project])
 
     useEffect(() => {
         setIsLoading(true)
@@ -111,6 +111,8 @@ export default function ResearchForm() {
     }, [setExternalResearchers, setErrorMessage, setError])
 
     const handlepost = async () => {
+        let body = research
+        body.projectId = student.projectId
         postResearch(research)
         .then(result =>navigate(-1))
         .catch(err =>setError(true))
@@ -133,8 +135,8 @@ export default function ResearchForm() {
                         </div>
                     </div>
                     <div className="form-section">
-                        <Select className="formInput" onSelect={setOrientator} options={professorOptions} label="Orientador" name="orientator" />
-                        <Select className="formInput" onSelect={setCoorientator} options={coorientatorOptions} label="Co-Orientador" name="coorientator" />
+                        <Select className="formInput" defaultValue="" onSelect={setOrientator} options={[""].concat(professorOptions)} label="Orientador" name="orientator" />
+                        <Select className="formInput" defaultValue="" onSelect={setCoorientator} options={[""].concat(coorientatorOptions)} label="Co-Orientador" name="coorientator" />
                     </div>
                     <div className="form-section">
                         <div className="formInput">

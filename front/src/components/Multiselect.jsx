@@ -10,6 +10,7 @@ export default function MultiSelect(
         placeholder,
         isLoading,
         displayValue,
+        isDisabled = false,
         selectedValues=[]
     }
 ) {
@@ -21,6 +22,7 @@ export default function MultiSelect(
         loading={isLoading}
         loadingMessage={<Spinner />}
         placeholder={placeholder}
+        disabled={isDisabled}
         onSelect={onSelect} // Function will trigger on select event
         onRemove={onRemove} // Function will trigger on remove event
         displayValue={displayValue} // Property name to display in the dropdown options
