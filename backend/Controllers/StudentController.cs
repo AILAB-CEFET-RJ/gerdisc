@@ -18,7 +18,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator, StudentManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<StudentDto>> CreateStudent(StudentDto studentDto)
         {
             try
@@ -33,7 +33,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpPost("csv")]
-        [Authorize(Roles = "Administrator, StudentManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<StudentDto>>> AddStudentsFromCsvAsync(IFormFile file)
         {
             try
@@ -48,7 +48,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpPost("course/csv")]
-        [Authorize(Roles = "Administrator, StudentManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<StudentDto>>> AddCoursesToStudentsFromCsvAsync(IFormFile file)
         {
             try
@@ -63,7 +63,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpGet("{studentId}")]
-        [Authorize(Roles = "Administrator, StudentManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<StudentDto>> GetStudent(Guid studentId)
         {
             var student = await _studentService.GetStudentAsync(studentId);
@@ -72,7 +72,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpPut("{studentId}")]
-        [Authorize(Roles = "Administrator, StudentManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<StudentDto>> UpdateStudent(Guid studentId, StudentDto studentDto)
         {
             var updatedStudentDto = await _studentService.UpdateStudentAsync(studentId, studentDto);
@@ -81,7 +81,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpDelete("{studentId}")]
-        [Authorize(Roles = "Administrator, StudentManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteStudent(Guid studentId)
         {
             var studentDto = await _studentService.GetStudentAsync(studentId);
@@ -91,7 +91,7 @@ namespace gerdisc.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator, StudentManager")]
+        [Authorize(Roles = "Administrator")]
         [ProducesResponseType(typeof(IEnumerable<StudentDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetAllStudentsAsync()
         {

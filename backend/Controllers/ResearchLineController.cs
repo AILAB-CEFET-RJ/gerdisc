@@ -23,7 +23,7 @@ namespace gerdisc.Controllers
         /// <param name="researchLineDto">The researchLine data.</param>
         /// <returns>The created researchLine.</returns>
         [HttpPost]
-        [Authorize(Roles = "Administrator, ResearchLineManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<ResearchLineDto>> CreateResearchLine(CreateResearchLineDto researchLineDto)
         {
             try
@@ -43,7 +43,7 @@ namespace gerdisc.Controllers
         /// <param name="id">The researchLine ID.</param>
         /// <returns>The researchLine.</returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator, ResearchLineManager, Developer")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<ResearchLineDto>> GetResearchLine(Guid id)
         {
             try
@@ -77,7 +77,7 @@ namespace gerdisc.Controllers
         /// <param name="researchLineDto">The researchLine data.</param>
         /// <returns>The updated researchLine.</returns>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Administrator, ResearchLineManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<ResearchLineDto>> UpdateResearchLine(Guid id, CreateResearchLineDto researchLineDto)
         {
             try
@@ -97,7 +97,7 @@ namespace gerdisc.Controllers
         /// <param name="id">The researchLine ID.</param>
         /// <returns>No content.</returns>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Administrator, ResearchLineManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteResearchLine(Guid id)
         {
             try
