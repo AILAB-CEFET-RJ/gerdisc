@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Entities
 {
@@ -21,8 +19,18 @@ namespace gerdisc.Models.Entities
         public virtual UserEntity? User { get; set; }
 
         /// <summary>
+        /// Gets or sets the list of professors associated with the project.
+        /// </summary>
+        public IEnumerable<ProfessorProjectEntity> ProfessorProjects { get; set; }
+
+        /// <summary>
         /// The SIAPE (System for Electronic Management of Educational Documentation) number of the professor.
         /// </summary>
         public string? Siape { get; set; }
+
+        public ProfessorEntity()
+        {
+            ProfessorProjects = new List<ProfessorProjectEntity>();
+        }
     }
 }

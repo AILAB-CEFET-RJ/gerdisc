@@ -43,6 +43,7 @@ namespace gerdisc.Models.Mapper
             self is null ? new ProfessorDto() : new ProfessorDto
             {
                 Siape = self.Siape,
+                ProjectIds = self.ProfessorProjects.Select(x => x.Id.ToString()).ToList()
             }.AddUserDto(self.User);
     }
 }
