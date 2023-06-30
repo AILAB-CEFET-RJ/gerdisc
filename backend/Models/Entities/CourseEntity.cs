@@ -11,7 +11,12 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// The name of the course.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unique identifier of the course.
+        /// </summary>
+        public string CourseUnique { get; set; }
 
         /// <summary>
         /// The number of credits associated with the course.

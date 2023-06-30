@@ -41,10 +41,7 @@ namespace gerdisc.Services
             var professor = await _repository
                 .Professor
                 .GetByIdAsync(id, x => x.User) ?? throw new ArgumentException("Professor not found.");
-            var professorProgect = await _repository
-                .ProfessorProject
-                .GetAllAsync(x => x.ProfessorId == professor.Id, x => x.Project);
-            return professor.ToDto(professorProgect);
+            return professor.ToDto();
         }
 
         /// <inheritdoc />

@@ -12,7 +12,7 @@ using gerdisc.Infrastructure.Repositories;
 namespace gerdisc.Migrations
 {
     [DbContext(typeof(ContexRepository))]
-    [Migration("20230625184443_AddTables")]
+    [Migration("20230630163729_AddTables")]
     partial class AddTables
     {
         /// <inheritdoc />
@@ -37,6 +37,10 @@ namespace gerdisc.Migrations
                     b.Property<string>("Concept")
                         .HasColumnType("text");
 
+                    b.Property<string>("CourseUnique")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("Credits")
                         .HasColumnType("integer");
 
@@ -47,6 +51,7 @@ namespace gerdisc.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -247,6 +252,9 @@ namespace gerdisc.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uuid");
 
@@ -308,6 +316,7 @@ namespace gerdisc.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Registration")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("RegistrationDate")

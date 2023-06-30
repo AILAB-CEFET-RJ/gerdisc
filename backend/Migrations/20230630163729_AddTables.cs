@@ -16,7 +16,8 @@ namespace gerdisc.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    CourseUnique = table.Column<string>(type: "text", nullable: false),
                     Credits = table.Column<int>(type: "integer", nullable: false),
                     Code = table.Column<string>(type: "text", nullable: true),
                     IsElective = table.Column<bool>(type: "boolean", nullable: false),
@@ -216,7 +217,7 @@ namespace gerdisc.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Registration = table.Column<string>(type: "text", nullable: true),
+                    Registration = table.Column<string>(type: "text", nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ProjectId = table.Column<Guid>(type: "uuid", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
@@ -267,6 +268,7 @@ namespace gerdisc.Migrations
                     Grade = table.Column<char>(type: "character(1)", nullable: false),
                     Year = table.Column<int>(type: "integer", nullable: false),
                     Trimester = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>

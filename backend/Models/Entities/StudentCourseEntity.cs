@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.Entities
 {
@@ -17,14 +18,6 @@ namespace gerdisc.Models.Entities
         public Guid StudentId { get; set; }
 
         /// <summary>
-        /// Gets or sets the student navigation property.
-        /// </summary>
-        /// <remarks>
-        /// This property allows lazy loading of the <see cref="StudentEntity"/> entity.
-        /// </remarks>
-        public virtual StudentEntity? Student { get; set; }
-
-        /// <summary>
         /// Gets or sets the unique identifier of the course.
         /// </summary>
         /// <remarks>
@@ -33,12 +26,20 @@ namespace gerdisc.Models.Entities
         public Guid CourseId { get; set; }
 
         /// <summary>
-        /// Gets or sets the course navigation property.
+        /// Gets or sets the unique identifier of the course.
         /// </summary>
         /// <remarks>
-        /// This property allows lazy loading of the <see cref="CourseEntity"/> entity.
+        /// This property is a foreign key to the <see cref="CourseEntity"/> entity.
         /// </remarks>
         public virtual CourseEntity? Course { get; set; }
+
+        /// <summary>
+        /// Gets or sets the student navigation property.
+        /// </summary>
+        /// <remarks>
+        /// This property allows lazy loading of the <see cref="StudentEntity"/> entity.
+        /// </remarks>
+        public virtual StudentEntity? Student { get; set; }
 
         /// <summary>
         /// Gets or sets the grade of the student in the course.
@@ -54,5 +55,10 @@ namespace gerdisc.Models.Entities
         /// Gets or sets the trimester in which the student took the course.
         /// </summary>
         public int Trimester { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status of the student in the course.
+        /// </summary>
+        public CourseStatusEnum Status { get; set; }
     }
 }

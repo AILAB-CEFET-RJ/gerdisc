@@ -41,7 +41,7 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<OrientationDto> GetOrientationAsync(Guid id)
         {
-            var orientationEntity = await _repository.Orientation.GetByIdAsync(id, x => x.Professor, x => x.Coorientator);
+            var orientationEntity = await _repository.Orientation.GetByIdAsync(id, x => x.Professor, x => x.Coorientator, x => x.Student, x => x.Project);
             if (orientationEntity == null)
             {
                 throw new ArgumentException("Orientation not found.");
@@ -53,7 +53,7 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<IEnumerable<OrientationDto>> GetAllOrientationsAsync()
         {
-            var orientations = await _repository.Orientation.GetAllAsync(x => x.Professor, x => x.Coorientator);
+            var orientations = await _repository.Orientation.GetAllAsync(x => x.Professor, x => x.Coorientator, x => x.Student, x => x.Project);
             var orientationDtos = new List<OrientationDto>();
             foreach (var orientation in orientations)
             {

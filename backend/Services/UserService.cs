@@ -58,11 +58,17 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<LoginResultDto> ResetPasswordAsync(ResetPasswordDto loginDto)
+        public async Task<LoginResultDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
         {
-            var user = await _repository.User.GetUserByEmail(loginDto.Email) ?? throw new ArgumentException($"User with email {loginDto.Email} not found.");
+            (var isValid, var message) = await _userValidator.CanResetPassword(resetPasswordDto);
+            _logger.LogInformation($"Changing password of user: {resetPasswordDto.Email}");
+            if (!isValid)
+            {
+                throw new ArgumentException(message);
+            }
 
-            user.PasswordHash = HashPassword(loginDto.Password);
+            var user = await _repository.User.GetUserByEmail(resetPasswordDto.Email.ToLower()) ?? throw new ArgumentException($"User with email {resetPasswordDto.Email} not found.");
+            user.PasswordHash = HashPassword(resetPasswordDto.Password);
 
             await _repository.User.UpdateAsync(user);
 
@@ -75,7 +81,7 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<LoginResultDto> AuthenticateAsync(LoginDto loginDto)
         {
-            var user = await _repository.User.GetUserByEmail(loginDto.Email);
+            var user = await _repository.User.GetUserByEmail(loginDto.Email.ToLower());
             if (user == null)
             {
                 throw new ArgumentException($"User with email {loginDto.Email} not found.");

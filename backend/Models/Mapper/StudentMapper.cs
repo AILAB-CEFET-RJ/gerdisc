@@ -125,5 +125,19 @@ namespace gerdisc.Models.Mapper
                 FirstName = csv.Name?.TrimStart().Split(' ').FirstOrDefault(),
                 LastName = csv.Name?.TrimEnd().Split(' ').LastOrDefault(),
             };
+
+        /// <summary>
+        /// Converts a <see cref="StudentCourseCsvDto"/> object to a <see cref="StudentCourseDto"/> object.
+        /// </summary>
+        /// <param name="csv">The <see cref="StudentCourseCsvDto"/> object to convert.</param>
+        /// <returns>A new <see cref="StudentCourseDto"/> object with the values from the <paramref name="csv"/> object.</returns>
+        public static StudentCourseDto ToDto(this StudentCourseCsvDto csv, Guid courseId) =>
+            csv is null ? new StudentCourseDto() : new StudentCourseDto
+            {
+                CourseId = courseId,
+                Grade = csv.Grade,
+                Trimester = int.Parse(csv.Trimester.Trim()[0].ToString()),
+                Year = csv.Year
+            };
     }
 }
