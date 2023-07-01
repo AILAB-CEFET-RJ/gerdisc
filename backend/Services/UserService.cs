@@ -44,7 +44,7 @@ namespace gerdisc.Services
             var user = await _repository.User.AddAsync(userDto.ToUserEntity());
             var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromDays(7));
             string emailSubject = "User Account Created";
-            string emailBody = $"Thank you for creating an account! Your temporary password is: {userDto.ResetPasswordPath + token}. Please change your password after logging in.";
+            string emailBody = $"Thank you for creating an account! Your temporary password is: {userDto.ResetPasswordPath + "?token=" + token}. Please change your password after logging in.";
             await _emailSender.SendEmail(userDto.Email, emailSubject, emailBody).ConfigureAwait(false);
             return user;
         }
@@ -56,7 +56,7 @@ namespace gerdisc.Services
 
             var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromMinutes(30));
             string emailSubject = "Password Reset";
-            string emailBody = $"You have requested to reset your password. Please click on the following link to reset your password: {request.ResetPasswordPath + token}";
+            string emailBody = $"You have requested to reset your password. Please click on the following link to reset your password: {request.ResetPasswordPath + "?token=" + token}";
             await _emailSender.SendEmail(request.Email, emailSubject, emailBody).ConfigureAwait(false);
         }
 
