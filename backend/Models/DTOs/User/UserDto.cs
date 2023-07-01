@@ -22,7 +22,7 @@ namespace gerdisc.Models.DTOs
         [Required(ErrorMessage = "Cpf is required")]
         [ValidCpf]
         public string? Cpf { get; set; }
-
+        public string? ResetPasswordPath { get; set; }
         public virtual RolesEnum Role { get; set; }
     }
 }
