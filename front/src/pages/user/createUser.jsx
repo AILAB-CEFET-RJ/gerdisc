@@ -292,22 +292,22 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                     {isStudent && <div className="form-section" id="registration-section">
                         <div className="formInput">
                             <label htmlFor="registration">Matricula</label>
-                            <input required={true} disabled={isUpdate} type="text" name="registration" id="registration" value={student.registration} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
+                            <input required={true} type="text" name="registration" id="registration" value={student.registration} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
                         </div>
                         <div className="formInput">
                             <Select required={false} defaultValue={oldvalues.scholarship} label={"Bolsa"} onSelect={(value) => changeStudentAtribute('scholarship', Number(SCHOLARSHIP_TYPE[value]))} name="scholarship" options={Object.keys(SCHOLARSHIP_TYPE)} />
                         </div>
                         <div className="formInput">
                             <label htmlFor="registrationDate">Data de Matricula</label>
-                            <input required={true} disabled={isUpdate} type="date" name="registrationDate" id="registrationDate" value={student.registrationDate} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
+                            <input required={true} type="date" name="registrationDate" id="registrationDate" value={student.registrationDate} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
                         </div>
                         <div className="formInput">
                             <label htmlFor="entryDate">Data de Entrada</label>
-                            <input required={true} disabled={isUpdate} type="date" name="entryDate" id="entryDate" value={student.entryDate} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
+                            <input required={true} type="date" name="entryDate" id="entryDate" value={student.entryDate} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
                         </div>
                         <div className="formInput">
                             <label htmlFor="dateOfBirth">Data de Nascimento</label>
-                            <input required={true} disabled={isUpdate} type="date" name="dateOfBirth" id="dateOfBirth" value={student.dateOfBirth} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
+                            <input required={true} type="date" name="dateOfBirth" id="dateOfBirth" value={student.dateOfBirth} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
                         </div>
                     </div>}
                     {isStudent && <div className="form-section" id="qualification-section2">
