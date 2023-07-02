@@ -1,4 +1,5 @@
 using CsvHelper.Configuration.Attributes;
+using gerdisc.Infrastructure.Validations;
 using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.DTOs
@@ -9,9 +10,11 @@ namespace gerdisc.Models.DTOs
         public string? Name { get; set; }
 
 	    [Name("E-mail")]
+        [ValidEmail]
         public string? Email { get; set; }
 
 	    [Name("CPF")]
+        [ValidCpf]
         public string? Cpf { get; set; }
 
 	    [Name("Inscrição")]

@@ -5,6 +5,7 @@ using gerdisc.Models.Mapper;
 using CsvHelper;
 using System.Globalization;
 using gerdisc.Services.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace gerdisc.Services
 {
@@ -40,12 +41,10 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<IEnumerable<StudentDto>> AddStudentsFromCsvAsync(IFormFile file)
         {
-            using var reader = new StreamReader(file.OpenReadStream());
-            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-            var records = await csv.GetRecordsAsync<StudentCsvDto>().ToListAsync();
+            var records = CastFromCsvAsync<StudentCsvDto>(file);
 
             var insertedStudents = new List<StudentDto>();
-            foreach (var record in records)
+            await foreach (var record in records)
             {
                 try
                 {
@@ -64,21 +63,19 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<IEnumerable<StudentCourseDto>> AddCoursesToStudentsFromCsvAsync(IFormFile file)
         {
-            using var reader = new StreamReader(file.OpenReadStream());
-            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-            var records = await csv.GetRecordsAsync<StudentCourseCsvDto>().ToListAsync();
+            var records = CastFromCsvAsync<StudentCourseCsvDto>(file);
 
-            var courseNames = records.Select(x => x.CourseUnique).ToList();
+            var courseNames = await records.Select(x => x.CourseUnique).ToListAsync();
             var courses = await _repository.Course.GetAllAsync(x => courseNames.Contains(x.CourseUnique));
             var courseDictionary = courses?.ToDictionary(x => x.CourseUnique, x => x.Id);
 
-            var studentRegistrations = records.Select(x => x.StudentRegistration).ToList();
+            var studentRegistrations = await records.Select(x => x.StudentRegistration).ToListAsync();
             var students = await _repository.Student.GetAllAsync(x => studentRegistrations.Contains(x.Registration));
             var studentDictionary = students?.ToDictionary(x => x.Registration, x => x);
 
             var insertedCourses = new List<StudentCourseDto>();
 
-            foreach (var record in records)
+            await foreach (var record in records)
             {
                 if (studentDictionary.TryGetValue(record.StudentRegistration, out var student) &&
                     courseDictionary.TryGetValue(record.CourseUnique, out var courseId))
@@ -148,6 +145,30 @@ namespace gerdisc.Services
             }
 
             await _repository.Student.DeactiveAsync(existingStudent);
+        }
+
+        public async IAsyncEnumerable<TDTO> CastFromCsvAsync<TDTO>(IFormFile file)
+            where TDTO: class
+        {
+            using var reader = new StreamReader(file.OpenReadStream());
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+            var records = await csv.GetRecordsAsync<TDTO>().ToListAsync();
+
+            foreach (var record in records)
+            {
+                var validationContext = new ValidationContext(record);
+                var validationResults = new List<ValidationResult>();
+
+                if (Validator.TryValidateObject(record, validationContext, validationResults, true))
+                {
+                    yield return record;
+                }
+                else
+                {
+                    var errorMessages = validationResults.Select(result => result.ErrorMessage);
+                    _logger.LogWarning($"Validation failed for record: {string.Join(", ", errorMessages)}");
+                }
+            }
         }
     }
 }
