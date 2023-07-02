@@ -128,8 +128,9 @@ RecurringJob.AddOrUpdate<StudentsFinishing>("daily-job", x => x.ExecuteAsync(nul
 
 app.MapControllers();
 
-app.UseHangfireDashboard("/hangfire", new DashboardOptions
+app.UseHangfireDashboard("/api/hangfire", new DashboardOptions
 {
+    PrefixPath = string.Empty,
     Authorization = new[] { new HangfireDashboardAuthorizationFilter() }
 });
 
