@@ -121,17 +121,17 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHangfireDashboard();
+
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    PrefixPath = string.Empty,
+    Authorization = new[] { new HangfireDashboardAuthorizationFilter() }
+});
+
 app.UseMiddleware<UserContextMiddleware>();
 app.UseMiddleware<LogRequest>();
 RecurringJob.AddOrUpdate<StudentsFinishing>("daily-job", x => x.ExecuteAsync(null), Cron.Daily);
 
 app.MapControllers();
-
-app.UseHangfireDashboard("/api/hangfire", new DashboardOptions
-{
-    PrefixPath = string.Empty,
-    Authorization = new[] { new HangfireDashboardAuthorizationFilter() }
-});
 
 app.Run();
