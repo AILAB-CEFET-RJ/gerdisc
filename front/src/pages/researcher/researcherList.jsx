@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import '../../styles/researcherList.scss';
 import Table from "../../components/Table/table"
 import { getResearchers } from "../../api/researcher_service"
@@ -7,7 +6,6 @@ import { useNavigate } from "react-router"
 import jwt_decode from "jwt-decode";
 import BackButton from "../../components/BackButton";
 import PageContainer from "../../components/PageContainer";
-
 
 export default function ResearcherList() {
     const navigate = useNavigate()
@@ -35,11 +33,11 @@ export default function ResearcherList() {
             .then(result => {
                 let mapped = []
                 if (result !== null && result !== undefined) {
-                    mapped = result.map((professor) => {
+                    mapped = result.map((researcher) => {
                         return {
-                            Id: professor.Id,
-                            Nome: `${professor.user?.firstName} ${professor.user?.lastName}`,
-                            Siape: professor.siape,
+                            Id: researcher.Id,
+                            Nome: `${researcher.user?.firstName} ${researcher.user?.lastName}`,
+                            Siape: researcher.siape,
                         }
                     })
                 }
@@ -47,7 +45,6 @@ export default function ResearcherList() {
                 setIsLoading(false)
             })
     }, [setResearchers, setIsLoading])
-
 
     return (
         <PageContainer name={name} isLoading={isLoading}>
@@ -64,7 +61,7 @@ export default function ResearcherList() {
                         <i className="fas fa-" />
                     </div>
                     <div className="create-button">
-                        <button onClick={()=> navigate('/researches/add')}>Novo Pesquisador</button>
+                        <button onClick={() => navigate('/researches/add')}>Novo Pesquisador</button>
                     </div>
                 </div>
             </div>

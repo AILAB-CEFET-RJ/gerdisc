@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../../styles/researchList.scss";
 import Table from "../../components/Table/table";
-import { getResearchers } from "../../api/researcher_service";
+import { getResearch } from "../../api/research_service";
 import { useNavigate } from "react-router";
 import jwt_decode from "jwt-decode";
 import BackButton from "../../components/BackButton";
@@ -31,7 +31,7 @@ export default function ResearchList() {
   }, [setRole, navigate, role]);
 
   useEffect(() => {
-    getResearchers()
+    getResearch()
       .then((result) => {
         let mapped = [];
         console.log(result);
