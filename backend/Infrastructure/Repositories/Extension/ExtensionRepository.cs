@@ -26,5 +26,16 @@ namespace gerdisc.Infrastructure.Repositories.Extension
                 .FilterByUserRole(_userContext)
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
+
+        /// <inheritdoc />
+        public override async Task<IEnumerable<ExtensionEntity>> GetAllAsync(
+            params Expression<Func<ExtensionEntity, object>>[] includeProperties)
+        {
+            return await _dbSet
+                .Where(e => !e.IsDeleted)
+                .IncludeMultiple(includeProperties)
+                .FilterByUserRole(_userContext)
+                .ToListAsync();
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<ExtensionDto> GetExtensionAsync(Guid id)
         {
-            var extensionEntity = await _repository.Extension.GetByIdAsync(id);
+            var extensionEntity = await _repository.Extension.GetByIdAsync(id, x => x.Student);
             if (extensionEntity == null)
             {
                 throw new ArgumentException("Extension not found.");
@@ -49,7 +49,7 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<IEnumerable<ExtensionDto>> GetAllExtensionsAsync()
         {
-            var extensions = await _repository.Extension.GetAllAsync();
+            var extensions = await _repository.Extension.GetAllAsync(x => x.Student);
             var extensionDtos = new List<ExtensionDto>();
             foreach (var extension in extensions)
             {
