@@ -35,7 +35,7 @@ export default function App() {
         <Route path="/projects" element={<ProjectList />} />
         <Route path="/user/add" element={<UserForm />} />
         <Route path="/entities/csv" element={<CsvLoader />} />
-        <Route path="/researches/add" element={<ResearchForm />} />
+        <Route path="/students/:id/researches/add" element={<ResearchForm />} />
         <Route path="/students/add" element={<StudentForm />} />
         <Route path="/professors/add" element={<UserForm type={"Professor"}/>} />
         <Route path="/professors/:id" element={<ProfessorUpdate/>} />
