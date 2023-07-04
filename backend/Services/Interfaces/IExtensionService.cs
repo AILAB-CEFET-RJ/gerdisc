@@ -12,7 +12,7 @@ namespace gerdisc.Services.Interfaces
         /// </summary>
         /// <param name="extensionDto">The extension DTO containing the extension details.</param>
         /// <returns>The created extension DTO.</returns>
-        Task<ExtensionDto> CreateExtensionAsync(ExtensionDto extensionDto);
+        Task<ExtensionDto> CreateExtensionAsync(CreateExtensionDto extensionDto);
 
         /// <summary>
         /// Retrieves a extension by ID.
@@ -33,7 +33,7 @@ namespace gerdisc.Services.Interfaces
         /// <param name="id">The ID of the extension to update.</param>
         /// <param name="extensionDto">The extension DTO containing the updated extension details.</param>
         /// <returns>The updated extension DTO.</returns>
-        Task<ExtensionDto> UpdateExtensionAsync(Guid id, ExtensionDto extensionDto);
+        Task<ExtensionDto> UpdateExtensionAsync(Guid id, CreateExtensionDto extensionDto);
 
         /// <summary>
         /// Deletes a extension.

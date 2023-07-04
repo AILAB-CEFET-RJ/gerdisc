@@ -35,8 +35,9 @@ export default function ResearcherList() {
                 if (result !== null && result !== undefined) {
                     mapped = result.map((researcher) => {
                         return {
+                            Id: researcher.id,
                             Nome: `${researcher?.firstName} ${researcher?.lastName}`,
-                            Siape: researcher.siape,
+                            "E-mail": researcher.email,
                             "Instituição": researcher.institution,
                         }
                     })

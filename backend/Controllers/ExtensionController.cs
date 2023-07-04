@@ -25,7 +25,7 @@ namespace gerdisc.Controllers
         /// <returns>The created extension.</returns>
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ExtensionDto>> CreateExtension(ExtensionDto extensionDto)
+        public async Task<ActionResult<ExtensionDto>> CreateExtension(CreateExtensionDto extensionDto)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace gerdisc.Controllers
         /// <returns>The updated extension.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ExtensionDto>> UpdateExtension(Guid id, ExtensionDto extensionDto)
+        public async Task<ActionResult<ExtensionDto>> UpdateExtension(Guid id, CreateExtensionDto extensionDto)
         {
             try
             {

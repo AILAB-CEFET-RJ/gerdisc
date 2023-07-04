@@ -9,11 +9,11 @@ namespace gerdisc.Models.Mapper
     public static class ExtensionMapper
     {
         /// <summary>
-        /// Converts a <see cref="ExtensionDto"/> object to a <see cref="ExtensionEntity"/> object.
+        /// Converts a <see cref="CreateExtensionDto"/> object to a <see cref="ExtensionEntity"/> object.
         /// </summary>
-        /// <param name="self">The <see cref="ExtensionDto"/> object to convert.</param>
+        /// <param name="self">The <see cref="CreateExtensionDto"/> object to convert.</param>
         /// <returns>A new <see cref="ExtensionEntity"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static ExtensionEntity ToEntity(this ExtensionDto self) =>
+        public static ExtensionEntity ToEntity(this CreateExtensionDto self) =>
             self is null ? new ExtensionEntity() : new ExtensionEntity
             {
                 Status = self.Status,
@@ -23,12 +23,12 @@ namespace gerdisc.Models.Mapper
             };
 
         /// <summary>
-        /// Updates the values of an existing <see cref="ExtensionEntity"/> object using the values from a <see cref="ExtensionDto"/> object.
+        /// Updates the values of an existing <see cref="ExtensionEntity"/> object using the values from a <see cref="CreateExtensionDto"/> object.
         /// </summary>
-        /// <param name="self">The <see cref="ExtensionDto"/> object containing the updated values.</param>
+        /// <param name="self">The <see cref="CreateExtensionDto"/> object containing the updated values.</param>
         /// <param name="entityToUpdate">The existing <see cref="ExtensionEntity"/> object to update.</param>
         /// <returns>The updated <see cref="ExtensionEntity"/> object.</returns>
-        public static ExtensionEntity ToEntity(this ExtensionDto self, ExtensionEntity entityToUpdate)
+        public static ExtensionEntity ToEntity(this CreateExtensionDto self, ExtensionEntity entityToUpdate)
         {
             entityToUpdate.Status = self.Status;
             entityToUpdate.NumberOfDays = self.NumberOfDays;
@@ -49,7 +49,8 @@ namespace gerdisc.Models.Mapper
                 Status = self.Status,
                 NumberOfDays = self.NumberOfDays,
                 StudentId = self.StudentId,
-                Type = self.Type
+                Type = self.Type,
+                Student = self.Student?.ToUserDto()
             };
     }
 }

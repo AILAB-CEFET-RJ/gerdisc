@@ -41,7 +41,7 @@ export default function ExtensionList() {
                         return {
                             Id: extension.id,
                             Status: extension.status,
-                            Estudante: extension?.studentId,
+                            Estudante: extension?.student?.email,
                             Dias: extension?.numberOfDays,
                             Tipo: extension?.type === 1? "Defesa": "Qualificação" 
                         }

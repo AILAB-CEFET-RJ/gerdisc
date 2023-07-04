@@ -2,7 +2,7 @@ using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.DTOs
 {
-    public class ExtensionDto
+    public class CreateExtensionDto
     {
         public Guid? Id { get; set; }
 
@@ -13,7 +13,5 @@ namespace gerdisc.Models.DTOs
         public string? Status { get; set; }
 
         public ExtensionTypeEnum Type { get; set; }
-
-        public UserDto? Student { get; set; }
     }
 }

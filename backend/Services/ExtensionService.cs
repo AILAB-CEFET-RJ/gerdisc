@@ -24,7 +24,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ExtensionDto> CreateExtensionAsync(ExtensionDto extensionDto)
+        public async Task<ExtensionDto> CreateExtensionAsync(CreateExtensionDto extensionDto)
         {
             var extension = extensionDto.ToEntity();
 
@@ -60,7 +60,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ExtensionDto> UpdateExtensionAsync(Guid id, ExtensionDto extensionDto)
+        public async Task<ExtensionDto> UpdateExtensionAsync(Guid id, CreateExtensionDto extensionDto)
         {
             var existingExtension = await _repository.Extension.GetByIdAsync(id);
             if (existingExtension == null)
