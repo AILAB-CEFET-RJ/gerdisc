@@ -31,7 +31,6 @@ export default function ResearcherList() {
     useEffect(() => {
         getResearchers()
             .then(result => {
-                console.log(result)
                 let mapped = []
                 if (result !== null && result !== undefined) {
                     mapped = result.map((researcher) => {
@@ -42,7 +41,6 @@ export default function ResearcherList() {
                         }
                     })
                 }
-                console.log(mapped)
                 setResearchers(mapped)
                 setIsLoading(false)
             })
