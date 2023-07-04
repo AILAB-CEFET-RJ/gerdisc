@@ -12,6 +12,8 @@ namespace gerdisc.Infrastructure.Extensions
             {
                 case RolesEnum.Student:
                     return query.Where(p => p.StudentId == userContext.UserId);
+                case RolesEnum.Administrator:
+                    return query;
                 default:
                     return query.Where(d => false);
             }
