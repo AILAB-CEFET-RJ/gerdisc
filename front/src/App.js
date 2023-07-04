@@ -38,6 +38,7 @@ export default function App() {
         <Route path="/students/:id/researches/add" element={<ResearchForm />} />
         <Route path="/students/add" element={<StudentForm />} />
         <Route path="/professors/add" element={<UserForm type={"Professor"}/>} />
+        <Route path="/researches/add" element={<UserForm type={"Externo"}/>} />
         <Route path="/professors/:id" element={<ProfessorUpdate/>} />
         <Route path="/researchers/:id" element={<ResearcherUpdate />} />
         <Route path="/projects/add" element={<ProjectForm />} />

@@ -64,7 +64,7 @@ export default function ResearcherList() {
                         <i className="fas fa-" />
                     </div>
                     <div className="create-button">
-                        <button>Novo Pesquisador</button>
+                        <button onClick={()=> navigate('/researches/add')}>Novo Pesquisador</button>
                     </div>
                 </div>
             </div>
