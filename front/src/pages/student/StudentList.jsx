@@ -39,7 +39,7 @@ export default function StudentList() {
                             Id: student.id,
                             Nome: `${student.firstName} ${student.lastName}`,
                             Status: student.status,
-                            Registração: student.registration,
+                            "Matrícula": student.registration,
                             "Data de defesa": student.projectDefenceDate,
                             "Data de qualificação": student.projectQualificationDate
                         }
