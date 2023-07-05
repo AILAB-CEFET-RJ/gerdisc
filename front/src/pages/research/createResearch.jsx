@@ -35,6 +35,11 @@ export default function ResearchForm() {
         setResearch({ ...research, coorientatorId: id });
       };
     
+
+    const setOrientator = (id) => {
+        setResearch({ ...professorOptions, orientatorId: id });
+      };
+    
   useEffect(() => {
     const fetchStudentAndProject = async () => {
       try {
@@ -89,16 +94,16 @@ export default function ResearchForm() {
       {!error && student && project && (
         <div className="form">
           <div className="form-section">
-            <Select
+          <Select
               className="formInput"
               defaultValue=""
-              onSelect={(name) => {
-                const id = project?.professors?.find((p) => `${p.firstName} ${p.lastName}` === name)?.id;
-                setResearch({ ...research, professorId: id });
-              }}
+              onSelect={setOrientator}
               options={[
                 { value: "", label: "" },
-                ...professorOptions.map((name) => ({ value: name, label: name })),
+                ...professorOptions.map((professor) => ({
+                  value: professor.id,
+                  label: `${professor.firstName} ${professor.lastName}`,
+                })),
               ]}
               label="Orientador"
               name="orientator"
