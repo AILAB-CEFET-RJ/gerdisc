@@ -59,7 +59,7 @@ export default function StudentProfile() {
                         <p data-label="Email">{student.email}</p>
                         <p data-label="Proficiencia">{student.proficiency}</p>
                         <p data-label="Matricula">{student.registration}</p>
-                        <p data-label="Projeto de pesquisa">{student.projectId}</p>
+                        <p data-label="Projeto de pesquisa">{student.project?.name}</p>
                         <p data-label="Data de ingresso">{student.entryDate}</p>
                         <p data-label="Previsao de defesa">{student.projectDefenceDate}</p>
                         <p data-label="Previsao de qualificação">{student.projectQualificationDate}</p>
