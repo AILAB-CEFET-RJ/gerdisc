@@ -47,19 +47,18 @@ export default function ResearchForm() {
         setStudent(student);
         const project = await getProjectById(student?.projectId);
         setProject(project);
-        setProfessorOptions(
-          project?.professors?.map((p) => ({
-            id: p.id,
-            name: `${p.firstName} ${p.lastName}`,
-          }))
-        );
+        const professorOptions = project?.professors?.map((p) => ({
+          value: p.id,
+          label: `${p.firstName} ${p.lastName}`,
+        }));
+        setProfessorOptions(professorOptions);
         const researchers = await getResearchers();
         setExternalResearchers(researchers);
-        const options = researchers.map((r) => ({
-          id: r.id,
-          name: `${r.firstName} ${r.lastName}`,
+        const researcherOptions = researchers.map((r) => ({
+          value: r.id,
+          label: `${r.firstName} ${r.lastName}`,
         }));
-        setCoorientatorOptions([...professorOptions, ...options]);
+        setCoorientatorOptions([...professorOptions, ...researcherOptions]);
         setIsLoading(false);
       } catch (error) {
         setError(true);
@@ -107,10 +106,7 @@ export default function ResearchForm() {
               onSelect={setOrientator}
               options={[
                 { value: "", label: "" },
-                ...professorOptions.map((professor) => ({
-                  value: professor.id,
-                  label: professor.name,
-                })),
+                ...professorOptions,
               ]}
               label="Orientador"
               name="orientator"
@@ -121,10 +117,7 @@ export default function ResearchForm() {
               onSelect={setCoorientator}
               options={[
                 { value: "", label: "" },
-                ...coorientatorOptions.map((researcher) => ({
-                  value: researcher.id,
-                  label: researcher.name,
-                })),
+                ...coorientatorOptions,
               ]}
               label="Co-Orientador"
               name="coorientator"
