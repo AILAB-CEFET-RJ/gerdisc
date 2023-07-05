@@ -12,34 +12,33 @@ import PageContainer from "../../components/PageContainer";
 import { postResearch } from "../../api/research_service";
 
 export default function ResearchForm() {
-    const { id } = useParams();
-    const navigate = useNavigate()
-    const [name,] = useState(localStorage.getItem('name'))
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
-    const [professorOptions, setProfessorOptions] = useState([]);
-    const [externalResearchers, setExternalResearchers] = useState([]);
-    const [coorientatorOptions, setCoorientatorOptions] = useState([]);
-    const [student, setStudent] = useState({});
-    const [project, setProject] = useState({});
-    const [research, setResearch] = useState({
-      dissertation: "",
-      studentId: id,
-      projectId: "",
-      professorId: undefined,
-      coorientatorId: undefined,
-    });
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [name] = useState(localStorage.getItem("name"));
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [professorOptions, setProfessorOptions] = useState([]);
+  const [externalResearchers, setExternalResearchers] = useState([]);
+  const [coorientatorOptions, setCoorientatorOptions] = useState([]);
+  const [student, setStudent] = useState({});
+  const [project, setProject] = useState({});
+  const [research, setResearch] = useState({
+    dissertation: "",
+    studentId: id,
+    projectId: "",
+    professorId: undefined,
+    coorientatorId: undefined,
+  });
 
-    const setCoorientator = (id) => {
-        setResearch({ ...research, coorientatorId: id });
-      };
-    
+  const setCoorientator = (id) => {
+    setResearch({ ...research, coorientatorId: id });
+  };
 
-    const setOrientator = (id) => {
-        setResearch({ ...research, orientatorId: id });
-      };
-    
+  const setOrientator = (id) => {
+    setResearch({ ...research, professorId: id });
+  };
+
   useEffect(() => {
     const fetchStudentAndProject = async () => {
       try {
@@ -48,11 +47,19 @@ export default function ResearchForm() {
         setStudent(student);
         const project = await getProjectById(student?.projectId);
         setProject(project);
-        setProfessorOptions(project?.professors?.map((p) => ({id: p.id, name:`${p.firstName} ${p.lastName}`})));
+        setProfessorOptions(
+          project?.professors?.map((p) => ({
+            id: p.id,
+            name: `${p.firstName} ${p.lastName}`,
+          }))
+        );
         const researchers = await getResearchers();
         setExternalResearchers(researchers);
-        const options = researchers.map((r) => ({id: p.id, name:`${r.firstName} ${r.lastName}`}));
-        setCoorientatorOptions(professorOptions.concat(options));
+        const options = researchers.map((r) => ({
+          id: r.id,
+          name: `${r.firstName} ${r.lastName}`,
+        }));
+        setCoorientatorOptions([...professorOptions, ...options]);
         setIsLoading(false);
       } catch (error) {
         setError(true);
@@ -94,7 +101,7 @@ export default function ResearchForm() {
       {!error && student && project && (
         <div className="form">
           <div className="form-section">
-          <Select
+            <Select
               className="formInput"
               defaultValue=""
               onSelect={setOrientator}
