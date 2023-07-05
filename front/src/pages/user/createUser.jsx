@@ -267,7 +267,17 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                 <BackButton />
                 <form className="form">
                     {type === undefined && <div className="form-section">
-                        <Select required={true} className="formInput" onSelect={handleUsertypeSelect} options={["", "Professor", "Estudante", "Externo"]} label="Tipo de Usuario" name="role" />
+                    <Select
+                        required={true}
+                        className="formInput"
+                        onSelect={handleUsertypeSelect}
+                        options={["", "Professor", "Estudante", "Externo"].map((option) => ({
+                            value: option,
+                            label: option,
+                        }))}
+                        label="Tipo de Usuario"
+                        name="role"
+                        />
                     </div>}
                     <div className="form-section">
                         <div className="formInput">
@@ -295,7 +305,19 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                             <input required={true} type="text" name="registration" id="registration" value={student.registration} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
                         </div>
                         <div className="formInput">
-                            <Select required={false} defaultValue={oldvalues.scholarship} label={"Bolsa"} onSelect={(value) => changeStudentAtribute('scholarship', Number(SCHOLARSHIP_TYPE[value]))} name="scholarship" options={Object.keys(SCHOLARSHIP_TYPE)} />
+                        <Select
+                            required={false}
+                            defaultValue={oldvalues.scholarship}
+                            label={"Bolsa"}
+                            onSelect={(value) =>
+                                changeStudentAtribute('scholarship', Number(SCHOLARSHIP_TYPE[value]))
+                            }
+                            name="scholarship"
+                            options={Object.keys(SCHOLARSHIP_TYPE).map((key) => ({
+                                value: key,
+                                label: key,
+                            }))}
+                            />
                         </div>
                         <div className="formInput">
                             <label htmlFor="registrationDate">Data de Matricula</label>
@@ -320,7 +342,14 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                             <input required={true} type="text" name="undergraduateCourse" id="undergraduateCourse" value={student.undergraduateCourse} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
                         </div>
                         <div className="formInput">
-                            <Select required={true} defaultValue={oldvalues.undergraduateArea} label={"undergraduateArea"} onSelect={(value) => changeStudentAtribute('undergraduateArea', Number(AREA_ENUM[value]))} name="undergraduateArea" options={Object.keys(AREA_ENUM)} />
+                        <Select
+                            required={true}
+                            defaultValue={oldvalues.undergraduateArea}
+                            label={"undergraduateArea"}
+                            onSelect={(value) => changeStudentAtribute('undergraduateArea', Number(AREA_ENUM[value]))}
+                            name="undergraduateArea"
+                            options={Object.keys(AREA_ENUM).map((key) => ({ value: key, label: key }))}
+                            />
                         </div>
                         <div className="formInput">
                             <label htmlFor="graduationYear">Ano de formação</label>
@@ -329,11 +358,24 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                     </div>}
                     {isStudent && <div className="form-section" id="qualification-section3">
                         <div className="formInput">
-                            <Select required={false} defaultValue={oldvalues.institutionType} className="formInput" options={Object.keys(INSTITUTION_TYPE_ENUM)} onSelect={(value) => changeStudentAtribute('institutionType', Number(INSTITUTION_TYPE_ENUM[value]))} label="Tipo de Institução" name="institutionType" />
+                            <Select
+                                required={false}
+                                defaultValue={oldvalues.institutionType}
+                                className="formInput"
+                                options={Object.keys(INSTITUTION_TYPE_ENUM).map((key) => ({
+                                    value: key,
+                                    label: key,
+                                }))}
+                                onSelect={(value) =>
+                                    changeStudentAtribute('institutionType', Number(INSTITUTION_TYPE_ENUM[value]))
+                                }
+                                label="Tipo de Institução"
+                                name="institutionType"
+                            />
                         </div>
                         <div className="formInput">
                             {console.log(selectedprojects)}
-                            <MultiSelect
+                            <Select
                                 isDisabled={isUpdate}
                                 selectedValues={selectedprojects}
                                 options={projects}

@@ -75,7 +75,15 @@ const CsvLoader = () => {
             <div className="form csv">
                 <div className='form-section'>
                     <div className='formInput'>
-                        <Select onSelect={setEntity} options={["Estudantes", "Materias cursados"]} label={"Entitidade a criar"} name={"entity"} />
+                    <Select
+                        onSelect={setEntity}
+                        options={["Estudantes", "Materias cursados"].map((option) => ({
+                            value: option,
+                            label: option,
+                        }))}
+                        label={"Entidade a criar"}
+                        name={"entity"}
+                        />
                     </div>
                 </div>
                 <div className='form-section'>
