@@ -93,7 +93,7 @@ namespace gerdisc.Models.Mapper
                 DateOfBirth = self.DateOfBirth?.ToUniversalTime(),
                 Scholarship = self.Scholarship,
                 StudentCourses = self.StudentCourses.Select(x => x.ToDto()),
-                Project = self.Project?.ToDto()
+                Project = self.Project?.ToDtoWE()
             };
             return self?.User is null ? entity : entity.AddUserDto(self.User);
         }

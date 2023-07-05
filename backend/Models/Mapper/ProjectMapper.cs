@@ -40,6 +40,20 @@ namespace gerdisc.Models.Mapper
         /// </summary>
         /// <param name="self">The <see cref="ProjectEntity"/> object to convert.</param>
         /// <returns>A new <see cref="ProjectDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static ProjectDto ToDtoWE(this ProjectEntity self) =>
+            self is null ? new ProjectDto() : new ProjectDto
+            {
+                Id = self.Id,
+                Name = self.Name,
+                Status = self.Status,
+                ResearchLineId = self.ResearchLineId
+            };
+
+        /// <summary>
+        /// Converts a <see cref="ProjectEntity"/> object to a <see cref="ProjectDto"/> object.
+        /// </summary>
+        /// <param name="self">The <see cref="ProjectEntity"/> object to convert.</param>
+        /// <returns>A new <see cref="ProjectDto"/> object with the values from the <paramref name="self"/> object.</returns>
         public static ProjectDto ToDto(this ProjectEntity self) =>
             self is null ? new ProjectDto() : new ProjectDto
             {
@@ -47,9 +61,9 @@ namespace gerdisc.Models.Mapper
                 Name = self.Name,
                 Status = self.Status,
                 ResearchLineId = self.ResearchLineId,
-                Professors = self.ProfessorProjects?.Select(p => p.Professor.ToUserDto()).ToList(),
-                Students = self.Students?.Select(s => s.ToDto()).ToList(),
-                Orientations = self.Orientations?.Select(d => d.ToDto()).ToList()
+                Professors = self.ProfessorProjects?.Select(p => p.Professor.ToUserDto()),
+                Students = self.Students?.Select(s => s.ToDto()),
+                Orientations = self.Orientations?.Select(d => d.ToDto())
             };
     }
 }

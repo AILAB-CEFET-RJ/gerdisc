@@ -9,9 +9,9 @@ namespace gerdisc.Models.DTOs
         public Guid ResearchLineId { get; set; }
         public string? Name { get; set; }
         public ProjectStatusEnum Status { get; set; }
-        public List<UserDto>? Professors { get; set; }
-        public List<StudentDto>? Students { get; set; }
-        public List<OrientationDto>? Orientations { get; set; }
+        public IEnumerable<UserDto>? Professors { get; set; }
+        public IEnumerable<StudentDto>? Students { get; set; }
+        public IEnumerable<OrientationDto>? Orientations { get; set; }
 
         public ProjectDto()
         {
