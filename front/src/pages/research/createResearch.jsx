@@ -100,6 +100,12 @@ export default function ResearchForm() {
       {!error && student && project && (
         <div className="form">
           <div className="form-section">
+              <div className="formInput">
+                  <label htmlFor="name">Nome</label>
+                  <input type="text" name="name" value={research.dissertation} onChange={(e) => setResearch({...research, dissertation: name })} id="name" />
+              </div>
+          </div>
+          <div className="form-section">
             <Select
               className="formInput"
               defaultValue=""
