@@ -202,8 +202,6 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         if (isStudent) {
             let _user = user
             _user.createdAt = new Date()
-            _user.password = student.registration
-            _user.role = ROLES_ENUM.Student
             let body = { ..._user, ...student }
             body.entryDate = new Date(body.entryDate)
             body.dateOfBirth = new Date(body.dateOfBirth)
@@ -219,13 +217,11 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
             body.createdAt = new Date()
             body.password = professor.siape
             if (userType === "Professor") {
-                body.role = ROLES_ENUM.Professor
                 postProfessors(body)
                     .then((professor) => navigate("/professors"))
                     .catch(error => { setError('Unable to create Professor') });
             }
             else {
-                body.role = ROLES_ENUM.ExternalResearcher
                 postResearchers(body)
                     .then((researcher) => navigate("/researchers"))
                     .catch(error => { setError('Unable to create Researcher') });
@@ -375,7 +371,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                         </div>
                         <div className="formInput">
                             {console.log(selectedprojects)}
-                            <Select
+                            <MultiSelect
                                 isDisabled={isUpdate}
                                 selectedValues={selectedprojects}
                                 options={projects}
