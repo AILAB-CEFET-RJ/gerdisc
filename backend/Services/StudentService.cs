@@ -95,7 +95,7 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<StudentDto> GetStudentAsync(Guid id)
         {
-            var studentEntity = await _repository.Student.GetByIdAsync(id, s => s.User);
+            var studentEntity = await _repository.Student.GetByIdAsync(id, s => s.User, s => s.Project);
             if (studentEntity == null)
             {
                 throw new ArgumentException("Student not found.");
