@@ -14,6 +14,7 @@ import { postResearch } from "../../api/research_service";
 export default function ResearchForm() {
     const { id } = useParams();
     const navigate = useNavigate()
+    const [name,] = useState(localStorage.getItem('name'))
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(true);
