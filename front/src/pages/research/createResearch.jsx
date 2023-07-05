@@ -102,7 +102,7 @@ export default function ResearchForm() {
           <div className="form-section">
               <div className="formInput">
                   <label htmlFor="name">Nome</label>
-                  <input type="text" name="name" value={research.dissertation} onChange={(e) => setResearch({...research, dissertation: name })} id="name" />
+                  <input type="text" name="name" value={research.dissertation} onChange={(e) => setResearch({...research, dissertation: e.target.value })} id="name" />
               </div>
           </div>
           <div className="form-section">
