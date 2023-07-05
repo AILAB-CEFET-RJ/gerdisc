@@ -71,6 +71,7 @@ namespace gerdisc.Models.Mapper
             self.Email = entity.Email;
             self.FirstName = entity.FirstName;
             self.LastName = entity.LastName;
+            self.Role = entity.Role;
             return self;
         }
 
