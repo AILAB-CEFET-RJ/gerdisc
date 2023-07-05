@@ -13,7 +13,7 @@ namespace gerdisc.Services.Interfaces
         /// </summary>
         /// <param name="studentDto">The student entity to create.</param>
         /// <returns>The created student entity.</returns>
-        Task<StudentDto> CreateStudentAsync(StudentDto student);
+        Task<StudentDto> CreateStudentAsync(CreateStudentDto student);
 
         /// <summary>
         /// Adds a list of students from a CSV file asynchronously.
@@ -48,7 +48,7 @@ namespace gerdisc.Services.Interfaces
         /// <param name="id">The id of the student to update.</param>
         /// <param name="studentDto">The student DTO to update.</param>
         /// <returns>The updated student DTO.</returns>
-        public Task<StudentDto> UpdateStudentAsync(Guid id, StudentDto studentDto);
+        public Task<StudentDto> UpdateStudentAsync(Guid id, CreateStudentDto studentDto);
 
         /// <summary>
         /// Deletes a student entity.

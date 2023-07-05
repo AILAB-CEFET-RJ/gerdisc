@@ -19,7 +19,7 @@ namespace gerdisc.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<StudentDto>> CreateStudent(StudentDto studentDto)
+        public async Task<ActionResult<StudentDto>> CreateStudent(CreateStudentDto studentDto)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace gerdisc.Controllers
 
         [HttpPut("{studentId}")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<StudentDto>> UpdateStudent(Guid studentId, StudentDto studentDto)
+        public async Task<ActionResult<StudentDto>> UpdateStudent(Guid studentId, CreateStudentDto studentDto)
         {
             try
             {

@@ -27,7 +27,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<StudentDto> CreateStudentAsync(StudentDto studentDto)
+        public async Task<StudentDto> CreateStudentAsync(CreateStudentDto studentDto)
         {
             var user = await _userService.CreateUserAsync(studentDto);
             var student = studentDto.ToEntity(user.Id);
@@ -71,7 +71,7 @@ namespace gerdisc.Services
 
             var studentRegistrations = await records.Select(x => x.StudentRegistration).ToListAsync();
             var students = await _repository.Student.GetAllAsync(x => studentRegistrations.Contains(x.Registration));
-            var studentDictionary = students?.ToDictionary(x => x.Registration, x => x);
+            var studentDictionary = students?.ToDictionary(x => x.Registration, x => x.Id);
 
             var insertedCourses = new List<StudentCourseDto>();
 
@@ -80,10 +80,8 @@ namespace gerdisc.Services
                 if (studentDictionary.TryGetValue(record.StudentRegistration, out var student) &&
                     courseDictionary.TryGetValue(record.CourseUnique, out var courseId))
                 {
-                    var studentDto = student.ToDto();
-                    studentDto.StudentCourses = new List<StudentCourseDto> { record.ToDto(courseId) };
-                    var insertedStudent = await UpdateStudentAsync(student.Id, studentDto);
-                    insertedCourses.Add(record.ToDto(courseId));
+                    var course = await _repository.StudentCourse.AddAsync(record.ToDto(courseId, student).ToEntity());
+                    insertedCourses.Add(course.ToDto());
                 }
                 else
                 {
@@ -120,7 +118,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<StudentDto> UpdateStudentAsync(Guid id, StudentDto studentDto)
+        public async Task<StudentDto> UpdateStudentAsync(Guid id, CreateStudentDto studentDto)
         {
             var existingStudent = await _repository.Student.GetByIdAsync(id);
             if (existingStudent == null)
