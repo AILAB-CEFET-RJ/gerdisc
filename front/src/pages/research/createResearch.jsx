@@ -37,7 +37,7 @@ export default function ResearchForm() {
     
 
     const setOrientator = (id) => {
-        setResearch({ ...professorOptions, orientatorId: id });
+        setResearch({ ...research, orientatorId: id });
       };
     
   useEffect(() => {
@@ -48,10 +48,10 @@ export default function ResearchForm() {
         setStudent(student);
         const project = await getProjectById(student?.projectId);
         setProject(project);
-        setProfessorOptions(project?.professors?.map((p) => `${p.firstName} ${p.lastName}`));
+        setProfessorOptions(project?.professors?.map((p) => ({id: p.id, name:`${p.firstName} ${p.lastName}`})));
         const researchers = await getResearchers();
         setExternalResearchers(researchers);
-        const options = researchers.map((r) => `${r.firstName} ${r.lastName}`);
+        const options = researchers.map((r) => ({id: p.id, name:`${r.firstName} ${r.lastName}`}));
         setCoorientatorOptions(professorOptions.concat(options));
         setIsLoading(false);
       } catch (error) {
@@ -102,7 +102,7 @@ export default function ResearchForm() {
                 { value: "", label: "" },
                 ...professorOptions.map((professor) => ({
                   value: professor.id,
-                  label: `${professor.firstName} ${professor.lastName}`,
+                  label: professor.name,
                 })),
               ]}
               label="Orientador"
@@ -116,7 +116,7 @@ export default function ResearchForm() {
                 { value: "", label: "" },
                 ...coorientatorOptions.map((researcher) => ({
                   value: researcher.id,
-                  label: `${researcher.firstName} ${researcher.lastName}`,
+                  label: researcher.name,
                 })),
               ]}
               label="Co-Orientador"
