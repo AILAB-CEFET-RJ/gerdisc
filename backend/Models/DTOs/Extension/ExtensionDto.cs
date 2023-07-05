@@ -13,7 +13,5 @@ namespace gerdisc.Models.DTOs
         public string? Status { get; set; }
 
         public ExtensionTypeEnum Type { get; set; }
-
-        public UserDto? Student { get; set; }
     }
 }

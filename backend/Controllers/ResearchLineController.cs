@@ -24,7 +24,7 @@ namespace gerdisc.Controllers
         /// <returns>The created researchLine.</returns>
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ResearchLineDto>> CreateResearchLine(CreateResearchLineDto researchLineDto)
+        public async Task<ActionResult<ResearchLineInfoDto>> CreateResearchLine(ResearchLineDto researchLineDto)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace gerdisc.Controllers
         /// <returns>The researchLine.</returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ResearchLineDto>> GetResearchLine(Guid id)
+        public async Task<ActionResult<ResearchLineInfoDto>> GetResearchLine(Guid id)
         {
             try
             {
@@ -63,8 +63,8 @@ namespace gerdisc.Controllers
         /// <returns>A list of researchLines.</returns>
         [HttpGet]
         [Authorize(Roles = "Administrator, Student, Professor")]
-        [ProducesResponseType(typeof(IEnumerable<ResearchLineDto>), 200)]
-        public async Task<ActionResult<IEnumerable<ResearchLineDto>>> GetAllResearchLinesAsync()
+        [ProducesResponseType(typeof(IEnumerable<ResearchLineInfoDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ResearchLineInfoDto>>> GetAllResearchLinesAsync()
         {
             var researchLineDtos = await _researchLineService.GetAllResearchLinesAsync();
             return Ok(researchLineDtos);
@@ -78,7 +78,7 @@ namespace gerdisc.Controllers
         /// <returns>The updated researchLine.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ResearchLineDto>> UpdateResearchLine(Guid id, CreateResearchLineDto researchLineDto)
+        public async Task<ActionResult<ResearchLineInfoDto>> UpdateResearchLine(Guid id, ResearchLineDto researchLineDto)
         {
             try
             {

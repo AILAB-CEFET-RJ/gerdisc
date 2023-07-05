@@ -10,6 +10,7 @@ namespace gerdisc.Models.DTOs
 
         public DateTime? RegistrationDate { get; set; }
 
+        [Required(ErrorMessage = "ProjectId is required")]
         public Guid? ProjectId { get; set; }
 
         public StatusEnum Status { get; set; }
@@ -38,8 +39,12 @@ namespace gerdisc.Models.DTOs
 
         public IEnumerable<StudentCourseDto>? StudentCourses { get; set; }
 
-        public ProjectDto? Project { get; set; }
-
+        [ValidRolesEnum(RolesEnum.Student)]
         public override RolesEnum Role { get; set; }
+
+        public StudentDto()
+        {
+            Role = Enums.RolesEnum.Student;
+        }
     }
 }

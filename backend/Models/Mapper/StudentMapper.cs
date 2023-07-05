@@ -6,16 +6,16 @@ using gerdisc.Models.Enums;
 namespace gerdisc.Models.Mapper
 {
     /// <summary>
-    /// A static class containing mapper methods for converting between <see cref="StudentDto"/> and <see cref="StudentEntity"/> objects.
+    /// A static class containing mapper methods for converting between <see cref="StudentInfoDto"/> and <see cref="StudentEntity"/> objects.
     /// </summary>
     public static class StudentMapper
     {
         /// <summary>
-        /// Converts a <see cref="CreateStudentDto"/> object to a <see cref="StudentEntity"/> object.
+        /// Converts a <see cref="StudentDto"/> object to a <see cref="StudentEntity"/> object.
         /// </summary>
-        /// <param name="dto">The <see cref="CreateStudentDto"/> object to convert.</param>
+        /// <param name="dto">The <see cref="StudentDto"/> object to convert.</param>
         /// <returns>A new <see cref="StudentEntity"/> object with the values from the <paramref name="dto"/> object.</returns>
-        public static StudentEntity ToEntity(this CreateStudentDto dto, Guid userId) =>
+        public static StudentEntity ToEntity(this StudentDto dto, Guid userId) =>
             dto is null ? new StudentEntity() : new StudentEntity
             {
                 Id = userId,
@@ -39,12 +39,12 @@ namespace gerdisc.Models.Mapper
             };
 
         /// <summary>
-        /// Updates the values of an existing <see cref="StudentEntity"/> object using the values from a <see cref="CreateStudentDto"/> object.
+        /// Updates the values of an existing <see cref="StudentEntity"/> object using the values from a <see cref="StudentDto"/> object.
         /// </summary>
-        /// <param name="self">The <see cref="CreateStudentDto"/> object containing the updated values.</param>
+        /// <param name="self">The <see cref="StudentDto"/> object containing the updated values.</param>
         /// <param name="entityToUpdate">The existing <see cref="StudentEntity"/> object to update.</param>
         /// <returns>The updated <see cref="StudentEntity"/> object.</returns>
-        public static StudentEntity ToEntity(this CreateStudentDto self, StudentEntity entityToUpdate)
+        public static StudentEntity ToEntity(this StudentDto self, StudentEntity entityToUpdate)
         {
             entityToUpdate.ProjectId = self.ProjectId;
             entityToUpdate.Status = self.Status;
@@ -69,13 +69,13 @@ namespace gerdisc.Models.Mapper
         }
 
         /// <summary>
-        /// Converts a <see cref="StudentEntity"/> object to a <see cref="StudentDto"/> object.
+        /// Converts a <see cref="StudentEntity"/> object to a <see cref="StudentInfoDto"/> object.
         /// </summary>
         /// <param name="self">The <see cref="StudentEntity"/> object to convert.</param>
-        /// <returns>A new <see cref="StudentDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static StudentDto ToDto(this StudentEntity self)
+        /// <returns>A new <see cref="StudentInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static StudentInfoDto ToDto(this StudentEntity self)
         {
-            var entity = self is null ? new StudentDto() : new StudentDto
+            var entity = self is null ? new StudentInfoDto() : new StudentInfoDto
             {
                 Registration = self.Registration,
                 RegistrationDate = self.RegistrationDate?.ToUniversalTime(),
@@ -93,18 +93,18 @@ namespace gerdisc.Models.Mapper
                 DateOfBirth = self.DateOfBirth?.ToUniversalTime(),
                 Scholarship = self.Scholarship,
                 StudentCourses = self.StudentCourses.Select(x => x.ToDto()),
-                Project = self.Project?.ToDtoWE()
+                Project = self.Project?.ToDto()
             };
             return self?.User is null ? entity : entity.AddUserDto(self.User);
         }
 
         /// <summary>
-        /// Converts a <see cref="StudentCsvDto"/> object to a <see cref="CreateStudentDto"/> object.
+        /// Converts a <see cref="StudentCsvDto"/> object to a <see cref="StudentDto"/> object.
         /// </summary>
         /// <param name="csv">The <see cref="StudentCsvDto"/> object to convert.</param>
-        /// <returns>A new <see cref="CreateStudentDto"/> object with the values from the <paramref name="csv"/> object.</returns>
-        public static CreateStudentDto ToDto(this StudentCsvDto csv) =>
-            csv is null ? new CreateStudentDto() : new CreateStudentDto
+        /// <returns>A new <see cref="StudentDto"/> object with the values from the <paramref name="csv"/> object.</returns>
+        public static StudentDto ToDto(this StudentCsvDto csv) =>
+            csv is null ? new StudentDto() : new StudentDto
             {
                 Registration = csv.Registration,
                 RegistrationDate = csv.RegistrationDate.Parse()?.ToUniversalTime(),

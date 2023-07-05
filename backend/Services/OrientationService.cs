@@ -24,7 +24,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<OrientationDto> CreateOrientationAsync(CreateOrientationDto orientationDto)
+        public async Task<OrientationInfoDto> CreateOrientationAsync(OrientationDto orientationDto)
         {
             (var isValid, var message) = await _validator.CanAddOrientationToProject(orientationDto);
             if(!isValid)
@@ -39,7 +39,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<OrientationDto> GetOrientationAsync(Guid id)
+        public async Task<OrientationInfoDto> GetOrientationAsync(Guid id)
         {
             var orientationEntity = await _repository.Orientation.GetByIdAsync(id, x => x.Professor, x => x.Coorientator, x => x.Student, x => x.Project);
             if (orientationEntity == null)
@@ -51,10 +51,10 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<OrientationDto>> GetAllOrientationsAsync()
+        public async Task<IEnumerable<OrientationInfoDto>> GetAllOrientationsAsync()
         {
             var orientations = await _repository.Orientation.GetAllAsync(x => x.Professor, x => x.Coorientator, x => x.Student, x => x.Project);
-            var orientationDtos = new List<OrientationDto>();
+            var orientationDtos = new List<OrientationInfoDto>();
             foreach (var orientation in orientations)
             {
                 orientationDtos.Add(orientation.ToDto());
@@ -64,7 +64,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<OrientationDto> UpdateOrientationAsync(Guid id, CreateOrientationDto orientationDto)
+        public async Task<OrientationInfoDto> UpdateOrientationAsync(Guid id, OrientationDto orientationDto)
         {
             (var isValid, var message) = await _validator.CanAddOrientationToProject(orientationDto);
             if(!isValid)

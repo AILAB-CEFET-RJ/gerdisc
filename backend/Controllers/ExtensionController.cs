@@ -25,7 +25,7 @@ namespace gerdisc.Controllers
         /// <returns>The created extension.</returns>
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ExtensionDto>> CreateExtension(CreateExtensionDto extensionDto)
+        public async Task<ActionResult<ExtensionInfoDto>> CreateExtension(ExtensionDto extensionDto)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace gerdisc.Controllers
         /// <returns>The extension.</returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
-        public async Task<ActionResult<ExtensionDto>> GetExtension(Guid id)
+        public async Task<ActionResult<ExtensionInfoDto>> GetExtension(Guid id)
         {
             try
             {
@@ -59,9 +59,9 @@ namespace gerdisc.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ExtensionDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ExtensionInfoDto>), StatusCodes.Status200OK)]
         [Authorize(Roles = "Administrator, Student")]
-        public async Task<ActionResult<IEnumerable<ExtensionDto>>> GetAllExtensionsAsync()
+        public async Task<ActionResult<IEnumerable<ExtensionInfoDto>>> GetAllExtensionsAsync()
         {
             var extensionDtos = await _extensionService.GetAllExtensionsAsync();
 
@@ -76,7 +76,7 @@ namespace gerdisc.Controllers
         /// <returns>The updated extension.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ExtensionDto>> UpdateExtension(Guid id, CreateExtensionDto extensionDto)
+        public async Task<ActionResult<ExtensionInfoDto>> UpdateExtension(Guid id, ExtensionDto extensionDto)
         {
             try
             {

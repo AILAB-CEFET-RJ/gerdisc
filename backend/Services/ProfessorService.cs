@@ -23,7 +23,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ProfessorDto> CreateProfessorAsync(CreateProfessorDto professorDto)
+        public async Task<ProfessorInfoDto> CreateProfessorAsync(ProfessorDto professorDto)
         {
             var user = await _userService.CreateUserAsync(professorDto);
             var professor = professorDto.ToEntity(user.Id);
@@ -36,7 +36,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ProfessorDto> GetProfessorAsync(Guid id)
+        public async Task<ProfessorInfoDto> GetProfessorAsync(Guid id)
         {
             var professor = await _repository
                 .Professor
@@ -45,10 +45,10 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<ProfessorDto>> GetAllProfessorsAsync()
+        public async Task<IEnumerable<ProfessorInfoDto>> GetAllProfessorsAsync()
         {
             var professors = await _repository.Professor.GetAllAsync(x => x.User);
-            var professorDtos = new List<ProfessorDto>();
+            var professorDtos = new List<ProfessorInfoDto>();
             foreach (var professor in professors)
             {
                 professorDtos.Add(professor.ToDto());
@@ -58,7 +58,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ProfessorDto> UpdateProfessorAsync(Guid id, CreateProfessorDto professorDto)
+        public async Task<ProfessorInfoDto> UpdateProfessorAsync(Guid id, ProfessorDto professorDto)
         {
             var existingProfessor = await _repository.Professor.GetByIdAsync(id);
             if (existingProfessor == null)

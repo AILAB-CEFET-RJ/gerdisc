@@ -24,7 +24,7 @@ namespace gerdisc.Infrastructure.Validations
         /// </summary>
         /// <param name="orientationDto">The orientation DTO containing the orientation and student IDs.</param>
         /// <returns>A tuple with a boolean indicating whether the orientation can be added, and a message describing the result.</returns>
-        public async Task<(bool, string)> CanAddOrientationToProject(CreateOrientationDto orientationDto)
+        public async Task<(bool, string)> CanAddOrientationToProject(OrientationDto orientationDto)
         {
             var project = await _repository.Project.GetByIdAsync(orientationDto.ProjectId);
             var student = await _repository.Student.GetByIdAsync(orientationDto.StudentId);

@@ -21,7 +21,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ProjectDto> CreateProjectAsync(CreateProjectDto projectDto)
+        public async Task<ProjectInfoDto> CreateProjectAsync(ProjectDto projectDto)
         {
             try
             {
@@ -33,17 +33,17 @@ namespace gerdisc.Services
                 await _repository.ProfessorProject.HandlesByProject(projectDto.ProfessorIds.Select(Guid.Parse), project);
 
                 _logger.LogInformation($"Project {project.Name} created successfully.");
-                return project.ToDto();
+                return project.ToInfoDto();
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"Project {projectDto.Name} as {ex}");
-                return projectDto.ToEntity().ToDto();
+                return projectDto.ToEntity().ToInfoDto();
             };
         }
 
         /// <inheritdoc />
-        public async Task<ProjectDto> GetProjectAsync(Guid id)
+        public async Task<ProjectInfoDto> GetProjectAsync(Guid id)
         {
             var projectEntity = await _repository
                 .Project
@@ -53,26 +53,26 @@ namespace gerdisc.Services
                 throw new ArgumentException("Project not found.");
             }
 
-            return projectEntity.ToDto();
+            return projectEntity.ToInfoDto();
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<ProjectDto>> GetAllProjectsAsync()
+        public async Task<IEnumerable<ProjectInfoDto>> GetAllProjectsAsync()
         {
             var projects = await _repository
                 .Project
                 .GetAllAsync();
-            var projectDtos = new List<ProjectDto>();
+            var projectDtos = new List<ProjectInfoDto>();
             foreach (var project in projects)
             {
-                projectDtos.Add(project.ToDto());
+                projectDtos.Add(project.ToInfoDto());
             }
 
             return projectDtos;
         }
 
         /// <inheritdoc />
-        public async Task<ProjectDto> UpdateProjectAsync(Guid id, CreateProjectDto projectDto)
+        public async Task<ProjectInfoDto> UpdateProjectAsync(Guid id, ProjectDto projectDto)
         {
             var existingProject = await _repository.Project.GetByIdAsync(id);
             if (existingProject == null)
@@ -84,7 +84,7 @@ namespace gerdisc.Services
             await _repository.Project.UpdateAsync(existingProject);
             await _repository.ProfessorProject.HandlesByProject(projectDto.ProfessorIds.Select(Guid.Parse), existingProject);
 
-            return existingProject.ToDto();
+            return existingProject.ToInfoDto();
         }
 
         /// <inheritdoc />

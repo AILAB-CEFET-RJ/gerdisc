@@ -4,16 +4,16 @@ using gerdisc.Models.Entities;
 namespace gerdisc.Models.Mapper
 {
     /// <summary>
-    /// A static class containing mapper methods for converting between <see cref="OrientationDto"/> and <see cref="OrientationEntity"/> objects.
+    /// A static class containing mapper methods for converting between <see cref="OrientationInfoDto"/> and <see cref="OrientationEntity"/> objects.
     /// </summary>
     public static class OrientationMapper
     {
         /// <summary>
-        /// Converts a <see cref="CreateOrientationDto"/> object to a <see cref="OrientationEntity"/> object.
+        /// Converts a <see cref="OrientationDto"/> object to a <see cref="OrientationEntity"/> object.
         /// </summary>
-        /// <param name="self">The <see cref="CreateOrientationDto"/> object to convert.</param>
+        /// <param name="self">The <see cref="OrientationDto"/> object to convert.</param>
         /// <returns>A new <see cref="OrientationEntity"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static OrientationEntity ToEntity(this CreateOrientationDto self) =>
+        public static OrientationEntity ToEntity(this OrientationDto self) =>
             self is null ? new OrientationEntity() : new OrientationEntity
             {
                 ProfessorId = self.ProfessorId,
@@ -24,12 +24,12 @@ namespace gerdisc.Models.Mapper
             };
 
         /// <summary>
-        /// Updates the values of an existing <see cref="OrientationEntity"/> object using the values from a <see cref="CreateOrientationDto"/> object.
+        /// Updates the values of an existing <see cref="OrientationEntity"/> object using the values from a <see cref="OrientationDto"/> object.
         /// </summary>
-        /// <param name="self">The <see cref="CreateOrientationDto"/> object containing the updated values.</param>
+        /// <param name="self">The <see cref="OrientationDto"/> object containing the updated values.</param>
         /// <param name="entityToUpdate">The existing <see cref="OrientationEntity"/> object to update.</param>
         /// <returns>The updated <see cref="OrientationEntity"/> object.</returns>
-        public static OrientationEntity ToEntity(this CreateOrientationDto self, OrientationEntity entityToUpdate)
+        public static OrientationEntity ToEntity(this OrientationDto self, OrientationEntity entityToUpdate)
         {
             entityToUpdate.CoorientatorId = self.CoorientatorId;
             entityToUpdate.ProfessorId = self.ProfessorId;
@@ -40,12 +40,12 @@ namespace gerdisc.Models.Mapper
         }
 
         /// <summary>
-        /// Converts a <see cref="OrientationEntity"/> object to a <see cref="OrientationDto"/> object.
+        /// Converts a <see cref="OrientationEntity"/> object to a <see cref="OrientationInfoDto"/> object.
         /// </summary>
         /// <param name="self">The <see cref="OrientationEntity"/> object to convert.</param>
-        /// <returns>A new <see cref="OrientationDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static OrientationDto ToDto(this OrientationEntity self) =>
-            self is null ? new OrientationDto() : new OrientationDto
+        /// <returns>A new <see cref="OrientationInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static OrientationInfoDto ToDto(this OrientationEntity self) =>
+            self is null ? new OrientationInfoDto() : new OrientationInfoDto
             {
                 Id = self.Id,
                 Dissertation = self.Dissertation,

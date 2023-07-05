@@ -4,13 +4,12 @@ using gerdisc.Models.Enums;
 
 namespace gerdisc.Models.DTOs
 {
-    public class CreateStudentDto : UserDto
+    public class StudentInfoDto : UserDto
     {
         public string? Registration { get; set; }
 
         public DateTime? RegistrationDate { get; set; }
 
-        [Required(ErrorMessage = "ProjectId is required")]
         public Guid? ProjectId { get; set; }
 
         public StatusEnum Status { get; set; }
@@ -39,12 +38,8 @@ namespace gerdisc.Models.DTOs
 
         public IEnumerable<StudentCourseDto>? StudentCourses { get; set; }
 
-        [ValidRolesEnum(RolesEnum.Student)]
-        public override RolesEnum Role { get; set; }
+        public ProjectDto? Project { get; set; }
 
-        public CreateStudentDto()
-        {
-            Role = Enums.RolesEnum.Student;
-        }
+        public override RolesEnum Role { get; set; }
     }
 }

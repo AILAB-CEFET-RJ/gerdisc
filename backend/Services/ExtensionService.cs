@@ -24,7 +24,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ExtensionDto> CreateExtensionAsync(CreateExtensionDto extensionDto)
+        public async Task<ExtensionInfoDto> CreateExtensionAsync(ExtensionDto extensionDto)
         {
             var extension = extensionDto.ToEntity();
 
@@ -35,7 +35,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ExtensionDto> GetExtensionAsync(Guid id)
+        public async Task<ExtensionInfoDto> GetExtensionAsync(Guid id)
         {
             var extensionEntity = await _repository.Extension.GetByIdAsync(id, x => x.Student);
             if (extensionEntity == null)
@@ -47,10 +47,10 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<ExtensionDto>> GetAllExtensionsAsync()
+        public async Task<IEnumerable<ExtensionInfoDto>> GetAllExtensionsAsync()
         {
             var extensions = await _repository.Extension.GetAllAsync(x => x.Student);
-            var extensionDtos = new List<ExtensionDto>();
+            var extensionDtos = new List<ExtensionInfoDto>();
             foreach (var extension in extensions)
             {
                 extensionDtos.Add(extension.ToDto());
@@ -60,7 +60,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ExtensionDto> UpdateExtensionAsync(Guid id, CreateExtensionDto extensionDto)
+        public async Task<ExtensionInfoDto> UpdateExtensionAsync(Guid id, ExtensionDto extensionDto)
         {
             var existingExtension = await _repository.Extension.GetByIdAsync(id);
             if (existingExtension == null)

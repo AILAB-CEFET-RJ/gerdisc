@@ -24,7 +24,7 @@ namespace gerdisc.Controllers
         /// <returns>The created professor.</returns>
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ProfessorDto>> CreateProfessor(CreateProfessorDto professorDto)
+        public async Task<ActionResult<ProfessorInfoDto>> CreateProfessor(ProfessorDto professorDto)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace gerdisc.Controllers
         /// <returns>The professor.</returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ProfessorDto>> GetProfessor(Guid id)
+        public async Task<ActionResult<ProfessorInfoDto>> GetProfessor(Guid id)
         {
             try
             {
@@ -58,8 +58,8 @@ namespace gerdisc.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ProfessorDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<ProfessorDto>>> GetAllProfessorsAsync()
+        [ProducesResponseType(typeof(IEnumerable<ProfessorInfoDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProfessorInfoDto>>> GetAllProfessorsAsync()
         {
             var professorDtos = await _professorService.GetAllProfessorsAsync();
 
@@ -74,7 +74,7 @@ namespace gerdisc.Controllers
         /// <returns>The updated professor.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ProfessorDto>> UpdateProfessor(Guid id, CreateProfessorDto professorDto)
+        public async Task<ActionResult<ProfessorInfoDto>> UpdateProfessor(Guid id, ProfessorDto professorDto)
         {
             try
             {

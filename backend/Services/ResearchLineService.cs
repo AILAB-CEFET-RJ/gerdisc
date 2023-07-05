@@ -21,7 +21,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ResearchLineDto> CreateResearchLineAsync(CreateResearchLineDto researchLineDto)
+        public async Task<ResearchLineInfoDto> CreateResearchLineAsync(ResearchLineDto researchLineDto)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ResearchLineDto> GetResearchLineAsync(Guid id)
+        public async Task<ResearchLineInfoDto> GetResearchLineAsync(Guid id)
         {
             var researchLineEntity = await _repository
                 .ResearchLine
@@ -54,12 +54,12 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<ResearchLineDto>> GetAllResearchLinesAsync()
+        public async Task<IEnumerable<ResearchLineInfoDto>> GetAllResearchLinesAsync()
         {
             var researchLines = await _repository
                 .ResearchLine
                 .GetAllAsync(x => x.Projects);
-            var researchLineDtos = new List<ResearchLineDto>();
+            var researchLineDtos = new List<ResearchLineInfoDto>();
             foreach (var researchLine in researchLines)
             {
                 researchLineDtos.Add(researchLine.ToDto());
@@ -69,7 +69,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<ResearchLineDto> UpdateResearchLineAsync(Guid id, CreateResearchLineDto researchLineDto)
+        public async Task<ResearchLineInfoDto> UpdateResearchLineAsync(Guid id, ResearchLineDto researchLineDto)
         {
             var existingResearchLine = await _repository.ResearchLine.GetByIdAsync(id);
             if (existingResearchLine == null)

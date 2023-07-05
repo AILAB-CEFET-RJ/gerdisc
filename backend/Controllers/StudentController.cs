@@ -19,7 +19,7 @@ namespace gerdisc.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<StudentDto>> CreateStudent(CreateStudentDto studentDto)
+        public async Task<ActionResult<StudentInfoDto>> CreateStudent(StudentDto studentDto)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace gerdisc.Controllers
 
         [HttpPost("csv")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<IEnumerable<StudentDto>>> AddStudentsFromCsvAsync(IFormFile file)
+        public async Task<ActionResult<IEnumerable<StudentInfoDto>>> AddStudentsFromCsvAsync(IFormFile file)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace gerdisc.Controllers
 
         [HttpPost("course/csv")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<IEnumerable<StudentDto>>> AddCoursesToStudentsFromCsvAsync(IFormFile file)
+        public async Task<ActionResult<IEnumerable<StudentInfoDto>>> AddCoursesToStudentsFromCsvAsync(IFormFile file)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace gerdisc.Controllers
 
         [HttpGet("{studentId}")]
         [Authorize(Roles = "Administrator, Professor, Student")]
-        public async Task<ActionResult<StudentDto>> GetStudent(Guid studentId)
+        public async Task<ActionResult<StudentInfoDto>> GetStudent(Guid studentId)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace gerdisc.Controllers
 
         [HttpPut("{studentId}")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<StudentDto>> UpdateStudent(Guid studentId, CreateStudentDto studentDto)
+        public async Task<ActionResult<StudentInfoDto>> UpdateStudent(Guid studentId, StudentDto studentDto)
         {
             try
             {
@@ -112,8 +112,8 @@ namespace gerdisc.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Administrator, Professor, Student")]
-        [ProducesResponseType(typeof(IEnumerable<StudentDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<StudentDto>>> GetAllStudentsAsync()
+        [ProducesResponseType(typeof(IEnumerable<StudentInfoDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<StudentInfoDto>>> GetAllStudentsAsync()
         {
             try
             {

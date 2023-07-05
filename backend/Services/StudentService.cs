@@ -27,7 +27,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<StudentDto> CreateStudentAsync(CreateStudentDto studentDto)
+        public async Task<StudentInfoDto> CreateStudentAsync(StudentDto studentDto)
         {
             var user = await _userService.CreateUserAsync(studentDto);
             var student = studentDto.ToEntity(user.Id);
@@ -39,11 +39,11 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<StudentDto>> AddStudentsFromCsvAsync(IFormFile file)
+        public async Task<IEnumerable<StudentInfoDto>> AddStudentsFromCsvAsync(IFormFile file)
         {
             var records = CastFromCsvAsync<StudentCsvDto>(file);
 
-            var insertedStudents = new List<StudentDto>();
+            var insertedStudents = new List<StudentInfoDto>();
             await foreach (var record in records)
             {
                 try
@@ -93,7 +93,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<StudentDto> GetStudentAsync(Guid id)
+        public async Task<StudentInfoDto> GetStudentAsync(Guid id)
         {
             var studentEntity = await _repository.Student.GetByIdAsync(id, s => s.User, s => s.Project);
             if (studentEntity == null)
@@ -105,10 +105,10 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync()
+        public async Task<IEnumerable<StudentInfoDto>> GetAllStudentsAsync()
         {
             var students = await _repository.Student.GetAllAsync(s => s.User);
-            var studentDtos = new List<StudentDto>();
+            var studentDtos = new List<StudentInfoDto>();
             foreach (var student in students)
             {
                 studentDtos.Add(student.ToDto());
@@ -118,7 +118,7 @@ namespace gerdisc.Services
         }
 
         /// <inheritdoc />
-        public async Task<StudentDto> UpdateStudentAsync(Guid id, CreateStudentDto studentDto)
+        public async Task<StudentInfoDto> UpdateStudentAsync(Guid id, StudentDto studentDto)
         {
             var existingStudent = await _repository.Student.GetByIdAsync(id);
             if (existingStudent == null)

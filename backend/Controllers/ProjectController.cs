@@ -24,7 +24,7 @@ namespace gerdisc.Controllers
         /// <returns>The created project.</returns>
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ProjectDto>> CreateProject(CreateProjectDto projectDto)
+        public async Task<ActionResult<ProjectInfoDto>> CreateProject(ProjectDto projectDto)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace gerdisc.Controllers
         /// <returns>The project.</returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
-        public async Task<ActionResult<ProjectDto>> GetProject(Guid id)
+        public async Task<ActionResult<ProjectInfoDto>> GetProject(Guid id)
         {
             try
             {
@@ -63,8 +63,8 @@ namespace gerdisc.Controllers
         /// <returns>A list of projects.</returns>
         [HttpGet]
         [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
-        [ProducesResponseType(typeof(IEnumerable<ProjectDto>), 200)]
-        public async Task<ActionResult<IEnumerable<ProjectDto>>> GetAllProjectsAsync()
+        [ProducesResponseType(typeof(IEnumerable<ProjectInfoDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ProjectInfoDto>>> GetAllProjectsAsync()
         {
             var projectDtos = await _projectService.GetAllProjectsAsync();
             return Ok(projectDtos);
@@ -78,7 +78,7 @@ namespace gerdisc.Controllers
         /// <returns>The updated project.</returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<ProjectDto>> UpdateProject(Guid id, CreateProjectDto projectDto)
+        public async Task<ActionResult<ProjectInfoDto>> UpdateProject(Guid id, ProjectDto projectDto)
         {
             try
             {
