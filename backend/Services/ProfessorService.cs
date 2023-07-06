@@ -60,7 +60,7 @@ namespace gerdisc.Services
         /// <inheritdoc />
         public async Task<ProfessorInfoDto> UpdateProfessorAsync(Guid id, ProfessorDto professorDto)
         {
-            var existingProfessor = await _repository.Professor.GetByIdAsync(id);
+            var existingProfessor = await _repository.Professor.GetByIdAsync(id, x => x.User);
             if (existingProfessor == null)
             {
                 throw new ArgumentException($"Professor with id {id} does not exist.");

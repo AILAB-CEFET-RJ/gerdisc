@@ -36,6 +36,10 @@ namespace gerdisc.Models.Mapper
         /// <returns>The updated <see cref="UserEntity"/> object.</returns>
         public static UserEntity ToUserEntity(this UserDto self, UserEntity entityToUpdate)
         {
+            if (self is null)
+            {
+                return entityToUpdate;
+            }
             entityToUpdate.FirstName = self.FirstName;
             entityToUpdate.LastName = self.LastName;
             entityToUpdate.Role = self.Role;
@@ -66,6 +70,10 @@ namespace gerdisc.Models.Mapper
         public static TUserDto AddUserDto<TUserDto>(this TUserDto self, UserEntity? entity)
             where TUserDto : UserDto
         {
+            if (entity is null)
+            {
+                return self;
+            }
             self.Id = entity.Id;
             self.Cpf = entity.Cpf;
             self.Email = entity.Email;

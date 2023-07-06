@@ -11,10 +11,12 @@ namespace gerdisc.Controllers
     public class ProfessorController : ControllerBase
     {
         private readonly IProfessorService _professorService;
+        private readonly ILogger<ProfessorController> _logger;
 
-        public ProfessorController(IProfessorService professorService)
+        public ProfessorController(IProfessorService professorService, ILogger<ProfessorController> logger)
         {
             _professorService = professorService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -53,6 +55,7 @@ namespace gerdisc.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error occurred: {ErrorMessage}. Stack trace: {StackTrace}", ex.Message, ex.StackTrace);
                 return BadRequest(ex.Message);
             }
         }
@@ -79,10 +82,11 @@ namespace gerdisc.Controllers
             try
             {
                 var professor = await _professorService.UpdateProfessorAsync(id, professorDto);
-                return Ok(professor);
+                return CreatedAtAction(nameof(GetProfessor), new { id = professor.Id }, professor);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error occurred: {ErrorMessage}. Stack trace: {StackTrace}", ex.Message, ex.StackTrace);
                 return BadRequest(ex.Message);
             }
         }

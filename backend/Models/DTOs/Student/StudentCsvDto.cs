@@ -20,22 +20,16 @@ namespace gerdisc.Models.DTOs
 	    [Name("Inscrição")]
         public string? Registration { get; set; }
 
-        [Optional]
         public string? RegistrationDate { get; set; }
 
-        [Optional]
         public string? ProjectId { get; set; }
 
-        [Optional]
         public StatusEnum Status { get; set; }
 
-        [Optional]
         public string? EntryDate { get; set; }
 
-        [Optional]
         public string? ProjectDefenceDate { get; set; }
 
-        [Optional]
         public string? ProjectQualificationDate { get; set; }
 
         [Optional]
@@ -44,7 +38,6 @@ namespace gerdisc.Models.DTOs
 	    [Name("Instituição de Formação")]
         public string? UndergraduateInstitution { get; set; }
 
-        [Optional]
         public InstitutionTypeEnum InstitutionType { get; set; }
 
 	    [Name("Curso")]
@@ -59,7 +52,6 @@ namespace gerdisc.Models.DTOs
 	    [Name("Nascimento")]
         public string? DateOfBirth { get; set; }
 
-        [Optional]
         public ScholarshipEnum Scholarship { get; set; }
     }
 }

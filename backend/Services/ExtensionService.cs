@@ -1,6 +1,7 @@
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
+using gerdisc.Models.Enums;
 using gerdisc.Models.Mapper;
 using gerdisc.Services.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -28,7 +29,16 @@ namespace gerdisc.Services
         {
             var extension = extensionDto.ToEntity();
 
+            var student = await _repository.Student.GetByIdAsync(extension.StudentId);
+
+            if (student is null)
+            {
+                throw new ArgumentException($"Student with id: {extension.StudentId} does not exist.");
+            }
+
             extension = await _repository.Extension.AddAsync(extension);
+
+            UpdateUserDates(student, extension);
 
             _logger.LogInformation($"Extension {extension.StudentId} created successfully.");
             return extension.ToDto();
@@ -63,14 +73,20 @@ namespace gerdisc.Services
         public async Task<ExtensionInfoDto> UpdateExtensionAsync(Guid id, ExtensionDto extensionDto)
         {
             var existingExtension = await _repository.Extension.GetByIdAsync(id);
-            if (existingExtension == null)
+            var student = await _repository.Student.GetByIdAsync(extensionDto.StudentId);
+
+            if (existingExtension == null || student is null)
             {
                 throw new ArgumentException($"Extension with id {id} does not exist.");
             }
 
+            var oldDays = existingExtension.NumberOfDays;
+
             existingExtension = extensionDto.ToEntity(existingExtension);
 
             await _repository.Extension.UpdateAsync(existingExtension);
+
+            UpdateUserDates(student, existingExtension, oldDays);
 
             return existingExtension.ToDto();
         }
@@ -85,6 +101,21 @@ namespace gerdisc.Services
             }
 
             await _repository.Extension.DeactiveAsync(existingExtension);
+        }
+
+        private void UpdateUserDates(StudentEntity user, ExtensionEntity extension, int oldDays = 0)
+        {
+            switch (extension.Type)
+            {
+                case ExtensionTypeEnum.Qualification:
+                    user.ProjectQualificationDate += TimeSpan.FromDays(extension.NumberOfDays - oldDays);
+                    break;
+                case ExtensionTypeEnum.Defence:
+                    user.ProjectDefenceDate += TimeSpan.FromDays(extension.NumberOfDays - oldDays);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

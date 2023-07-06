@@ -31,6 +31,7 @@ namespace gerdisc.Models.Mapper
         public static ProfessorEntity ToEntity(this ProfessorDto self, ProfessorEntity entityToUpdate)
         {
             entityToUpdate.Siape = self.Siape;
+            entityToUpdate.User = self.ToUserEntity(entityToUpdate.User);
             return entityToUpdate;
         }
 
