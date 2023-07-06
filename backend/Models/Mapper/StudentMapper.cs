@@ -73,7 +73,7 @@ namespace gerdisc.Models.Mapper
         /// </summary>
         /// <param name="self">The <see cref="StudentEntity"/> object to convert.</param>
         /// <returns>A new <see cref="StudentInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static StudentInfoDto ToDto(this StudentEntity self)
+        public static StudentInfoDto ToInfoDto(this StudentEntity self)
         {
             var entity = self is null ? new StudentInfoDto() : new StudentInfoDto
             {
@@ -94,6 +94,34 @@ namespace gerdisc.Models.Mapper
                 Scholarship = self.Scholarship,
                 StudentCourses = self.StudentCourses.Select(x => x.ToDto()),
                 Project = self.Project?.ToDto()
+            };
+            return self?.User is null ? entity : entity.AddUserDto(self.User);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="StudentEntity"/> object to a <see cref="StudentInfoDto"/> object.
+        /// </summary>
+        /// <param name="self">The <see cref="StudentEntity"/> object to convert.</param>
+        /// <returns>A new <see cref="StudentInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static StudentInfoDto ToDto(this StudentEntity self)
+        {
+            var entity = self is null ? new StudentInfoDto() : new StudentInfoDto
+            {
+                Registration = self.Registration,
+                RegistrationDate = self.RegistrationDate?.ToUniversalTime(),
+                ProjectId = self.ProjectId,
+                Status = self.Status,
+                EntryDate = self.EntryDate?.ToUniversalTime(),
+                ProjectDefenceDate = self.ProjectDefenceDate?.ToUniversalTime(),
+                ProjectQualificationDate = self.ProjectQualificationDate?.ToUniversalTime(),
+                Proficiency = self.Proficiency,
+                UndergraduateInstitution = self.UndergraduateInstitution,
+                InstitutionType = self.InstitutionType,
+                UndergraduateCourse = self.UndergraduateCourse,
+                GraduationYear = self.GraduationYear,
+                UndergraduateArea = self.UndergraduateArea,
+                DateOfBirth = self.DateOfBirth?.ToUniversalTime(),
+                Scholarship = self.Scholarship
             };
             return self?.User is null ? entity : entity.AddUserDto(self.User);
         }

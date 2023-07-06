@@ -35,7 +35,7 @@ namespace gerdisc.Services
             student = await _repository.Student.AddAsync(student);
 
             _logger.LogInformation($"Student {studentDto.Email} created successfully.");
-            return student.ToDto();
+            return student.ToInfoDto();
         }
 
         /// <inheritdoc />
@@ -101,7 +101,7 @@ namespace gerdisc.Services
                 throw new ArgumentException("Student not found.");
             }
 
-            return studentEntity.ToDto();
+            return studentEntity.ToInfoDto();
         }
 
         /// <inheritdoc />
@@ -111,7 +111,7 @@ namespace gerdisc.Services
             var studentDtos = new List<StudentInfoDto>();
             foreach (var student in students)
             {
-                studentDtos.Add(student.ToDto());
+                studentDtos.Add(student.ToInfoDto());
             }
 
             return studentDtos;
@@ -130,7 +130,7 @@ namespace gerdisc.Services
 
             await _repository.Student.UpdateAsync(existingStudent);
 
-            return existingStudent.ToDto();
+            return existingStudent.ToInfoDto();
         }
 
         /// <inheritdoc />

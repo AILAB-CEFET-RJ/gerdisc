@@ -35,7 +35,7 @@ namespace gerdisc.Services
             var orientation = await _repository.Orientation.AddAsync(orientationDto.ToEntity());
 
             _logger.LogInformation($"Orientation {orientation.Id} created successfully.");
-            return orientation.ToDto();
+            return orientation.ToInfoDto();
         }
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace gerdisc.Services
                 throw new ArgumentException("Orientation not found.");
             }
 
-            return orientationEntity.ToDto();
+            return orientationEntity.ToInfoDto();
         }
 
         /// <inheritdoc />
@@ -57,7 +57,7 @@ namespace gerdisc.Services
             var orientationDtos = new List<OrientationInfoDto>();
             foreach (var orientation in orientations)
             {
-                orientationDtos.Add(orientation.ToDto());
+                orientationDtos.Add(orientation.ToInfoDto());
             }
 
             return orientationDtos;
@@ -78,7 +78,7 @@ namespace gerdisc.Services
 
             await _repository.Orientation.UpdateAsync(existingOrientation);
 
-            return existingOrientation.ToDto();
+            return existingOrientation.ToInfoDto();
         }
 
         /// <inheritdoc />

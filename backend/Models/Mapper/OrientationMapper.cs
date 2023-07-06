@@ -52,6 +52,22 @@ namespace gerdisc.Models.Mapper
                 CoorientatorId = self.CoorientatorId,
                 ProfessorId = self.ProfessorId,
                 ProjectId = self.ProjectId,
+                StudentId = self.StudentId
+            };
+
+        /// <summary>
+        /// Converts a <see cref="OrientationEntity"/> object to a <see cref="OrientationInfoDto"/> object.
+        /// </summary>
+        /// <param name="self">The <see cref="OrientationEntity"/> object to convert.</param>
+        /// <returns>A new <see cref="OrientationInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static OrientationInfoDto ToInfoDto(this OrientationEntity self) =>
+            self is null ? new OrientationInfoDto() : new OrientationInfoDto
+            {
+                Id = self.Id,
+                Dissertation = self.Dissertation,
+                CoorientatorId = self.CoorientatorId,
+                ProfessorId = self.ProfessorId,
+                ProjectId = self.ProjectId,
                 StudentId = self.StudentId,
                 Coorientator = self.Coorientator?.ToUserDto(),
                 Professor = self.Professor?.ToUserDto(),

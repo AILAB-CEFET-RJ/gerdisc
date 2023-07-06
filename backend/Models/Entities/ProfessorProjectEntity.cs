@@ -37,11 +37,5 @@ namespace gerdisc.Models.Entities
         /// This property allows lazy loading of the <see cref="ProjectEntity"/> entity.
         /// </remarks>
         public virtual ProjectEntity? Project { get; set; }
-
-        public ProfessorProjectEntity()
-        {
-            Professor = null;
-            Project = null;
-        }
     }
 }
