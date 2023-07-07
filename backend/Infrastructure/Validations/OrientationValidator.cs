@@ -34,6 +34,13 @@ namespace gerdisc.Infrastructure.Validations
                 return (false, "Project or student not found.");
             }
 
+            var orientation = await _repository.Orientation.GetAllAsync(x => x.StudentId == student.UserId);
+
+            if (orientation.Any())
+            {
+                return (false, "Student alredy has an orientation.");
+            }
+
             // Check if the student is already associated with the project
             if (student.ProjectId != project.Id)
             {
