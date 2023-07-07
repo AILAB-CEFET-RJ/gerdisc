@@ -9,16 +9,20 @@ export default function MultiSelect(
         onRemove,
         placeholder,
         isLoading,
-        displayValue
+        displayValue,
+        isDisabled = false,
+        selectedValues=[]
     }
 ) {
     return <div id="multiselect">
     <Multi
+        selectedValues={selectedValues}
         options={options} // Options to display in the dropdown
         closeOnSelect={false}
         loading={isLoading}
         loadingMessage={<Spinner />}
         placeholder={placeholder}
+        disabled={isDisabled}
         onSelect={onSelect} // Function will trigger on select event
         onRemove={onRemove} // Function will trigger on remove event
         displayValue={displayValue} // Property name to display in the dropdown options

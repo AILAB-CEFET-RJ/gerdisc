@@ -7,14 +7,14 @@ namespace gerdisc.Models.DTOs
 {
     public class OrientationDto
     {
-        public Guid? Id { get; set; }
-        public Guid ProfessorId { get; set; }
-        public Guid ResearcherId { get; set; }
-        public DissertationDto Dissertation { get; set; }
+        public Guid? CoorientatorId { get; set; }
 
-        public OrientationDto()
-        {
-            Dissertation = new DissertationDto();
-        }
+        public Guid StudentId { get; set; }
+
+        public string? Dissertation { get; set; }
+
+        public Guid ProjectId { get; set; }
+
+        public Guid ProfessorId { get; set; }
     }
 }

@@ -1,8 +1,12 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using gerdisc.Models.Enums;
+
 namespace gerdisc.Models.Entities
 {
     /// <summary>
     /// Represents an extension in the system.
     /// </summary>
+    [Table("Extensions")]
     public record ExtensionEntity : BaseEntity
     {
         /// <summary>
@@ -23,7 +27,7 @@ namespace gerdisc.Models.Entities
         /// <summary>
         /// Gets or sets the type of extension.
         /// </summary>
-        public int Type { get; set; }
+        public ExtensionTypeEnum Type { get; set; }
 
         /// <summary>
         /// Gets or sets the student associated with the extension.
@@ -32,7 +36,8 @@ namespace gerdisc.Models.Entities
         /// This property is virtual to enable lazy loading of the associated Student entity
         /// by Entity Framework.
         /// </remarks>
-        public virtual StudentEntity? Student { get; set; }
+        [ForeignKey("StudentId")]
+        public virtual UserEntity? Student { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtensionEntity"/> class.

@@ -2,8 +2,14 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace gerdisc.Properties
 {
+    /// <summary>
+    /// Represents the signing configuration for generating tokens.
+    /// </summary>
     public interface ISigningConfiguration
     {
-        public RsaSecurityKey Key { get; set; }
+        /// <summary>
+        /// Gets the RSA security key used for signing.
+        /// </summary>
+        RsaSecurityKey Key { get; }
     }
 }

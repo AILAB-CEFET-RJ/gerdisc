@@ -22,6 +22,7 @@ namespace gerdisc.Services
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
+        /// <inheritdoc />
         public async Task<ExternalResearcherDto> CreateExternalResearcherAsync(ExternalResearcherDto externalResearcherDto)
         {
             var userId = (await _userService.CreateUserAsync(externalResearcherDto)).Id;
@@ -32,6 +33,7 @@ namespace gerdisc.Services
             return externalResearcher.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<ExternalResearcherDto> GetExternalResearcherAsync(Guid id)
         {
             var externalResearcherEntity = await _repository.ExternalResearcher.GetByIdAsync(id, x => x.User);
@@ -43,6 +45,7 @@ namespace gerdisc.Services
             return externalResearcherEntity.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<ExternalResearcherDto>> GetAllExternalResearchersAsync()
         {
             var externalResearchers = await _repository.ExternalResearcher.GetAllAsync(x => x.User);
@@ -55,6 +58,7 @@ namespace gerdisc.Services
             return externalResearcherDtos;
         }
 
+        /// <inheritdoc />
         public async Task<ExternalResearcherDto> UpdateExternalResearcherAsync(Guid id, ExternalResearcherDto externalResearcherDto)
         {
             var existingExternalResearcher = await _repository.ExternalResearcher.GetByIdAsync(id);
@@ -65,10 +69,12 @@ namespace gerdisc.Services
 
             existingExternalResearcher = externalResearcherDto.ToEntity(existingExternalResearcher);
 
+            await _repository.ExternalResearcher.UpdateAsync(existingExternalResearcher);
 
             return existingExternalResearcher.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteExternalResearcherAsync(Guid id)
         {
             var existingExternalResearcher = await _repository.ExternalResearcher.GetByIdAsync(id);

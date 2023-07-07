@@ -7,7 +7,7 @@ using gerdisc.Models.Entities;
 namespace gerdisc.Infrastructure.Repositories
 {
     /// <summary>
-    /// Represents a base repository for entities of a certain type.
+    /// Represents a base repository for entities of type <typeparamref name="TEntity"/>.
     /// </summary>
     /// <typeparam name="TEntity">The type of entity that this repository works with.</typeparam>
     public interface IBaseRepository<TEntity> where TEntity : BaseEntity
@@ -40,6 +40,10 @@ namespace gerdisc.Infrastructure.Repositories
         /// <param name="includeProperties">An array of property expressions to include in the query results.</param>
         /// <returns>An enumerable collection of entities of type <typeparamref name="TEntity"/>.</returns>
         Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includeProperties);
+
+        Task<IEnumerable<TEntity>> GetAllAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] includeProperties);
 
         /// <summary>
         /// Retrieves a paged subset of entities of type <typeparamref name="TEntity"/> from the repository.

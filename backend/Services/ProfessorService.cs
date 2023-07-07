@@ -22,28 +22,33 @@ namespace gerdisc.Services
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
-        public async Task<ProfessorDto> CreateProfessorAsync(ProfessorDto professorDto)
+        /// <inheritdoc />
+        public async Task<ProfessorInfoDto> CreateProfessorAsync(ProfessorDto professorDto)
         {
             var user = await _userService.CreateUserAsync(professorDto);
             var professor = professorDto.ToEntity(user.Id);
             professor = await _repository.Professor.AddAsync(professor);
+            if (professorDto.ProjectIds.Any())
+                await _repository.ProfessorProject.HandleByProfessor(professorDto.ProjectIds.Select(Guid.Parse), professor);
 
             _logger.LogInformation($"Professor {professor.User.Id} created successfully.");
             return professor.ToDto();
         }
 
-        public async Task<ProfessorDto> GetProfessorAsync(Guid id)
+        /// <inheritdoc />
+        public async Task<ProfessorInfoDto> GetProfessorAsync(Guid id)
         {
-            var professorEntity = await _repository
+            var professor = await _repository
                 .Professor
                 .GetByIdAsync(id, x => x.User) ?? throw new ArgumentException("Professor not found.");
-            return professorEntity.ToDto();
+            return professor.ToDto();
         }
 
-        public async Task<IEnumerable<ProfessorDto>> GetAllProfessorsAsync()
+        /// <inheritdoc />
+        public async Task<IEnumerable<ProfessorInfoDto>> GetAllProfessorsAsync()
         {
             var professors = await _repository.Professor.GetAllAsync(x => x.User);
-            var professorDtos = new List<ProfessorDto>();
+            var professorDtos = new List<ProfessorInfoDto>();
             foreach (var professor in professors)
             {
                 professorDtos.Add(professor.ToDto());
@@ -52,20 +57,23 @@ namespace gerdisc.Services
             return professorDtos;
         }
 
-        public async Task<ProfessorDto> UpdateProfessorAsync(Guid id, ProfessorDto professorDto)
+        /// <inheritdoc />
+        public async Task<ProfessorInfoDto> UpdateProfessorAsync(Guid id, ProfessorDto professorDto)
         {
-            var existingProfessor = await _repository.Professor.GetByIdAsync(id);
+            var existingProfessor = await _repository.Professor.GetByIdAsync(id, x => x.User);
             if (existingProfessor == null)
             {
                 throw new ArgumentException($"Professor with id {id} does not exist.");
             }
 
             existingProfessor = professorDto.ToEntity(existingProfessor);
-
+            await _repository.Professor.UpdateAsync(existingProfessor);
+            await _repository.ProfessorProject.HandleByProfessor(professorDto.ProjectIds.Select(Guid.Parse), existingProfessor);
 
             return existingProfessor.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteProfessorAsync(Guid id)
         {
             var existingProfessor = await _repository.Professor.GetByIdAsync(id);

@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import '../../styles/researcherList.scss';
 import Table from "../../components/Table/table"
 import { getResearchers } from "../../api/researcher_service"
@@ -7,7 +6,6 @@ import { useNavigate } from "react-router"
 import jwt_decode from "jwt-decode";
 import BackButton from "../../components/BackButton";
 import PageContainer from "../../components/PageContainer";
-
 
 export default function ResearcherList() {
     const navigate = useNavigate()
@@ -35,28 +33,26 @@ export default function ResearcherList() {
             .then(result => {
                 let mapped = []
                 if (result !== null && result !== undefined) {
-                    console.log(result)
-                    mapped = result.map((professor) => {
+                    mapped = result.map((researcher) => {
                         return {
-                            Id: professor.Id,
-                            Nome: `${professor.user?.firstName} ${professor.user?.lastName}`,
-                            Siape: professor.siape,
+                            Id: researcher.id,
+                            Nome: `${researcher?.firstName} ${researcher?.lastName}`,
+                            "E-mail": researcher.email,
+                            "Instituição": researcher.institution,
                         }
                     })
                 }
                 setResearchers(mapped)
                 setIsLoading(false)
-
             })
     }, [setResearchers, setIsLoading])
-
 
     return (
         <PageContainer name={name} isLoading={isLoading}>
             <div className="researcherBar">
                 <div className="left-bar">
                     <div>
-                        <img src="professor.png" alt="A logo representing researchers" height={"100rem"} />
+                        <img className="filtered" src="researcher.png" alt="A logo representing researchers" height={"100rem"} />
                     </div>
                     <div className="title">Pesquisadores</div>
                 </div>
@@ -66,7 +62,7 @@ export default function ResearcherList() {
                         <i className="fas fa-" />
                     </div>
                     <div className="create-button">
-                        <button>Novo Pesquisador</button>
+                        <button onClick={() => navigate('/researches/add')}>Novo Pesquisador</button>
                     </div>
                 </div>
             </div>

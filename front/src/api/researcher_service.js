@@ -1,11 +1,11 @@
 import api from './_api'
 
 export async function getResearchers(){
-    return await api.get("externalResearchers")?.data
+    return (await api.get("externalResearchers"))?.data
 }
 
 export async function getResearcherById(id){
-    return await api.get(`externalResearchers/${id}`)?.data
+    return (await api.get(`externalResearchers/${id}`))?.data
 }
 
 export async function postResearchers(data) {

@@ -1,23 +1,30 @@
+using CsvHelper.Configuration.Attributes;
+using gerdisc.Infrastructure.Validations;
+using gerdisc.Models.Enums;
+
 namespace gerdisc.Models.DTOs
 {
     public class StudentCsvDto
     {
-        public string? FirstName { get; set; }
+	    [Name("Nome")]
+        public string? Name { get; set; }
 
-        public string? LastName { get; set; }
+	    [Name("E-mail")]
+        [ValidEmail]
         public string? Email { get; set; }
 
-        public string? Password { get; set; }
-
+	    [Name("CPF")]
+        [ValidCpf]
         public string? Cpf { get; set; }
 
+	    [Name("Inscrição")]
         public string? Registration { get; set; }
 
         public string? RegistrationDate { get; set; }
 
         public string? ProjectId { get; set; }
 
-        public int Status { get; set; }
+        public StatusEnum Status { get; set; }
 
         public string? EntryDate { get; set; }
 
@@ -25,22 +32,26 @@ namespace gerdisc.Models.DTOs
 
         public string? ProjectQualificationDate { get; set; }
 
+        [Optional]
         public string? Proficiency { get; set; }
 
-        public string? CPF { get; set; }
-
+	    [Name("Instituição de Formação")]
         public string? UndergraduateInstitution { get; set; }
 
-        public int InstitutionType { get; set; }
+        public InstitutionTypeEnum InstitutionType { get; set; }
 
+	    [Name("Curso")]
         public string? UndergraduateCourse { get; set; }
 
+	    [Name("Ano de Formação")]
         public int GraduationYear { get; set; }
 
-        public int UndergraduateArea { get; set; }
+        [Optional]
+        public UndergraduateAreaEnum UndergraduateArea { get; set; }
 
+	    [Name("Nascimento")]
         public string? DateOfBirth { get; set; }
 
-        public int Scholarship { get; set; }
+        public ScholarshipEnum Scholarship { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 import api from './_api'
 
 export async function getExtensions(){
-    return await api.get("extensions")?.data
+    return (await api.get("extensions"))?.data
 }
 
 export async function postExtensions(data) {

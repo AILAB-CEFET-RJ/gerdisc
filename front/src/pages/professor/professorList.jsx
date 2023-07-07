@@ -44,6 +44,7 @@ export default function ProfessorList() {
                         return {
                             Id: professor.id,
                             Nome: `${professor.firstName} ${professor.lastName}`,
+                            "E-mail": professor.email,
                             Siape: professor.siape,
                         }
                     })

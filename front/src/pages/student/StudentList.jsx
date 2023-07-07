@@ -39,7 +39,8 @@ export default function StudentList() {
                             Id: student.id,
                             Nome: `${student.firstName} ${student.lastName}`,
                             Status: student.status,
-                            Registração: student.registration,
+                            "E-mail": student.email,
+                            "Matrícula": student.registration,
                             "Data de defesa": student.projectDefenceDate,
                             "Data de qualificação": student.projectQualificationDate
                         }
@@ -60,7 +61,7 @@ export default function StudentList() {
                     </div>
                     <div className="title">Estudantes</div>
                 </div>
-                <div className="right-bar">
+                {role === 'Administrator' && <div className="right-bar">
                     <div className="search">
                         <input type="search" name="search" id="search" />
                         <i className="fas fa-" />
@@ -68,7 +69,7 @@ export default function StudentList() {
                     <div className="create-button">
                         <button onClick={() => navigate('/students/add')}>Novo Estudante</button>
                     </div>
-                </div>
+                </div>}
             </div>
             <BackButton ></BackButton>
             <Table data={students} useOptions={true} detailsCallback={(id) => navigate(`${id}`)} />

@@ -4,7 +4,7 @@ using gerdisc.Models.Entities;
 namespace gerdisc.Models.Mapper
 {
     /// <summary>
-    /// A static class containing mapper methods for converting between <see cref="OrientationDto"/> and <see cref="OrientationEntity"/> objects.
+    /// A static class containing mapper methods for converting between <see cref="OrientationInfoDto"/> and <see cref="OrientationEntity"/> objects.
     /// </summary>
     public static class OrientationMapper
     {
@@ -16,9 +16,11 @@ namespace gerdisc.Models.Mapper
         public static OrientationEntity ToEntity(this OrientationDto self) =>
             self is null ? new OrientationEntity() : new OrientationEntity
             {
-                DissertationId = self.Dissertation.Id ?? Guid.Empty,
                 ProfessorId = self.ProfessorId,
-                ResearcherId = self.ResearcherId,
+                CoorientatorId = self.CoorientatorId,
+                Dissertation = self.Dissertation,
+                ProjectId = self.ProjectId,
+                StudentId = self.StudentId
             };
 
         /// <summary>
@@ -29,24 +31,47 @@ namespace gerdisc.Models.Mapper
         /// <returns>The updated <see cref="OrientationEntity"/> object.</returns>
         public static OrientationEntity ToEntity(this OrientationDto self, OrientationEntity entityToUpdate)
         {
-            entityToUpdate.DissertationId = self.Dissertation.Id ?? Guid.Empty;
+            entityToUpdate.CoorientatorId = self.CoorientatorId;
             entityToUpdate.ProfessorId = self.ProfessorId;
-            entityToUpdate.ResearcherId = self.ResearcherId;
+            entityToUpdate.Dissertation = self.Dissertation;
+            entityToUpdate.ProjectId = self.ProjectId;
+            entityToUpdate.StudentId = self.StudentId;
             return entityToUpdate;
         }
 
         /// <summary>
-        /// Converts a <see cref="OrientationEntity"/> object to a <see cref="OrientationDto"/> object.
+        /// Converts a <see cref="OrientationEntity"/> object to a <see cref="OrientationInfoDto"/> object.
         /// </summary>
         /// <param name="self">The <see cref="OrientationEntity"/> object to convert.</param>
-        /// <returns>A new <see cref="OrientationDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static OrientationDto ToDto(this OrientationEntity self) =>
-            self is null ? new OrientationDto() : new OrientationDto
+        /// <returns>A new <see cref="OrientationInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static OrientationInfoDto ToDto(this OrientationEntity self) =>
+            self is null ? new OrientationInfoDto() : new OrientationInfoDto
             {
                 Id = self.Id,
+                Dissertation = self.Dissertation,
+                CoorientatorId = self.CoorientatorId,
                 ProfessorId = self.ProfessorId,
-                Dissertation = self.Dissertation.ToDto(),
-                ResearcherId = self.ResearcherId ?? Guid.Empty,
+                ProjectId = self.ProjectId,
+                StudentId = self.StudentId
+            };
+
+        /// <summary>
+        /// Converts a <see cref="OrientationEntity"/> object to a <see cref="OrientationInfoDto"/> object.
+        /// </summary>
+        /// <param name="self">The <see cref="OrientationEntity"/> object to convert.</param>
+        /// <returns>A new <see cref="OrientationInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static OrientationInfoDto ToInfoDto(this OrientationEntity self) =>
+            self is null ? new OrientationInfoDto() : new OrientationInfoDto
+            {
+                Id = self.Id,
+                Dissertation = self.Dissertation,
+                CoorientatorId = self.CoorientatorId,
+                ProfessorId = self.ProfessorId,
+                ProjectId = self.ProjectId,
+                StudentId = self.StudentId,
+                Coorientator = self.Coorientator?.ToUserDto(),
+                Professor = self.Professor?.ToUserDto(),
+                Student = self.Student?.ToUserDto()
             };
     }
 }

@@ -1,6 +1,7 @@
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
+using gerdisc.Models.Enums;
 using gerdisc.Models.Mapper;
 using gerdisc.Services.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -23,19 +24,32 @@ namespace gerdisc.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<ExtensionDto> CreateExtensionAsync(ExtensionDto extensionDto)
+        /// <inheritdoc />
+        public async Task<ExtensionInfoDto> CreateExtensionAsync(ExtensionDto extensionDto)
         {
             var extension = extensionDto.ToEntity();
 
+            var student = await _repository.Student.GetByIdAsync(extension.StudentId);
+
+            if (student is null)
+            {
+                throw new ArgumentException($"Student with id: {extension.StudentId} does not exist.");
+            }
+
             extension = await _repository.Extension.AddAsync(extension);
+
+            UpdateUserDates(student, extension);
+
+            await _repository.Student.UpdateAsync(student);
 
             _logger.LogInformation($"Extension {extension.StudentId} created successfully.");
             return extension.ToDto();
         }
 
-        public async Task<ExtensionDto> GetExtensionAsync(Guid id)
+        /// <inheritdoc />
+        public async Task<ExtensionInfoDto> GetExtensionAsync(Guid id)
         {
-            var extensionEntity = await _repository.Extension.GetByIdAsync(id);
+            var extensionEntity = await _repository.Extension.GetByIdAsync(id, x => x.Student);
             if (extensionEntity == null)
             {
                 throw new ArgumentException("Extension not found.");
@@ -44,10 +58,11 @@ namespace gerdisc.Services
             return extensionEntity.ToDto();
         }
 
-        public async Task<IEnumerable<ExtensionDto>> GetAllExtensionsAsync()
+        /// <inheritdoc />
+        public async Task<IEnumerable<ExtensionInfoDto>> GetAllExtensionsAsync()
         {
-            var extensions = await _repository.Extension.GetAllAsync();
-            var extensionDtos = new List<ExtensionDto>();
+            var extensions = await _repository.Extension.GetAllAsync(x => x.Student);
+            var extensionDtos = new List<ExtensionInfoDto>();
             foreach (var extension in extensions)
             {
                 extensionDtos.Add(extension.ToDto());
@@ -56,20 +71,31 @@ namespace gerdisc.Services
             return extensionDtos;
         }
 
-        public async Task<ExtensionDto> UpdateExtensionAsync(Guid id, ExtensionDto extensionDto)
+        /// <inheritdoc />
+        public async Task<ExtensionInfoDto> UpdateExtensionAsync(Guid id, ExtensionDto extensionDto)
         {
             var existingExtension = await _repository.Extension.GetByIdAsync(id);
-            if (existingExtension == null)
+            var student = await _repository.Student.GetByIdAsync(extensionDto.StudentId);
+
+            if (existingExtension == null || student is null)
             {
                 throw new ArgumentException($"Extension with id {id} does not exist.");
             }
 
+            var oldDays = existingExtension.NumberOfDays;
+
             existingExtension = extensionDto.ToEntity(existingExtension);
 
+            await _repository.Extension.UpdateAsync(existingExtension);
+
+            UpdateUserDates(student, existingExtension, oldDays);
+
+            await _repository.Student.UpdateAsync(student);
 
             return existingExtension.ToDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteExtensionAsync(Guid id)
         {
             var existingExtension = await _repository.Extension.GetByIdAsync(id);
@@ -79,6 +105,21 @@ namespace gerdisc.Services
             }
 
             await _repository.Extension.DeactiveAsync(existingExtension);
+        }
+
+        private async void UpdateUserDates(StudentEntity student, ExtensionEntity extension, int oldDays = 0)
+        {
+            switch (extension.Type)
+            {
+                case ExtensionTypeEnum.Qualification:
+                    student.ProjectQualificationDate += TimeSpan.FromDays(extension.NumberOfDays - oldDays);
+                    break;
+                case ExtensionTypeEnum.Defence:
+                    student.ProjectDefenceDate += TimeSpan.FromDays(extension.NumberOfDays - oldDays);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

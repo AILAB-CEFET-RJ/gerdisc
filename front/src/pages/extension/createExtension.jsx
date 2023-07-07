@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import "../../styles/createExtension.scss";
 import { useParams } from "react-router";
@@ -21,7 +20,7 @@ export default function ExtensionForm() {
             studentId: id,
             numberOfDays: 0,
             type: 1,
-            status: 'pending'
+            status: 'aprovado'
 
         }
     );
@@ -68,7 +67,16 @@ export default function ExtensionForm() {
                         <label htmlFor="name">Quantidade de Dias</label>
                         <input type="number" name="numberOfDays" value={extension.name} onChange={(e)=>setDays(e.target.value)} id="numberOfDays" />
                     </div>
-                    <Select className="formInput" onSelect={setType} options={["Defesa", "Qualificação"]} label="Type" name="type" />
+                    <Select
+                        className="formInput"
+                        onSelect={setType}
+                        options={["Defesa", "Qualificação"].map((option) => ({
+                            value: option,
+                            label: option,
+                        }))}
+                        label="Type"
+                        name="type"
+                        />
                 </div>
                 <div className="form-section">
                 </div>

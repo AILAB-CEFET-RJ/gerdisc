@@ -1,14 +1,137 @@
-namespace gerdisc
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+using gerdisc.Infrastructure.Providers;
+using gerdisc.Infrastructure.Providers.Interfaces;
+using gerdisc.Infrastructure.Repositories;
+using gerdisc.Infrastructure.Validations;
+using gerdisc.Properties;
+using gerdisc.Services;
+using gerdisc.Services.Interfaces;
+using gerdisc.Settings;
+using Hangfire;
+using Hangfire.PostgreSql;
+using Infrastructure.Jobs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
-    }
-}
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddAuthorization();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gerdisc", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.OperationFilter<SecurityRequirementsOperationFilter>();
+    c.DocumentFilter<BasePathDocumentFilter>(); 
+});
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+
+var settings = new AppSettings();
+var connectionString = $"Host={settings.PostgresServer};Username={settings.PostgresUser};Password={settings.PostgresPassword};Database={settings.PostgresDb}";
+
+var signingConfig = new SigningConfiguration(settings.SinginKey);
+
+builder.Services.AddDbContext<ContexRepository>(options =>
+{
+    options.UseNpgsql(connectionString);
+}, ServiceLifetime.Scoped);
+builder.Services.AddScoped<OrientationValidator>();
+builder.Services.AddScoped<UserValidator>();
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IResearchLineService, ResearchLineService>();
+builder.Services.AddScoped<IProfessorService, ProfessorService>();
+builder.Services.AddScoped<IExternalResearcherService, ExternalResearcherService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IOrientationService, OrientationService>();
+builder.Services.AddScoped<IExtensionService, ExtensionService>();
+builder.Services.AddScoped<IUserContext, UserContext>();
+builder.Services.AddSingleton<ISigningConfiguration>(signingConfig);
+builder.Services.AddSingleton<ISettings>(settings);
+builder.Services.AddScoped<IRepository,Repository>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddAuthorization();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = signingConfig.Key
+        };
+    });
+
+builder.Services.AddHangfireServer();
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UsePostgreSqlStorage(connectionString));
+
+var app = builder.Build();
+
+app.UsePathBase("/api");
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Gerdisc V1");
+    c.DefaultModelsExpandDepth(-1);
+    c.RoutePrefix = string.Empty;
+    c.DocumentTitle = "Gerdisc API Documentation";
+    c.EnableDeepLinking();
+    c.DisplayRequestDuration();
+});
+
+app.UseCors("CorsPolicy");
+
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    PrefixPath = string.Empty,
+    Authorization = new[] { new HangfireDashboardAuthorizationFilter() }
+});
+
+app.UseMiddleware<UserContextMiddleware>();
+app.UseMiddleware<LogRequest>();
+RecurringJob.AddOrUpdate<StudentsFinishing>("daily-job", x => x.ExecuteAsync(null), Cron.Daily);
+
+app.MapControllers();
+
+app.Run();

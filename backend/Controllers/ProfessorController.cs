@@ -11,10 +11,12 @@ namespace gerdisc.Controllers
     public class ProfessorController : ControllerBase
     {
         private readonly IProfessorService _professorService;
+        private readonly ILogger<ProfessorController> _logger;
 
-        public ProfessorController(IProfessorService professorService)
+        public ProfessorController(IProfessorService professorService, ILogger<ProfessorController> logger)
         {
             _professorService = professorService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -23,13 +25,13 @@ namespace gerdisc.Controllers
         /// <param name="professorDto">The professor data.</param>
         /// <returns>The created professor.</returns>
         [HttpPost]
-        [Authorize(Roles = "Administrator, ProfessorManager")]
-        public async Task<ActionResult<ProfessorDto>> CreateProfessor(ProfessorDto professorDto)
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<ProfessorInfoDto>> CreateProfessor(ProfessorDto professorDto)
         {
             try
             {
                 var professor = await _professorService.CreateProfessorAsync(professorDto);
-                return CreatedAtAction(nameof(GetProfessor), new { id = professor.UserId }, professor);
+                return CreatedAtAction(nameof(GetProfessor), new { id = professor.Id }, professor);
             }
             catch (Exception ex)
             {
@@ -43,8 +45,8 @@ namespace gerdisc.Controllers
         /// <param name="id">The professor ID.</param>
         /// <returns>The professor.</returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator, ProfessorManager, Developer")]
-        public async Task<ActionResult<ProfessorDto>> GetProfessor(Guid id)
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<ProfessorInfoDto>> GetProfessor(Guid id)
         {
             try
             {
@@ -53,13 +55,14 @@ namespace gerdisc.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error occurred: {ErrorMessage}. Stack trace: {StackTrace}", ex.Message, ex.StackTrace);
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ProfessorDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<ProfessorDto>>> GetAllProfessorsAsync()
+        [ProducesResponseType(typeof(IEnumerable<ProfessorInfoDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProfessorInfoDto>>> GetAllProfessorsAsync()
         {
             var professorDtos = await _professorService.GetAllProfessorsAsync();
 
@@ -73,16 +76,17 @@ namespace gerdisc.Controllers
         /// <param name="professorDto">The professor data.</param>
         /// <returns>The updated professor.</returns>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Administrator, ProfessorManager")]
-        public async Task<ActionResult<ProfessorDto>> UpdateProfessor(Guid id, ProfessorDto professorDto)
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<ProfessorInfoDto>> UpdateProfessor(Guid id, ProfessorDto professorDto)
         {
             try
             {
                 var professor = await _professorService.UpdateProfessorAsync(id, professorDto);
-                return Ok(professor);
+                return CreatedAtAction(nameof(GetProfessor), new { id = professor.Id }, professor);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error occurred: {ErrorMessage}. Stack trace: {StackTrace}", ex.Message, ex.StackTrace);
                 return BadRequest(ex.Message);
             }
         }
@@ -93,7 +97,7 @@ namespace gerdisc.Controllers
         /// <param name="id">The professor ID.</param>
         /// <returns>No content.</returns>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Administrator, ProfessorManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteProfessor(Guid id)
         {
             try

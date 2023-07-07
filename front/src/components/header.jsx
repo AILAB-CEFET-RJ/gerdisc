@@ -12,7 +12,7 @@ export default function Header({ name }) {
                     <span>GERDISC</span>
                 </div>
                 <div className={"headerOptions"}>
-                    <div>Óla, {name}</div>
+                    <div>Olá, {name}</div>
                 </div>
             </div>
             <div className={"headerBreak"}><span></span></div>

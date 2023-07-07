@@ -1,6 +1,7 @@
 {
-  "name": "front",
+  "name": "gerdisc",
   "version": "0.1.0",
+  "homepage": "/gerdisc",
   "private": true,
   "type": "commonjs",
   "dependencies": {

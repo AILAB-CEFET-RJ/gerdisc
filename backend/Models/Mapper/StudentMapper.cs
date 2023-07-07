@@ -6,7 +6,7 @@ using gerdisc.Models.Enums;
 namespace gerdisc.Models.Mapper
 {
     /// <summary>
-    /// A static class containing mapper methods for converting between <see cref="StudentDto"/> and <see cref="StudentEntity"/> objects.
+    /// A static class containing mapper methods for converting between <see cref="StudentInfoDto"/> and <see cref="StudentEntity"/> objects.
     /// </summary>
     public static class StudentMapper
     {
@@ -18,6 +18,7 @@ namespace gerdisc.Models.Mapper
         public static StudentEntity ToEntity(this StudentDto dto, Guid userId) =>
             dto is null ? new StudentEntity() : new StudentEntity
             {
+                Id = userId,
                 Registration = dto.Registration,
                 RegistrationDate = dto.RegistrationDate?.ToUniversalTime(),
                 ProjectId = dto.ProjectId,
@@ -33,6 +34,7 @@ namespace gerdisc.Models.Mapper
                 UndergraduateArea = dto.UndergraduateArea,
                 DateOfBirth = dto.DateOfBirth?.ToUniversalTime(),
                 Scholarship = dto.Scholarship,
+                StudentCourses = dto.StudentCourses?.Select(x => x.ToEntity()) ?? new List<StudentCourseEntity>(),
                 UserId = userId
             };
 
@@ -57,19 +59,54 @@ namespace gerdisc.Models.Mapper
             entityToUpdate.UndergraduateArea = self.UndergraduateArea;
             entityToUpdate.DateOfBirth = self.DateOfBirth;
             entityToUpdate.Scholarship = self.Scholarship;
+            
+            var coursesToAdd = self.StudentCourses?
+                .Where(x => !entityToUpdate.StudentCourses.Select(sc => sc.CourseId).Contains(x.CourseId))
+                .Select(x => x.ToEntity()) ?? new List<StudentCourseEntity>();
+
+            entityToUpdate.StudentCourses = entityToUpdate.StudentCourses.Concat(coursesToAdd);
             return entityToUpdate;
         }
 
         /// <summary>
-        /// Converts a <see cref="StudentEntity"/> object to a <see cref="StudentDto"/> object.
+        /// Converts a <see cref="StudentEntity"/> object to a <see cref="StudentInfoDto"/> object.
         /// </summary>
         /// <param name="self">The <see cref="StudentEntity"/> object to convert.</param>
-        /// <returns>A new <see cref="StudentDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static StudentDto ToDto(this StudentEntity self)
+        /// <returns>A new <see cref="StudentInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static StudentInfoDto ToInfoDto(this StudentEntity self)
         {
-            var entity = self is null ? new StudentDto() : new StudentDto
+            var entity = self is null ? new StudentInfoDto() : new StudentInfoDto
             {
-                UserId = self.Id,
+                Registration = self.Registration,
+                RegistrationDate = self.RegistrationDate?.ToUniversalTime(),
+                ProjectId = self.ProjectId,
+                Status = self.Status,
+                EntryDate = self.EntryDate?.ToUniversalTime(),
+                ProjectDefenceDate = self.ProjectDefenceDate?.ToUniversalTime(),
+                ProjectQualificationDate = self.ProjectQualificationDate?.ToUniversalTime(),
+                Proficiency = self.Proficiency,
+                UndergraduateInstitution = self.UndergraduateInstitution,
+                InstitutionType = self.InstitutionType,
+                UndergraduateCourse = self.UndergraduateCourse,
+                GraduationYear = self.GraduationYear,
+                UndergraduateArea = self.UndergraduateArea,
+                DateOfBirth = self.DateOfBirth?.ToUniversalTime(),
+                Scholarship = self.Scholarship,
+                StudentCourses = self.StudentCourses.Select(x => x.ToDto()),
+                Project = self.Project?.ToDto()
+            };
+            return self?.User is null ? entity : entity.AddUserDto(self.User);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="StudentEntity"/> object to a <see cref="StudentInfoDto"/> object.
+        /// </summary>
+        /// <param name="self">The <see cref="StudentEntity"/> object to convert.</param>
+        /// <returns>A new <see cref="StudentInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static StudentInfoDto ToDto(this StudentEntity self)
+        {
+            var entity = self is null ? new StudentInfoDto() : new StudentInfoDto
+            {
                 Registration = self.Registration,
                 RegistrationDate = self.RegistrationDate?.ToUniversalTime(),
                 ProjectId = self.ProjectId,
@@ -86,37 +123,51 @@ namespace gerdisc.Models.Mapper
                 DateOfBirth = self.DateOfBirth?.ToUniversalTime(),
                 Scholarship = self.Scholarship
             };
-            return entity.AddUserDto(self.User);
+            return self?.User is null ? entity : entity.AddUserDto(self.User);
         }
 
         /// <summary>
         /// Converts a <see cref="StudentCsvDto"/> object to a <see cref="StudentDto"/> object.
         /// </summary>
-        /// <param name="entity">The <see cref="StudentCsvDto"/> object to convert.</param>
-        /// <returns>A new <see cref="StudentDto"/> object with the values from the <paramref name="entity"/> object.</returns>
-        public static StudentDto ToDto(this StudentCsvDto entity) =>
-            entity is null ? new StudentDto() : new StudentDto
+        /// <param name="csv">The <see cref="StudentCsvDto"/> object to convert.</param>
+        /// <returns>A new <see cref="StudentDto"/> object with the values from the <paramref name="csv"/> object.</returns>
+        public static StudentDto ToDto(this StudentCsvDto csv) =>
+            csv is null ? new StudentDto() : new StudentDto
             {
-                Registration = entity.Registration,
-                RegistrationDate = entity.RegistrationDate.Parse()?.ToUniversalTime(),
-                ProjectId = entity.ProjectId,
-                Status = entity.Status,
-                EntryDate = entity.EntryDate.Parse()?.ToUniversalTime(),
-                ProjectDefenceDate = entity.ProjectDefenceDate.Parse()?.ToUniversalTime(),
-                ProjectQualificationDate = entity.ProjectQualificationDate.Parse()?.ToUniversalTime(),
-                Proficiency = entity.Proficiency,
-                UndergraduateInstitution = entity.UndergraduateInstitution,
-                InstitutionType = entity.InstitutionType,
-                UndergraduateCourse = entity.UndergraduateCourse,
-                GraduationYear = entity.GraduationYear,
-                UndergraduateArea = entity.UndergraduateArea,
-                DateOfBirth = entity.DateOfBirth.Parse()?.ToUniversalTime(),
-                Scholarship = entity.Scholarship,
-                Cpf = entity.Cpf,
-                Email = entity.Email,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                Password = entity.Password,
+                Registration = csv.Registration,
+                RegistrationDate = csv.RegistrationDate.Parse()?.ToUniversalTime(),
+                ProjectId = string.IsNullOrEmpty(csv.ProjectId) ? null : Guid.Parse(csv.ProjectId),
+                Status = (StatusEnum)csv.Status,
+                EntryDate = csv.EntryDate.Parse()?.ToUniversalTime(),
+                ProjectDefenceDate = csv.ProjectDefenceDate.Parse()?.ToUniversalTime(),
+                ProjectQualificationDate = csv.ProjectQualificationDate.Parse()?.ToUniversalTime(),
+                Proficiency = csv.Proficiency?.ToLower() == "sim",
+                UndergraduateInstitution = csv.UndergraduateInstitution,
+                InstitutionType = (InstitutionTypeEnum)csv.InstitutionType,
+                UndergraduateCourse = csv.UndergraduateCourse,
+                GraduationYear = csv.GraduationYear,
+                UndergraduateArea = (UndergraduateAreaEnum)csv.UndergraduateArea,
+                DateOfBirth = csv.DateOfBirth.Parse()?.ToUniversalTime(),
+                Scholarship = csv.Scholarship,
+                Cpf = csv.Cpf,
+                Email = csv.Email,
+                FirstName = csv.Name?.TrimStart().Split(' ').FirstOrDefault(),
+                LastName = csv.Name?.TrimEnd().Split(' ').LastOrDefault(),
+            };
+
+        /// <summary>
+        /// Converts a <see cref="StudentCourseCsvDto"/> object to a <see cref="StudentCourseDto"/> object.
+        /// </summary>
+        /// <param name="csv">The <see cref="StudentCourseCsvDto"/> object to convert.</param>
+        /// <returns>A new <see cref="StudentCourseDto"/> object with the values from the <paramref name="csv"/> object.</returns>
+        public static StudentCourseDto ToDto(this StudentCourseCsvDto csv, Guid courseId, Guid studentId) =>
+            csv is null ? new StudentCourseDto() : new StudentCourseDto
+            {
+                CourseId = courseId,
+                StudentId = studentId,
+                Grade = csv.Grade,
+                Trimester = int.Parse(csv.Trimester.Trim()[0].ToString()),
+                Year = csv.Year
             };
     }
 }

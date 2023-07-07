@@ -4,7 +4,7 @@ using gerdisc.Models.Entities;
 namespace gerdisc.Models.Mapper
 {
     /// <summary>
-    /// A static class containing mapper methods for converting between <see cref="ExtensionDto"/> and <see cref="ExtensionEntity"/> objects.
+    /// A static class containing mapper methods for converting between <see cref="ExtensionInfoDto"/> and <see cref="ExtensionEntity"/> objects.
     /// </summary>
     public static class ExtensionMapper
     {
@@ -38,18 +38,19 @@ namespace gerdisc.Models.Mapper
         }
 
         /// <summary>
-        /// Converts a <see cref="ExtensionEntity"/> object to a <see cref="ExtensionDto"/> object.
+        /// Converts a <see cref="ExtensionEntity"/> object to a <see cref="ExtensionInfoDto"/> object.
         /// </summary>
         /// <param name="self">The <see cref="ExtensionEntity"/> object to convert.</param>
-        /// <returns>A new <see cref="ExtensionDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static ExtensionDto ToDto(this ExtensionEntity self) =>
-            self is null ? new ExtensionDto() : new ExtensionDto
+        /// <returns>A new <see cref="ExtensionInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static ExtensionInfoDto ToDto(this ExtensionEntity self) =>
+            self is null ? new ExtensionInfoDto() : new ExtensionInfoDto
             {
                 Id = self.Id,
                 Status = self.Status,
                 NumberOfDays = self.NumberOfDays,
                 StudentId = self.StudentId,
-                Type = self.Type
+                Type = self.Type,
+                Student = self.Student?.ToUserDto()
             };
     }
 }

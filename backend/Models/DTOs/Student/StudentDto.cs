@@ -1,3 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+using gerdisc.Infrastructure.Validations;
+using gerdisc.Models.Enums;
+
 namespace gerdisc.Models.DTOs
 {
     public class StudentDto : UserDto
@@ -6,9 +10,10 @@ namespace gerdisc.Models.DTOs
 
         public DateTime? RegistrationDate { get; set; }
 
-        public string? ProjectId { get; set; }
+        [Required(ErrorMessage = "ProjectId is required")]
+        public Guid? ProjectId { get; set; }
 
-        public int Status { get; set; }
+        public StatusEnum Status { get; set; }
 
         public DateTime? EntryDate { get; set; }
 
@@ -16,21 +21,26 @@ namespace gerdisc.Models.DTOs
 
         public DateTime? ProjectQualificationDate { get; set; }
 
-        public string? Proficiency { get; set; }
+        public bool Proficiency { get; set; }
 
         public string? UndergraduateInstitution { get; set; }
 
-        public int InstitutionType { get; set; }
+        public InstitutionTypeEnum InstitutionType { get; set; }
 
         public string? UndergraduateCourse { get; set; }
 
         public int GraduationYear { get; set; }
 
-        public int UndergraduateArea { get; set; }
+        public UndergraduateAreaEnum UndergraduateArea { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
 
-        public int Scholarship { get; set; }
+        public ScholarshipEnum Scholarship { get; set; }
+
+        public IEnumerable<StudentCourseDto>? StudentCourses { get; set; }
+
+        [ValidRolesEnum(RolesEnum.Student)]
+        public override RolesEnum Role { get; set; }
 
         public StudentDto()
         {

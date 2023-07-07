@@ -1,6 +1,6 @@
+using gerdisc.Infrastructure.Extensions;
 using gerdisc.Infrastructure.Repositories;
 using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
 using gerdisc.Models.Mapper;
 using gerdisc.Services.Interfaces;
 
@@ -20,7 +20,8 @@ namespace gerdisc.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<ProjectDto> CreateProjectAsync(CreateProjectDto projectDto)
+        /// <inheritdoc />
+        public async Task<ProjectInfoDto> CreateProjectAsync(ProjectDto projectDto)
         {
             try
             {
@@ -29,19 +30,20 @@ namespace gerdisc.Services
                 var professorIds = projectDto.ProfessorIds.Select(x => Guid.Parse(x));
 
                 project = await _repository.Project.AddAsync(project);
-                await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(project.Id));
+                await _repository.ProfessorProject.HandlesByProject(projectDto.ProfessorIds.Select(Guid.Parse), project);
 
                 _logger.LogInformation($"Project {project.Name} created successfully.");
-                return project.ToDto();
+                return project.ToInfoDto();
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"Project {projectDto.Name} as {ex}");
-                return projectDto.ToEntity().ToDto();
+                return projectDto.ToEntity().ToInfoDto();
             };
         }
 
-        public async Task<ProjectDto> GetProjectAsync(Guid id)
+        /// <inheritdoc />
+        public async Task<ProjectInfoDto> GetProjectAsync(Guid id)
         {
             var projectEntity = await _repository
                 .Project
@@ -51,24 +53,26 @@ namespace gerdisc.Services
                 throw new ArgumentException("Project not found.");
             }
 
-            return projectEntity.ToDto();
+            return projectEntity.ToInfoDto();
         }
 
-        public async Task<IEnumerable<ProjectDto>> GetAllProjectsAsync()
+        /// <inheritdoc />
+        public async Task<IEnumerable<ProjectInfoDto>> GetAllProjectsAsync()
         {
             var projects = await _repository
                 .Project
                 .GetAllAsync();
-            var projectDtos = new List<ProjectDto>();
+            var projectDtos = new List<ProjectInfoDto>();
             foreach (var project in projects)
             {
-                projectDtos.Add(project.ToDto());
+                projectDtos.Add(project.ToInfoDto());
             }
 
             return projectDtos;
         }
 
-        public async Task<ProjectDto> UpdateProjectAsync(Guid id, CreateProjectDto projectDto)
+        /// <inheritdoc />
+        public async Task<ProjectInfoDto> UpdateProjectAsync(Guid id, ProjectDto projectDto)
         {
             var existingProject = await _repository.Project.GetByIdAsync(id);
             if (existingProject == null)
@@ -76,27 +80,14 @@ namespace gerdisc.Services
                 throw new ArgumentException($"Project with id {id} does not exist.");
             }
 
-            var professorIds = projectDto
-                .ProfessorIds
-                .Select(x => Guid.Parse(x))
-                .Except(existingProject.ProfessorProjects.Select(x => x.Id));
-
-            var professorIdsToDelete = existingProject
-                .ProfessorProjects
-                .Select(x => x.Id)
-                .Except(
-                    projectDto
-                    .ProfessorIds
-                    .Select(x => Guid.Parse(x))).ToList();
-
-            await _repository.ProfessorProject.DeactiveRangeAsync(entity => professorIdsToDelete.Contains(entity.ProfessorId));
-
             existingProject = projectDto.ToEntity(existingProject);
-            await _repository.ProfessorProject.AddRangeAsync(professorIds.CreateProfessorProjects(existingProject.Id));
+            await _repository.Project.UpdateAsync(existingProject);
+            await _repository.ProfessorProject.HandlesByProject(projectDto.ProfessorIds.Select(Guid.Parse), existingProject);
 
-            return existingProject.ToDto();
+            return existingProject.ToInfoDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteProjectAsync(Guid id)
         {
             var existingProject = await _repository.Project.GetByIdAsync(id);

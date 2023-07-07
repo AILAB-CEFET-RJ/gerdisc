@@ -17,6 +17,7 @@ namespace gerdisc.Models.Mapper
         public static ProfessorEntity ToEntity(this ProfessorDto self, Guid userId) =>
             self is null ? new ProfessorEntity() : new ProfessorEntity
             {
+                Id = userId,
                 Siape = self.Siape,
                 UserId = userId,
             };
@@ -30,18 +31,18 @@ namespace gerdisc.Models.Mapper
         public static ProfessorEntity ToEntity(this ProfessorDto self, ProfessorEntity entityToUpdate)
         {
             entityToUpdate.Siape = self.Siape;
+            entityToUpdate.User = self.ToUserEntity(entityToUpdate.User);
             return entityToUpdate;
         }
 
         /// <summary>
-        /// Converts a <see cref="ProfessorEntity"/> object to a <see cref="ProfessorDto"/> object.
+        /// Converts a <see cref="ProfessorEntity"/> object to a <see cref="ProfessorInfoDto"/> object.
         /// </summary>
         /// <param name="self">The <see cref="ProfessorEntity"/> object to convert.</param>
-        /// <returns>A new <see cref="ProfessorDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static ProfessorDto ToDto(this ProfessorEntity self) =>
-            self is null ? new ProfessorDto() : new ProfessorDto
+        /// <returns>A new <see cref="ProfessorInfoDto"/> object with the values from the <paramref name="self"/> object.</returns>
+        public static ProfessorInfoDto ToDto(this ProfessorEntity self) =>
+            self is null ? new ProfessorInfoDto() : new ProfessorInfoDto
             {
-                UserId = self.Id,
                 Siape = self.Siape,
             }.AddUserDto(self.User);
     }

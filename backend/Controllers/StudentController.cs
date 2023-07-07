@@ -7,7 +7,7 @@ using gerdisc.Services.Interfaces;
 namespace gerdisc.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("students")]
     public class StudentsController : ControllerBase
     {
         private readonly IStudentService _studentService;
@@ -18,13 +18,13 @@ namespace gerdisc.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator, StudentManager")]
-        public async Task<ActionResult<StudentDto>> CreateStudent(StudentDto studentDto)
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<StudentInfoDto>> CreateStudent(StudentDto studentDto)
         {
             try
             {
                 var student = await _studentService.CreateStudentAsync(studentDto);
-                return CreatedAtAction(nameof(GetStudent), new { studentId = student.UserId }, student);
+                return CreatedAtAction(nameof(GetStudent), new { studentId = student.Id }, student);
             }
             catch (Exception ex)
             {
@@ -33,8 +33,8 @@ namespace gerdisc.Controllers
         }
 
         [HttpPost("csv")]
-        [Authorize(Roles = "Administrator, StudentManager")]
-        public async Task<ActionResult<IEnumerable<StudentDto>>> AddStudentsFromCsvAsync(IFormFile file)
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<IEnumerable<StudentInfoDto>>> AddStudentsFromCsvAsync(IFormFile file)
         {
             try
             {
@@ -47,42 +47,83 @@ namespace gerdisc.Controllers
             }
         }
 
-        [HttpGet("{studentId}")]
-        [Authorize(Roles = "Administrator, StudentManager")]
-        public async Task<ActionResult<StudentDto>> GetStudent(Guid studentId)
+        [HttpPost("course/csv")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<IEnumerable<StudentInfoDto>>> AddCoursesToStudentsFromCsvAsync(IFormFile file)
         {
-            var student = await _studentService.GetStudentAsync(studentId);
-            if (student == null) return NotFound();
-            return Ok(student);
+            try
+            {
+                var courses = await _studentService.AddCoursesToStudentsFromCsvAsync(file);
+                return Ok(courses);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{studentId}")]
+        [Authorize(Roles = "Administrator, Professor, Student")]
+        public async Task<ActionResult<StudentInfoDto>> GetStudent(Guid studentId)
+        {
+            try
+            {
+                var student = await _studentService.GetStudentAsync(studentId);
+                return Ok(student);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("{studentId}")]
-        [Authorize(Roles = "Administrator, StudentManager")]
-        public async Task<ActionResult<StudentDto>> UpdateStudent(Guid studentId, StudentDto studentDto)
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<StudentInfoDto>> UpdateStudent(Guid studentId, StudentDto studentDto)
         {
-            var updatedStudentDto = await _studentService.UpdateStudentAsync(studentId, studentDto);
-            if (updatedStudentDto == null) return NotFound();
-            return Ok(updatedStudentDto);
+            try
+            {
+                var updatedStudentDto = await _studentService.UpdateStudentAsync(studentId, studentDto);
+                if (updatedStudentDto == null) return NotFound();
+                return Ok(updatedStudentDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{studentId}")]
-        [Authorize(Roles = "Administrator, StudentManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteStudent(Guid studentId)
         {
-            var studentDto = await _studentService.GetStudentAsync(studentId);
-            if (studentDto == null) return NotFound();
-            await _studentService.DeleteStudentAsync(studentId);
-            return NoContent();
+            try
+            {
+                var studentDto = await _studentService.GetStudentAsync(studentId);
+                if (studentDto == null) return NotFound();
+                await _studentService.DeleteStudentAsync(studentId);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator, StudentManager")]
-        [ProducesResponseType(typeof(IEnumerable<StudentDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<StudentDto>>> GetAllStudentsAsync()
+        [Authorize(Roles = "Administrator, Professor, Student")]
+        [ProducesResponseType(typeof(IEnumerable<StudentInfoDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<StudentInfoDto>>> GetAllStudentsAsync()
         {
-            var studentDtos = await _studentService.GetAllStudentsAsync();
-
-            return Ok(studentDtos);
+            try
+            {
+                var studentDtos = await _studentService.GetAllStudentsAsync();
+                return Ok(studentDtos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

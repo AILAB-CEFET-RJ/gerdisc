@@ -2,6 +2,7 @@ using gerdisc.Models.Entities;
 
 namespace gerdisc.Infrastructure.Repositories.User
 {
+    /// <inheritdoc />
     public interface IUserRepository : IBaseRepository<UserEntity>
     {
         /// <summary>

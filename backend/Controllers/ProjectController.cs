@@ -23,8 +23,8 @@ namespace gerdisc.Controllers
         /// <param name="projectDto">The project data.</param>
         /// <returns>The created project.</returns>
         [HttpPost]
-        [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<ProjectDto>> CreateProject(CreateProjectDto projectDto)
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<ProjectInfoDto>> CreateProject(ProjectDto projectDto)
         {
             try
             {
@@ -43,8 +43,8 @@ namespace gerdisc.Controllers
         /// <param name="id">The project ID.</param>
         /// <returns>The project.</returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator, ProjectManager, Developer")]
-        public async Task<ActionResult<ProjectDto>> GetProject(Guid id)
+        [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
+        public async Task<ActionResult<ProjectInfoDto>> GetProject(Guid id)
         {
             try
             {
@@ -62,8 +62,9 @@ namespace gerdisc.Controllers
         /// </summary>
         /// <returns>A list of projects.</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ProjectDto>), 200)]
-        public async Task<ActionResult<IEnumerable<ProjectDto>>> GetAllProjectsAsync()
+        [Authorize(Roles = "Administrator, Student, Professor, ExternalResearcher")]
+        [ProducesResponseType(typeof(IEnumerable<ProjectInfoDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ProjectInfoDto>>> GetAllProjectsAsync()
         {
             var projectDtos = await _projectService.GetAllProjectsAsync();
             return Ok(projectDtos);
@@ -76,13 +77,13 @@ namespace gerdisc.Controllers
         /// <param name="projectDto">The project data.</param>
         /// <returns>The updated project.</returns>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Administrator, ProjectManager")]
-        public async Task<ActionResult<ProjectDto>> UpdateProject(Guid id, CreateProjectDto projectDto)
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<ProjectInfoDto>> UpdateProject(Guid id, ProjectDto projectDto)
         {
             try
             {
-                var projectId = await _projectService.UpdateProjectAsync(id, projectDto);
-                return CreatedAtAction(nameof(GetProject), new { id = projectId });
+                var project = await _projectService.UpdateProjectAsync(id, projectDto);
+                return CreatedAtAction(nameof(GetProject), new { id = project.Id }, project);
             }
             catch (Exception ex)
             {
@@ -96,7 +97,7 @@ namespace gerdisc.Controllers
         /// <param name="id">The project ID.</param>
         /// <returns>No content.</returns>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Administrator, ProjectManager")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteProject(Guid id)
         {
             try

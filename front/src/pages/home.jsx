@@ -8,6 +8,7 @@ export default function Home() {
     const navigate = useNavigate()
     var [role, setRole] = useState("")
     var [name, setName] = useState("")
+    const [studentId, setStudentId] = useState('')
     useEffect(() => {
 
         let token = localStorage.getItem('token')
@@ -15,6 +16,7 @@ export default function Home() {
         try {
             const decoded = jwt_decode(token)
             setRole(decoded.role)
+            setStudentId(decoded.nameid)
         } catch (error) {
             navigate('/login')
         }
@@ -24,61 +26,67 @@ export default function Home() {
         <PageContainer isLoading={false} name={name}>
             <div className='home'>
             <div>
-                <pre id='pre' style={{ margin: "1rem" }}>Acesse os paneis para consulta e cadastro:</pre>
+                <pre id='pre' style={{ margin: "1rem" }}>Acesse os painéis para consulta e cadastro:</pre>
             </div>
             <div className={"dashboard"}>
                 {(role === "Professor" || role === "Administrator") && <div className={"boardItem"} onClick={() => navigate('/students')}>
                     <div id='student' className={"itemIcon"} >
-                        <img src="student.png" />
+                        <img src={process.env.PUBLIC_URL +"/student.png"} />
                     </div>
                     <label htmlFor='student' className={"iconLabel"}>Estudantes</label>
                 </div>}
-                {(role === "Student") && <div className={"boardItem"} onClick={() => navigate('/student/perfil')}>
+                {(role === "Student") && <div className={"boardItem"} onClick={() => navigate(`/students/${studentId}`)}>
                     <div id='Profile' className={"itemIcon"} >
-                        <img src="student.png" />
+                        <img src={process.env.PUBLIC_URL + "/student.png"} />
                     </div>
                     <label htmlFor='Profile' className={"iconLabel"}>Meu Perfil</label>
                 </div>}
                 {(role === "Student") && <div className={"boardItem"} onClick={() => navigate('/extensions')}>
                     <div id='extensions' className={"itemIcon"} >
-                        <img className={"filtered"} src="calender.png" />
+                        <img className={"filtered"} src={process.env.PUBLIC_URL +"/calender.png"} />
                     </div>
                     <label htmlFor='extensions' className={"iconLabel"}>Pedidos de Extensão</label>
                 </div>}
                 {(role === "Administrator") && <div className={"boardItem"} onClick={() => navigate('/professors')}>
                     <div id='professor' className={"itemIcon"} >
-                        <img src="professor.png" />
+                        <img src={process.env.PUBLIC_URL +"/professor.png"} />
                     </div>
                     <label htmlFor='professor' className={"iconLabel"}>Professores</label>
                 </div>}
+                {(role === "Administrator") && <div className={"boardItem"} onClick={() => navigate('/researchers')}>
+                    <div id='researcher' className={"itemIcon"} >
+                        <img className={"filtered"} src={process.env.PUBLIC_URL +"/researcher.png"} />
+                    </div>
+                    <label htmlFor='researcher' className={"iconLabel"}>Pesquisadores</label>
+                </div>}
                 {(role === "Administrator" || role === "Professor") && <div className={"boardItem"} onClick={() => navigate('/researches')}>
                     <div id='research' className={"itemIcon"} >
-                        <img src="research.png" />
+                        <img src={process.env.PUBLIC_URL +"/research.png"} />
                     </div>
                     <label htmlFor='research' className={"iconLabel"}>Dissertações</label>
                 </div>}
                 {(role === "Administrator" || role === "Professor") && <div className={"boardItem"} onClick={() => navigate('/projects')}>
                     <div id='project' className={"itemIcon"} >
-                        <img className={"filtered"} src="lamp.png" />
+                        <img className={"filtered"} src={process.env.PUBLIC_URL +"/lamp.png"} />
                     </div>
                     <label htmlFor='project' className={"iconLabel"}>Projetos</label>
                 </div>}
-                {(role === "Administrator") && <div className={"boardItem"} onClick={() => navigate('/reports')}>
+                {/* {(role === "Administrator") && <div className={"boardItem"} onClick={() => navigate('/reports')}>
                     <div id='report' className={"itemIcon"} >
-                        <img className={"filtered"} src="report.png" />
+                        <img className={"filtered"} src={process.env.PUBLIC_URL +"/report.png"} />
                     </div>
                     <label htmlFor='report' className={"iconLabel"}>Relatorios</label>
-                </div>}
+                </div>} */}
                 {(role === "Administrator") && <div className={"boardItem"} onClick={() => navigate('/extensions')}>
                     <div id='extension' className={"itemIcon"} >
-                        <img className={"filtered"} src="calender.png" />
+                        <img className={"filtered"} src={process.env.PUBLIC_URL +"/calender.png"} />
                     </div>
                     <label htmlFor='extension' className={"iconLabel"}>Extensões</label>
                 </div>}
                 {
                     (role === "Administrator") && <div className='boardItem' onClick={() => navigate('/entities/csv')}>
                         <div id='entities'>
-                            <img className={"filtered"} src="csv3.png" />
+                            <img className={"filtered"} src={process.env.PUBLIC_URL +"/csv3.png"} />
                         </div>
                         <label htmlFor='entities' className={"iconLabel"}>Carregar CSV</label>
                     </div>

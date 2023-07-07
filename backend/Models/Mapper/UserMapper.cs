@@ -1,3 +1,4 @@
+using System.Text;
 using gerdisc.Models.DTOs;
 using gerdisc.Models.Entities;
 using gerdisc.Models.Enums;
@@ -21,9 +22,9 @@ namespace gerdisc.Models.Mapper
                 FirstName = self.FirstName,
                 LastName = self.LastName,
                 Cpf = self.Cpf,
-                Email = self.Email,
+                Email = self.Email.ToLower(),
                 CreatedAt = DateTime.UtcNow,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(self.Password),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(GeneratePassword(23)),
                 Role = self.Role
             };
 
@@ -35,6 +36,10 @@ namespace gerdisc.Models.Mapper
         /// <returns>The updated <see cref="UserEntity"/> object.</returns>
         public static UserEntity ToUserEntity(this UserDto self, UserEntity entityToUpdate)
         {
+            if (self is null)
+            {
+                return entityToUpdate;
+            }
             entityToUpdate.FirstName = self.FirstName;
             entityToUpdate.LastName = self.LastName;
             entityToUpdate.Role = self.Role;
@@ -46,10 +51,10 @@ namespace gerdisc.Models.Mapper
         /// </summary>
         /// <param name="self">The <see cref="UserEntity"/> object to convert.</param>
         /// <returns>A new <see cref="UserDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static UserDto ToUserDto(this UserEntity self) =>
+        public static UserDto ToUserDto(this UserEntity? self) =>
             self is null ? new UserDto() : new UserDto
             {
-                UserId = self.Id,
+                Id = self.Id,
                 FirstName = self.FirstName,
                 LastName = self.LastName,
                 Cpf = self.Cpf,
@@ -62,10 +67,14 @@ namespace gerdisc.Models.Mapper
         /// </summary>
         /// <param name="self">The <see cref="UserEntity"/> object to convert.</param>
         /// <returns>A new <see cref="UserDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static TUserDto AddUserDto<TUserDto>(this TUserDto self, UserEntity entity)
+        public static TUserDto AddUserDto<TUserDto>(this TUserDto self, UserEntity? entity)
             where TUserDto : UserDto
         {
-            self.UserId = entity.Id;
+            if (entity is null)
+            {
+                return self;
+            }
+            self.Id = entity.Id;
             self.Cpf = entity.Cpf;
             self.Email = entity.Email;
             self.FirstName = entity.FirstName;
@@ -86,19 +95,20 @@ namespace gerdisc.Models.Mapper
                 Token = token,
             };
 
-        /// <summary>
-        /// Converts a <see cref="UserEntity"/> object to a <see cref="StudentCsvDto"/> object.
-        /// </summary>
-        /// <param name="self">The <see cref="UserEntity"/> object to convert.</param>
-        /// <returns>A new <see cref="StudentCsvDto"/> object with the values from the <paramref name="self"/> object.</returns>
-        public static UserEntity ToUserEntity(this StudentCsvDto entity) => new UserEntity
+        public static string GeneratePassword(int length)
         {
-            Cpf = entity.Cpf,
-            Email = entity.Email,
-            FirstName = entity.FirstName,
-            LastName = entity.LastName,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(entity.Password),
-            Role = RolesEnum.Student
-        };
+            var allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=<>?";
+            Random random = new();
+            StringBuilder password = new();
+
+            for (int i = 0; i < length; i++)
+            {
+                int index = random.Next(allowedChars.Length);
+                password.Append(allowedChars[index]);
+            }
+
+            return password.ToString();
+        }
+
     }
 }

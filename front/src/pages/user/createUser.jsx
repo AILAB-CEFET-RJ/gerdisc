@@ -1,25 +1,34 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router"
+import { useNavigate, useParams } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Select from "../../components/select";
-import { postProfessors, getProfessorById,putProfessorById } from "../../api/professor_service";
-import { postStudents, getStudentById, putStudentById } from "../../api/student_service";
 import { getProjects } from "../../api/project_service";
+import { postProfessors, getProfessorById, putProfessorById } from "../../api/professor_service";
+import { postStudents, getStudentById, putStudentById } from "../../api/student_service";
 import { postResearchers, getResearcherById, putResearcherById } from "../../api/researcher_service";
 import BackButton from "../../components/BackButton";
 import ErrorPage from "../../components/error/Error";
 import PageContainer from "../../components/PageContainer";
-
+import { AREA_ENUM, INSTITUTION_TYPE_ENUM, STATUS_ENUM, SCHOLARSHIP_TYPE } from "../../enum_helpers";
+import MultiSelect from "../../components/Multiselect";
 
 export default function UserForm({ type = undefined, isUpdate = false }) {
-    const navigate = useNavigate()
-    const { id } = useParams()
+    const navigate = useNavigate();
+    const { id } = useParams();
     const [userType, setUserType] = useState(type);
-    const [name,] = useState(localStorage.getItem('name'))
+    const [name] = useState(localStorage.getItem('name'));
     const [isStudent, setIsStudent] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState();
+    const [error, setError] = useState(false);
+    const [selectedProjects, setSelectedProject] = useState([]);
     const [errorMessage, setErrorMessage] = useState(undefined);
+    const [oldValues, setOldValues] = useState({
+        status: '',
+        undergraduateArea: '',
+        institutionType: '',
+        scholarship: '',
+
+    })
     const [projects, setProjects] = useState([])
     const [role, setRole] = useState(localStorage.getItem('role'))
     const [user, setUser] = useState({
@@ -29,14 +38,13 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         cpf: '',
         password: '',
         createdAt: '',
-        role: isStudent ? 'student' : 'Professor',
     })
     const [student, SetStudent] = useState({
         registration: "",
         registrationDate: '',
         status: 1,
         entryDate: '',
-        proficiency: "",
+        proficiency: false,
         undergraduateInstitution: "",
         institutionType: 1,
         undergraduateCourse: "",
@@ -44,7 +52,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         undergraduateArea: 1,
         dateOfBirth: '',
         scholarship: 0,
-        projectId: "",
+        projectIds: [],
     })
     const [professor, setProfessor] = useState({
         siape: '',
@@ -53,12 +61,27 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
     })
 
     useEffect(() => {
+        var projectsId = undefined
         if (isUpdate) {
             if (isStudent) {
                 getStudentById(id)
                     .then(student => {
                         setUser(student)
-                        SetStudent(student)
+                        SetStudent(
+                            {
+                                ...student,
+                                undergraduateArea: AREA_ENUM[student.undergraduateArea],
+                                scholarship: student.scholarship,
+                                status: STATUS_ENUM[student.status]
+                            })
+                        projectsId = student.projectId
+                        setOldValues(
+                            {
+                                ...oldValues,
+                                institutionType: student.institutionType,
+                                scholarship: student.scholarship,
+                                undergraduateArea: student.undergraduateArea
+                            })
                     })
                     .catch(error => {
                         setError(true)
@@ -71,14 +94,13 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                     .then(professor => {
                         setUser(professor)
                         setProfessor(professor)
-                        console.log(professor)
                     })
                     .catch(error => {
                         setError(true)
                         setErrorMessage(error.message)
                     })
             }
-            else {
+            else if (userType === 'Externo') {
                 getResearcherById(id)
                     .then(researcher => {
                         setUser(researcher)
@@ -89,12 +111,6 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                         setErrorMessage(error.message)
                     })
             }
-        }
-    }, [isUpdate, isStudent, setUser, SetStudent, setProfessor, id, userType]);
-
-    useEffect(() => {
-        if (isStudent) {
-            setIsLoading(true);
             getProjects()
                 .then(result => {
                     let mapped = []
@@ -105,26 +121,42 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                                 Nome: project.name
                             }
                         })
+                        setSelectedProject(mapped.filter(project => projectsId === project.Id))
                         setProjects(mapped)
                     }
                 })
-                .catch(err => setError(true))
-            setIsLoading(false);
+                .catch(error => {
+                    setError(true)
+                    setErrorMessage(error.message)
+                })
         }
+    }, [isUpdate, isStudent, setUser, SetStudent, setProfessor, id, userType]);
+
+
+
+    useEffect(() => {
+        setIsLoading(true);
+        getProjects()
+            .then(result => {
+                let mapped = []
+                if (result !== null && result !== undefined) {
+                    mapped = result.map((project) => {
+                        return {
+                            Id: project.id,
+                            Nome: project.name
+                        }
+                    })
+                    setProjects(mapped)
+                }
+            })
+            .catch(err => setError(true))
+        setIsLoading(false);
     }, [isStudent, setProjects])
 
-    // const [address, setAddress] = useState({
-    //     country: '',
-    //     city: '',
-    //     street: '',
-    //     number: ''
-    // })
-
-    // const changeAddressAtribute = (name, value)=> {
-    //     let newValue = {}
-    //     newValue[name] = value
-    //     setAddress({...address, ...newValue})
-    // }
+    const onProjectSelect = (selectedList, Item) => {
+        const [selected] = selectedList
+        SetStudent({ ...student, ...{ projectId: selected.Id } })
+    }
 
     const changeUserAtribute = (name, value) => {
         let newValue = {}
@@ -132,7 +164,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         setUser({ ...user, ...newValue })
     }
 
-    const changeStudentAtribute = (name, value) => {
+    const changeStudentAttribute = (name, value) => {
         let newValue = {}
         newValue[name] = value
         SetStudent({ ...student, ...newValue })
@@ -143,18 +175,8 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         setProfessor({ ...professor, ...newValue })
     }
 
-    const handleUsertypeSelect = (value) => {
+    const handleUserTypeSelect = (value) => {
         setUserType(value);
-    };
-    const handleProjectSelect = (value) => {
-        let project = projects.find(p => p.Nome === value)
-        if (userType === 'Professor') {
-            setProfessor({ ...professor, ...{ projectId: project?.Id } })
-        }
-        else {
-            SetStudent({ ...student, ...{ projectId: project?.Id } });
-        }
-        console.log(project)
     };
 
     useEffect(() => {
@@ -179,8 +201,6 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         if (isStudent) {
             let _user = user
             _user.createdAt = new Date()
-            _user.password = student.registration
-            _user.role = 0
             let body = { ..._user, ...student }
             body.entryDate = new Date(body.entryDate)
             body.dateOfBirth = new Date(body.dateOfBirth)
@@ -196,13 +216,11 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
             body.createdAt = new Date()
             body.password = professor.siape
             if (userType === "Professor") {
-                body.role = 1
                 postProfessors(body)
                     .then((professor) => navigate("/professors"))
                     .catch(error => { setError('Unable to create Professor') });
             }
             else {
-                body.role = 3
                 postResearchers(body)
                     .then((researcher) => navigate("/researchers"))
                     .catch(error => { setError('Unable to create Researcher') });
@@ -212,151 +230,189 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
     const handleSave = (e) => {
         e.preventDefault()
         const form = document.querySelector('form')
-        if(form.reportValidity())
-        {
+        if (form.reportValidity()) {
             isUpdate ? handleUpdate() : handlepost()
         }
     }
     const handleUpdate = () => {
-       if (isStudent) {
-        let body = { ...user, ...student }
-        putStudentById(id, body)
-        .then((student) =>{
-            navigate("/students")
-        })
-        .catch(error => setError(true))
-       }
-       else if (userType === 'Professor') {
-        let body = { ...user, ...professor }
-        putProfessorById(id, body)
-        .then((student) =>navigate("/professors"))
-        .catch(error => setError(true))
-       }
-       else{
-        let body = { ...user, ...professor }
-        putResearcherById(id,body)
-        .then((student) =>navigate("/researchers"))
-        .catch(error => setError(true))
-       }
+        if (isStudent) {
+            let body = { ...user, ...student }
+            putStudentById(id, body)
+                .then((student) => {
+                    navigate("/students")
+                })
+                .catch(error => setError(true))
+        }
+        else if (userType === 'Professor') {
+            let body = { ...user, ...professor }
+            putProfessorById(id, body)
+                .then((student) => navigate("/professors"))
+                .catch(error => setError(true))
+        }
+        else {
+            let body = { ...user, ...professor }
+            putResearcherById(id, body)
+                .then((student) => navigate("/researchers"))
+                .catch(error => setError(true))
+        }
     }
     return (
         <PageContainer name={name} isLoading={isLoading}>
-            {!error && <>
-                <BackButton />
-                <form className="form">
-                    {type === undefined && <div className="form-section">
-                        <Select required={true} className="formInput" onSelect={handleUsertypeSelect} options={["", "Professor", "Estudante", "Externo"]} label="Tipo de Usuario" name="role" />
-                    </div>}
-                    <div className="form-section">
-                        <div className="formInput">
-                            <label htmlFor="firstName">Primeiro Nome</label>
-                            <input required={true} type="text" name="firstName" value={user.firstName} onChange={(e) => changeUserAtribute(e.target.name, e.target.value)} id="firstName" />
+            {!error && (
+                <>
+                    <BackButton />
+                    <form className="form">
+                        {type === undefined && (
+                            <div className="form-section">
+                                <Select
+                                    required={true}
+                                    className="formInput"
+                                    onSelect={handleUserTypeSelect}
+                                    options={["", "Professor", "Estudante", "Externo"].map((option) => ({
+                                        value: option,
+                                        label: option,
+                                    }))}
+                                    label="Tipo de Usuario"
+                                    name="role"
+                                />
+                            </div>
+                        )}
+                        <div className="form-section">
+                            <div className="formInput">
+                                <label htmlFor="firstName">Primeiro Nome</label>
+                                <input required={true} type="text" name="firstName" value={user.firstName} onChange={(e) => changeUserAtribute(e.target.name, e.target.value)} id="firstName" />
+                            </div>
+                            <div className="formInput">
+                                <label htmlFor="lastName">Sobrenome</label>
+                                <input required={true} type="text" name="lastName" id="lastName" value={user.lastName} onChange={(e) => changeUserAtribute(e.target.name, e.target.value)} />
+                            </div>
                         </div>
-                        <div className="formInput">
-                            <label htmlFor="lastName">SobreNome</label>
-                            <input required={true} type="text" name="lastName" id="lastName" value={user.lastName} onChange={(e) => changeUserAtribute(e.target.name, e.target.value)} />
+                        <div className="form-section">
+                            <div className="formInput">
+                                <label htmlFor="email">Email</label>
+                                <input required={true} type="email" name="email" id="email" value={user.email} onChange={(e) => changeUserAtribute(e.target.name, e.target.value)} />
+                            </div>
+                            <div className="formInput">
+                                <label htmlFor="cpf">CPF</label>
+                                <input required={true} disabled={isUpdate} type="text" name="cpf" value={user.cpf} id="cpf" onChange={(e) => changeUserAtribute(e.target.name, e.target.value)} />
+                            </div>
                         </div>
-                    </div>
-                    <div className="form-section">
-                        <div className="formInput">
-                            <label htmlFor="email">Email</label>
-                            <input required={true} type="email" name="email" id="email" value={user.email} onChange={(e) => changeUserAtribute(e.target.name, e.target.value)} />
+                        {userType === "Estudante" && (
+                            <>
+                                <div className="form-section" id="registration-section">
+                                    <div className="formInput">
+                                        <label htmlFor="registration">Matricula</label>
+                                        <input required={true} disabled={isUpdate} type="text" name="registration" id="registration" value={student.registration} onChange={(e) => changeStudentAttribute(e.target.name, e.target.value)} />
+                                    </div>
+                                    <div className="formInput">
+                                        <Select
+                                            required={false}
+                                            defaultValue={oldValues.scholarship}
+                                            label={"Bolsa"}
+                                            onSelect={(value) =>
+                                                changeStudentAttribute('scholarship', Number(SCHOLARSHIP_TYPE[value]))
+                                            }
+                                            name="scholarship"
+                                            options={Object.keys(SCHOLARSHIP_TYPE).map((key) => ({
+                                                value: key,
+                                                label: key,
+                                            }))}
+                                        />
+                                    </div>
+                                    <div className="formInput">
+                                        <label htmlFor="registrationDate">Data de Matrícula</label>
+                                        <input required={true} disabled={isUpdate} type="date" name="registrationDate" id="registrationDate" value={student.registrationDate} onChange={(e) => changeStudentAttribute(e.target.name, e.target.value)} />
+                                    </div>
+                                    <div className="formInput">
+                                        <label htmlFor="entryDate">Data de Entrada</label>
+                                        <input required={true} disabled={isUpdate} type="date" name="entryDate" id="entryDate" value={student.entryDate} onChange={(e) => changeStudentAttribute(e.target.name, e.target.value)} />
+                                    </div>
+                                    <div className="formInput">
+                                        <label htmlFor="dateOfBirth">Data de Nascimento</label>
+                                        <input required={true} disabled={isUpdate} type="date" name="dateOfBirth" id="dateOfBirth" value={student.dateOfBirth} onChange={(e) => changeStudentAttribute(e.target.name, e.target.value)} />
+                                    </div>
+                                    <div className="form-section" id="qualification-section2">
+                                        <div className="formInput">
+                                            <label htmlFor="undergraduateInstitution">Institução de graduação</label>
+                                            <input required={true} minLength={3} type="text" name="undergraduateInstitution" value={student.undergraduateInstitution} id="undergraduateInstitution" onChange={(e) => changeStudentAttribute(e.target.name, e.target.value)} />
+                                        </div>
+                                        <div className="formInput">
+                                            <label htmlFor="undergraduateCourse">Curso</label>
+                                            <input required={true} type="text" name="undergraduateCourse" id="undergraduateCourse" value={student.undergraduateCourse} onChange={(e) => changeStudentAttribute(e.target.name, e.target.value)} />
+                                        </div>
+                                        <div className="formInput">
+                                            <Select
+                                                required={true}
+                                                defaultValue={oldValues.undergraduateArea}
+                                                label={"Área de graduação"}
+                                                onSelect={(value) => changeStudentAttribute('undergraduateArea', Number(AREA_ENUM[value]))}
+                                                name="undergraduateArea"
+                                                options={Object.keys(AREA_ENUM).map((key) => ({ value: key, label: key }))}
+                                            />
+                                        </div>
+                                        <div className="formInput">
+                                            <label htmlFor="graduationYear">Ano de formação</label>
+                                            <input required={true} type="number" min={1950} max={3000} name="graduationYear" value={student.graduationYear} id="graduationYear" onChange={(e) => changeStudentAttribute(e.target.name, e.target.value)} />
+                                        </div>
+                                    </div>
+                                    <div className="form-section" id="qualification-section3">
+                                        <div className="formInput">
+                                            <Select
+                                                required={false}
+                                                defaultValue={oldValues.institutionType}
+                                                className="formInput"
+                                                options={Object.keys(INSTITUTION_TYPE_ENUM).map((key) => ({
+                                                    value: key,
+                                                    label: key,
+                                                }))}
+                                                onSelect={(value) =>
+                                                    changeStudentAttribute('institutionType', Number(INSTITUTION_TYPE_ENUM[value]))
+                                                }
+                                                label="Tipo de Institução"
+                                                name="institutionType"
+                                            />
+                                        </div>
+                                        <div className="formInput">
+                                            <MultiSelect
+                                                isDisabled={isUpdate}
+                                                selectedValues={selectedProjects}
+                                                options={projects}
+                                                loading={isLoading}
+                                                placeholder="Selecionar Projetos"
+                                                onSelect={onProjectSelect}
+                                                onRemove={onProjectSelect}
+                                                displayValue="Nome"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
+                        <div className="form-section" id="professor-section">
+                            {userType === "Professor" && (
+
+                                <div className="formInput">
+                                    <label htmlFor="siape">SIAPE</label>
+                                    <input required={userType === "Professor"} disabled={isUpdate} type="text" minLength={3} value={professor.siape} name="siape" id="siape" onChange={(e) => changeProfessorAtribute(e.target.name, e.target.value)} />
+                                </div>
+                            )}
+                            {userType === "Externo" && (
+                                <div className="formInput">
+                                    <label htmlFor="institution">Institução</label>
+                                    <input required={true} type="text" name="institution" value={professor.institution} id="institution" onChange={(e) => changeProfessorAtribute(e.target.name, e.target.value)} />
+                                </div>
+                            )}
                         </div>
-                        <div className="formInput">
-                            <label htmlFor="cpf">CPF</label>
-                            <input required={true} disabled={isUpdate} type="text" name="cpf" value={user.cpf} id="cpf" onChange={(e) => changeUserAtribute(e.target.name, e.target.value)} />
+                        <div className="form-section">
+                            <div className="formInput">
+                                <input type="submit" value={isUpdate ? "Update" : "Submit"} onClick={(e) => handleSave(e)} />
+                            </div>
                         </div>
-                    </div>
-                    {/* {isStudent && <div className="form-section" id="adress-section">
-                    <div className="formInput">
-                        <label htmlFor="country">País</label>
-                        <input type="text" name="country" id="country" value={address.country}  onChange={(e)=> changeAddressAtribute(e.target.name, e.target.value)} />
-                    </div>
-                    <div className="formInput">
-                        <label htmlFor="city">Cidade</label>
-                        <input type="text" name="city" id="city" value={address.city}  onChange={(e)=> changeAddressAtribute(e.target.name, e.target.value)} />
-                    </div>
-                    <div className="formInput">
-                        <label htmlFor="street">Rua</label>
-                        <input type="text" name="street" id="street" value={address.street}  onChange={(e)=> changeAddressAtribute(e.target.name, e.target.value)} />
-                    </div>
-                    <div className="formInput">
-                        <label htmlFor="number">Numero</label>
-                        <input type="text" name="number" id="number" value={address.number}  onChange={(e)=> changeAddressAtribute(e.target.name, e.target.value)} />
-                    </div>
-                </div>} */}
-                    {isStudent && <div className="form-section" id="registration-section">
-                        <div className="formInput">
-                            <label htmlFor="registration">Matricula</label>
-                            <input required={true} disabled={isUpdate} type="text" name="registration" id="registration" value={student.registration} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
-                        </div>
-                        <div className="formInput">
-                            <label htmlFor="scholarship">Bolsa</label>
-                            <input type="number" name="scholarship" id="scholarship" value={student.scholarship} onChange={(e) => changeStudentAtribute(e.target.name, Number(e.target.value))} />
-                        </div>
-                        <div className="formInput">
-                            <label htmlFor="registrationDate">Data de Matricula</label>
-                            <input required={true} disabled={isUpdate} type="date" name="registrationDate" id="registrationDate" value={student.registrationDate} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
-                        </div>
-                        <div className="formInput">
-                            <label htmlFor="entryDate">Data de Entrada</label>
-                            <input required={true} disabled={isUpdate} type="date" name="entryDate" id="entryDate" value={student.entryDate} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
-                        </div>
-                        <div className="formInput">
-                            <label htmlFor="dateOfBirth">Data de Nascimento</label>
-                            <input required={true} disabled={isUpdate} type="date" name="dateOfBirth" id="dateOfBirth" value={student.dateOfBirth} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
-                        </div>
-                    </div>}
-                    {isStudent && <div className="form-section" id="qualification-section2">
-                        <div className="formInput">
-                            <label htmlFor="undergraduateInstitution">Institução de graduação</label>
-                            <input required={true} minLength={3} type="text" name="undergraduateInstitution" value={student.undergraduateInstitution} id="undergraduateInstitution" onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
-                        </div>
-                        <div className="formInput">
-                            <label htmlFor="undergraduateCourse">Curso</label>
-                            <input required={true} type="text" name="undergraduateCourse" id="undergraduateCourse" value={student.undergraduateCourse} onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
-                        </div>
-                        <div className="formInput">
-                            <label htmlFor="undergraduateArea">Areá</label>
-                            <input required={true} type="number" name="undergraduateArea" id="undergraduateArea" value={student.undergraduateArea} onChange={(e) => changeStudentAtribute(e.target.name, Number(e.target.value))} />
-                        </div>
-                        <div className="formInput">
-                            <label htmlFor="graduationYear">Ano de formação</label>
-                            <input required={true} type="number" min={1950} max={3000} name="graduationYear" value={student.graduationYear} id="graduationYear" onChange={(e) => changeStudentAtribute(e.target.name, e.target.value)} />
-                        </div>
-                    </div>}
-                    {isStudent && <div className="form-section" id="qualification-section3">
-                        <div className="formInput">
-                            <label htmlFor="institutionType">Tipo de Institução</label>
-                            <input type="number" name="institutionType" id="institutionType" value={student.institutionType} onChange={(e) => changeStudentAtribute(e.target.name, Number(e.target.value))} />
-                        </div>
-                        <div className="formInput">
-                            <Select required={true} className="formInput" onSelect={handleProjectSelect} options={projects.map(x => x.Nome)} label="Projeto" name="project" />
-                        </div>
-                    </div>}
-                    {!isStudent && <div className="form-section" id="professor-section">
-                        {userType === "Externo" && <div className="formInput">
-                            <label htmlFor="institution">Institução</label>
-                            <input required={true} type="text" name="institution" value={professor.institution} id="institution" onChange={(e) => changeProfessorAtribute(e.target.name, e.target.value)} />
-                        </div>}
-                        {userType === "Professor" && <div className="formInput">
-                            <Select required={true} className="formInput" onSelect={handleProjectSelect} options={projects.map(x => x.Nome)} label="Projeto" name="project" />
-                        </div>
-                        }
-                        <div className="formInput">
-                            <label htmlFor="siape">SIAPE</label>
-                            <input required={userType==="Professor"? true: false} disabled={isUpdate} type="text" minLength={3} value={professor.siape} name="siape" id="siape" onChange={(e) => changeProfessorAtribute(e.target.name, e.target.value)} />
-                        </div>
-                    </div>}
-                    <div className="form-section">
-                        <div className="formInput">
-                            <input type="submit" value={isUpdate ? "Update" : "Submit"} onClick={(e) => handleSave(e)} />
-                        </div>
-                    </div>
-                </form>
-            </>}
+
+                    </form>
+                </>
+            )}
             {error && <ErrorPage errorMessage={errorMessage} />}
         </PageContainer>
-
     );
 }
