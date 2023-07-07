@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Compose CI
 
 on:
   push:
@@ -12,6 +12,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      working-directory: backend
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build and push Docker Compose services
+      run: |
+        docker-compose build
+        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username radhanama --password-stdin
+        docker-compose push
