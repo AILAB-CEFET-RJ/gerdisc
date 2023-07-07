@@ -103,7 +103,7 @@ namespace gerdisc.Services
             await _repository.Extension.DeactiveAsync(existingExtension);
         }
 
-        private void UpdateUserDates(StudentEntity user, ExtensionEntity extension, int oldDays = 0)
+        private async void UpdateUserDates(StudentEntity user, ExtensionEntity extension, int oldDays = 0)
         {
             switch (extension.Type)
             {
@@ -116,6 +116,7 @@ namespace gerdisc.Services
                 default:
                     break;
             }
+            await _repository.Student.UpdateAsync(user);
         }
     }
 }
