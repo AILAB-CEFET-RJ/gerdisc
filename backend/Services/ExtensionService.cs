@@ -40,6 +40,8 @@ namespace gerdisc.Services
 
             UpdateUserDates(student, extension);
 
+            await _repository.Student.UpdateAsync(student);
+
             _logger.LogInformation($"Extension {extension.StudentId} created successfully.");
             return extension.ToDto();
         }
@@ -88,6 +90,8 @@ namespace gerdisc.Services
 
             UpdateUserDates(student, existingExtension, oldDays);
 
+            await _repository.Student.UpdateAsync(student);
+
             return existingExtension.ToDto();
         }
 
@@ -103,20 +107,19 @@ namespace gerdisc.Services
             await _repository.Extension.DeactiveAsync(existingExtension);
         }
 
-        private async void UpdateUserDates(StudentEntity user, ExtensionEntity extension, int oldDays = 0)
+        private async void UpdateUserDates(StudentEntity student, ExtensionEntity extension, int oldDays = 0)
         {
             switch (extension.Type)
             {
                 case ExtensionTypeEnum.Qualification:
-                    user.ProjectQualificationDate += TimeSpan.FromDays(extension.NumberOfDays - oldDays);
+                    student.ProjectQualificationDate += TimeSpan.FromDays(extension.NumberOfDays - oldDays);
                     break;
                 case ExtensionTypeEnum.Defence:
-                    user.ProjectDefenceDate += TimeSpan.FromDays(extension.NumberOfDays - oldDays);
+                    student.ProjectDefenceDate += TimeSpan.FromDays(extension.NumberOfDays - oldDays);
                     break;
                 default:
                     break;
             }
-            await _repository.Student.UpdateAsync(user);
         }
     }
 }
