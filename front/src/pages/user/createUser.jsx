@@ -9,7 +9,7 @@ import { postResearchers, getResearcherById, putResearcherById } from "../../api
 import BackButton from "../../components/BackButton";
 import ErrorPage from "../../components/error/Error";
 import PageContainer from "../../components/PageContainer";
-import { ROLES_ENUM, AREA_ENUM, INSTITUTION_TYPE_ENUM, STATUS_ENUM, SCHOLARSHIP_TYPE } from "../../enum_helpers";
+import { AREA_ENUM, INSTITUTION_TYPE_ENUM, STATUS_ENUM, SCHOLARSHIP_TYPE } from "../../enum_helpers";
 import MultiSelect from "../../components/Multiselect";
 
 export default function UserForm({ type = undefined, isUpdate = false }) {
@@ -38,7 +38,6 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         cpf: '',
         password: '',
         createdAt: '',
-        role: isStudent ? 'student' : 'Professor',
     })
     const [student, SetStudent] = useState({
         registration: "",
