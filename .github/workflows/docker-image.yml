@@ -7,9 +7,12 @@ on:
     branches: [ "main" ]
 
 env:
-  POSTGRES_USER: postgress
-  POSTGRES_PASSWORD: password
-  POSTGRES_DB: gerdisc
+  postgresPort: 5434
+  PostgresServer: postgres
+  PostgresUser: postgres
+  PostgresPassword: ${{ secrets.PostgresPassword }}
+  PostgresDb: gerdisc
+  SingInKey: ${{ secrets.SingInKey }}
 
 jobs:
   build:
