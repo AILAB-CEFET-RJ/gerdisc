@@ -24,7 +24,7 @@ jobs:
 
     - name: Build and push Docker Compose services
       run: |
-        cd gerdisc
+        pwd
         docker-compose build
         echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username radhanama --password-stdin
         docker-compose push
