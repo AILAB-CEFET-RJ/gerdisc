@@ -62,23 +62,14 @@ builder.Services.AddDbContext<ContexRepository>(options =>
 {
     options.UseNpgsql(connectionString);
 }, ServiceLifetime.Scoped);
-builder.Services.AddScoped<OrientationValidator>();
-builder.Services.AddScoped<UserValidator>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
-builder.Services.AddScoped<ICourseService, CourseService>();
-builder.Services.AddScoped<IStudentService, StudentService>();
-builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<IResearchLineService, ResearchLineService>();
-builder.Services.AddScoped<IProfessorService, ProfessorService>();
-builder.Services.AddScoped<IExternalResearcherService, ExternalResearcherService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IOrientationService, OrientationService>();
-builder.Services.AddScoped<IExtensionService, ExtensionService>();
 builder.Services.AddScoped<IUserContext, UserContext>();
 builder.Services.AddSingleton<ISigningConfiguration>(signingConfig);
 builder.Services.AddSingleton<ISettings>(settings);
 builder.Services.AddScoped<IRepository,Repository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+RegisterValidations(builder.Services);
+RegisterServices(builder.Services);
 builder.Services.AddAuthorization();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -135,3 +126,23 @@ RecurringJob.AddOrUpdate<StudentsFinishing>("daily-job", x => x.ExecuteAsync(nul
 app.MapControllers();
 
 app.Run();
+
+void RegisterValidations(IServiceCollection services)
+{
+    services.AddScoped<OrientationValidator>();
+    services.AddScoped<UserValidator>();
+}
+
+void RegisterServices(IServiceCollection services)
+{
+    
+    services.AddScoped<ICourseService, CourseService>();
+    services.AddScoped<IStudentService, StudentService>();
+    services.AddScoped<IProjectService, ProjectService>();
+    services.AddScoped<IResearchLineService, ResearchLineService>();
+    services.AddScoped<IProfessorService, ProfessorService>();
+    services.AddScoped<IExternalResearcherService, ExternalResearcherService>();
+    services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IOrientationService, OrientationService>();
+    services.AddScoped<IExtensionService, ExtensionService>();
+}
