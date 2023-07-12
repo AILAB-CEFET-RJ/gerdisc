@@ -1,0 +1,36 @@
+@import './variables.scss';
+.home {
+    .dashboard {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        margin: 2rem;
+    }
+    .boardItem {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin: 1rem;
+    }
+    .boardItem:hover{
+        border: 2px solid #004AAD;
+        border-radius: 1rem;
+    }
+    #pre{
+        word-wrap: break-word;
+    }
+    .itemIcon img{
+        color: #004AAD;
+        height: auto;
+        margin: 1rem;
+    }
+    .boardItem .filtered{
+        width: 9rem;
+        height: 9rem;
+        filter: $filter
+    }
+}
