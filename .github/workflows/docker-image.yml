@@ -13,6 +13,11 @@ env:
   PostgresPassword: ${{ secrets.PostgresPassword }}
   PostgresDb: gerdisc
   SingInKey: ${{ secrets.SingInKey }}
+  EmailSettings__SmtpServer: "smtp.office365.com"
+  EmailSettings__SmtpPort: 587
+  EmailSettings__Username: ${{ secrets.EmailUsername }}
+  EmailSettings__Password: ${{ secrets.EmailPassword }}
+  EmailSettings__SenderEmail: ${{ secrets.EmailSender }}
 
 jobs:
   build:
