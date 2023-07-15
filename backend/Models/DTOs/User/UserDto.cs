@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using gerdisc.Infrastructure.Validations;
-using gerdisc.Models.Enums;
+using saga.Infrastructure.Validations;
+using saga.Models.Enums;
 using System.Text.Json.Serialization;
 
-namespace gerdisc.Models.DTOs
+namespace saga.Models.DTOs
 {
     /// <summary>
     /// Represents a user cantract to the api.

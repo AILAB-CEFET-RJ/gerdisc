@@ -1,10 +1,10 @@
 using System.Linq.Expressions;
-using gerdisc.Infrastructure.Extensions;
-using gerdisc.Models.Entities;
+using saga.Infrastructure.Extensions;
+using saga.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace gerdisc.Infrastructure.Repositories
+namespace saga.Infrastructure.Repositories
 {
     /// <summary>
     /// Represents the repository with CRUD operaton.

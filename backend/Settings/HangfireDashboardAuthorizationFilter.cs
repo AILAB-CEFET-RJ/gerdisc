@@ -1,8 +1,8 @@
 using System.Security.Claims;
-using gerdisc.Models.Enums;
+using saga.Models.Enums;
 using Hangfire.Dashboard;
 
-namespace gerdisc.Settings;
+namespace saga.Settings;
 public class HangfireDashboardAuthorizationFilter : IDashboardAuthorizationFilter
 {
         public bool Authorize(DashboardContext context)

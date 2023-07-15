@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using gerdisc.Models.Enums;
+using saga.Models.Enums;
 
-namespace gerdisc.Infrastructure.Validations
+namespace saga.Infrastructure.Validations
 {
     /// <summary>
     /// A custom validation attribute used to validate roles enum values.

@@ -1,6 +1,6 @@
-# **Gerdisc**
+# **Saga**
 
-Gerdisc is a web-based information system designed to manage the registration and information of students enrolled in the MSc program in Computer Science at CEFET/RJ. The system is intended to replace the current spreadsheet-based approach, which has become increasingly cumbersome to manage as the volume of data grows.
+Saga is a web-based information system designed to manage the registration and information of students enrolled in the MSc program in Computer Science at CEFET/RJ. The system is intended to replace the current spreadsheet-based approach, which has become increasingly cumbersome to manage as the volume of data grows.
 
 ### Architecture
 
@@ -20,13 +20,13 @@ The presentation layer includes controllers, which define API endpoints for data
 Controllers handle HTTP requests and responses, executing the logic of the application. Each entity has its own controller, such as StudentsController, TeachersController, ResearchLinesController, and ResearchProjectsController, with endpoints for creating, reading, updating, and deleting data.
 
 - #### Service Layer 
-The service layer contains the business logic of the application. It communicates with the data layer (repositories and database context) to perform CRUD operations on the database. The services are used by the controllers to perform complex operations that require multiple database queries or complex calculations. In Gerdisc, each entity has its own service, such as StudentService, TeacherService, ResearchLineService, and ResearchProjectService.
+The service layer contains the business logic of the application. It communicates with the data layer (repositories and database context) to perform CRUD operations on the database. The services are used by the controllers to perform complex operations that require multiple database queries or complex calculations. In Saga, each entity has its own service, such as StudentService, TeacherService, ResearchLineService, and ResearchProjectService.
 
 - #### Data Layer
 
 The data layer consists of repositories and a database context. The repositories encapsulate the data access logic, while the database context provides a connection to the database and manages the entities.
 
-The repository is responsible for communicating with the database. It uses Entity Framework to perform the CRUD operations on the database tables. In Gerdisc, each entity has its own repository, such as StudentRepository, TeacherRepository, ResearchLineRepository, and ResearchProjectRepository. The repositories are used by the services to access the data.
+The repository is responsible for communicating with the database. It uses Entity Framework to perform the CRUD operations on the database tables. In Saga, each entity has its own repository, such as StudentRepository, TeacherRepository, ResearchLineRepository, and ResearchProjectRepository. The repositories are used by the services to access the data.
 
 ### Technologies Used
 
@@ -50,8 +50,8 @@ Prerequisites
 3. Run the database migrations to create the required tables in the database.
 4. Run the project.
 ~~~
-git clone git@github.com:radhanama/gerdisc.git
-cd gerdisc
+git clone git@github.com:radhanama/saga.git
+cd saga
 dotnet ef database update
 dotnet run
 ~~~
@@ -68,7 +68,7 @@ The application exposes the following endpoints:
 
 ### Development Container
 
-The Gerdisc development container is a Docker container that includes all the required dependencies to run the Gerdisc application, including PostgreSQL. Using a development container allows you to quickly set up your development environment without installing anything other than Docker and Visual Studio Code (VS Code). Additionally, it provides a consistent and reproducible development environment that is isolated from your local machine.
+The Saga development container is a Docker container that includes all the required dependencies to run the Saga application, including PostgreSQL. Using a development container allows you to quickly set up your development environment without installing anything other than Docker and Visual Studio Code (VS Code). Additionally, it provides a consistent and reproducible development environment that is isolated from your local machine.
 
 To use the development container, follow these steps:
 

@@ -1,10 +1,10 @@
-using gerdisc.Infrastructure.Providers.Interfaces;
-using gerdisc.Settings;
+using saga.Infrastructure.Providers.Interfaces;
+using saga.Settings;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace gerdisc.Infrastructure.Providers
+namespace saga.Infrastructure.Providers
 {
     public class EmailSender : IEmailSender
     {

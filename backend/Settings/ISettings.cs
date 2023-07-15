@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace gerdisc.Settings
+namespace saga.Settings
 {
     public interface ISettings
     {

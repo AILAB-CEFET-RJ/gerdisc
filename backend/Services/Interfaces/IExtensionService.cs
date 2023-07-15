@@ -1,6 +1,6 @@
-using gerdisc.Models.DTOs;
+using saga.Models.DTOs;
 
-namespace gerdisc.Services.Interfaces
+namespace saga.Services.Interfaces
 {
     /// <summary>
     /// Defines methods for managing extensions.

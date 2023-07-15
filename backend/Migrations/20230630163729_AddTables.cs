@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace gerdisc.Migrations
+namespace saga.Migrations
 {
     /// <inheritdoc />
     public partial class AddTables : Migration

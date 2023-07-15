@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace gerdisc.Models.Entities
+namespace saga.Models.Entities
 {
     /// <summary>
     /// Represents the orientation of a professor or external researcher in a student's dissertation project.

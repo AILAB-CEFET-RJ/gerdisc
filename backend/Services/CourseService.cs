@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using gerdisc.Infrastructure.Repositories;
-using gerdisc.Models;
-using gerdisc.Models.DTOs;
-using gerdisc.Models.Mapper;
-using gerdisc.Services.Interfaces;
+using saga.Infrastructure.Repositories;
+using saga.Models;
+using saga.Models.DTOs;
+using saga.Models.Mapper;
+using saga.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace gerdisc.Services
+namespace saga.Services
 {
     public class CourseService : ICourseService
     {

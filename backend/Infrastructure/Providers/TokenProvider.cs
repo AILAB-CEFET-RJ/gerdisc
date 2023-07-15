@@ -1,12 +1,12 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using gerdisc.Models.Entities;
-using gerdisc.Models.Enums;
-using gerdisc.Properties;
+using saga.Models.Entities;
+using saga.Models.Enums;
+using saga.Properties;
 using Microsoft.IdentityModel.Tokens;
 
-namespace gerdisc.Infrastructure.Providers
+namespace saga.Infrastructure.Providers
 {
     /// <summary>
     /// Generates a token.

@@ -29,6 +29,10 @@ api.interceptors.request.use(
     }
   )
 
+  api.postWithoutToken = (url, data, config) => {
+    return axios.post((env.REACT_APP_BASE_URL + "/" + url), data, config);
+  };
+
   export default api
 
 

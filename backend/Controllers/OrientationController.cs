@@ -1,11 +1,11 @@
-using gerdisc.Infrastructure.Repositories;
-using gerdisc.Models.DTOs;
-using gerdisc.Services;
-using gerdisc.Services.Interfaces;
+using saga.Infrastructure.Repositories;
+using saga.Models.DTOs;
+using saga.Services;
+using saga.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace gerdisc.Controllers
+namespace saga.Controllers
 {
     [ApiController]
     [Route("orientations")]

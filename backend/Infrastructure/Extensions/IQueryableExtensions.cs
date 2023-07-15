@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
-namespace gerdisc.Infrastructure.Extensions
+namespace saga.Infrastructure.Extensions
 {
     public static class IQueryableExtensions
     {

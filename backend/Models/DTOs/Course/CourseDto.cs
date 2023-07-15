@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace gerdisc.Models.DTOs
+namespace saga.Models.DTOs
 {
     public record CourseDto
     {

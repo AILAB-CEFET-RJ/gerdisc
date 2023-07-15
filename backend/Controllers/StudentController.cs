@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using gerdisc.Models.DTOs;
-using gerdisc.Services;
+using saga.Models.DTOs;
+using saga.Services;
 using Microsoft.AspNetCore.Authorization;
-using gerdisc.Services.Interfaces;
+using saga.Services.Interfaces;
 
-namespace gerdisc.Controllers
+namespace saga.Controllers
 {
     [ApiController]
     [Route("students")]

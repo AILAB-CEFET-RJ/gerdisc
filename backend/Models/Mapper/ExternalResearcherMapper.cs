@@ -1,8 +1,8 @@
-using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
-using gerdisc.Models.Enums;
+using saga.Models.DTOs;
+using saga.Models.Entities;
+using saga.Models.Enums;
 
-namespace gerdisc.Models.Mapper
+namespace saga.Models.Mapper
 {
     /// <summary>
     /// A static class containing mapper methods for converting between <see cref="ExternalResearcherDto"/> and <see cref="ExternalResearcherEntity"/> objects.

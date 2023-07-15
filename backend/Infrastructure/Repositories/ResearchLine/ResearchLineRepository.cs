@@ -1,9 +1,9 @@
-using gerdisc.Infrastructure.Extensions;
-using gerdisc.Infrastructure.Providers;
-using gerdisc.Models.Entities;
+using saga.Infrastructure.Extensions;
+using saga.Infrastructure.Providers;
+using saga.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace gerdisc.Infrastructure.Repositories.ResearchLine
+namespace saga.Infrastructure.Repositories.ResearchLine
 {
     /// <inheritdoc />
     public class ResearchLineRepository : BaseRepository<ResearchLineEntity>, IResearchLineRepository

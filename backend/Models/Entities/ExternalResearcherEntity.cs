@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace gerdisc.Models.Entities
+namespace saga.Models.Entities
 {
     /// <summary>
     /// Represents an external researcher in the system.

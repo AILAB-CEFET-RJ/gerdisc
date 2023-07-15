@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/login";
+import ResetPassword from "./pages/changePassword";
 import StudentProfile from "./pages/student/profile";
 import UserForm from './pages/user/createUser';
 import StudentList from './pages/student/StudentList';
@@ -21,10 +22,11 @@ import StudentForm from './pages/student/CreateStudent';
 
 export default function App() {
   return (
-    <Router basename="gerdisc">
+    <Router basename="saga">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/changePassword" element={<ResetPassword />} />
         <Route path="/students/:id" element={<StudentProfile />} />
         <Route path="/students/:id/edit" element={<StudentUpdate/>} />
         <Route path="/students" element={<StudentList />} />

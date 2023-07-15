@@ -1,4 +1,4 @@
-namespace gerdisc.Settings
+namespace saga.Settings
 {
     public class EmailSettings
     {

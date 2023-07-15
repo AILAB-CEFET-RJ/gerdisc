@@ -1,7 +1,7 @@
-using gerdisc.Models.Entities;
+using saga.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace gerdisc.Infrastructure.Repositories.User
+namespace saga.Infrastructure.Repositories.User
 {
     /// <inheritdoc />
     public class UserRepository : BaseRepository<UserEntity>, IUserRepository

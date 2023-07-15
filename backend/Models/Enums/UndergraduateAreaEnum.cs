@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using CsvHelper.Configuration.Attributes;
 
-namespace gerdisc.Models.Enums
+namespace saga.Models.Enums
 {
     public enum UndergraduateAreaEnum
     {

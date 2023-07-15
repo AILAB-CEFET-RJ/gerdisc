@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace gerdisc.Infrastructure.Extensions
+namespace saga.Infrastructure.Extensions
 {
     /// <summary>
     /// Provides extension methods for enumerable.

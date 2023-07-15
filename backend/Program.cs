@@ -1,11 +1,11 @@
-using gerdisc.Infrastructure.Providers;
-using gerdisc.Infrastructure.Providers.Interfaces;
-using gerdisc.Infrastructure.Repositories;
-using gerdisc.Infrastructure.Validations;
-using gerdisc.Properties;
-using gerdisc.Services;
-using gerdisc.Services.Interfaces;
-using gerdisc.Settings;
+using saga.Infrastructure.Providers;
+using saga.Infrastructure.Providers.Interfaces;
+using saga.Infrastructure.Repositories;
+using saga.Infrastructure.Validations;
+using saga.Properties;
+using saga.Services;
+using saga.Services.Interfaces;
+using saga.Settings;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Infrastructure.Jobs;
@@ -33,7 +33,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gerdisc", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Saga", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -98,10 +98,10 @@ app.UsePathBase("/api");
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Gerdisc V1");
+    c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Saga V1");
     c.DefaultModelsExpandDepth(-1);
     c.RoutePrefix = string.Empty;
-    c.DocumentTitle = "Gerdisc API Documentation";
+    c.DocumentTitle = "Saga API Documentation";
     c.EnableDeepLinking();
     c.DisplayRequestDuration();
 });

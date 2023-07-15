@@ -1,6 +1,6 @@
-using gerdisc.Models.Enums;
+using saga.Models.Enums;
 
-namespace gerdisc.Models.DTOs
+namespace saga.Models.DTOs
 {
     public class ExtensionInfoDto
     {

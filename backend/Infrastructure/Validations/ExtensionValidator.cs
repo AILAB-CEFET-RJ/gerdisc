@@ -1,7 +1,7 @@
-using gerdisc.Infrastructure.Repositories;
-using gerdisc.Models.DTOs;
+using saga.Infrastructure.Repositories;
+using saga.Models.DTOs;
 
-namespace gerdisc.Infrastructure.Validations
+namespace saga.Infrastructure.Validations
 {
     /// <summary>
     /// Provides validation methods for extensions.

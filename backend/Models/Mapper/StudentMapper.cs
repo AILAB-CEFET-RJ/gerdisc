@@ -1,9 +1,9 @@
-using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
-using gerdisc.Infrastructure.Extensions;
-using gerdisc.Models.Enums;
+using saga.Models.DTOs;
+using saga.Models.Entities;
+using saga.Infrastructure.Extensions;
+using saga.Models.Enums;
 
-namespace gerdisc.Models.Mapper
+namespace saga.Models.Mapper
 {
     /// <summary>
     /// A static class containing mapper methods for converting between <see cref="StudentInfoDto"/> and <see cref="StudentEntity"/> objects.

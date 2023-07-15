@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using gerdisc.Infrastructure.Validations;
-using gerdisc.Models.Enums;
+using saga.Infrastructure.Validations;
+using saga.Models.Enums;
 
-namespace gerdisc.Models.DTOs
+namespace saga.Models.DTOs
 {
     public class StudentInfoDto : UserDto
     {

@@ -1,7 +1,7 @@
-using gerdisc.Infrastructure.Extensions;
-using gerdisc.Models.Entities;
+using saga.Infrastructure.Extensions;
+using saga.Models.Entities;
 
-namespace gerdisc.Infrastructure.Repositories.ProfessorProject
+namespace saga.Infrastructure.Repositories.ProfessorProject
 {
     /// <inheritdoc />
     public class ProfessorProjectRepository : BaseRepository<ProfessorProjectEntity>, IProfessorProjectRepository

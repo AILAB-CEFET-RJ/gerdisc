@@ -1,13 +1,13 @@
-using gerdisc.Infrastructure.Repositories;
-using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
-using gerdisc.Models.Mapper;
+using saga.Infrastructure.Repositories;
+using saga.Models.DTOs;
+using saga.Models.Entities;
+using saga.Models.Mapper;
 using CsvHelper;
 using System.Globalization;
-using gerdisc.Services.Interfaces;
+using saga.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
-namespace gerdisc.Services
+namespace saga.Services
 {
     public class StudentService : IStudentService
     {

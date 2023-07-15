@@ -1,9 +1,9 @@
 using System.Linq.Expressions;
-using gerdisc.Infrastructure.Extensions;
-using gerdisc.Models.Entities;
+using saga.Infrastructure.Extensions;
+using saga.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace gerdisc.Infrastructure.Repositories.Professor
+namespace saga.Infrastructure.Repositories.Professor
 {
     /// <inheritdoc />
     public class ProfessorRepository : BaseRepository<ProfessorEntity>, IProfessorRepository

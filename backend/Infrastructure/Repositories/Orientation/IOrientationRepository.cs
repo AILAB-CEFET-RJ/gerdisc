@@ -1,6 +1,6 @@
-using gerdisc.Models.Entities;
+using saga.Models.Entities;
 
-namespace gerdisc.Infrastructure.Repositories.Orientation
+namespace saga.Infrastructure.Repositories.Orientation
 {
     /// <inheritdoc />
     public interface IOrientationRepository : IBaseRepository<OrientationEntity>

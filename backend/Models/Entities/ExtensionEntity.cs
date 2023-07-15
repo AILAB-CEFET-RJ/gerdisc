@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using gerdisc.Models.Enums;
+using saga.Models.Enums;
 
-namespace gerdisc.Models.Entities
+namespace saga.Models.Entities
 {
     /// <summary>
     /// Represents an extension in the system.

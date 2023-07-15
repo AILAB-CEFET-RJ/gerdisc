@@ -1,4 +1,4 @@
-namespace gerdisc.Models.DTOs
+namespace saga.Models.DTOs
 {
     public class LoginResultDto
     {

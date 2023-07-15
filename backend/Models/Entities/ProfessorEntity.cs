@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace gerdisc.Models.Entities
+namespace saga.Models.Entities
 {
     [Table("Professors")]
     public record ProfessorEntity : BaseEntity

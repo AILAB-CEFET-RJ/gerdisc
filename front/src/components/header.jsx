@@ -9,7 +9,7 @@ export default function Header({ name }) {
             <div className={"header"}>
                 <div className={"appName"} style={{cursor:'pointer'}} onClick={()=> navigate('/')}>
                     <div className={"bleap"}> </div>
-                    <span>GERDISC</span>
+                    <span>SAGA</span>
                 </div>
                 <div className={"headerOptions"}>
                     <div>Olá, {name}</div>

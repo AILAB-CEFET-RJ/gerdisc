@@ -1,10 +1,10 @@
-using gerdisc.Infrastructure.Repositories;
-using gerdisc.Infrastructure.Validations;
-using gerdisc.Models.DTOs;
-using gerdisc.Models.Mapper;
-using gerdisc.Services.Interfaces;
+using saga.Infrastructure.Repositories;
+using saga.Infrastructure.Validations;
+using saga.Models.DTOs;
+using saga.Models.Mapper;
+using saga.Services.Interfaces;
 
-namespace gerdisc.Services
+namespace saga.Services
 {
     public class OrientationService : IOrientationService
     {

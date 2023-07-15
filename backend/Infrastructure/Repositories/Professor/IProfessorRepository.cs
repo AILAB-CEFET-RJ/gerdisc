@@ -1,6 +1,6 @@
-using gerdisc.Models.Entities;
+using saga.Models.Entities;
 
-namespace gerdisc.Infrastructure.Repositories.Professor
+namespace saga.Infrastructure.Repositories.Professor
 {
     /// <inheritdoc />
     public interface IProfessorRepository : IBaseRepository<ProfessorEntity>

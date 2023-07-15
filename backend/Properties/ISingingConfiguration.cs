@@ -1,6 +1,6 @@
 using Microsoft.IdentityModel.Tokens;
 
-namespace gerdisc.Properties
+namespace saga.Properties
 {
     /// <summary>
     /// Represents the signing configuration for generating tokens.

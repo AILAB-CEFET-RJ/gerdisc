@@ -1,10 +1,10 @@
 using System.Linq.Expressions;
-using gerdisc.Infrastructure.Providers;
-using gerdisc.Infrastructure.Repositories.Orientation;
-using gerdisc.Models.Entities;
-using gerdisc.Models.Enums;
+using saga.Infrastructure.Providers;
+using saga.Infrastructure.Repositories.Orientation;
+using saga.Models.Entities;
+using saga.Models.Enums;
 
-namespace gerdisc.Infrastructure.Extensions
+namespace saga.Infrastructure.Extensions
 {
     public static class OrientationExtensions
     {

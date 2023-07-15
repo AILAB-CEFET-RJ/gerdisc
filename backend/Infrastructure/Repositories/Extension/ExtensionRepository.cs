@@ -1,10 +1,10 @@
 using System.Linq.Expressions;
-using gerdisc.Infrastructure.Extensions;
-using gerdisc.Infrastructure.Providers;
-using gerdisc.Models.Entities;
+using saga.Infrastructure.Extensions;
+using saga.Infrastructure.Providers;
+using saga.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace gerdisc.Infrastructure.Repositories.Extension
+namespace saga.Infrastructure.Repositories.Extension
 {
     /// <inheritdoc />
     public class ExtensionRepository : BaseRepository<ExtensionEntity>, IExtensionRepository

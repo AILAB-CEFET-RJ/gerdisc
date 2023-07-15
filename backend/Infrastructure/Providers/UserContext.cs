@@ -1,6 +1,6 @@
-using gerdisc.Models.Enums;
+using saga.Models.Enums;
 
-namespace gerdisc.Infrastructure.Providers
+namespace saga.Infrastructure.Providers
 {
     public class UserContext : IUserContext
     {

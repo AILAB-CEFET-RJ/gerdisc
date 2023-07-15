@@ -1,4 +1,4 @@
-namespace gerdisc.Models.Enums
+namespace saga.Models.Enums
 {
     public enum RolesEnum
     {

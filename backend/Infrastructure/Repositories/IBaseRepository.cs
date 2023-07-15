@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using gerdisc.Models.Entities;
+using saga.Models.Entities;
 
-namespace gerdisc.Infrastructure.Repositories
+namespace saga.Infrastructure.Repositories
 {
     /// <summary>
     /// Represents a base repository for entities of type <typeparamref name="TEntity"/>.
