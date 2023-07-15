@@ -38,6 +38,7 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         cpf: '',
         password: '',
         createdAt: '',
+        resetPasswordPath: `${process.env.REACT_APP_BASE_URL}/changePassword`
     })
     const [student, SetStudent] = useState({
         registration: "",
