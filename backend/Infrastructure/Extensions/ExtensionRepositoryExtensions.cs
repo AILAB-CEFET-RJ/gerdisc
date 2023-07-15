@@ -1,8 +1,8 @@
-using gerdisc.Infrastructure.Providers;
-using gerdisc.Models.Entities;
-using gerdisc.Models.Enums;
+using saga.Infrastructure.Providers;
+using saga.Models.Entities;
+using saga.Models.Enums;
 
-namespace gerdisc.Infrastructure.Extensions
+namespace saga.Infrastructure.Extensions
 {
     public static class ExtensionRepositoryExtensions
     {

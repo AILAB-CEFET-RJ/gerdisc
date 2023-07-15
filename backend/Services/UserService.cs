@@ -1,14 +1,14 @@
-using gerdisc.Infrastructure.Providers;
-using gerdisc.Infrastructure.Providers.Interfaces;
-using gerdisc.Infrastructure.Repositories;
-using gerdisc.Infrastructure.Validations;
-using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
-using gerdisc.Models.Mapper;
-using gerdisc.Properties;
-using gerdisc.Services.Interfaces;
+using saga.Infrastructure.Providers;
+using saga.Infrastructure.Providers.Interfaces;
+using saga.Infrastructure.Repositories;
+using saga.Infrastructure.Validations;
+using saga.Models.DTOs;
+using saga.Models.Entities;
+using saga.Models.Mapper;
+using saga.Properties;
+using saga.Services.Interfaces;
 
-namespace gerdisc.Services
+namespace saga.Services
 {
     public class UserService : IUserService
     {

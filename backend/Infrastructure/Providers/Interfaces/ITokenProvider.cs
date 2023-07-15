@@ -1,7 +1,7 @@
 using System;
-using gerdisc.Models.Entities;
+using saga.Models.Entities;
 
-namespace gerdisc.Infrastructure.Providers
+namespace saga.Infrastructure.Providers
 {
     /// <summary>
     /// Provides functionality to generate tokens.

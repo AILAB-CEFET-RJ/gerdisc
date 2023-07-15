@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace gerdisc.Models.DTOs
+namespace saga.Models.DTOs
 {
     public class ResearchLineInfoDto
     {

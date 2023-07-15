@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace gerdisc.Models.Entities
+namespace saga.Models.Entities
 {
     /// <summary>
     /// Represents a course in the application.

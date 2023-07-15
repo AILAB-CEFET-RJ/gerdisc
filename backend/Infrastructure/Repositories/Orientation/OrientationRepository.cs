@@ -1,10 +1,10 @@
 using System.Linq.Expressions;
-using gerdisc.Infrastructure.Extensions;
-using gerdisc.Infrastructure.Providers;
-using gerdisc.Models.Entities;
+using saga.Infrastructure.Extensions;
+using saga.Infrastructure.Providers;
+using saga.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace gerdisc.Infrastructure.Repositories.Orientation
+namespace saga.Infrastructure.Repositories.Orientation
 {
     /// <inheritdoc />
     public class OrientationRepository : BaseRepository<OrientationEntity>, IOrientationRepository

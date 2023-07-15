@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using gerdisc.Infrastructure.Repositories;
+using saga.Infrastructure.Repositories;
 
 #nullable disable
 
-namespace gerdisc.Migrations
+namespace saga.Migrations
 {
     [DbContext(typeof(ContexRepository))]
     [Migration("20230630163729_AddTables")]
@@ -25,7 +25,7 @@ namespace gerdisc.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("gerdisc.Models.Entities.CourseEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.CourseEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,7 +59,7 @@ namespace gerdisc.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ExtensionEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ExtensionEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +87,7 @@ namespace gerdisc.Migrations
                     b.ToTable("Extensions");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ExternalResearcherEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ExternalResearcherEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,7 +109,7 @@ namespace gerdisc.Migrations
                     b.ToTable("ExternalResearchers");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.OrientationEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.OrientationEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -146,7 +146,7 @@ namespace gerdisc.Migrations
                     b.ToTable("Orientations");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ProfessorEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ProfessorEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -168,7 +168,7 @@ namespace gerdisc.Migrations
                     b.ToTable("Professors");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ProfessorProjectEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ProfessorProjectEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -192,7 +192,7 @@ namespace gerdisc.Migrations
                     b.ToTable("ProfessorProjects");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ProjectEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ProjectEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -217,7 +217,7 @@ namespace gerdisc.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ResearchLineEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ResearchLineEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -237,7 +237,7 @@ namespace gerdisc.Migrations
                     b.ToTable("ResearchLines");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.StudentCourseEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.StudentCourseEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -273,7 +273,7 @@ namespace gerdisc.Migrations
                     b.ToTable("StudentCourses");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.StudentEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -351,7 +351,7 @@ namespace gerdisc.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.UserEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.UserEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -386,9 +386,9 @@ namespace gerdisc.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ExtensionEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ExtensionEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.UserEntity", "Student")
+                    b.HasOne("saga.Models.Entities.UserEntity", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -397,9 +397,9 @@ namespace gerdisc.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ExternalResearcherEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ExternalResearcherEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.UserEntity", "User")
+                    b.HasOne("saga.Models.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -408,25 +408,25 @@ namespace gerdisc.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.OrientationEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.OrientationEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.UserEntity", "Coorientator")
+                    b.HasOne("saga.Models.Entities.UserEntity", "Coorientator")
                         .WithMany()
                         .HasForeignKey("CoorientatorId");
 
-                    b.HasOne("gerdisc.Models.Entities.UserEntity", "Professor")
+                    b.HasOne("saga.Models.Entities.UserEntity", "Professor")
                         .WithMany()
                         .HasForeignKey("ProfessorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("gerdisc.Models.Entities.ProjectEntity", "Project")
+                    b.HasOne("saga.Models.Entities.ProjectEntity", "Project")
                         .WithMany("Orientations")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("gerdisc.Models.Entities.UserEntity", "Student")
+                    b.HasOne("saga.Models.Entities.UserEntity", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -441,9 +441,9 @@ namespace gerdisc.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ProfessorEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ProfessorEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.UserEntity", "User")
+                    b.HasOne("saga.Models.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -452,15 +452,15 @@ namespace gerdisc.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ProfessorProjectEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ProfessorProjectEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.UserEntity", "Professor")
+                    b.HasOne("saga.Models.Entities.UserEntity", "Professor")
                         .WithMany()
                         .HasForeignKey("ProfessorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("gerdisc.Models.Entities.ProjectEntity", "Project")
+                    b.HasOne("saga.Models.Entities.ProjectEntity", "Project")
                         .WithMany("ProfessorProjects")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -471,9 +471,9 @@ namespace gerdisc.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ProjectEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ProjectEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.ResearchLineEntity", "ResearchLine")
+                    b.HasOne("saga.Models.Entities.ResearchLineEntity", "ResearchLine")
                         .WithMany("Projects")
                         .HasForeignKey("ResearchLineId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -482,15 +482,15 @@ namespace gerdisc.Migrations
                     b.Navigation("ResearchLine");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.StudentCourseEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.StudentCourseEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.CourseEntity", "Course")
+                    b.HasOne("saga.Models.Entities.CourseEntity", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("gerdisc.Models.Entities.StudentEntity", "Student")
+                    b.HasOne("saga.Models.Entities.StudentEntity", "Student")
                         .WithMany("StudentCourses")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -501,17 +501,17 @@ namespace gerdisc.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.StudentEntity", b =>
                 {
-                    b.HasOne("gerdisc.Models.Entities.OrientationEntity", "Orientation")
+                    b.HasOne("saga.Models.Entities.OrientationEntity", "Orientation")
                         .WithMany()
                         .HasForeignKey("OrientationId");
 
-                    b.HasOne("gerdisc.Models.Entities.ProjectEntity", "Project")
+                    b.HasOne("saga.Models.Entities.ProjectEntity", "Project")
                         .WithMany("Students")
                         .HasForeignKey("ProjectId");
 
-                    b.HasOne("gerdisc.Models.Entities.UserEntity", "User")
+                    b.HasOne("saga.Models.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -524,7 +524,7 @@ namespace gerdisc.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ProjectEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ProjectEntity", b =>
                 {
                     b.Navigation("Orientations");
 
@@ -533,12 +533,12 @@ namespace gerdisc.Migrations
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.ResearchLineEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.ResearchLineEntity", b =>
                 {
                     b.Navigation("Projects");
                 });
 
-            modelBuilder.Entity("gerdisc.Models.Entities.StudentEntity", b =>
+            modelBuilder.Entity("saga.Models.Entities.StudentEntity", b =>
                 {
                     b.Navigation("StudentCourses");
                 });

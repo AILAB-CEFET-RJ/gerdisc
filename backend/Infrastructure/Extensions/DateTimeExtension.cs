@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace gerdisc.Infrastructure.Extensions
+namespace saga.Infrastructure.Extensions
 {
     public static class DateTimeExtension
     {

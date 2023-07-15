@@ -1,7 +1,7 @@
 {
-  "name": "gerdisc",
+  "name": "saga",
   "version": "0.1.0",
-  "homepage": "/gerdisc",
+  "homepage": "/saga",
   "private": true,
   "type": "commonjs",
   "dependencies": {

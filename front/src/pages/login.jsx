@@ -43,7 +43,7 @@ export default function Login() {
                 <div className={"body"}>
                     <div className={"header"}>
                         <div className='app-name'>
-                            GERDISC
+                            SAGA
                         </div>
                         <div className={"headerOptions"}>
                             <div style={{ "marginRight": "2rem" }}> Sobre</div>

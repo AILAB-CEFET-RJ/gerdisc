@@ -1,8 +1,8 @@
-using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
+using saga.Models.DTOs;
+using saga.Models.Entities;
 using System.Threading.Tasks;
 
-namespace gerdisc.Infrastructure.Providers.Interfaces
+namespace saga.Infrastructure.Providers.Interfaces
 {
     /// <summary>
     /// Represents a service for sending emails.

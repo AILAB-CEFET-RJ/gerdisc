@@ -1,9 +1,9 @@
-using gerdisc.Infrastructure.Extensions;
-using gerdisc.Infrastructure.Providers;
-using gerdisc.Models.Entities;
+using saga.Infrastructure.Extensions;
+using saga.Infrastructure.Providers;
+using saga.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace gerdisc.Infrastructure.Repositories.Project
+namespace saga.Infrastructure.Repositories.Project
 {
     /// <inheritdoc />
     public class ProjectRepository : BaseRepository<ProjectEntity>, IProjectRepository

@@ -1,14 +1,14 @@
-using gerdisc.Infrastructure.Repositories;
-using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
-using gerdisc.Models.Enums;
-using gerdisc.Models.Mapper;
-using gerdisc.Services.Interfaces;
+using saga.Infrastructure.Repositories;
+using saga.Models.DTOs;
+using saga.Models.Entities;
+using saga.Models.Enums;
+using saga.Models.Mapper;
+using saga.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace gerdisc.Services
+namespace saga.Services
 {
     public class ExtensionService : IExtensionService
     {

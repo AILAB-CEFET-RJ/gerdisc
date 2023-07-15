@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace gerdisc.Models.Entities
+namespace saga.Models.Entities
 {
     /// <summary>
     /// Represents the base entity for all entities in the system.

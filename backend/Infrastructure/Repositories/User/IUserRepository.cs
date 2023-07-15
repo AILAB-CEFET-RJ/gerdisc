@@ -1,6 +1,6 @@
-using gerdisc.Models.Entities;
+using saga.Models.Entities;
 
-namespace gerdisc.Infrastructure.Repositories.User
+namespace saga.Infrastructure.Repositories.User
 {
     /// <inheritdoc />
     public interface IUserRepository : IBaseRepository<UserEntity>

@@ -1,7 +1,7 @@
-using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
+using saga.Models.DTOs;
+using saga.Models.Entities;
 
-namespace gerdisc.Services.Interfaces
+namespace saga.Services.Interfaces
 {
     /// <summary>
     /// provides the contract for user-related operations in the application.

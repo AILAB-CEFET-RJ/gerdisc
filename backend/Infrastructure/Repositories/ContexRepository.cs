@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
-using gerdisc.Models.Entities;
+using saga.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace gerdisc.Infrastructure.Repositories
+namespace saga.Infrastructure.Repositories
 {
     /// <summary>
     /// Represents the database context for the application, providing access to various entity sets.

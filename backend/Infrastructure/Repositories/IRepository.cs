@@ -1,16 +1,16 @@
-using gerdisc.Infrastructure.Repositories.Course;
-using gerdisc.Infrastructure.Repositories.Extension;
-using gerdisc.Infrastructure.Repositories.ExternalResearcher;
-using gerdisc.Infrastructure.Repositories.Orientation;
-using gerdisc.Infrastructure.Repositories.Professor;
-using gerdisc.Infrastructure.Repositories.ProfessorProject;
-using gerdisc.Infrastructure.Repositories.Project;
-using gerdisc.Infrastructure.Repositories.ResearchLine;
-using gerdisc.Infrastructure.Repositories.Student;
-using gerdisc.Infrastructure.Repositories.StudentCourse;
-using gerdisc.Infrastructure.Repositories.User;
+using saga.Infrastructure.Repositories.Course;
+using saga.Infrastructure.Repositories.Extension;
+using saga.Infrastructure.Repositories.ExternalResearcher;
+using saga.Infrastructure.Repositories.Orientation;
+using saga.Infrastructure.Repositories.Professor;
+using saga.Infrastructure.Repositories.ProfessorProject;
+using saga.Infrastructure.Repositories.Project;
+using saga.Infrastructure.Repositories.ResearchLine;
+using saga.Infrastructure.Repositories.Student;
+using saga.Infrastructure.Repositories.StudentCourse;
+using saga.Infrastructure.Repositories.User;
 
-namespace gerdisc.Infrastructure.Repositories
+namespace saga.Infrastructure.Repositories
 {
     /// <summary>
     /// Represents a repository interface that provides access to various entity repositories.

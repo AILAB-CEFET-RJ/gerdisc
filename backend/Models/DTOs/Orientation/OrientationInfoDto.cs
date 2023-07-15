@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace gerdisc.Models.DTOs
+namespace saga.Models.DTOs
 {
     public class OrientationInfoDto : OrientationDto
     {

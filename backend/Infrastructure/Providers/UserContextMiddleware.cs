@@ -1,7 +1,7 @@
 using System.Security.Claims;
-using gerdisc.Models.Enums;
+using saga.Models.Enums;
 
-namespace gerdisc.Infrastructure.Providers
+namespace saga.Infrastructure.Providers
 {
     /// <summary>
     /// Middleware for setting user context based on the claims of the current HttpContext.

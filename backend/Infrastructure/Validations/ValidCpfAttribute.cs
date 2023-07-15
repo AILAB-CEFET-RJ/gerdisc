@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace gerdisc.Infrastructure.Validations
+namespace saga.Infrastructure.Validations
 {
     /// <summary>
     /// A custom validation attribute used to validate CPF addresses.

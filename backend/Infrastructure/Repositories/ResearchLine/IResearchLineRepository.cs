@@ -1,6 +1,6 @@
-using gerdisc.Models.Entities;
+using saga.Models.Entities;
 
-namespace gerdisc.Infrastructure.Repositories.ResearchLine
+namespace saga.Infrastructure.Repositories.ResearchLine
 {
     /// <inheritdoc />
     public interface IResearchLineRepository : IBaseRepository<ResearchLineEntity>

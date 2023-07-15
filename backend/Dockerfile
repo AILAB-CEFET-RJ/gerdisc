@@ -21,4 +21,4 @@ COPY --from=build-env /app/out .
 EXPOSE 80
 
 # Run the app on container startup
-ENTRYPOINT ["dotnet", "gerdisc.dll"]
+ENTRYPOINT ["dotnet", "saga.dll"]

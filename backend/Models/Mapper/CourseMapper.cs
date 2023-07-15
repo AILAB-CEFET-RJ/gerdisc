@@ -1,7 +1,7 @@
-using gerdisc.Models.DTOs;
-using gerdisc.Models.Entities;
+using saga.Models.DTOs;
+using saga.Models.Entities;
 
-namespace gerdisc.Models.Mapper
+namespace saga.Models.Mapper
 {
     /// <summary>
     /// A static class containing mapper methods for converting between <see cref="CourseDto"/> and <see cref="CourseEntity"/> objects.

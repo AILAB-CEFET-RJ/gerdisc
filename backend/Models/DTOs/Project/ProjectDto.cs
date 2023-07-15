@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using gerdisc.Models.Enums;
+using saga.Models.Enums;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace gerdisc.Models.DTOs
+namespace saga.Models.DTOs
 {
     public class ProjectDto
     {

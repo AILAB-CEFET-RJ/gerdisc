@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace gerdisc.Infrastructure.Validations
+namespace saga.Infrastructure.Validations
 {
     public class ValidEnumAttribute : ValidationAttribute
     {

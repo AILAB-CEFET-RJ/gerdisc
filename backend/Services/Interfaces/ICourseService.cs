@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using gerdisc.Models.DTOs;
+using saga.Models.DTOs;
 
-namespace gerdisc.Services.Interfaces
+namespace saga.Services.Interfaces
 {
     /// <summary>
     /// Interface for CourseService that defines the methods to manage courses.
