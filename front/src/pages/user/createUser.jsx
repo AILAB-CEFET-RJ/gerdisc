@@ -11,6 +11,8 @@ import ErrorPage from "../../components/error/Error";
 import PageContainer from "../../components/PageContainer";
 import { AREA_ENUM, INSTITUTION_TYPE_ENUM, STATUS_ENUM, SCHOLARSHIP_TYPE } from "../../enum_helpers";
 import MultiSelect from "../../components/Multiselect";
+import { translateEnumValue } from "../../enum_helpers";
+
 
 export default function UserForm({ type = undefined, isUpdate = false }) {
     const navigate = useNavigate();
@@ -23,14 +25,13 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
     const [selectedProjects, setSelectedProject] = useState([]);
     const [errorMessage, setErrorMessage] = useState(undefined);
     const [oldValues, setOldValues] = useState({
-        status: '',
-        undergraduateArea: '',
-        institutionType: '',
-        scholarship: '',
-
-    })
-    const [projects, setProjects] = useState([])
-    const [role, setRole] = useState(localStorage.getItem('role'))
+        status: 1,
+        undergraduateArea: 1,
+        institutionType: 1,
+        scholarship: 1,
+    });
+    const [projects, setProjects] = useState([]);
+    const [role, setRole] = useState(localStorage.getItem('role'));
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
@@ -38,8 +39,8 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         cpf: '',
         password: '',
         createdAt: '',
-        resetPasswordPath: `${process.env.REACT_APP_BASE_URL}/changePassword`
-    })
+        resetPasswordPath: "https://spica.eic.cefet-rj.br/saga/changePassword"
+    });
     const [student, SetStudent] = useState({
         registration: "",
         registrationDate: '',
@@ -54,143 +55,140 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
         dateOfBirth: '',
         scholarship: 0,
         projectIds: [],
-    })
+    });
     const [professor, setProfessor] = useState({
         siape: '',
         institution: '',
         projectId: '',
-    })
+    });
 
     useEffect(() => {
-        var projectsId = undefined
+        var projectsId = undefined;
         if (isUpdate) {
             if (isStudent) {
                 getStudentById(id)
-                    .then(student => {
-                        setUser(student)
-                        SetStudent(
-                            {
-                                ...student,
-                                undergraduateArea: AREA_ENUM[student.undergraduateArea],
-                                scholarship: student.scholarship,
-                                status: STATUS_ENUM[student.status]
-                            })
-                        projectsId = student.projectId
-                        setOldValues(
-                            {
-                                ...oldValues,
-                                institutionType: student.institutionType,
-                                scholarship: student.scholarship,
-                                undergraduateArea: student.undergraduateArea
-                            })
+                    .then((student) => {
+                        setUser(student);
+                        SetStudent({
+                            ...student,
+                            undergraduateArea: AREA_ENUM.find((x) => x.name === student.undergraduateArea).key,
+                            scholarship: SCHOLARSHIP_TYPE.find((x) => x.name === student.scholarship).key,
+                            institutionType: INSTITUTION_TYPE_ENUM.find((x) => x.name === student.institutionType).key,
+                            status: STATUS_ENUM.find((x) => x.name === student.status).key,
+                        });
+                        projectsId = student.projectId;
+                        setOldValues({
+                            ...oldValues,
+                            institutionType: student.institutionType,
+                            scholarship: student.scholarship,
+                            undergraduateArea: student.undergraduateArea,
+                        });
                     })
-                    .catch(error => {
-                        setError(true)
-                        setErrorMessage(error.message)
-                    })
-
+                    .catch((error) => {
+                        setError(true);
+                        setErrorMessage(error.message);
+                    });
             }
             else if (userType === 'Professor') {
                 getProfessorById(id)
                     .then(professor => {
-                        setUser(professor)
-                        setProfessor(professor)
+                        setUser(professor);
+                        setProfessor(professor);
                     })
                     .catch(error => {
-                        setError(true)
-                        setErrorMessage(error.message)
-                    })
+                        setError(true);
+                        setErrorMessage(error.message);
+                    });
             }
             else if (userType === 'Externo') {
                 getResearcherById(id)
                     .then(researcher => {
-                        setUser(researcher)
-                        setProfessor(researcher)
+                        setUser(researcher);
+                        setProfessor(researcher);
                     })
                     .catch(error => {
-                        setError(true)
-                        setErrorMessage(error.message)
-                    })
+                        setError(true);
+                        setErrorMessage(error.message);
+                    });
             }
             getProjects()
                 .then(result => {
-                    let mapped = []
+                    let mapped = [];
                     if (result !== null && result !== undefined) {
                         mapped = result.map((project) => {
                             return {
                                 Id: project.id,
                                 Nome: project.name
-                            }
-                        })
-                        setSelectedProject(mapped.filter(project => projectsId === project.Id))
-                        setProjects(mapped)
+                            };
+                        });
+                        setSelectedProject(mapped.filter(project => projectsId === project.Id));
+                        setProjects(mapped);
                     }
                 })
                 .catch(error => {
-                    setError(true)
-                    setErrorMessage(error.message)
-                })
+                    setError(true);
+                    setErrorMessage(error.message);
+                });
         }
     }, [isUpdate, isStudent, setUser, SetStudent, setProfessor, id, userType]);
-
-
 
     useEffect(() => {
         setIsLoading(true);
         getProjects()
             .then(result => {
-                let mapped = []
+                let mapped = [];
                 if (result !== null && result !== undefined) {
                     mapped = result.map((project) => {
                         return {
                             Id: project.id,
                             Nome: project.name
-                        }
-                    })
-                    setProjects(mapped)
+                        };
+                    });
+                    setProjects(mapped);
                 }
             })
             .catch(err => setError(true))
         setIsLoading(false);
-    }, [isStudent, setProjects])
+    }, [isStudent, setProjects]);
 
     const onProjectSelect = (selectedList, Item) => {
-        const [selected] = selectedList
-        SetStudent({ ...student, ...{ projectId: selected.Id } })
-    }
+        const [selected] = selectedList;
+        SetStudent({ ...student, ...{ projectId: selected.Id } });
+    };
 
     const changeUserAtribute = (name, value) => {
-        let newValue = {}
-        newValue[name] = value
-        setUser({ ...user, ...newValue })
-    }
+        let newValue = {};
+        newValue[name] = value;
+        setUser({ ...user, ...newValue });
+    };
 
     const changeStudentAttribute = (name, value) => {
-        let newValue = {}
-        newValue[name] = value
-        SetStudent({ ...student, ...newValue })
-    }
+        let newValue = {};
+        newValue[name] = value;
+        SetStudent({ ...student, ...newValue });
+    };
+
     const changeProfessorAtribute = (name, value) => {
-        let newValue = {}
-        newValue[name] = value
-        setProfessor({ ...professor, ...newValue })
-    }
+        let newValue = {};
+        newValue[name] = value;
+        setProfessor({ ...professor, ...newValue });
+    };
 
     const handleUserTypeSelect = (value) => {
         setUserType(value);
     };
 
     useEffect(() => {
-        const roles = ['Administrator']
-        const token = localStorage.getItem('token')
+        const roles = ['Administrator'];
+        const token = localStorage.getItem('token');
         try {
-            const decoded = jwt_decode(token)
+            const decoded = jwt_decode(token);
             if (!roles.includes(decoded.role)) {
-                navigate('/')
+                navigate('/');
             }
-            setRole(decoded.role)
+            setRole(decoded.role);
         } catch (error) {
-            navigate('/login')
+            navigate('/login');
         }
     }, [setRole, navigate, role]);
 
@@ -200,63 +198,66 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
 
     const handlepost = async () => {
         if (isStudent) {
-            let _user = user
-            _user.createdAt = new Date()
-            let body = { ..._user, ...student }
-            body.entryDate = new Date(body.entryDate)
-            body.dateOfBirth = new Date(body.dateOfBirth)
-            body.registrationDate = new Date(body.registrationDate)
-            body.projectDefenceDate = new Date("2025-05-11")
-            body.projectQualificationDate = new Date("2025-05-11")
+            let _user = user;
+            _user.createdAt = new Date();
+            let body = { ..._user, ...student };
+            body.entryDate = new Date(body.entryDate);
+            body.dateOfBirth = new Date(body.dateOfBirth);
+            body.registrationDate = new Date(body.registrationDate);
+            body.projectDefenceDate = new Date("2025-05-11");
+            body.projectQualificationDate = new Date("2025-05-11");
             postStudents(body)
                 .then((student) => navigate("/students"))
-                .catch(error => { setError('Unable to create student') });
+                .catch(error => { setError('Unable to create student'); });
         }
         else {
-            let body = { ...user, ...professor }
-            body.createdAt = new Date()
-            body.password = professor.siape
+            let body = { ...user, ...professor };
+            body.createdAt = new Date();
+            body.password = professor.siape;
             if (userType === "Professor") {
                 postProfessors(body)
                     .then((professor) => navigate("/professors"))
-                    .catch(error => { setError('Unable to create Professor') });
+                    .catch(error => { setError('Unable to create Professor'); });
             }
             else {
                 postResearchers(body)
                     .then((researcher) => navigate("/researchers"))
-                    .catch(error => { setError('Unable to create Researcher') });
+                    .catch(error => { setError('Unable to create Researcher'); });
             }
         }
-    }
+    };
+
     const handleSave = (e) => {
-        e.preventDefault()
-        const form = document.querySelector('form')
+        e.preventDefault();
+        const form = document.querySelector('form');
         if (form.reportValidity()) {
-            isUpdate ? handleUpdate() : handlepost()
+            isUpdate ? handleUpdate() : handlepost();
         }
-    }
+    };
+
     const handleUpdate = () => {
         if (isStudent) {
-            let body = { ...user, ...student }
+            let body = { ...user, ...student };
             putStudentById(id, body)
                 .then((student) => {
-                    navigate("/students")
+                    navigate("/students");
                 })
-                .catch(error => setError(true))
+                .catch(error => setError(true));
         }
         else if (userType === 'Professor') {
-            let body = { ...user, ...professor }
+            let body = { ...user, ...professor };
             putProfessorById(id, body)
                 .then((student) => navigate("/professors"))
-                .catch(error => setError(true))
+                .catch(error => setError(true));
         }
         else {
-            let body = { ...user, ...professor }
+            let body = { ...user, ...professor };
             putResearcherById(id, body)
                 .then((student) => navigate("/researchers"))
-                .catch(error => setError(true))
+                .catch(error => setError(true));
         }
-    }
+    };
+
     return (
         <PageContainer name={name} isLoading={isLoading}>
             {!error && (
@@ -310,14 +311,9 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                                             required={false}
                                             defaultValue={oldValues.scholarship}
                                             label={"Bolsa"}
-                                            onSelect={(value) =>
-                                                changeStudentAttribute('scholarship', Number(SCHOLARSHIP_TYPE[value]))
-                                            }
+                                            onSelect={(value) => changeStudentAttribute("scholarship", Number(value))}
                                             name="scholarship"
-                                            options={Object.keys(SCHOLARSHIP_TYPE).map((key) => ({
-                                                value: key,
-                                                label: key,
-                                            }))}
+                                            options={SCHOLARSHIP_TYPE.map((item) => ({ value: item.key, label: item.translation }))}
                                         />
                                     </div>
                                     <div className="formInput">
@@ -345,10 +341,10 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                                             <Select
                                                 required={true}
                                                 defaultValue={oldValues.undergraduateArea}
-                                                label={"Área de graduação"}
-                                                onSelect={(value) => changeStudentAttribute('undergraduateArea', Number(AREA_ENUM[value]))}
+                                                label="Área de graduação"
+                                                onSelect={(value) => changeStudentAttribute("undergraduateArea", Number(value))}
                                                 name="undergraduateArea"
-                                                options={Object.keys(AREA_ENUM).map((key) => ({ value: key, label: key }))}
+                                                options={AREA_ENUM.map((item) => ({ value: item.key, label: item.translation }))}
                                             />
                                         </div>
                                         <div className="formInput">
@@ -362,14 +358,9 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                                                 required={false}
                                                 defaultValue={oldValues.institutionType}
                                                 className="formInput"
-                                                options={Object.keys(INSTITUTION_TYPE_ENUM).map((key) => ({
-                                                    value: key,
-                                                    label: key,
-                                                }))}
-                                                onSelect={(value) =>
-                                                    changeStudentAttribute('institutionType', Number(INSTITUTION_TYPE_ENUM[value]))
-                                                }
-                                                label="Tipo de Institução"
+                                                options={INSTITUTION_TYPE_ENUM.map((item) => ({ value: item.key, label: item.translation }))}
+                                                onSelect={(value) => changeStudentAttribute("institutionType", Number(value))}
+                                                label="Tipo de Instituição"
                                                 name="institutionType"
                                             />
                                         </div>
@@ -391,7 +382,6 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                         )}
                         <div className="form-section" id="professor-section">
                             {userType === "Professor" && (
-
                                 <div className="formInput">
                                     <label htmlFor="siape">SIAPE</label>
                                     <input required={userType === "Professor"} disabled={isUpdate} type="text" minLength={3} value={professor.siape} name="siape" id="siape" onChange={(e) => changeProfessorAtribute(e.target.name, e.target.value)} />
@@ -409,7 +399,6 @@ export default function UserForm({ type = undefined, isUpdate = false }) {
                                 <input type="submit" value={isUpdate ? "Update" : "Submit"} onClick={(e) => handleSave(e)} />
                             </div>
                         </div>
-
                     </form>
                 </>
             )}

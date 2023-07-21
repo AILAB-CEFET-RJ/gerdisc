@@ -18,7 +18,7 @@ namespace saga.Infrastructure.Providers
         }
 
         /// <inheritdoc />
-        public async Task SendEmail(string recipient, string subject, string body)
+        public async Task SendEmail(string recipient, string subject, string body, bool isBodyHtml = true)
         {
             try
             {
@@ -28,6 +28,7 @@ namespace saga.Infrastructure.Providers
                     client.Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password);
 
                     var message = new MailMessage(_emailSettings.SenderEmail, recipient, subject, body);
+                    message.IsBodyHtml = isBodyHtml;
 
                     using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30)))
                     {

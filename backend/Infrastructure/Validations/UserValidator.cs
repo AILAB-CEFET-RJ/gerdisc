@@ -63,13 +63,6 @@ namespace saga.Infrastructure.Validations
                 return (false, $"Token.");
             }
 
-            var user = await _repository.User.GetByIdAsync(_userContext.UserId.Value);
-            if (user is null || resetPasswordDto.Email is null || resetPasswordDto.Email.ToLower() != user.Email?.ToLower())
-            {
-                _logger.LogInformation("Invalid reset password  DTO.");
-                return (false, $"Invalid reset password DTO.");
-            }
-
             _logger.LogInformation($"reset password dto verified.");
             return (true, "Success");
         }

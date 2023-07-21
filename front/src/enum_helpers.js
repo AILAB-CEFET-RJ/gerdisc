@@ -1,45 +1,51 @@
-export const AREA_ENUM = {
-    Default: 0,
-    COMPUTATION: 1,
-    EXACT_SCIENCES: 2,
-    HUMANITIES: 3,
-    HEALTH: 4,
-    ENGINEERING: 5
-}
+export const AREA_ENUM = [
+    { key: 0, name: "Default", translation: "Padrão" },
+    { key: 1, name: "COMPUTATION", translation: "Computação" },
+    { key: 2, name: "EXACT_SCIENCES", translation: "Ciências Exatas" },
+    { key: 3, name: "HUMANITIES", translation: "Humanidades" },
+    { key: 4, name: "HEALTH", translation: "Saúde" },
+    { key: 5, name: "ENGINEERING", translation: "Engenharia" },
+  ];
+  
+  export const STATUS_ENUM = [
+    { key: 0, name: "Default", translation: "Padrão" },
+    { key: 1, name: "Active", translation: "Ativo" },
+    { key: 2, name: "Graduated", translation: "Formado" },
+    { key: 3, name: "Disconnected", translation: "Desconectado" },
+  ];
+  
+  export const ROLES_ENUM = [
+    { key: 0, name: "Default", translation: "Padrão" },
+    { key: 1, name: "Student", translation: "Estudante" },
+    { key: 2, name: "Professor", translation: "Professor" },
+    { key: 3, name: "Administrator", translation: "Administrador" },
+    { key: 4, name: "ExternalResearcher", translation: "Pesquisador Externo" },
+    { key: 5, name: "ResetPassword", translation: "Redefinir Senha" },
+  ];
+  
+  export const PROJECT_STATUS_ENUM = [
+    { key: 0, name: "Default", translation: "Padrão" },
+    { key: 1, name: "Active", translation: "Ativo" },
+    { key: 2, name: "Inactive", translation: "Inativo" },
+    { key: 3, name: "Closed", translation: "Encerrado" },
+  ];
+  
+  export const INSTITUTION_TYPE_ENUM = [
+    { key: 0, name: "Default", translation: "Padrão" },
+    { key: 1, name: "Publica", translation: "Pública" },
+    { key: 2, name: "Particular", translation: "Particular" },
+    { key: 3, name: "CEFET", translation: "CEFET" },
+  ];
+  
+  export const SCHOLARSHIP_TYPE = [
+    { key: 0, name: "Default", translation: "Padrão" },
+    { key: 1, name: "Cefet", translation: "Cefet" },
+    { key: 2, name: "Capes", translation: "Capes" },
+    { key: 3, name: "FapeRj", translation: "FapeRj" },
+  ];
 
-export const STATUS_ENUM = {
-    Default: 0,
-    Active: 1,
-    Graduated: 2,
-    Disconnected: 3
-}
-
-export const ROLES_ENUM = {
-    Default: 0,
-    Student: 1,
-    Professor: 2,
-    Administrator: 3,
-    ExternalResearcher: 4,
-    ResetPassword: 5
-}
-
-export const PROJECT_STATUS_ENUM = {
-    Default: 0,
-    Active: 1,
-    Inactive: 2,
-    Closed: 3
-}
-
-export const INSTITUTION_TYPE_ENUM = {
-    Default: 0,
-    Publica: 1,
-    Particular: 2,
-    CEFET:3,
-}
-
-export const SCHOLARSHIP_TYPE = {
-    Default: 0,
-    Cefet: 1,
-    Capes: 2,
-    FapeRj:3,
-}
+  export const translateEnumValue = (enumValues, value) => {
+    const matchedValue = enumValues.find((item) => item.key === value || item.name === value);
+    return matchedValue ? matchedValue.translation : "";
+  };
+  

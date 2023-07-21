@@ -17,3 +17,8 @@ export function Login({email, password})
         return api.postWithoutToken('users/resetPassword', { password }, config)
     }
 
+    export function ForgotPassword({email, resetPasswordPath})
+    {
+        return api.postWithoutToken('users/resetPasswordRequet', { email, resetPasswordPath })
+    }
+

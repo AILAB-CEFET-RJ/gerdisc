@@ -6,7 +6,8 @@ import { useNavigate } from "react-router"
 import jwt_decode from "jwt-decode";
 import BackButton from "../../components/BackButton";
 import PageContainer from "../../components/PageContainer";
-
+import { translateEnumValue } from "../../enum_helpers";
+import { PROJECT_STATUS_ENUM } from "../../enum_helpers";
 
 export default function ProjectList() {
     const navigate = useNavigate()
@@ -42,7 +43,7 @@ export default function ProjectList() {
                         return {
                             Id: project.id,
                             Nome: project.name,
-                            Status: project.status,
+                            Status: translateEnumValue(PROJECT_STATUS_ENUM, project.status),
                             Professores: project?.professors?.length,
                             Students: project?.students?.length
                         }

@@ -1,3 +1,4 @@
+using Infrastructure.EmailTemplates;
 using saga.Infrastructure.Providers;
 using saga.Infrastructure.Providers.Interfaces;
 using saga.Infrastructure.Repositories;
@@ -15,6 +16,7 @@ namespace saga.Services
         private readonly IRepository _repository;
         private readonly IEmailSender _emailSender;
         private readonly ITokenProvider _tokenProvider;
+        private readonly IUserContext _userContext;
         private readonly ILogger<UserService> _logger;
         private readonly UserValidator _userValidator;
         public UserService(
@@ -22,7 +24,8 @@ namespace saga.Services
             ITokenProvider tokenProvider,
             ILogger<UserService> logger,
             IEmailSender emailSender,
-            UserValidator userValidator
+            UserValidator userValidator,
+            IUserContext userContext
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -30,6 +33,7 @@ namespace saga.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
             _userValidator= userValidator?? throw new ArgumentNullException(nameof(userValidator));
+            _userContext= userContext?? throw new ArgumentNullException(nameof(userContext));
         }
 
         /// <inheritdoc />
@@ -44,7 +48,7 @@ namespace saga.Services
             var user = await _repository.User.AddAsync(userDto.ToUserEntity());
             var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromDays(7));
             string emailSubject = "User Account Created";
-            string emailBody = $"Thank you for creating an account! Your temporary password is: {userDto.ResetPasswordPath + "?token=" + token}. Please change your password after logging in.";
+            string emailBody = EmailTemplates.WelcomeEmailTemplate(userDto.ResetPasswordPath, token);
             await _emailSender.SendEmail(userDto.Email, emailSubject, emailBody).ConfigureAwait(false);
             return user;
         }
@@ -56,7 +60,7 @@ namespace saga.Services
 
             var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromMinutes(30));
             string emailSubject = "Password Reset";
-            string emailBody = $"You have requested to reset your password. Please click on the following link to reset your password: {request.ResetPasswordPath + "?token=" + token}";
+            string emailBody = EmailTemplates.ResetPasswordEmailTemplate(request.ResetPasswordPath, token);
             await _emailSender.SendEmail(request.Email, emailSubject, emailBody).ConfigureAwait(false);
         }
 
@@ -64,13 +68,14 @@ namespace saga.Services
         public async Task<LoginResultDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
         {
             (var isValid, var message) = await _userValidator.CanResetPassword(resetPasswordDto);
-            _logger.LogInformation($"Changing password of user: {resetPasswordDto.Email}");
+
             if (!isValid)
             {
                 throw new ArgumentException(message);
             }
+            var user = await _repository.User.GetByIdAsync(_userContext.UserId.Value) ?? throw new ArgumentException($"User with email {_userContext.UserId} not found.");
 
-            var user = await _repository.User.GetUserByEmail(resetPasswordDto.Email.ToLower()) ?? throw new ArgumentException($"User with email {resetPasswordDto.Email} not found.");
+            _logger.LogInformation($"Changing password of user: {user.Email}");
             user.PasswordHash = HashPassword(resetPasswordDto.Password);
 
             await _repository.User.UpdateAsync(user);

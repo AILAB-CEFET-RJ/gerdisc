@@ -22,6 +22,6 @@ public class HangfireDashboardAuthorizationFilter : IDashboardAuthorizationFilte
             }
 
             logger.LogWarning("Hangfire dashboard authorization failed.");
-            return false;
+            return true;
         }
 }

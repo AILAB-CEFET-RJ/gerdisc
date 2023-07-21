@@ -6,6 +6,8 @@ import { useNavigate } from "react-router"
 import jwt_decode from "jwt-decode";
 import BackButton from "../../components/BackButton"
 import PageContainer from "../../components/PageContainer"
+import { translateEnumValue } from "../../enum_helpers";
+import { STATUS_ENUM } from "../../enum_helpers";
 
 export default function StudentList() {
     const navigate = useNavigate()
@@ -38,7 +40,7 @@ export default function StudentList() {
                         return {
                             Id: student.id,
                             Nome: `${student.firstName} ${student.lastName}`,
-                            Status: student.status,
+                            Status: translateEnumValue(STATUS_ENUM, student.status),
                             "E-mail": student.email,
                             "Matrícula": student.registration,
                             "Data de defesa": student.projectDefenceDate,
