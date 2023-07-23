@@ -46,9 +46,9 @@ namespace Infrastructure.Jobs
 
         private async Task NotifyProfessorAsync(IGrouping<Guid, OrientationEntity> groupedOrientations, Dictionary<Guid, StudentEntity> studentInfo)
         {
-            string emailSubject = "Upcoming Student Defenses";
+            string emailSubject = "Próximas Defesas de Alunos";
             var body = new StringBuilder();
-            body.AppendLine("The following students are finishing the course:");
+            body.AppendLine("Os seguintes estudantes estão concluindo o curso:");
 
             string emailBody = EmailTemplates.EmailTemplates.StudentsFinishingFromProfessorEmailTemplate(groupedOrientations, studentInfo);
             string professorEmail = groupedOrientations?.FirstOrDefault()?.Professor?.Email;
@@ -57,20 +57,19 @@ namespace Infrastructure.Jobs
 
         private async Task NotifyStudentAsync(StudentEntity student)
         {
-            string emailSubject = "Upcoming Defense Date";
             var defenseTypes = new List<string>();
 
             if (student.ProjectDefenceDate <= DateTime.UtcNow.Date.AddDays(30))
             {
-                defenseTypes.Add("Defense");
+                defenseTypes.Add("Defesa");
             }
             if (student.ProjectQualificationDate <= DateTime.UtcNow.Date.AddDays(30))
             {
-                defenseTypes.Add("Qualification");
+                defenseTypes.Add("Qualificação");
             }
 
-            string defenseTypeText = string.Join(" and ", defenseTypes);
-
+            string defenseTypeText = string.Join(" e ", defenseTypes);
+            string emailSubject = $"Data limite de {defenseTypeText} se aproximando.";
             string emailBody = EmailTemplates.EmailTemplates.UpcomingDefenseEmailTemplate(student.User?.FirstName, defenseTypeText, student.ProjectQualificationDate, student.ProjectDefenceDate);
 
             await _emailSender.SendEmail(student.User.Email, emailSubject, emailBody).ConfigureAwait(false);
@@ -83,3 +82,4 @@ namespace Infrastructure.Jobs
         }
     }
 }
+

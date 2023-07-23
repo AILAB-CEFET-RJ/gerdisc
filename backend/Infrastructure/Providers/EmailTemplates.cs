@@ -9,8 +9,8 @@ namespace Infrastructure.EmailTemplates
         {
             return $@"<html>
                         <body>
-                            <p>Welcome to CEFET RJ Post Graduation!</p>
-                            <p>To access your account, please set your password by clicking on the following link:</p>
+                            <p>Bem-vindo(a) à Pós-Graduação do CEFET RJ!</p>
+                            <p>Para acessar sua conta, por favor, defina sua senha clicando no seguinte link:</p>
                             <p><a href=""{resetPasswordPath}?token={token}"">{resetPasswordPath}?token={token}</a></p>
                         </body>
                     </html>";
@@ -20,7 +20,7 @@ namespace Infrastructure.EmailTemplates
         {
             return $@"<html>
                         <body>
-                            <p>You have requested to reset your password. Please click on the following link to reset your password:</p>
+                            <p>Você solicitou a redefinição da sua senha. Por favor, clique no seguinte link para redefinir sua senha:</p>
                             <p><a href=""{resetPasswordPath}?token={token}"">{resetPasswordPath}?token={token}</a></p>
                         </body>
                     </html>";
@@ -30,15 +30,15 @@ namespace Infrastructure.EmailTemplates
         {
             return $@"<html>
                         <body>
-                            <p>Dear {firstName},</p>
-                            <p>This is a reminder that your {defenseTypeText} date is approaching soon. Please make sure to prepare and be ready for your presentation.</p>
-                            <p>If you have any questions or need any assistance, feel free to reach out to your mentor.</p>
-                            <p>If you find that you need more time to adequately prepare, you may request an extension by contacting your academic advisor.</p>
-                            <p>Your Qualification Date: {qualificationDate}</p>
-                            <p>Your Defense Date: {defenseDate}</p>
+                            <p>Prezado(a) {firstName},</p>
+                            <p>Este é um lembrete de que a data da sua {defenseTypeText} está se aproximando. Por favor, certifique-se de se preparar e estar pronto(a) para a sua apresentação.</p>
+                            <p>Se tiver alguma dúvida ou precisar de ajuda, sinta-se à vontade para entrar em contato com o seu orientador.</p>
+                            <p>Se você precisar de mais tempo para se preparar adequadamente, pode solicitar uma prorrogação entrando em contato com o seu orientador acadêmico.</p>
+                            <p>Data da sua Qualificação: {qualificationDate}</p>
+                            <p>Data da sua Defesa: {defenseDate}</p>
                             <br>
-                            <p>Best regards,</p>
-                            <p>The Academic Team</p>
+                            <p>Atenciosamente,</p>
+                            <p>A Equipe Acadêmica</p>
                         </body>
                     </html>";
         }
@@ -47,14 +47,14 @@ namespace Infrastructure.EmailTemplates
         {
             var body = new StringBuilder();
 
-            body.AppendLine("The following students are finishing the course:");
+            body.AppendLine("Os seguintes estudantes estão concluindo o curso:");
             body.AppendLine("<table>");
             body.AppendLine("<tr>");
-            body.AppendLine("<th>First Name</th>");
-            body.AppendLine("<th>Last Name</th>");
+            body.AppendLine("<th>Nome</th>");
+            body.AppendLine("<th>Sobrenome</th>");
             body.AppendLine("<th>Email</th>");
-            body.AppendLine("<th>Defense Date</th>");
-            body.AppendLine("<th>Qualification Date</th>");
+            body.AppendLine("<th>Data de Defesa</th>");
+            body.AppendLine("<th>Data de Qualificação</th>");
             body.AppendLine("</tr>");
 
             foreach (var orientation in orientations)
@@ -76,3 +76,4 @@ namespace Infrastructure.EmailTemplates
         }
     }
 }
+
