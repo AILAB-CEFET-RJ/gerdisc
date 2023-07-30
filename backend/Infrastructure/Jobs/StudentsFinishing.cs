@@ -23,14 +23,12 @@ namespace Infrastructure.Jobs
 
             var endOfCourseStudents = await _repository.Student.GetAllAsync(x =>
                 (x.ProjectDefenceDate <= dangerousDate || x.ProjectQualificationDate <= dangerousDate)
-                && x.Status == StatusEnum.Active);
-
+                && x.Status == StatusEnum.Active, x => x.User);
             var orientations = await _repository.Orientation.GetAllAsync(x =>
                 endOfCourseStudents.Select(x => x.UserId).Contains(x.StudentId),
                 x => x.Student, x => x.Professor);
 
             var studentInfo = endOfCourseStudents.ToDictionary(x => x.UserId);
-
             foreach (var orientationGroup in orientations.GroupBy(x => x.ProfessorId))
             {
                 await NotifyProfessorAsync(orientationGroup, studentInfo);
@@ -38,9 +36,12 @@ namespace Infrastructure.Jobs
 
             foreach (var student in endOfCourseStudents)
             {
-                _logger.LogInformation($"End of Course Student: {student.Id}");
-                await NotifyStudentAsync(student);
-                await UpdateStudentAsync(student);
+                if (student.LastNotification == null && DateTime.UtcNow.Date.AddDays(-7) > student.LastNotification)
+                {
+                    _logger.LogInformation($"End of Course Student: {student.Id}");
+                    await NotifyStudentAsync(student);
+                    await UpdateStudentAsync(student);
+                }
             }
         }
 
