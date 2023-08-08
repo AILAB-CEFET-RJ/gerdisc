@@ -28,7 +28,7 @@ namespace saga.Services
         public async Task<OrientationInfoDto> CreateOrientationAsync(OrientationDto orientationDto)
         {
             (var isValid, var message) = await _validations.OrientationValidator.CanAddOrientationToProject(orientationDto);
-            if(!isValid)
+            if (!isValid)
             {
                 throw new ArgumentException(message);
             }
@@ -68,7 +68,7 @@ namespace saga.Services
         public async Task<OrientationInfoDto> UpdateOrientationAsync(Guid id, OrientationDto orientationDto)
         {
             (var isValid, var message) = await _validations.OrientationValidator.CanAddOrientationToProject(orientationDto);
-            if(!isValid)
+            if (!isValid)
             {
                 throw new ArgumentException(message);
             }

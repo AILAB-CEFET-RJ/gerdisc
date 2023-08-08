@@ -45,7 +45,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 
     c.OperationFilter<SecurityRequirementsOperationFilter>();
-    c.DocumentFilter<BasePathDocumentFilter>(); 
+    c.DocumentFilter<BasePathDocumentFilter>();
 });
 
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -66,7 +66,7 @@ builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddScoped<IUserContext, UserContext>();
 builder.Services.AddSingleton<ISigningConfiguration>(signingConfig);
 builder.Services.AddSingleton<ISettings>(settings);
-builder.Services.AddScoped<IRepository,Repository>();
+builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 RegisterValidations(builder.Services);
 RegisterServices(builder.Services);
@@ -134,7 +134,7 @@ void RegisterValidations(IServiceCollection services)
 
 void RegisterServices(IServiceCollection services)
 {
-    
+
     services.AddScoped<ICourseService, CourseService>();
     services.AddScoped<IStudentService, StudentService>();
     services.AddScoped<IProjectService, ProjectService>();

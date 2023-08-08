@@ -33,8 +33,8 @@ namespace saga.Services
             _tokenProvider = tokenProvider ?? throw new ArgumentNullException(nameof(tokenProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
-            _validations= validations?? throw new ArgumentNullException(nameof(validations));
-            _userContext= userContext?? throw new ArgumentNullException(nameof(userContext));
+            _validations = validations ?? throw new ArgumentNullException(nameof(validations));
+            _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
         }
 
         /// <inheritdoc />

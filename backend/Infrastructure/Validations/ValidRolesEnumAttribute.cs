@@ -27,7 +27,7 @@ namespace saga.Infrastructure.Validations
         /// <param name="acceptedRole">The accepted role enum value.</param>
         public ValidRolesEnumAttribute(RolesEnum acceptedRole)
         {
-            _acceptedRoles = new List<RolesEnum>{acceptedRole};
+            _acceptedRoles = new List<RolesEnum> { acceptedRole };
         }
 
         /// <summary>
