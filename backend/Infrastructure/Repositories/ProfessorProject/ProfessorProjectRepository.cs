@@ -19,7 +19,7 @@ namespace saga.Infrastructure.Repositories.ProfessorProject
                 .Select(x => x.ProfessorId)
                 .IEnumerableDifference(newProfessors);
 
-            
+
             await this.AddRangeAsync(professorProjectIds.Select(
                 x => new ProfessorProjectEntity
                 {
@@ -39,7 +39,7 @@ namespace saga.Infrastructure.Repositories.ProfessorProject
                 .Select(x => x.ProjectId)
                 .IEnumerableDifference(newProjects);
 
-            
+
             await this.AddRangeAsync(professorProjectIds.Select(
                 x => new ProfessorProjectEntity
                 {

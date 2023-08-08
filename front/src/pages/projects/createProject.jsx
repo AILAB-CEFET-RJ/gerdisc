@@ -61,7 +61,7 @@ export default function ProjectForm({ Update = false }) {
         .then(project => {
           setProject({
             name: project.name,
-            status: PROJECT_STATUS_ENUM[project.status],
+            status: project.status,
             professorIds: project.professors.map(x => x.id),
             researchLineId: project.researchLineId,
           });
@@ -140,17 +140,14 @@ export default function ProjectForm({ Update = false }) {
               <input required type="text" name="name" value={project.name} onChange={(e) => setName(e.target.value)} id="name" />
             </div>
             <Select
-                required
-                defaultValue={oldStatus}
-                className="formInput"
-                onSelect={(value) => setStatus(PROJECT_STATUS_ENUM[value])}
-                options={Object.keys(PROJECT_STATUS_ENUM).map((option) => ({
-                    value: option,
-                    label: option,
-                }))}
-                label="Status"
-                name="status"
-                />
+              required
+              defaultValue={oldStatus}
+              className="formInput"
+              options={PROJECT_STATUS_ENUM.map((item) => ({ value: item.name, label: item.translation }))}
+              onSelect={(value) => setStatus(value)}
+              label="Status"
+              name="status"
+            />
           </div>
           <div className="form-section">
             <MultiSelect
@@ -164,16 +161,16 @@ export default function ProjectForm({ Update = false }) {
             />
             {!isUpdate && (
               <Select
-              className="formInput"
-              defaultValue=""
-              onSelect={setResearchLine}
-              options={[
-                { value: "", label: "" },
-                ...linesOptions,
-              ]}
-              label="Linha de Pesquisa"
-              name="researchLineId"
-            />
+                className="formInput"
+                defaultValue=""
+                onSelect={setResearchLine}
+                options={[
+                  { value: "", label: "" },
+                  ...linesOptions,
+                ]}
+                label="Linha de Pesquisa"
+                name="researchLineId"
+              />
             )}
           </div>
           <div className="form-section">

@@ -17,6 +17,6 @@ namespace saga.Infrastructure.Providers.Interfaces
         /// <param name="body">The body content of the email.</param>
         /// <param name="recipientEmail">The email address of the recipient.</param>
         /// <returns>A task representing the asynchronous email sending operation.</returns>
-        Task SendEmail(string recipient, string subject, string body);
+        Task SendEmail(string recipient, string subject, string body, bool isBodyHtml = true);
     }
 }

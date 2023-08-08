@@ -7,6 +7,7 @@ export default function ResetPassword() {
   const navigate = useNavigate();
   const location = useLocation();
   const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
   const [error, setError] = useState(undefined);
   const token = new URLSearchParams(location.search).get('token');
 
@@ -20,6 +21,17 @@ export default function ResetPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(undefined);
+
+    if (password.length < 8 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
+      setError('Password must be at least 8 characters long and contain letters and numbers.');
+      return;
+    }
+
+    if (password !== repeatPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
     resetPassword({ token, password })
       .then((response) => {
         if (response.status === 200) {
@@ -53,6 +65,17 @@ export default function ResetPassword() {
               placeholder="Digite sua nova senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}"
+              required
+            />
+            <label htmlFor="repeat-password">Repetir Senha</label>
+            <input
+              type="password"
+              id="repeat-password"
+              placeholder="Digite novamente sua nova senha"
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
+              required
             />
             <input type="submit" id="submit" value={'Resetar Senha'} onClick={handleSubmit} />
             {error && <p>{error}</p>}

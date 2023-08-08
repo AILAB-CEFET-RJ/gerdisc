@@ -48,7 +48,7 @@ export default function StudentProfile() {
                     <BackButton />
                     {role === "Administrator" && <div className="options">
                         <input type={'button'} className="option" value={"Criar Dissertação"} onClick={(e) => navigate(`researches/add`)} />
-                        <input type={'button'} className="option" value={'Criar Extensão'} onClick={(e) => navigate('extensions/add')} />
+                        <input type={'button'} className="option" value={'Prorrogação'} onClick={(e) => navigate('extensions/add')} />
                         <input type={'button'} className="option" value={'Editar Estudante'} onClick={(e) => navigate('edit')} />
                     </div>}
                 </div>

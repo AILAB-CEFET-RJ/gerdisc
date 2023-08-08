@@ -41,10 +41,8 @@ namespace saga.Services
         /// <inheritdoc />
         public async Task<IEnumerable<StudentInfoDto>> AddStudentsFromCsvAsync(IFormFile file)
         {
-            var records = CastFromCsvAsync<StudentCsvDto>(file);
-
             var insertedStudents = new List<StudentInfoDto>();
-            await foreach (var record in records)
+            await foreach (var record in CastFromCsvAsync<StudentCsvDto>(file))
             {
                 try
                 {
@@ -63,8 +61,9 @@ namespace saga.Services
         /// <inheritdoc />
         public async Task<IEnumerable<StudentCourseDto>> AddCoursesToStudentsFromCsvAsync(IFormFile file)
         {
-            var records = CastFromCsvAsync<StudentCourseCsvDto>(file);
+            var insertedCourses = new List<StudentCourseDto>();
 
+            var records = CastFromCsvAsync<StudentCourseCsvDto>(file);
             var courseNames = await records.Select(x => x.CourseUnique).ToListAsync();
             var courses = await _repository.Course.GetAllAsync(x => courseNames.Contains(x.CourseUnique));
             var courseDictionary = courses?.ToDictionary(x => x.CourseUnique, x => x.Id);
@@ -72,8 +71,6 @@ namespace saga.Services
             var studentRegistrations = await records.Select(x => x.StudentRegistration).ToListAsync();
             var students = await _repository.Student.GetAllAsync(x => studentRegistrations.Contains(x.Registration));
             var studentDictionary = students?.ToDictionary(x => x.Registration, x => x.Id);
-
-            var insertedCourses = new List<StudentCourseDto>();
 
             await foreach (var record in records)
             {
@@ -108,24 +105,14 @@ namespace saga.Services
         public async Task<IEnumerable<StudentInfoDto>> GetAllStudentsAsync()
         {
             var students = await _repository.Student.GetAllAsync(s => s.User);
-            var studentDtos = new List<StudentInfoDto>();
-            foreach (var student in students)
-            {
-                studentDtos.Add(student.ToInfoDto());
-            }
-
+            var studentDtos = students.Select(student => student.ToInfoDto());
             return studentDtos;
         }
 
         /// <inheritdoc />
         public async Task<StudentInfoDto> UpdateStudentAsync(Guid id, StudentDto studentDto)
         {
-            var existingStudent = await _repository.Student.GetByIdAsync(id);
-            if (existingStudent == null)
-            {
-                throw new ArgumentException($"Student with id {id} does not exist.");
-            }
-
+            var existingStudent = await GetExistingStudentAsync(id);
             existingStudent = studentDto.ToEntity(existingStudent);
 
             await _repository.Student.UpdateAsync(existingStudent);
@@ -136,17 +123,22 @@ namespace saga.Services
         /// <inheritdoc />
         public async Task DeleteStudentAsync(Guid id)
         {
+            var existingStudent = await GetExistingStudentAsync(id);
+            await _repository.Student.DeactiveAsync(existingStudent);
+        }
+
+        private async Task<StudentEntity> GetExistingStudentAsync(Guid id)
+        {
             var existingStudent = await _repository.Student.GetByIdAsync(id);
             if (existingStudent == null)
             {
                 throw new ArgumentException($"Student with id {id} does not exist.");
             }
-
-            await _repository.Student.DeactiveAsync(existingStudent);
+            return existingStudent;
         }
 
-        public async IAsyncEnumerable<TDTO> CastFromCsvAsync<TDTO>(IFormFile file)
-            where TDTO: class
+        private async IAsyncEnumerable<TDTO> CastFromCsvAsync<TDTO>(IFormFile file)
+            where TDTO : class
         {
             using var reader = new StreamReader(file.OpenReadStream());
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
@@ -154,19 +146,28 @@ namespace saga.Services
 
             foreach (var record in records)
             {
-                var validationContext = new ValidationContext(record);
-                var validationResults = new List<ValidationResult>();
-
-                if (Validator.TryValidateObject(record, validationContext, validationResults, true))
+                if (TryValidateCsvRecord(record, out var errorMessages))
                 {
                     yield return record;
                 }
                 else
                 {
-                    var errorMessages = validationResults.Select(result => result.ErrorMessage);
                     _logger.LogWarning($"Validation failed for record: {string.Join(", ", errorMessages)}");
                 }
             }
+        }
+
+        private bool TryValidateCsvRecord(object record, out List<string> errorMessages)
+        {
+            var validationContext = new ValidationContext(record);
+            var validationResults = new List<ValidationResult>();
+
+            var isValid = Validator.TryValidateObject(record, validationContext, validationResults, true);
+            errorMessages = isValid
+                ? new List<string>()
+                : validationResults.Select(result => result.ErrorMessage).ToList();
+
+            return isValid;
         }
     }
 }

@@ -9,9 +9,6 @@ namespace saga.Models.DTOs
 {
     public class ResetPasswordDto
     {
-        [Required(ErrorMessage = "Email is required")]
-        [ValidEmail(ErrorMessage = "Email is not in a valid format")]
-        public string? Email { get; set; }
         public string? Password { get; set; }
     }
 }

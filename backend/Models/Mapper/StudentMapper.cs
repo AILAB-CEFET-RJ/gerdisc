@@ -59,7 +59,7 @@ namespace saga.Models.Mapper
             entityToUpdate.UndergraduateArea = self.UndergraduateArea;
             entityToUpdate.DateOfBirth = self.DateOfBirth;
             entityToUpdate.Scholarship = self.Scholarship;
-            
+
             var coursesToAdd = self.StudentCourses?
                 .Where(x => !entityToUpdate.StudentCourses.Select(sc => sc.CourseId).Contains(x.CourseId))
                 .Select(x => x.ToEntity()) ?? new List<StudentCourseEntity>();

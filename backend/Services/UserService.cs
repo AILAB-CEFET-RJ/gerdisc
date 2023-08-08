@@ -1,3 +1,5 @@
+using backend.Infrastructure.Validations;
+using Infrastructure.EmailTemplates;
 using saga.Infrastructure.Providers;
 using saga.Infrastructure.Providers.Interfaces;
 using saga.Infrastructure.Repositories;
@@ -15,27 +17,30 @@ namespace saga.Services
         private readonly IRepository _repository;
         private readonly IEmailSender _emailSender;
         private readonly ITokenProvider _tokenProvider;
+        private readonly IUserContext _userContext;
         private readonly ILogger<UserService> _logger;
-        private readonly UserValidator _userValidator;
+        private readonly Validations _validations;
         public UserService(
             IRepository repository,
             ITokenProvider tokenProvider,
             ILogger<UserService> logger,
             IEmailSender emailSender,
-            UserValidator userValidator
+            Validations validations,
+            IUserContext userContext
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _tokenProvider = tokenProvider ?? throw new ArgumentNullException(nameof(tokenProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
-            _userValidator= userValidator?? throw new ArgumentNullException(nameof(userValidator));
+            _validations = validations ?? throw new ArgumentNullException(nameof(validations));
+            _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
         }
 
         /// <inheritdoc />
         public async Task<UserEntity> CreateUserAsync(UserDto userDto)
         {
-            (var isValid, var message) = await _userValidator.CanAddUser(userDto);
+            (var isValid, var message) = await _validations.UserValidator.CanAddUser(userDto);
             _logger.LogInformation($"Creating user{userDto.Email}");
             if (!isValid)
             {
@@ -43,8 +48,8 @@ namespace saga.Services
             }
             var user = await _repository.User.AddAsync(userDto.ToUserEntity());
             var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromDays(7));
-            string emailSubject = "User Account Created";
-            string emailBody = $"Thank you for creating an account! Your temporary password is: {userDto.ResetPasswordPath + "?token=" + token}. Please change your password after logging in.";
+            string emailSubject = "Sua conta foi criada";
+            string emailBody = EmailTemplates.WelcomeEmailTemplate(userDto.ResetPasswordPath, token);
             await _emailSender.SendEmail(userDto.Email, emailSubject, emailBody).ConfigureAwait(false);
             return user;
         }
@@ -55,22 +60,23 @@ namespace saga.Services
             var user = await _repository.User.GetUserByEmail(request.Email) ?? throw new ArgumentException($"User with email {request.Email} not found.");
 
             var token = _tokenProvider.GenerateResetPasswordJwt(user, TimeSpan.FromMinutes(30));
-            string emailSubject = "Password Reset";
-            string emailBody = $"You have requested to reset your password. Please click on the following link to reset your password: {request.ResetPasswordPath + "?token=" + token}";
+            string emailSubject = "Alteração de senha";
+            string emailBody = EmailTemplates.ResetPasswordEmailTemplate(request.ResetPasswordPath, token);
             await _emailSender.SendEmail(request.Email, emailSubject, emailBody).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
         public async Task<LoginResultDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
         {
-            (var isValid, var message) = await _userValidator.CanResetPassword(resetPasswordDto);
-            _logger.LogInformation($"Changing password of user: {resetPasswordDto.Email}");
+            (var isValid, var message) = await _validations.UserValidator.CanResetPassword(resetPasswordDto);
+
             if (!isValid)
             {
                 throw new ArgumentException(message);
             }
+            var user = await _repository.User.GetByIdAsync(_userContext.UserId.Value) ?? throw new ArgumentException($"User with email {_userContext.UserId} not found.");
 
-            var user = await _repository.User.GetUserByEmail(resetPasswordDto.Email.ToLower()) ?? throw new ArgumentException($"User with email {resetPasswordDto.Email} not found.");
+            _logger.LogInformation($"Changing password of user: {user.Email}");
             user.PasswordHash = HashPassword(resetPasswordDto.Password);
 
             await _repository.User.UpdateAsync(user);

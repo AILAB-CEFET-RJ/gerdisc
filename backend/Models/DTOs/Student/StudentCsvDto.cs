@@ -6,18 +6,18 @@ namespace saga.Models.DTOs
 {
     public class StudentCsvDto
     {
-	    [Name("Nome")]
+        [Name("Nome")]
         public string? Name { get; set; }
 
-	    [Name("E-mail")]
+        [Name("E-mail")]
         [ValidEmail]
         public string? Email { get; set; }
 
-	    [Name("CPF")]
+        [Name("CPF")]
         [ValidCpf]
         public string? Cpf { get; set; }
 
-	    [Name("Inscrição")]
+        [Name("Inscrição")]
         public string? Registration { get; set; }
 
         public string? RegistrationDate { get; set; }
@@ -35,21 +35,21 @@ namespace saga.Models.DTOs
         [Optional]
         public string? Proficiency { get; set; }
 
-	    [Name("Instituição de Formação")]
+        [Name("Instituição de Formação")]
         public string? UndergraduateInstitution { get; set; }
 
         public InstitutionTypeEnum InstitutionType { get; set; }
 
-	    [Name("Curso")]
+        [Name("Curso")]
         public string? UndergraduateCourse { get; set; }
 
-	    [Name("Ano de Formação")]
+        [Name("Ano de Formação")]
         public int GraduationYear { get; set; }
 
         [Optional]
         public UndergraduateAreaEnum UndergraduateArea { get; set; }
 
-	    [Name("Nascimento")]
+        [Name("Nascimento")]
         public string? DateOfBirth { get; set; }
 
         public ScholarshipEnum Scholarship { get; set; }
