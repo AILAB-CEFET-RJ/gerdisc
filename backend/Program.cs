@@ -1,7 +1,6 @@
 using saga.Infrastructure.Providers;
 using saga.Infrastructure.Providers.Interfaces;
 using saga.Infrastructure.Repositories;
-using saga.Infrastructure.Validations;
 using saga.Properties;
 using saga.Services;
 using saga.Services.Interfaces;
@@ -14,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
+using backend.Infrastructure.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -129,8 +129,7 @@ app.Run();
 
 void RegisterValidations(IServiceCollection services)
 {
-    services.AddScoped<OrientationValidator>();
-    services.AddScoped<UserValidator>();
+    services.AddScoped<Validations>();
 }
 
 void RegisterServices(IServiceCollection services)

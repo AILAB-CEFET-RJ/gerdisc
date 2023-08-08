@@ -1,3 +1,4 @@
+using backend.Infrastructure.Validations;
 using saga.Infrastructure.Repositories;
 using saga.Infrastructure.Validations;
 using saga.Models.DTOs;
@@ -10,23 +11,23 @@ namespace saga.Services
     {
         private readonly IRepository _repository;
         private readonly ILogger<OrientationService> _logger;
-        private readonly OrientationValidator _validator;
+        private readonly Validations _validations;
 
         public OrientationService(
             IRepository repository,
             ILogger<OrientationService> logger,
-            OrientationValidator validator
+            Validations validations
         )
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _validator = validator ?? throw new ArgumentNullException(nameof(validator));
+            _validations = validations ?? throw new ArgumentNullException(nameof(validations));
         }
 
         /// <inheritdoc />
         public async Task<OrientationInfoDto> CreateOrientationAsync(OrientationDto orientationDto)
         {
-            (var isValid, var message) = await _validator.CanAddOrientationToProject(orientationDto);
+            (var isValid, var message) = await _validations.OrientationValidator.CanAddOrientationToProject(orientationDto);
             if(!isValid)
             {
                 throw new ArgumentException(message);
@@ -66,7 +67,7 @@ namespace saga.Services
         /// <inheritdoc />
         public async Task<OrientationInfoDto> UpdateOrientationAsync(Guid id, OrientationDto orientationDto)
         {
-            (var isValid, var message) = await _validator.CanAddOrientationToProject(orientationDto);
+            (var isValid, var message) = await _validations.OrientationValidator.CanAddOrientationToProject(orientationDto);
             if(!isValid)
             {
                 throw new ArgumentException(message);
