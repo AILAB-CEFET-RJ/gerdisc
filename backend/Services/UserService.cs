@@ -1,3 +1,4 @@
+using backend.Infrastructure.Validations;
 using Infrastructure.EmailTemplates;
 using saga.Infrastructure.Providers;
 using saga.Infrastructure.Providers.Interfaces;
@@ -18,13 +19,13 @@ namespace saga.Services
         private readonly ITokenProvider _tokenProvider;
         private readonly IUserContext _userContext;
         private readonly ILogger<UserService> _logger;
-        private readonly UserValidator _userValidator;
+        private readonly Validations _validations;
         public UserService(
             IRepository repository,
             ITokenProvider tokenProvider,
             ILogger<UserService> logger,
             IEmailSender emailSender,
-            UserValidator userValidator,
+            Validations validations,
             IUserContext userContext
         )
         {
@@ -32,14 +33,14 @@ namespace saga.Services
             _tokenProvider = tokenProvider ?? throw new ArgumentNullException(nameof(tokenProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
-            _userValidator= userValidator?? throw new ArgumentNullException(nameof(userValidator));
-            _userContext= userContext?? throw new ArgumentNullException(nameof(userContext));
+            _validations = validations ?? throw new ArgumentNullException(nameof(validations));
+            _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
         }
 
         /// <inheritdoc />
         public async Task<UserEntity> CreateUserAsync(UserDto userDto)
         {
-            (var isValid, var message) = await _userValidator.CanAddUser(userDto);
+            (var isValid, var message) = await _validations.UserValidator.CanAddUser(userDto);
             _logger.LogInformation($"Creating user{userDto.Email}");
             if (!isValid)
             {
@@ -67,7 +68,7 @@ namespace saga.Services
         /// <inheritdoc />
         public async Task<LoginResultDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
         {
-            (var isValid, var message) = await _userValidator.CanResetPassword(resetPasswordDto);
+            (var isValid, var message) = await _validations.UserValidator.CanResetPassword(resetPasswordDto);
 
             if (!isValid)
             {

@@ -9,6 +9,6 @@ namespace saga.Models.DTOs
 {
     public class ResetPasswordDto
     {
-                public string? Password { get; set; }
+        public string? Password { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 using saga.Infrastructure.Providers;
 using saga.Infrastructure.Providers.Interfaces;
 using saga.Infrastructure.Repositories;
-using saga.Infrastructure.Validations;
 using saga.Properties;
 using saga.Services;
 using saga.Services.Interfaces;
@@ -14,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
+using backend.Infrastructure.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +45,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 
     c.OperationFilter<SecurityRequirementsOperationFilter>();
-    c.DocumentFilter<BasePathDocumentFilter>(); 
+    c.DocumentFilter<BasePathDocumentFilter>();
 });
 
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -66,7 +66,7 @@ builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddScoped<IUserContext, UserContext>();
 builder.Services.AddSingleton<ISigningConfiguration>(signingConfig);
 builder.Services.AddSingleton<ISettings>(settings);
-builder.Services.AddScoped<IRepository,Repository>();
+builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 RegisterValidations(builder.Services);
 RegisterServices(builder.Services);
@@ -129,13 +129,12 @@ app.Run();
 
 void RegisterValidations(IServiceCollection services)
 {
-    services.AddScoped<OrientationValidator>();
-    services.AddScoped<UserValidator>();
+    services.AddScoped<Validations>();
 }
 
 void RegisterServices(IServiceCollection services)
 {
-    
+
     services.AddScoped<ICourseService, CourseService>();
     services.AddScoped<IStudentService, StudentService>();
     services.AddScoped<IProjectService, ProjectService>();
