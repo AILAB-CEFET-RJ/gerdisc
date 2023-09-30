@@ -26,6 +26,7 @@ namespace saga.Infrastructure.Repositories
         public DbSet<StudentCourseEntity> StudentCourses { get; set; } = null!;
         public DbSet<OrientationEntity> Orientations { get; set; } = null!;
         public DbSet<ResearchLineEntity> ResearchLines { get; set; } = null!;
+        public DbSet<PondocQualisEntity> Qualis { get; set; } = null!;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContexRepository"/> class with the specified options.
@@ -33,8 +34,7 @@ namespace saga.Infrastructure.Repositories
         /// <param name="options">The options for configuring the database context.</param>
         public ContexRepository(DbContextOptions<ContexRepository> options)
             : base(options)
-        {
-        }
+        { }
 
         /// <inheritdoc />
         protected override void OnModelCreating(ModelBuilder modelBuilder)

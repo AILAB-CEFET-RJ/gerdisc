@@ -9,6 +9,8 @@ using saga.Infrastructure.Repositories.ResearchLine;
 using saga.Infrastructure.Repositories.Student;
 using saga.Infrastructure.Repositories.StudentCourse;
 using saga.Infrastructure.Repositories.User;
+using saga.Infrastructure.Repositories.PondocQualis;
+
 
 namespace saga.Infrastructure.Repositories
 {
@@ -71,6 +73,11 @@ namespace saga.Infrastructure.Repositories
         /// Gets the repository for research line entities.
         /// </summary>
         IResearchLineRepository ResearchLine { get; }
+
+        /// <summary>
+        /// Gets the repository for Pondoc Qualis entities.
+        /// </summary>
+        IPondocQualisRepository PondocQualis { get; }
 
         /// <summary>
         /// Commits the pending changes asynchronously.
