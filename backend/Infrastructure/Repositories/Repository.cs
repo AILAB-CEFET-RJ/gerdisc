@@ -10,6 +10,7 @@ using saga.Infrastructure.Repositories.ResearchLine;
 using saga.Infrastructure.Repositories.Student;
 using saga.Infrastructure.Repositories.StudentCourse;
 using saga.Infrastructure.Repositories.User;
+using saga.Infrastructure.Repositories.PondocQualis;
 
 namespace saga.Infrastructure.Repositories
 {
@@ -73,7 +74,11 @@ namespace saga.Infrastructure.Repositories
         /// <inheritdoc />
         public IOrientationRepository Orientation => new OrientationRepository(_dbContext, _userContext);
 
+        /// <inheritdoc />
         public IResearchLineRepository ResearchLine => new ResearchLineRepository(_dbContext);
+
+        /// <inheritdoc />
+        public IPondocQualisRepository PondocQualis => new PondocQualisRepository(_dbContext);
 
         /// <inheritdoc />
         public async Task<int> CommitAsync()
