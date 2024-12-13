@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   postgres:
     image: postgres:10.17
@@ -35,7 +33,7 @@ services:
       - EmailSettings__Password=${EmailSettings__Password}
       - EmailSettings__SenderEmail=${EmailSettings__SenderEmail}
     ports:
-      - "5000:80"
+      - "5000:5000"
     depends_on:
       postgres:
         condition: service_healthy
