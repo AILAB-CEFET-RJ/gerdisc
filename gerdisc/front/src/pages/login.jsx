@@ -80,7 +80,7 @@ export default function Login() {
             </div>
           </div>
           <div className={'form'}>
-            <p>Entrar na conta</p>
+            <p className='title-login'>Entrar na conta</p>
             <label htmlFor="email">Email</label>
             <input
               type="text"

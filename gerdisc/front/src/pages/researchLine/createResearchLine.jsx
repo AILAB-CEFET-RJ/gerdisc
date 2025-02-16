@@ -90,7 +90,7 @@ export default function ResearchLineForm({ Update = false }) {
           </div>
           <div className="form-section">
             <div className="formInput">
-              <input type="submit" value="Salvar" onClick={(e) => handleSave(e)} />
+              <input type="submit" value="Submit" onClick={(e) => handleSave(e)} />
             </div>
           </div>
         </form>

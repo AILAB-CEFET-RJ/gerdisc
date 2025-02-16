@@ -6,11 +6,10 @@ A ideia inicial do Saga é a unificação de dois sistemas já utilizados pelo P
 - Git: Versão > 2.28.0
 - Python: Versão > 3.10.0
 - Docker Compose: Versão > 1.27.0
-- MongoDB: Versão > 7.0
 
 ## Primeiros passos
 - Clonar repositório
   - Abra um terminal ou prompt de comando e execute o código abaixo:
-  - `git clone https://github.com/ribeiroisaac/saga.git`
+  - `https://github.com/AILAB-CEFET-RJ/gerdisc.git`
   - Verifique a criação dos arquivos "docker-compose.yaml" nas pastas "gerdisc" e "pondoc".
-- Verificar nas pastas deste Github, a inicialização do [Gerdisc](https://github.com/ribeiroisaac/saga/tree/main/gerdisc) e do [Pondoc](https://github.com/ribeiroisaac/saga/tree/main/pondoc), conforme seu desejo.
+- Verificar nas pastas deste Github, a inicialização do [Gerdisc](https://github.com/AILAB-CEFET-RJ/gerdisc/tree/saga/gerdisc) e do [Pondoc](https://github.com/AILAB-CEFET-RJ/gerdisc/tree/saga/pondoc), conforme seu desejo.

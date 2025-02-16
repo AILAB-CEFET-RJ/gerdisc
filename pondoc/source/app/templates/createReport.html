@@ -30,12 +30,14 @@
                             id="endYear" name="endYear" />
                     </div>
                     <button type="submit" class="btn btn-primary" id="reportBtn">Gerar</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">Voltar</button>
                 </form>
                 <div class="spinner-border hidden" id="spinner" role="status">
                     <span class="sr-only"></span>
                 </div>
             </div>
         </div>
+        
 </body>
 <script>
     function toggle() {
@@ -84,18 +86,105 @@
     }
 </script>
 <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    
+    .container-sm {
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    #form-wrapper {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    #form-wrapper:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+
+
+    .form-label {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+
+    .form-control {
+        border-radius: 10px;
+        border: 2px solid #ddd;
+        padding: 1rem;
+        font-size: 1rem;
+        width: 100%;
+        margin-bottom: 1rem;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #0066cc;
+        background-color: #f3f8ff;
+        outline: none;
+    }
+
+
+    .btn {
+        width: 48%;
+        padding: 1rem;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+        color: #fff;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        transform: translateY(-2px);
+    }
+
     .hidden {
         display: none !important;
     }
 
-    .size600 {
-        margin-top: 30vh;
-        padding: 2vh;
-        width: 50vh !important;
-        border: 1px rgb(196, 196, 196) solid;
-        border-radius: 10px;
-        box-shadow: 0 0 10px 2px #999;
-    }
+    
 </style>
 
 </html>

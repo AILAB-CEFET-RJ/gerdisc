@@ -14,11 +14,13 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        margin: 1rem;
+        
     }
     .boardItem:hover{
-        border: 2px solid #004AAD;
-        border-radius: 1rem;
+        transform: scale(1.07);
+        font-weight: 500;
+        background-color: rgb(237, 252, 252);
+        border-radius: 10px;
     }
     #pre{
         word-wrap: break-word;
@@ -33,4 +35,5 @@
         height: 9rem;
         filter: $filter
     }
+
 }

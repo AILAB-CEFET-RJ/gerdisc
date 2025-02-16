@@ -12,7 +12,7 @@ export default function Header({ name }) {
                     <span>SAGA</span>
                 </div>
                 <div className={"headerOptions"}>
-                    <div>Olá, {name}</div>
+                    <div>Olá, <strong>{name}</strong></div>
                 </div>
             </div>
             <div className={"headerBreak"}><span></span></div>
